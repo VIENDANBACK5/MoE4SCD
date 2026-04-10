@@ -1,0 +1,33 @@
+{
+  "centroid_alignment_ratio": 0.9959595959595959,
+  "token_mask_similarity_mean": 0.9999999989162792,
+  "token_mask_similarity_best_mean": 0.9999999989162792,
+  "token_mask_best_not_identity_ratio": 0.0,
+  "mask_iou_mean": 1.0,
+  "mask_iou_std": 0.0,
+  "mask_iou_lt_0_8_ratio": 0.0,
+  "coverage_ratio": 0.7328701019287109,
+  "sum_mask_ratio": 1.0791161855061848,
+  "overlap_pixel_ratio": 0.31154950459798175,
+  "count_mismatch_images": 0,
+  "mean_count_gap": 0.0,
+  "max_count_gap": 0,
+  "mask_area_mean": 3428.8949494949493,
+  "mask_area_min": 45,
+  "mask_area_max": 230073,
+  "zero_area_masks": 0,
+  "huge_masks_over_50pct": 1,
+  "total_tokens": 495,
+  "centroid_inside_mask_ratio": 0.9959595959595959,
+  "mismatched_indices_examples": {
+    "01658": [
+      52
+    ],
+    "01770": [
+      0
+    ]
+  },
+  "detected_mapping_errors": [
+    "D: masks do not cover image adequately; projection may be biased"
+  ]
+}

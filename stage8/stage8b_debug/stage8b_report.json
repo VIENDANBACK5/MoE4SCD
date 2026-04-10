@@ -1,0 +1,93 @@
+{
+  "centroid_alignment_ratio": 0.9951170830808711,
+  "token_mask_similarity_mean": 0.9999999950947313,
+  "token_mask_similarity_best_mean": 0.9999999950989801,
+  "token_mask_best_not_identity_ratio": 0.0009623266920911003,
+  "mask_iou_mean": 1.0,
+  "mask_iou_std": 0.0,
+  "mask_iou_lt_0_8_ratio": 0.0,
+  "coverage_ratio": 0.6845826973786225,
+  "sum_mask_ratio": 0.9211823360340016,
+  "overlap_pixel_ratio": 0.20020946296485695,
+  "count_mismatch_images": 0,
+  "mean_count_gap": 0.0,
+  "max_count_gap": 0,
+  "mask_area_mean": 2547.6279359874543,
+  "mask_area_min": 18,
+  "mask_area_max": 261364,
+  "zero_area_masks": 0,
+  "huge_masks_over_50pct": 25,
+  "total_tokens": 28057,
+  "centroid_inside_mask_ratio": 0.9951170830808711,
+  "mismatched_indices_examples": {
+    "01658": [
+      52
+    ],
+    "01770": [
+      0
+    ],
+    "10345": [
+      51
+    ],
+    "02239": [
+      10
+    ],
+    "07656": [
+      39
+    ],
+    "11204": [
+      28
+    ],
+    "03182": [
+      22
+    ],
+    "00569": [
+      68
+    ],
+    "04324": [
+      109
+    ],
+    "11086": [
+      104
+    ],
+    "01883": [
+      72
+    ],
+    "04583": [
+      9,
+      53,
+      110
+    ],
+    "01905": [
+      29
+    ],
+    "05490": [
+      73
+    ],
+    "02623": [
+      25,
+      73,
+      76
+    ],
+    "02376": [
+      8,
+      24
+    ],
+    "03335": [
+      2,
+      24
+    ],
+    "09139": [
+      66
+    ],
+    "06201": [
+      38
+    ],
+    "04160": [
+      51
+    ]
+  },
+  "detected_mapping_errors": [
+    "D: masks do not cover image adequately; projection may be biased"
+  ]
+}

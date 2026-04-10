@@ -1,0 +1,7 @@
+metric,value
+mean_entropy,0.06238786552101374
+mean_off_diag_sim,0.22391390738387904
+expert_0_change_prob,0.40803435511993363
+expert_1_change_prob,0.19743438930559104
+expert_2_change_prob,0.2073927058909388
+expert_3_change_prob,0.40777475683743747

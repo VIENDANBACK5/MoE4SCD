@@ -1,0 +1,40 @@
+# =============================================
+# Toàn bộ thư mục SECOND/ (data lớn 154GB)
+# =============================================
+SECOND/
+
+# SAM2 và segment-geospatial (large model repos)
+sam2/
+segment-geospatial/
+
+# Experiment smoke/full runs output
+feature_refine_branch_smoke/
+feature_refine_branch_v2_smoke/
+multiscale_graph_branch_*/
+stage5_test/
+
+# =============================================
+# Python
+# =============================================
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# =============================================
+# Logs (can be large)
+# =============================================
+*.log
+
+# =============================================
+# Jupyter checkpoints
+# =============================================
+.ipynb_checkpoints/
+
+# =============================================
+# OS & Editor
+# =============================================
+.DS_Store
+.vscode/
+*.swp
+*.swo

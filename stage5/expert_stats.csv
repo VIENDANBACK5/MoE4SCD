@@ -1,0 +1,5 @@
+expert,token_count,change_ratio,mean_disp,dominant_class,purity
+expert_0,12245,0.4637,0.7820,low_veg,0.8205
+expert_1,12657,0.2435,0.7640,low_veg,0.8201
+expert_2,13424,0.2492,0.7692,low_veg,0.7768
+expert_3,12840,0.4499,0.7817,low_veg,0.8050
