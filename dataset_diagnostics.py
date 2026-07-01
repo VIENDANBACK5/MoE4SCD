@@ -613,7 +613,7 @@ def run(args):
 
 def parse_args():
     p = argparse.ArgumentParser(description="Stage 2.5 — Full dataset diagnostics")
-    p.add_argument("--dataset_root",   default="/home/chung/RS/phase1/SECOND")
+    p.add_argument("--dataset_root",   default="SECOND")
     p.add_argument("--splits",         nargs="+", default=["train"],
                                        choices=["train", "test"])
     p.add_argument("--output_dir",     default=None)

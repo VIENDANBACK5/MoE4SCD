@@ -461,7 +461,7 @@ def parse_args():
         description="Stage 2.5: Dataset diagnostics and validation"
     )
     parser.add_argument("--dataset_root", type=str,
-                        default="/home/chung/RS/phase1/SECOND")
+                        default="SECOND")
     parser.add_argument("--splits", nargs="+", default=["train"],
                         choices=["train", "test"],
                         help="Which splits to diagnose")

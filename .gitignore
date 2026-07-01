@@ -32,6 +32,26 @@ __pycache__/
 .ipynb_checkpoints/
 
 # =============================================
+# SECOND-OC benchmark — generated data (large)
+# =============================================
+SECOND-OC/masks/
+SECOND-OC/annotations/*.json
+SECOND-OC/annotations/*.jsonl
+SECOND-OC/tier1/*.json
+SECOND-OC/tier1/*.jsonl
+SECOND-OC/phase0_report.json
+
+# Spot-check visualizations
+phase1_viz_*.png
+phase0_report.json
+
+# =============================================
+# Agent internal state
+# =============================================
+.agent/
+.claude/
+
+# =============================================
 # OS & Editor
 # =============================================
 .DS_Store

@@ -250,7 +250,7 @@ def parse_args():
     parser.add_argument(
         "--dataset_root",
         type=str,
-        default="/home/chung/RS/phase1/SECOND",
+        default="SECOND",
         help="Path to SECOND dataset root",
     )
     parser.add_argument(
