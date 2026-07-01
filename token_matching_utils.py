@@ -91,6 +91,9 @@ def fused_similarity_matrix(
     alpha: float = 1.0,
     beta: float = 0.5,
     spatial_gate_dist: float = 0.3,
+    cv_t1: Optional[torch.Tensor] = None,
+    cv_t2: Optional[torch.Tensor] = None,
+    gamma_cv: float = 0.1,
 ) -> Tuple[torch.Tensor, torch.Tensor, dict]:
     """
     Fused similarity:  S_ij = α·cos(i,j) − β·dist(i,j)
@@ -116,6 +119,11 @@ def fused_similarity_matrix(
     dist_mat = centroid_distance_matrix(centroids_t1, centroids_t2)       # [N1,N2]
 
     sim = alpha * cos_mat - beta * dist_mat                               # [N1,N2]
+
+    # CV penalty: penalize matches involving high CV tokens (Inverse Noise Weighting)
+    if cv_t1 is not None and cv_t2 is not None and gamma_cv > 0:
+        cv_penalty = cv_t1.unsqueeze(1) + cv_t2.unsqueeze(0)              # [N1, N2]
+        sim = sim - gamma_cv * cv_penalty
 
     # Spatial gating: impossible pairs → –∞
     gated_mask = torch.zeros_like(sim, dtype=torch.bool)

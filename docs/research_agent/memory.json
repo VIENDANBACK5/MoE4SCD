@@ -1,0 +1,67 @@
+{
+  "project_name": "MoE4SCD",
+  "domain": "Semantic Change Detection with Mixture of Experts",
+  "dataset": "SECOND (Remote Sensing Change Detection)",
+  "state": {
+    "current_best_model": {
+      "checkpoint_dir": "SECOND/stage5_6_semantic/",
+      "name": "stage5_6_semantic (Semantic MoE with router_v3)",
+      "val_f1": 0.5470,
+      "val_iou": 0.3764,
+      "val_change": 0.8234,
+      "val_delta": 0.4585,
+      "epochs": 30
+    },
+    "baselines": [
+      {
+        "name": "stage4 (Baseline Transformer)",
+        "val_change": 0.6912,
+        "val_delta": 0.4135
+      },
+      {
+        "name": "stage4B (+ GNN SAGE)",
+        "val_change": 0.8051,
+        "val_delta": 0.5890
+      },
+      {
+        "name": "stage4C (+ MoE 4 experts)",
+        "val_change": 0.7908,
+        "val_delta": 0.5567
+      },
+      {
+        "name": "stage5_6_dynamic (+ Dynamic MoE router_v1)",
+        "val_change": 0.7879,
+        "val_delta": 0.4583,
+        "val_f1": 0.5469,
+        "val_iou": 0.3764
+      }
+    ],
+    "key_hyperparameters": {
+      "token_dim": 256,
+      "hidden_dim": 384,
+      "num_layers": 4,
+      "num_heads": 8,
+      "ff_dim": 1536,
+      "dropout": 0.1,
+      "pos_mlp_hidden": 64,
+      "area_mlp_hidden": 64,
+      "delta_loss_weight": 0.2,
+      "proxy_delta_threshold": 9.56
+    }
+  },
+  "research_hypotheses": [
+    {
+      "hypothesis": "Injecting class labels directly to the MoE router (Semantic Routing) yields better expert specialization than routing based on latent features alone (Dynamic Routing).",
+      "status": "Tested - Showed marginal difference (F1: 0.5470 vs 0.5469). Root cause: Class imbalance (80% low_veg) overwhelms load-balancing loss."
+    },
+    {
+      "hypothesis": "GNN layer (GraphSAGE with hybrid spatial-spectral weights) captures local geographic and feature adjacency better than flat token Transformer reasoning.",
+      "status": "Validated - Jumped val_change from 0.6912 to 0.8051."
+    }
+  ],
+  "open_research_questions": [
+    "How to mitigate class imbalance in MoE routing without causing expert collapse (e.g. class-weighted routing, unbalanced routing, Top-2 without rebalancing)?",
+    "How would performance scale if trained for more than 30 epochs?",
+    "Evaluation of the best semantic model on the full 1,694 test pairs."
+  ]
+}

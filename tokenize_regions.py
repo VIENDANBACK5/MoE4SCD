@@ -27,10 +27,13 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import cv2
 import torch
 import torch.nn.functional as F
 from PIL import Image
 from tqdm import tqdm
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 
 # ---------------------------------------------------------------------------
 # SAM2 repo path (raw SAM2 — no samgeo geo deps needed)
@@ -164,6 +167,7 @@ def tokenize_image(
     tokens_list = []
     centroids_list = []
     areas_list = []
+    cv_list = []
 
     for m in masks:
         seg = m["segmentation"]  # (512,512) bool ndarray
@@ -180,6 +184,15 @@ def tokenize_image(
         region_feats = emb[:, mask_small]  # (256, K) where K = #true pixels
         token = region_feats.mean(dim=1)   # (256,)
         tokens_list.append(token)
+        
+        # --- Compute Coefficient of Variation (CV) ---
+        # Evaluate how uniform the features are inside the mask.
+        if region_feats.shape[1] > 1:
+            std = region_feats.std(dim=1)
+            cv_val = (std / (torch.abs(token) + 1e-6)).mean()
+        else:
+            cv_val = torch.tensor(0.0, dtype=torch.float32).to(region_feats.device)
+        cv_list.append(cv_val)
 
         # --- Centroid (in original 512x512 space, normalized) ---
         ys, xs = np.where(seg)
@@ -197,12 +210,81 @@ def tokenize_image(
         tokens_list = [token]
         centroids_list = [torch.tensor([0.5, 0.5], dtype=torch.float32)]
         areas_list = [1.0]
+        cv_list = [torch.tensor(0.0, dtype=torch.float32)]
 
-    return {
+    res = {
         "tokens":    torch.stack(tokens_list),                          # (N, 256)
         "centroids": torch.stack(centroids_list),                       # (N, 2)
         "areas":     torch.tensor(areas_list, dtype=torch.float32),     # (N,)
+        "cvs":       torch.stack(cv_list),                              # (N,)
     }
+    
+    # Optionally include raw boolean masks
+    if getattr(tokenize_image, "save_masks", False):
+        res["masks"] = [m["segmentation"] for m in masks] if masks else [np.ones((IMG_SIZE, IMG_SIZE), dtype=bool)]
+
+    return res
+
+
+# ========================= AUTO-TUNING & OUTLIER REMOVAL =========================
+
+def compute_nn_nroc(img: np.ndarray) -> float:
+    """
+    Computes Nearest Neighbor normalized Rate of Change (NN-nRoC)
+    as a proxy for image complexity/texture density.
+    """
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
+    diff_y = np.abs(gray[1:, :] - gray[:-1, :])
+    diff_x = np.abs(gray[:, 1:] - gray[:, :-1])
+    return float((np.mean(diff_y) + np.mean(diff_x)) / 2.0)
+
+def dynamic_points_per_side(img: np.ndarray, base_points: int) -> int:
+    """
+    Auto-tunes points_per_side dynamically based on image complexity.
+    """
+    nroc = compute_nn_nroc(img)
+    if nroc < 0.03:
+        return max(16, base_points // 2)
+    elif nroc > 0.08:
+        return min(64, base_points * 2)
+    return base_points
+
+def remove_outliers_mad(tokens_dict: dict, k: float = 3.0) -> dict:
+    """
+    Parameter-free Outlier Removal using Median Absolute Deviation (MAD).
+    Removes tokens that are extreme outliers in either Area or CV.
+    """
+    areas = tokens_dict["areas"]
+    cvs = tokens_dict["cvs"]
+    N = areas.shape[0]
+    
+    if N < 5:
+        return tokens_dict
+        
+    def get_mad_mask(x: torch.Tensor) -> torch.Tensor:
+        med = torch.median(x)
+        mad = torch.median(torch.abs(x - med))
+        if mad < 1e-6:
+            return torch.ones_like(x, dtype=torch.bool)
+        modified_z = 0.6745 * torch.abs(x - med) / mad
+        return modified_z <= k
+
+    # Valid if neither area nor CV is an extreme outlier
+    valid_mask = get_mad_mask(areas) & get_mad_mask(cvs)
+    
+    # Check if we didn't filter everything
+    if valid_mask.sum() == 0 or valid_mask.sum() == N:
+        return tokens_dict
+        
+    filtered = {}
+    for key, val in tokens_dict.items():
+        if isinstance(val, torch.Tensor) and val.shape[0] == N:
+            filtered[key] = val[valid_mask]
+        elif isinstance(val, list) and len(val) == N:
+            filtered[key] = [val[i] for i in range(N) if valid_mask[i]]
+        else:
+            filtered[key] = val
+    return filtered
 
 
 # ========================== MAIN PIPELINE ===================================
@@ -220,15 +302,23 @@ def run_tokenization(args):
     if not os.path.isfile(sam2_ckpt):
         raise FileNotFoundError(f"Checkpoint not found: {sam2_ckpt}")
 
-    amg = load_mask_generator(
-        config=sam2_config,
-        checkpoint=sam2_ckpt,
-        device=device,
-        points_per_side=args.points_per_side,
-        pred_iou_thresh=args.pred_iou_thresh,
-        stability_thresh=args.stability_thresh,
-        min_mask_area=args.min_mask_area,
-    )
+    pps_options = set([
+        args.points_per_side, 
+        max(16, args.points_per_side // 2), 
+        min(64, args.points_per_side * 2)
+    ])
+    
+    amgs = {}
+    for pps in pps_options:
+        amgs[pps] = load_mask_generator(
+            config=sam2_config,
+            checkpoint=sam2_ckpt,
+            device=device,
+            points_per_side=pps,
+            pred_iou_thresh=args.pred_iou_thresh,
+            stability_thresh=args.stability_thresh,
+            min_mask_area=args.min_mask_area,
+        )
 
     pairs = build_image_pairs(args.dataset_root, args.split)
 
@@ -257,6 +347,104 @@ def run_tokenization(args):
             skipped += 1
             continue
 
+# ========================= VISUALIZATION =========================
+
+def save_tokenization_viz(img: np.ndarray, masks: list, cvs: torch.Tensor, output_path: str):
+    """
+    Saves a visualization of the tokenized regions.
+    Each region is colored by its Coefficient of Variation (CV).
+    """
+    plt.figure(figsize=(10, 10))
+    plt.imshow(img)
+    
+    # Create colormap for CV (normalized 0.0 to 1.0)
+    cv_np = cvs.cpu().numpy()
+    norm = plt.Normalize(vmin=0, vmax=1.0)
+    cmap = cm.get_cmap("jet")
+    
+    combined_mask = np.zeros((img.shape[0], img.shape[1], 4))
+    
+    for i, mask in enumerate(masks):
+        m = mask["segmentation"] if isinstance(mask, dict) else mask
+            
+        color = cmap(norm(cv_np[i]))
+        combined_mask[m] = color
+        combined_mask[m, 3] = 0.5  # Alpha
+        
+        # Add index text at centroid
+        coords = np.argwhere(m)
+        if len(coords) > 0:
+            y_c, x_c = coords.mean(axis=0)
+            plt.text(x_c, y_c, str(i), color="white", fontsize=6, ha="center", va="center")
+
+    plt.imshow(combined_mask)
+    plt.title(f"Tokenization Preview (Color by CV: Blue=Clean, Red=Noisy)\nOutput: {Path(output_path).name}")
+    plt.axis("off")
+    plt.savefig(output_path, bbox_inches="tight", dpi=150)
+    plt.close()
+
+
+def run_tokenization(args):
+    """Main execution logic for Stage 2."""
+    device = torch.device("cpu" if args.cpu or not torch.cuda.is_available() else "cuda")
+    log.info(f"Using device: {device}")
+
+    # Build pairs
+    pairs = build_image_pairs(args.dataset_root, args.split)
+
+    # Output directory
+    root = Path(args.dataset_root)
+    split_str = f"_{args.split}" if args.split != "train" else ""
+    tok_t1_dir = root / f"tokens_T1{split_str}"
+    tok_t2_dir = root / f"tokens_T2{split_str}"
+    tok_t1_dir.mkdir(parents=True, exist_ok=True)
+    tok_t2_dir.mkdir(parents=True, exist_ok=True)
+    
+    viz_dir = root / "visualizations" / "stage2"
+    if args.visualize:
+        viz_dir.mkdir(parents=True, exist_ok=True)
+
+    # Init SAM2 AMGs for different densities
+    # (points_per_side, stability_thresh, etc.)
+    # We maintain a dict of AMGs to avoid re-initializing if density changes
+    amgs = {}
+    pps_options = [16, 32, 64] # Core options for auto-tuning
+    
+    sam2_checkpoint = os.path.join(SAM2_REPO, args.sam2_ckpt)
+    model_cfg = args.sam2_config
+    sam2_model = build_sam2(model_cfg, sam2_checkpoint, device=device)
+
+    for pps in pps_options:
+        amgs[pps] = SAM2AutomaticMaskGenerator(
+            model=sam2_model,
+            points_per_side=pps,
+            pred_iou_thresh=args.pred_iou_thresh,
+            stability_score_thresh=args.stability_thresh,
+            min_mask_region_area=args.min_mask_area,
+        )
+
+    # Default AMG if auto-tuning results in something else
+    if args.points_per_side not in amgs:
+        amgs[args.points_per_side] = SAM2AutomaticMaskGenerator(
+            model=sam2_model,
+            points_per_side=args.points_per_side,
+            pred_iou_thresh=args.pred_iou_thresh,
+            stability_score_thresh=args.stability_thresh,
+            min_mask_region_area=args.min_mask_area,
+        )
+
+    skipped = 0
+    errors = 0
+    total_tokens = 0
+
+    for i, (stem, path_t1, path_t2, emb_t1_path, emb_t2_path) in enumerate(tqdm(pairs, desc=f"Stage 2 ({args.split})")):
+        out_t1 = tok_t1_dir / f"{stem}.pt"
+        out_t2 = tok_t2_dir / f"{stem}.pt"
+
+        if out_t1.exists() and out_t2.exists():
+            skipped += 1
+            continue
+
         try:
             # --- Load images ---
             img_t1 = np.array(Image.open(path_t1).convert("RGB"))
@@ -266,21 +454,43 @@ def run_tokenization(args):
             emb_t1 = torch.load(emb_t1_path, weights_only=True).to(device)
             emb_t2 = torch.load(emb_t2_path, weights_only=True).to(device)
 
+            # Auto-tune AMG based on NN-nRoC
+            pps_t1 = dynamic_points_per_side(img_t1, args.points_per_side)
+            pps_t2 = dynamic_points_per_side(img_t2, args.points_per_side)
+            amg_t1 = amgs[pps_t1]
+            amg_t2 = amgs[pps_t2]
+
             # --- Generate masks for both time steps ---
-            masks_t1 = amg.generate(img_t1)
-            masks_t2 = amg.generate(img_t2)
+            masks_t1 = amg_t1.generate(img_t1)
+            masks_t2 = amg_t2.generate(img_t2)
 
             # --- Tokenize ---
+            tokenize_image.save_masks = args.save_masks or args.visualize
             result_t1 = tokenize_image(masks_t1, emb_t1)
             result_t2 = tokenize_image(masks_t2, emb_t2)
+            
+            # --- Apply MAD Outlier Removal ---
+            result_t1 = remove_outliers_mad(result_t1)
+            result_t2 = remove_outliers_mad(result_t2)
 
             # Move to CPU before saving
-            result_t1 = {k: v.cpu() for k, v in result_t1.items()}
-            result_t2 = {k: v.cpu() for k, v in result_t2.items()}
+            result_t1_cpu = {k: v.cpu() if torch.is_tensor(v) else v for k, v in result_t1.items()}
+            result_t2_cpu = {k: v.cpu() if torch.is_tensor(v) else v for k, v in result_t2.items()}
 
             # --- Save ---
-            torch.save(result_t1, out_t1)
-            torch.save(result_t2, out_t2)
+            # Remove masks from save dict if not explicitly asked (to save space)
+            if not args.save_masks:
+                if "masks" in result_t1_cpu: del result_t1_cpu["masks"]
+                if "masks" in result_t2_cpu: del result_t2_cpu["masks"]
+
+            torch.save(result_t1_cpu, out_t1)
+            torch.save(result_t2_cpu, out_t2)
+
+            # --- Visualization ---
+            if args.visualize and i < args.num_vis:
+                if "masks" in result_t1:
+                    save_tokenization_viz(img_t1, result_t1["masks"], result_t1["cvs"], str(viz_dir / f"{stem}_T1_viz.png"))
+                    save_tokenization_viz(img_t2, result_t2["masks"], result_t2["cvs"], str(viz_dir / f"{stem}_T2_viz.png"))
 
             total_tokens += result_t1["tokens"].shape[0] + result_t2["tokens"].shape[0]
 
@@ -316,7 +526,7 @@ def parse_args():
     )
     parser.add_argument(
         "--dataset_root", type=str,
-        default="/home/chung/RS/phase1/SECOND",
+        default="SECOND",
         help="Path to SECOND dataset root",
     )
     parser.add_argument(
@@ -342,6 +552,10 @@ def parse_args():
                         help="Minimum mask stability score")
     parser.add_argument("--min_mask_area", type=int, default=256,
                         help="Minimum mask area in pixels (default=256 = 0.1% of 512x512)")
+    parser.add_argument("--save_masks", action="store_true",
+                        help="Save full binary masks in tokens for diagnostics (takes more space)")
+    parser.add_argument("--visualize", action="store_true", help="Save sample PNG visualizations")
+    parser.add_argument("--num_vis", type=int, default=5, help="Number of samples to visualize")
     parser.add_argument("--cpu", action="store_true", help="Force CPU")
     return parser.parse_args()
 

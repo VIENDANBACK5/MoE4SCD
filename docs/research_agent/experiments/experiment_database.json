@@ -1,0 +1,234 @@
+{
+  "runs": [
+    {
+      "run_name": "stage4",
+      "config": {
+        "token_dim": 256,
+        "hidden_dim": 384,
+        "pos_mlp_hidden": 64,
+        "area_mlp_hidden": 64,
+        "dropout": 0.1,
+        "num_layers": 4,
+        "num_heads": 8,
+        "ff_dim": 1536,
+        "delta_loss_weight": 0.2,
+        "proxy_delta_threshold": 9.56
+      },
+      "best_epoch_metrics": {
+        "epoch": 27,
+        "train_loss": 0.783122,
+        "val_loss": 0.770009,
+        "val_change": 0.693712,
+        "val_delta": 0.381488,
+        "val_f1": 0.0,
+        "val_iou": 0.0,
+        "lr": "1.22e-05",
+        "time_s": 13.92
+      },
+      "total_epochs": 30
+    },
+    {
+      "run_name": "stage4B",
+      "config": {
+        "token_dim": 256,
+        "hidden_dim": 384,
+        "pos_mlp_hidden": 64,
+        "area_mlp_hidden": 64,
+        "dropout": 0.1,
+        "num_layers": 4,
+        "num_heads": 8,
+        "ff_dim": 1536,
+        "delta_loss_weight": 0.2,
+        "proxy_delta_threshold": 9.56,
+        "graph_k": 6,
+        "graph_layers": 2,
+        "graph_dropout": 0.1,
+        "graph_residual": true
+      },
+      "best_epoch_metrics": {
+        "epoch": 20,
+        "train_loss": 0.833822,
+        "val_loss": 0.90388,
+        "val_change": 0.790203,
+        "val_delta": 0.568384,
+        "val_f1": 0.0,
+        "val_iou": 0.0,
+        "lr": "3.25e-05",
+        "time_s": 14.64
+      },
+      "total_epochs": 30
+    },
+    {
+      "run_name": "stage4B_v2",
+      "config": {
+        "token_dim": 256,
+        "hidden_dim": 384,
+        "pos_mlp_hidden": 64,
+        "area_mlp_hidden": 64,
+        "dropout": 0.1,
+        "num_layers": 4,
+        "num_heads": 8,
+        "ff_dim": 1536,
+        "delta_loss_weight": 0.2,
+        "proxy_delta_threshold": 9.56,
+        "graph_k": 6,
+        "graph_layers": 2,
+        "graph_dropout": 0.2,
+        "graph_residual": true,
+        "alpha_spatial": 0.6,
+        "beta_semantic": 0.4,
+        "gamma_cross": 1.2
+      },
+      "best_epoch_metrics": {
+        "epoch": 29,
+        "train_loss": 0.900144,
+        "val_loss": 0.904321,
+        "val_change": 0.786358,
+        "val_delta": 0.589815,
+        "val_f1": 0.0,
+        "val_iou": 0.0,
+        "lr": "1.02e-05",
+        "time_s": 15.45
+      },
+      "total_epochs": 30
+    },
+    {
+      "run_name": "stage4C",
+      "config": {
+        "token_dim": 256,
+        "hidden_dim": 384,
+        "pos_mlp_hidden": 64,
+        "area_mlp_hidden": 64,
+        "dropout": 0.1,
+        "num_layers": 4,
+        "num_heads": 8,
+        "ff_dim": 1536,
+        "delta_loss_weight": 0.2,
+        "proxy_delta_threshold": 9.56,
+        "graph_k": 6,
+        "graph_layers": 2,
+        "graph_dropout": 0.2,
+        "graph_residual": true,
+        "alpha_spatial": 0.6,
+        "beta_semantic": 0.4,
+        "gamma_cross": 1.2,
+        "moe_num_experts": 4,
+        "moe_expert_dim": 512,
+        "lambda_balance": 0.01,
+        "lambda_entropy": 0.001
+      },
+      "best_epoch_metrics": {
+        "epoch": 25,
+        "train_loss": 0.884545,
+        "val_loss": 0.912031,
+        "val_change": 0.786779,
+        "val_delta": 0.573664,
+        "val_f1": 0.0,
+        "val_iou": 0.0,
+        "lr": "1.60e-05",
+        "time_s": 15.78,
+        "expert_fracs": [
+          0.4954,
+          0.1628,
+          0.1679,
+          0.1739
+        ]
+      },
+      "total_epochs": 30
+    },
+    {
+      "run_name": "stage5_6_dynamic",
+      "config": {
+        "token_dim": 256,
+        "hidden_dim": 384,
+        "pos_mlp_hidden": 64,
+        "area_mlp_hidden": 64,
+        "dropout": 0.1,
+        "num_layers": 4,
+        "num_heads": 8,
+        "ff_dim": 1536,
+        "delta_loss_weight": 0.2,
+        "proxy_delta_threshold": 9.56,
+        "graph_k": 6,
+        "graph_layers": 2,
+        "graph_dropout": 0.2,
+        "graph_residual": true,
+        "alpha_spatial": 0.6,
+        "beta_semantic": 0.4,
+        "gamma_cross": 1.2,
+        "moe_num_experts": 4,
+        "moe_expert_dim": 512,
+        "lambda_balance": 0.01,
+        "lambda_entropy": 0.001,
+        "router_version": "v1",
+        "expert_dropout_prob": 0.0,
+        "use_top2": false
+      },
+      "best_epoch_metrics": {
+        "epoch": 26,
+        "train_loss": 0.819963,
+        "val_loss": 0.899862,
+        "val_change": 0.78794,
+        "val_delta": 0.507055,
+        "val_f1": 0.562485,
+        "val_iou": 0.39129,
+        "lr": "6.44e-05",
+        "time_s": 15.89,
+        "expert_fracs": [
+          0.4939,
+          0.1645,
+          0.1686,
+          0.1731
+        ]
+      },
+      "total_epochs": 57
+    },
+    {
+      "run_name": "stage5_6_semantic",
+      "config": {
+        "token_dim": 256,
+        "hidden_dim": 384,
+        "pos_mlp_hidden": 64,
+        "area_mlp_hidden": 64,
+        "dropout": 0.1,
+        "num_layers": 4,
+        "num_heads": 8,
+        "ff_dim": 1536,
+        "delta_loss_weight": 0.2,
+        "proxy_delta_threshold": 9.56,
+        "graph_k": 6,
+        "graph_layers": 2,
+        "graph_dropout": 0.2,
+        "graph_residual": true,
+        "alpha_spatial": 0.6,
+        "beta_semantic": 0.4,
+        "gamma_cross": 1.2,
+        "moe_num_experts": 4,
+        "moe_expert_dim": 512,
+        "lambda_balance": 0.01,
+        "lambda_entropy": 0.001,
+        "router_version": "v3",
+        "expert_dropout_prob": 0.0,
+        "use_top2": false
+      },
+      "best_epoch_metrics": {
+        "epoch": 21,
+        "train_loss": 0.905257,
+        "val_loss": 0.959612,
+        "val_change": 0.829357,
+        "val_delta": 0.59863,
+        "val_f1": 0.555114,
+        "val_iou": 0.384193,
+        "lr": "7.54e-05",
+        "time_s": 20.92,
+        "expert_fracs": [
+          0.4958,
+          0.1677,
+          0.1629,
+          0.1736
+        ]
+      },
+      "total_epochs": 60
+    }
+  ]
+}

@@ -108,6 +108,7 @@ class MatchConfig:
     # thresholds
     hungarian_threshold: float = 0.2   # minimum score to keep a match
     softmax_temp: float = 0.1
+    gamma_cv: float = 0.1              # penalty weight for CV noise
 
     # split / merge
     split_area_ratio: float = 0.6
@@ -186,6 +187,14 @@ class TokenMatcher:
         cen2 = data_t2["centroids"].to(dev, dtype=torch.float32)     # [N2, 2]
         are1 = data_t1["areas"].to(dev, dtype=torch.float32)         # [N1]
         are2 = data_t2["areas"].to(dev, dtype=torch.float32)         # [N2]
+        
+        cv1 = data_t1.get("cvs", None)
+        if cv1 is not None:
+            cv1 = cv1.to(dev, dtype=torch.float32)
+            
+        cv2 = data_t2.get("cvs", None)
+        if cv2 is not None:
+            cv2 = cv2.to(dev, dtype=torch.float32)
 
         N1, N2 = tok1.shape[0], tok2.shape[0]
 
@@ -199,6 +208,9 @@ class TokenMatcher:
             alpha=cfg.alpha_cos,
             beta=cfg.beta_geo,
             spatial_gate_dist=cfg.spatial_gate_dist,
+            cv_t1=cv1,
+            cv_t2=cv2,
+            gamma_cv=getattr(cfg, "gamma_cv", 0.1),
         )
 
         # ── Dispatch to matching method

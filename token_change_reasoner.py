@@ -49,6 +49,10 @@ class ReasonerConfig:
     # used when GT labels are not provided
     proxy_delta_threshold: float = 9.56
 
+    # Quality weighting (Inverse noise weighting)
+    # loss = loss * exp(-alpha_cv * CV)
+    alpha_cv: float = 1.0
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helper: small MLP
@@ -306,6 +310,9 @@ class SampleData:
     areas_t2: torch.Tensor     # [N2]
     # Stage 3 match output: [[i, j, score], ...]  already as tensor [M_pairs, 3]
     match_pairs: torch.Tensor
+    # Optional stage 2 CV extracted features
+    cvs_t1: Optional[torch.Tensor] = None
+    cvs_t2: Optional[torch.Tensor] = None
     # Optional: per-token change labels  [N1+N2]  float 0/1
     # Pass None to use proxy labels derived from delta_norm
     change_labels: Optional[torch.Tensor] = None
@@ -373,6 +380,12 @@ def build_batch(
     else:
         semantic_labels_pad = None
 
+    has_cvs = any(s.cvs_t1 is not None for s in samples)
+    if has_cvs:
+        cvs_pad = torch.zeros(B, N_max)
+    else:
+        cvs_pad = None
+
     # ── 3. Pair lists ──────────────────────────────────────────────────────
     pair_b_list: List[int] = []
     pair_i_list: List[int] = []
@@ -405,6 +418,11 @@ def build_batch(
 
         # -- Padding mask  (False = valid)
         padding_mask[b, :n] = False
+
+        # -- CVs
+        if has_cvs and s.cvs_t1 is not None and s.cvs_t2 is not None:
+            cvs_pad[b, :n1] = s.cvs_t1.float()
+            cvs_pad[b, n1:n] = s.cvs_t2.float()
 
         # -- Semantic labels
         if has_semantic and s.semantic_labels is not None:
@@ -456,6 +474,8 @@ def build_batch(
     }
     if has_semantic:
         batch["semantic_labels_pad"] = semantic_labels_pad.to(device)
+    if has_cvs:
+        batch["cvs_pad"] = cvs_pad.to(device)
     
     return batch
 
@@ -491,16 +511,41 @@ def compute_loss(
     pos_weight = torch.tensor(
         [(1 - pos_frac) / pos_frac], device=change_logits.device
     )
-    change_loss = F.binary_cross_entropy_with_logits(
-        logits_valid, labels_valid, pos_weight=pos_weight
+    
+    # ── Quality Weighting (CV) ─────────────────────────────────────────────
+    # quality_weight = exp(-alpha * CV). If CVs are not loaded, use 1.0
+    alpha_cv = cfg.alpha_cv
+    if "cvs_pad" in batch:
+        cvs_valid = batch["cvs_pad"][valid]
+        quality_weight = torch.exp(-alpha_cv * cvs_valid)
+    else:
+        quality_weight = torch.ones_like(logits_valid)
+        
+    # Unreduced loss
+    bce_loss = F.binary_cross_entropy_with_logits(
+        logits_valid, labels_valid, pos_weight=pos_weight, reduction="none"
     )
+    change_loss = (bce_loss * quality_weight).mean()
 
     # ── Delta loss ─────────────────────────────────────────────────────────
     delta_pred   = outputs["delta_pred"]    # [M]
     delta_target = outputs["delta_target"]  # [M]
 
     if len(delta_pred) > 0:
-        delta_loss = F.mse_loss(delta_pred, delta_target)
+        if "cvs_pad" in batch:
+            pair_b = batch["pair_b"]
+            pair_i = batch["pair_i"]
+            pair_j = batch["pair_j"]
+            cv_i = batch["cvs_pad"][pair_b, pair_i]
+            cv_j = batch["cvs_pad"][pair_b, pair_j]
+            # Average CV of the matched pair
+            pair_cv = (cv_i + cv_j) / 2.0
+            pair_weight = torch.exp(-alpha_cv * pair_cv)
+        else:
+            pair_weight = torch.ones_like(delta_pred)
+            
+        mse = F.mse_loss(delta_pred, delta_target, reduction="none")
+        delta_loss = (mse * pair_weight).mean()
     else:
         delta_loss = torch.tensor(0.0, device=change_loss.device)
 

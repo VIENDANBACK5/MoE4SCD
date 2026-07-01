@@ -1,6 +1,6 @@
 # Project Summary: Token-based Semantic Change Detection with Mixture of Experts (MoE)
 
-**Last updated:** 2026-03-12
+**Last updated:** 2026-04-24
 
 ---
 
@@ -52,7 +52,6 @@ Stage 4+: Token Change Reasoner (Transformer + GNN + MoE)
   Output: SECOND/stage4/, stage4B/, stage4B_v2/, stage4C/,
           stage5_6_dynamic/, stage5_6_semantic/
 ```
-
 **Full current architecture:**
 ```
 Tokens (T1+T2) → TokenEncoder (Linear + time_embed + pos_mlp + area_mlp)
@@ -228,3 +227,143 @@ Results from `stage5/diversity/dynamic/`:
 3. **Test set evaluation**: Run `best_model.pt` of `stage5_6_semantic` on the 1,694 test pairs.
 4. **Expert capacity tuning**: Increase `expert_dim` (currently 512) or use more experts for rare classes.
 5. **Phase 2**: Use extracted embeddings/tokens for a downstream pixel-level decoder (e.g., UperNet or Mask2Former head).
+
+---
+
+## 11. High-Fidelity Preprocessing & Noise Robustness (Inspiration: Paper 2021)
+
+To address the inherent noise in zero-shot segmentation (SAM2) and the variability of remote sensing textures, we integrated several "Quality-Weighted" mechanisms. These features aim to stabilize the token set before it enters the reasoning stage.
+
+### A. Dynamic Auto-Tuning (NN-nRoC)
+Instead of a fixed grid, we dynamically select the SAM2 `points_per_side` ($PPS$) based on image complexity.
+- **Metric:** Nearest Neighbor normalized Rate of Change (NN-nRoC).
+- **Formula:** $PPS = 16$ if $NN\_nRoC < 10$, $32$ if $10 \le NN\_nRoC < 25$, $64$ otherwise.
+- **Why?**: Large homogeneous areas (water, soil) produce thousands of redundant tokens at high $PPS$, while dense urban areas (iSAID vehicles) miss small objects at low $PPS$. NN-nRoC acts as a "complexity-aware" density controller.
+
+### B. Parameter-Free Outlier Removal (MAD)
+Applied in Stage 2 to prune noisy or structurally insignificant tokens.
+- **Method:** Median Absolute Deviation (MAD) filtering on Area and CV.
+- **Criterion:** Keep token $i$ if $|Area_i - \text{med}(Area)| < 3.5 \cdot \text{MAD}(Area)$.
+- **Why?**: Prevents "dust" tokens (tiny masks from SAM2 noise) from consuming computation and generating false matching pairs.
+
+### C. Quality-Weighted Loss Integration
+Gradient updates are scaled by token reliability.
+- **Token Reliability:** $w_i = \exp(-\alpha \cdot CV_i)$, where $CV = \sigma/\mu$.
+- **Why?**: Tokens with high $CV$ (Coefficient of Variation) are usually blurry, poorly segmented, or represent transition zones (shadows). We penalize their influence during training to favor stable, well-defined objects.
+
+### D. Inverse Noise Weighting for Bipartite Matching
+The Cost Matrix for Hungarian matching now penalizes "noisy" pairings.
+- **Formula:** $S'_{ij} = \alpha S_{cos} + \beta S_{geo} - \gamma (CV_i + CV_j)$.
+- **Why?**: Improves the stability of the bipartite graph. Matches between two low-quality (high-CV) tokens are discouraged, preventing the reasoner from learning patterns on noise.
+
+---
+
+## 12. Expanded Multi-Dataset Ingestion
+
+| Dataset | Key Feature | Status |
+|---------|-------------|--------|
+| **SECOND** | 7 classes, 512x512 | Fully Processed |
+| **iSAID** | Instance-level masks, Small objects | Ingested (Tiling active) |
+| **WHU Bldg** | High-res building footprints | Ingested |
+
+**Preprocessing Strategy:** Due to the extreme resolution of iSAID/WHU, we implementation a **Dynamic Tiling** module that crops large mosaics into 512x512 patches, filtering for patches with $>5\%$ non-background content to optimize compute.
+
+---
+
+## 13. Hierarchical Graph Reasoning & Multiscale Fusion (MOB-GCN 2025 & Phuong D. Dao HSI)
+
+The integration of concepts from **MOB-GCN (2025)** and **Phuong D. Dao's Multiscale HSI Analysis** transforms the change reasoner from a flat token encoder into a hierarchical reasoning system capable of dynamic spatial-spectral abstraction.
+
+### A. MiddlePool: Gumbel-Softmax Differentiable Assignment (MOB-GCN 2025)
+Instead of hard-coded spatial pooling or heuristic clustering, we aggregate local tokens $X \in \mathbb{R}^{N \times H}$ into $C$ global "Super-Tokens" (Clusters) using a learnable, differentiable assignment matrix $S \in \mathbb{R}^{N \times C}$:
+$$S_{ij} = \frac{\exp\left( (\Phi(X_i)_j + G_{ij}) / \tau \right)}{\sum_{k=1}^C \exp\left( (\Phi(X_i)_k + G_{ik}) / \tau \right)}$$
+where:
+*   $\Phi(X_i) \in \mathbb{R}^C$ is a projection MLP parameterized by weights $\mathbf{W}_{\Phi}$.
+*   $G_{ij} \sim \text{Gumbel}(0, 1)$ represents i.i.d. Gumbel noise, enabling stochastic, differentiable sampling during training.
+*   $\tau$ is the annealing temperature parameter controlling the sharpness of the distribution (as $\tau \to 0$, $S_{ij}$ becomes a one-hot indicator).
+
+**Why it was added / Rationale:**
+Standard Graph Convolutional Networks (GCNs) suffer from **oversmoothing** (loss of feature diversity as graph depth increases) and struggle with long-range dependencies. By grouping local, fine-grained tokens (e.g., individual houses or cars) into a Super-Token (e.g., a residential block or parking lot), the model can perform high-level environmental reasoning. MiddlePool preserves spatial and semantic gradients end-to-end.
+
+---
+
+### B. Multiresolution Graph Network (MGN) (MOB-GCN 2025)
+We build a dual-path graph reasoning network that operates simultaneously on the local token graph and the coarsened global cluster graph:
+1.  **Local Adjacency:** $A_{local} \in \mathbb{R}^{N \times N}$, constructed as a spatial-spectral $k$-NN graph.
+2.  **Coarsened Global Adjacency:**
+    $$A_{global} = S^T A_{local} S \in \mathbb{R}^{C \times C}$$
+    representing the structural relationships between the Super-Tokens.
+3.  **Global Cluster GCN:**
+    $$X_{global} = \text{ReLU}\left( A_{global} (S^T X) \mathbf{W}_{global} \right) \in \mathbb{R}^{C \times H}$$
+4.  **Feedback / Contextual Broadcast:**
+    $$X_{context} = S X_{global} \in \mathbb{R}^{N \times H}$$
+    where cluster-level global context is broadcasted back to the local node level.
+
+**Why it was added / Rationale:**
+Remote sensing objects have multi-scale spatial arrangements. A building's change is not an isolated event; it depends on its surrounding land-cover context. Processing local edge transitions alongside global coarsened cluster context allows the network to have a "Dual-Eye" perspective, resolving local pixel-shifting noise while maintaining regional contextual integrity.
+
+---
+
+### C. Hybrid Spatial-Spectral Edge Weights (Phuong D. Dao HSI)
+To capture both physical adjacency and spectral/embedding coherence, we construct edge weights $W_{ij}$ for the local $k$-NN graph using a hybrid spatial-spectral formulation:
+$$W_{ij} = \exp\left( - \left( \alpha \frac{d(c_i, c_j)^2}{\sigma_s^2} + \beta \frac{\|x_i - x_j\|_2^2}{\sigma_f^2} \right) \right) \cdot \mathbb{I}\left( (i,j) \in \mathcal{E}_{spatial} \right)$$
+where:
+*   $c_i, c_j$ are 2D spatial centroids of the tokens.
+*   $x_i, x_j$ are the latent embedding vectors.
+*   $\sigma_s^2$ and $\sigma_f^2$ are variance normalizers.
+*   $\alpha$ and $\beta$ control the relative influence of spatial proximity vs. spectral similarity.
+
+**Why it was added / Rationale:**
+In remote sensing, physical proximity does not guarantee semantic category membership (e.g., a building next to water). By incorporating spectral (embedding) similarity directly into the edge weight $W_{ij}$, we enforce **edge-preserving smoothing**. This prevents noisy, high-frequency boundary tokens from contaminating stable neighboring classes during graph message passing.
+
+---
+
+### D. Multiscale Residual Feature Fusion (Phuong D. Dao HSI)
+Instead of standard additive residual connections, the local node representations $H_{local}$ and the global broadcasted cluster representations $H_{context}$ are fused via a learnable Multiscale Fusion MLP:
+$$H_{fused} = \text{MLP}\left( \left[ H_{local} \,\|\, H_{context} \right] \right) \in \mathbb{R}^{N \times H}$$
+where $\|$ denotes concatenation.
+
+**Why it was added / Rationale:**
+Simply summing features causes high-frequency spatial details (edges, micro-structures) to be overshadowed by low-frequency global semantics. Concatenating and applying a non-linear fusion layer allows the network to learn a dynamic gating function, deciding exactly how much local structure vs. global context is required to identify a semantic change.
+
+---
+
+### E. Smoothness Regularization ($\mathcal{L}_{smooth}$) (MOB-GCN 2025)
+To ensure spatial and semantic consistency across adjacent regions, we append a Smoothness Regularization term to the training objective:
+$$\mathcal{L}_{smooth} = \frac{1}{|\mathcal{E}|} \sum_{(i,j) \in \mathcal{E}} W_{ij} \left( \hat{y}_i - \hat{y}_j \right)^2$$
+where $\hat{y}_i, \hat{y}_j$ are the predicted change probabilities of adjacent nodes.
+
+**Why it was added / Rationale:**
+Unregularized token reasoners suffer from "checkerboard noise," where adjacent segments of a single building or field are assigned opposite change classifications. $\mathcal{L}_{smooth}$ acts as a spatial regularizer, encouraging contiguous geographical regions to shift uniformly, aligning model predictions with real-world geographical continuity.
+
+---
+
+### F. Context-Aware routing (MoE v2/v3)
+The MoE routing decision is conditioned on the concatenated local-global multiscale representation:
+$$g(x_i) = \text{Softmax}\left( \text{Gate}\left( \left[ x_{local, i} \,\|\, \sum_c S_{ic} x_{pool,c} \right] \right) \right)$$
+
+**Why it was added / Rationale:**
+Standard routers suffer from **Expert Saturation**, where experts specialize solely on low-level feature norms. Providing global context directly to the routing function allows experts to specialize around high-level environmental domains (e.g., "Forestry Expert" vs. "Urban Expert").
+
+## 14. Master Pipeline & Auto-tuning (Stage 2.5)
+We introduced `run_stage2_autotune.py` to solve the "optimal density" problem. Instead of guessing the number of SAM2 points, we now sweep multiple configurations and pick the one that optimizes the **Pareto Front** of Over-segmentation (OS) vs. Under-segmentation (US).
+
+**Key Metrics for Defense:**
+- **OS (Over-segmentation):** Lower is better. High OS means objects are fragmented.
+- **US (Under-segmentation):** CRITICAL. High US means small objects (like iSAID targets) are merged with background.
+- **ED (Edge Displacement):** Measured as Mean matched IoU. Higher is better.
+
+## 15. Quality-Weighted Training (Stage 4)
+We implemented **Inverse Noise Weighting** directly into the loss function:
+$$\mathcal{L}_{total} = \sum w_i \cdot \text{BCE}(\hat{y}_i, y_i)$$
+where $w_i = \exp(-\alpha \cdot \text{CV}_i)$. 
+This ensures that tokens with high uncertainty (noisy SAM2 masks) contribute less to the gradient, making the model robust to pre-processing errors.
+
+---
+**Current Status:** End-to-end pipeline is READY for iSAID/WHU.
+1. `preprocess_isaid.py` → Tiling
+2. `extract_sam2_features.py` → Embeddings
+3. `run_stage2_autotune.py` → Optimal Tokenization
+4. `tokenize_regions.py` → Tokens
+5. `token_matching.py` → Pairs
+6. `train_reasoner.py --model_type hierarchical` → MOB-GCN Reasoning
