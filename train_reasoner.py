@@ -79,6 +79,28 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
+# ── SECOND RGB → class mapping (mirrors SECOND-OC/config.py) ─────────────────
+# Class 7 "other/farmland" is remapped to 0 (background) — rare & not evaluated.
+_SECOND_RGB_TO_CLASS: Dict[tuple, int] = {
+    (0,   0,   0):   0,
+    (0,   128, 0):   1,
+    (128, 0,   0):   2,
+    (0,   0,   255): 3,
+    (128, 128, 128): 4,
+    (255, 255, 255): 5,
+    (0,   255, 0):   6,
+    (255, 0,   0):   0,   # other → background
+}
+
+
+def _centroid_class(label_rgb: "np.ndarray", cx: float, cy: float) -> int:
+    """Sample class ID at normalised centroid (cx, cy) from an RGB label image."""
+    H, W = label_rgb.shape[:2]
+    px = max(0, min(int(round(cx * (W - 1))), W - 1))
+    py = max(0, min(int(round(cy * (H - 1))), H - 1))
+    rgb = tuple(label_rgb[py, px].tolist())
+    return _SECOND_RGB_TO_CLASS.get(rgb, 0)
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Dataset
@@ -104,14 +126,16 @@ class MatchDataset(Dataset):
         match_dir: Path,
         labels_dir: Optional[Path] = None,
         semantic_dir: Optional[Path] = None,
+        semantic_dir_t2: Optional[Path] = None,
         max_samples: Optional[int] = None,
         seed: int = 42,
     ):
-        self.t1_dir    = t1_dir
-        self.t2_dir    = t2_dir
-        self.match_dir = match_dir
-        self.labels_dir = labels_dir
-        self.semantic_dir = semantic_dir
+        self.t1_dir          = t1_dir
+        self.t2_dir          = t2_dir
+        self.match_dir       = match_dir
+        self.labels_dir      = labels_dir
+        self.semantic_dir    = semantic_dir      # T1 label dir
+        self.semantic_dir_t2 = semantic_dir_t2  # T2 label dir (separate)
 
 
         # Collect valid stems
@@ -155,44 +179,30 @@ class MatchDataset(Dataset):
             if lp.exists():
                 labels = torch.load(lp, weights_only=True).float()
 
-        # ── Semantic labels ────────────────────────────
+        # ── Semantic labels (T1 + T2 concatenated) ────────────────────────
+        # Layout mirrors token sequence: [T1 labels (N1), T2 labels (N2)].
+        # Uses proper RGB→class lookup for SECOND (not grayscale approximation).
         semantic_labels = None
         if self.semantic_dir is not None:
-            sp = self.semantic_dir / f"{stem}.png"
-            if sp.exists():
-                import numpy as np
-                from PIL import Image
-                
-                # Load PIL image, ensure mode L or P
-                lbl_pil = Image.open(sp)
-                if lbl_pil.mode not in ("L", "P"):
-                    lbl_pil = lbl_pil.convert("L")
-                lbl_img = np.array(lbl_pil)
-                img_h, img_w = lbl_img.shape[:2]
-                
-                # Extract values for T1 + T2 centroids
+            import numpy as np
+            from PIL import Image
+
+            sp1 = self.semantic_dir / f"{stem}.png"
+            sp2 = (self.semantic_dir_t2 / f"{stem}.png"
+                   if self.semantic_dir_t2 is not None else sp1)
+
+            if sp1.exists():
+                lab_t1_rgb = np.array(Image.open(sp1).convert("RGB"))
+                lab_t2_rgb = (np.array(Image.open(sp2).convert("RGB"))
+                              if sp2.exists() else lab_t1_rgb)
+
                 c1 = t1["centroids"].numpy()
                 c2 = t2["centroids"].numpy()
-                c_all = np.concatenate([c1, c2], axis=0) # [N1+N2, 2]
-                
-                sem_list = []
-                for cx, cy in c_all:
-                    px = max(0, min(int(round(cx * (img_w - 1))), img_w - 1))
-                    py = max(0, min(int(round(cy * (img_h - 1))), img_h - 1))
-                    val = lbl_img[py, px]
-                    
-                    if isinstance(val, (np.ndarray, list)) and len(val) > 1:
-                        raw_val = float(val[0])
-                    else:
-                        raw_val = float(val)
-                    
-                    # Map 0-255 intensity to 0-6 class index
-                    cls = int(round(raw_val / 255.0 * 6))
-                    if cls >= 7:
-                        cls = 0
-                    sem_list.append(cls)
-                
-                semantic_labels = torch.tensor(sem_list, dtype=torch.long)
+
+                sem_t1 = [_centroid_class(lab_t1_rgb, cx, cy) for cx, cy in c1]
+                sem_t2 = [_centroid_class(lab_t2_rgb, cx, cy) for cx, cy in c2]
+
+                semantic_labels = torch.tensor(sem_t1 + sem_t2, dtype=torch.long)
 
         return SampleData(
             tokens_t1    = t1["tokens"].float(),
@@ -444,17 +454,19 @@ def train(args):
     log.info(f"Model type: {stage}")
 
     # ── Dataset ────────────────────────────────────────────────────────────
-    labels_dir = Path(args.labels) if args.labels else None
-    semantic_dir = Path(args.semantic_dir) if getattr(args, "semantic_dir", None) else None
-    
+    labels_dir       = Path(args.labels) if args.labels else None
+    semantic_dir     = Path(args.semantic_dir)    if getattr(args, "semantic_dir",    None) else None
+    semantic_dir_t2  = Path(args.semantic_dir_t2) if getattr(args, "semantic_dir_t2", None) else None
+
     dataset = MatchDataset(
-        t1_dir     = Path(args.tokens_T1),
-        t2_dir     = Path(args.tokens_T2),
-        match_dir  = Path(args.matches),
-        labels_dir = labels_dir,
-        semantic_dir=semantic_dir,
-        max_samples= args.n_samples,
-        seed       = args.seed,
+        t1_dir          = Path(args.tokens_T1),
+        t2_dir          = Path(args.tokens_T2),
+        match_dir       = Path(args.matches),
+        labels_dir      = labels_dir,
+        semantic_dir    = semantic_dir,
+        semantic_dir_t2 = semantic_dir_t2,
+        max_samples     = args.n_samples,
+        seed            = args.seed,
     )
 
     val_size  = max(1, int(len(dataset) * args.val_split))
@@ -512,7 +524,7 @@ def train(args):
               "val_total",   "val_change",   "val_delta",
               "val_f1", "val_iou", "lr", "time_s"]
     if use_moe:
-        header += ["train_balance", "train_entropy", "expert_fracs"]
+        header += ["train_balance", "train_entropy", "train_semantic", "expert_fracs"]
     csv_writer.writerow(header)
 
     # ── Training loop ──────────────────────────────────────────────────────
@@ -535,9 +547,11 @@ def train(args):
         # Aux loss logging (MoE only)
         bal_info = ""
         if "balance_loss" in train_losses:
+            sem = train_losses.get("semantic_loss", 0)
             bal_info = (
                 f" bal={train_losses['balance_loss']:.4f}"
                 f" ent={train_losses['entropy_loss']:.4f}"
+                f" sem={sem:.4f}"
             )
 
         log.info(
@@ -569,6 +583,7 @@ def train(args):
             row += [
                 f"{train_losses['balance_loss']:.6f}",
                 f"{train_losses['entropy_loss']:.6f}",
+                f"{train_losses.get('semantic_loss', 0):.6f}",
             ]
         if "expert_fracs" in train_losses:
             row.append("|".join(f"{f:.4f}" for f in train_losses["expert_fracs"]))
@@ -613,7 +628,9 @@ def parse_args():
     p.add_argument("--labels",     default=None,
                    help="Optional dir with *_labels.pt for GT change labels")
     p.add_argument("--semantic_dir", default=None,
-                   help="Optional dir with Semantic label RGB pngs")
+                   help="T1 GT label dir (RGB .png) for semantic head supervision")
+    p.add_argument("--semantic_dir_t2", default=None,
+                   help="T2 GT label dir (RGB .png); defaults to same as --semantic_dir")
     p.add_argument("--output",     default="SECOND/stage4")
     p.add_argument("--n_samples",  type=int, default=None,
                    help="Limit number of training samples (None = all)")

@@ -93,6 +93,13 @@ class MoEConfig(GraphReasonerConfig):
     # Top-2 routing: weighted sum of two expert outputs per token
     use_top2:             bool  = False
 
+    # ── Stage 5 SCD additions ─────────────────────────────────────────────
+    # Semantic classification heads (makes Token-MoE a full SCD model)
+    # SECOND has 7 classes: 0=background, 1=tree, 2=buildings, 3=water,
+    #                       4=non_veg_ground, 5=playground, 6=low_vegetation
+    num_classes:      int   = 7
+    lambda_semantic:  float = 0.3   # weight for CE semantic loss (T1 + T2)
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Expert FFN
@@ -308,6 +315,16 @@ class TokenChangeReasonerMoE(nn.Module):
         self.change_head   = ChangePredictionHead(cfg)
         self.delta_head    = DeltaHead(cfg)
 
+        # ── Semantic heads (Stage 5 SCD) ─────────────────────────────────
+        # Each head predicts the semantic class of each token independently.
+        # T1 head operates on T1 tokens; T2 head on T2 tokens.
+        # LayerNorm stabilises training — semantic task needs clean features.
+        H = cfg.hidden_dim
+        self.sem_norm_T1   = nn.LayerNorm(H)
+        self.sem_norm_T2   = nn.LayerNorm(H)
+        self.class_head_T1 = nn.Linear(H, cfg.num_classes)
+        self.class_head_T2 = nn.Linear(H, cfg.num_classes)
+
     def forward(self, batch: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
         """
         batch keys (from build_batch):
@@ -385,6 +402,12 @@ class TokenChangeReasonerMoE(nn.Module):
         else:
             delta_pred = torch.zeros(0, device=repr_ctx.device)
 
+        # ── 8. Semantic logits (Stage 5 SCD) ────────────────────────────────
+        # Compute class logits for all positions; caller uses time_ids to
+        # select T1 or T2 positions when computing the semantic CE loss.
+        class_logits_T1 = self.class_head_T1(self.sem_norm_T1(repr_ctx))  # [B, N, C]
+        class_logits_T2 = self.class_head_T2(self.sem_norm_T2(repr_ctx))  # [B, N, C]
+
         return {
             "change_logits":     change_logits,
             "delta_pred":        delta_pred,
@@ -392,6 +415,8 @@ class TokenChangeReasonerMoE(nn.Module):
             "balance_loss":      balance_loss,
             "entropy_loss":      entropy_loss,
             "tokens_per_expert": tokens_per_expert,
+            "class_logits_T1":   class_logits_T1,
+            "class_logits_T2":   class_logits_T2,
         }
 
 
@@ -409,9 +434,10 @@ def compute_moe_loss(
         L_total = L_change + λ_delta * L_delta
                 + λ_balance * L_balance
                 + λ_entropy * L_entropy
+                + λ_semantic * (L_sem_T1 + L_sem_T2) / 2   [if labels present]
 
     Returns dict with keys:
-        total_loss, change_loss, delta_loss, balance_loss, entropy_loss
+        total_loss, change_loss, delta_loss, balance_loss, entropy_loss, semantic_loss
     """
     base = compute_loss(outputs, batch, cfg)
 
@@ -422,12 +448,42 @@ def compute_moe_loss(
              + cfg.lambda_balance * balance_loss
              + cfg.lambda_entropy * entropy_loss)
 
+    # ── Semantic CE loss ─────────────────────────────────────────────────────
+    sem_loss = torch.zeros(1, device=total.device).squeeze()
+    sem_labels = batch.get("semantic_labels_pad")
+    if sem_labels is not None and "class_logits_T1" in outputs:
+        time_ids = batch["time_ids_pad"]    # [B, N]  0=T1 1=T2
+        padding  = batch["padding_mask"]    # [B, N]  True=pad
+
+        t1_valid = (~padding) & (time_ids == 0)   # real T1 token positions
+        t2_valid = (~padding) & (time_ids == 1)   # real T2 token positions
+
+        n_terms = 0
+        if t1_valid.any():
+            logits_t1 = outputs["class_logits_T1"][t1_valid]  # [K1, C]
+            labels_t1 = sem_labels[t1_valid]                   # [K1]
+            sem_loss = sem_loss + F.cross_entropy(
+                logits_t1, labels_t1, ignore_index=-1)
+            n_terms += 1
+
+        if t2_valid.any():
+            logits_t2 = outputs["class_logits_T2"][t2_valid]  # [K2, C]
+            labels_t2 = sem_labels[t2_valid]                   # [K2]
+            sem_loss = sem_loss + F.cross_entropy(
+                logits_t2, labels_t2, ignore_index=-1)
+            n_terms += 1
+
+        if n_terms > 0:
+            sem_loss = sem_loss / n_terms
+            total = total + cfg.lambda_semantic * sem_loss
+
     return {
-        "total_loss":   total,
-        "change_loss":  base["change_loss"],
-        "delta_loss":   base["delta_loss"],
-        "balance_loss": balance_loss,
-        "entropy_loss": entropy_loss,
+        "total_loss":    total,
+        "change_loss":   base["change_loss"],
+        "delta_loss":    base["delta_loss"],
+        "balance_loss":  balance_loss,
+        "entropy_loss":  entropy_loss,
+        "semantic_loss": sem_loss,
     }
 
 
