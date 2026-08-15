@@ -1,0 +1,21 @@
+{
+  "n_images_sampled": 200,
+  "intra_cv": {
+    "mean": 0.21675086332109397,
+    "median": 0.18746010214090347,
+    "pct_high_cv": 0.6591546258356696,
+    "interpretation": "BAD: many masks contain multiple spectral classes"
+  },
+  "boundary_purity": {
+    "mean": 0.9584125019544116,
+    "pct_low_purity": 0.057795988785852924,
+    "interpretation": "GOOD: mask boundaries align with GT labels"
+  },
+  "inter_spectral_distance": {
+    "mean": 69.95040990877747,
+    "pct_low_dist": 0.1866872382631695,
+    "interpretation": "GOOD: adjacent masks are spectrally distinct"
+  },
+  "n_bad_masks": 12226,
+  "n_merge_pairs": 10164
+}

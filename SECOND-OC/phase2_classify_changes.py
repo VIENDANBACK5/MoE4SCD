@@ -31,6 +31,9 @@ from config import (
 )
 
 
+BG_CLASSES = {0, 4, 6}  # background, non_veg_ground, low_vegetation
+
+
 def _t2_lookup(mask: np.ndarray, gt_class_T2: np.ndarray) -> tuple[str, int, float]:
     """
     Apply a T1 instance mask to the T2 GT label.
@@ -41,11 +44,12 @@ def _t2_lookup(mask: np.ndarray, gt_class_T2: np.ndarray) -> tuple[str, int, flo
     if total == 0:
         return "ambiguous", 0, 0.0
 
-    bg_ratio = float((t2_pixels == 0).sum()) / total
+    bg_mask = np.isin(t2_pixels, list(BG_CLASSES))
+    bg_ratio = float(bg_mask.sum()) / total
     if bg_ratio > DISAPPEARED_THRESH:
         return "disappeared", 0, bg_ratio
 
-    fg = t2_pixels[t2_pixels != 0]
+    fg = t2_pixels[~bg_mask]
     if len(fg) == 0:
         return "disappeared", 0, bg_ratio
 
@@ -72,6 +76,9 @@ def process_stem(stem: str,
 
     # ── T1 instances → T2 lookup ───────────────────────────────────────────────
     for inst in insts_T1:
+        if inst["class_id"] in BG_CLASSES:
+            continue
+
         mask_path = OUT_ROOT / inst["mask_file"]
         if not mask_path.exists():
             continue
@@ -112,13 +119,17 @@ def process_stem(stem: str,
 
     # ── T2 instances → appeared detection ─────────────────────────────────────
     for inst in insts_T2:
+        if inst["class_id"] in BG_CLASSES:
+            continue
+
         mask_path = OUT_ROOT / inst["mask_file"]
         if not mask_path.exists():
             continue
         mask = np.load(mask_path).astype(bool)
 
         t1_pixels = gt_T1[mask]
-        t1_bg_ratio = float((t1_pixels == 0).sum()) / max(len(t1_pixels), 1)
+        t1_bg_mask = np.isin(t1_pixels, list(BG_CLASSES))
+        t1_bg_ratio = float(t1_bg_mask.sum()) / max(len(t1_pixels), 1)
 
         if t1_bg_ratio > DISAPPEARED_THRESH:
             changes.append({

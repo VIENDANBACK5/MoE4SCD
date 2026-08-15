@@ -99,6 +99,12 @@ class MoEConfig(GraphReasonerConfig):
     #                       4=non_veg_ground, 5=playground, 6=low_vegetation
     num_classes:      int   = 7
     lambda_semantic:  float = 0.3   # weight for CE semantic loss (T1 + T2)
+    lambda_transition: float = 0.0  # weight for joint (class_T1 → class_T2) transition CE
+
+    # ── Spectral features additions ─────────────────────────────────────────
+    use_spectral:      bool  = True
+    spectral_dim:      int   = 24
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -325,6 +331,25 @@ class TokenChangeReasonerMoE(nn.Module):
         self.class_head_T1 = nn.Linear(H, cfg.num_classes)
         self.class_head_T2 = nn.Linear(H, cfg.num_classes)
 
+        # ── Transition head (Stage 5 Description experiment) ──────────────
+        # Predicts joint (class_T1 → class_T2) transition from repr_ctx.
+        # repr_ctx is bitemporal: T1 tokens already attended to all T2 tokens
+        # through Transformer + Graph → sufficient context for joint prediction.
+        if cfg.lambda_transition > 0:
+            self.trans_norm       = nn.LayerNorm(H)
+            self.transition_head  = nn.Linear(H, cfg.num_classes * cfg.num_classes)
+
+        # ── Spectral Projector ────────────────────────────────────────────
+        if getattr(cfg, "use_spectral", False):
+            self.spectral_projector = nn.Sequential(
+                nn.Linear(cfg.spectral_dim, 64),
+                nn.ReLU(),
+                nn.Linear(64, H),
+                nn.LayerNorm(H),
+            )
+            self.spectral_merge = nn.Linear(H * 2, H)
+
+
     def forward(self, batch: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
         """
         batch keys (from build_batch):
@@ -352,8 +377,17 @@ class TokenChangeReasonerMoE(nn.Module):
         flat_repr = self.token_encoder(flat_emb, flat_tid, flat_cen, flat_area)
         repr_pad  = flat_repr.reshape(B, N, -1)
 
+        # -- Spectral Injection
+        if getattr(self, "spectral_projector", None) is not None and "spectral_pad" in batch:
+            spectral = batch["spectral_pad"]                        # [B, N, 24]
+            spectral_feat = self.spectral_projector(spectral)       # [B, N, H]
+            repr_pad = self.spectral_merge(
+                torch.cat([repr_pad, spectral_feat], dim=-1)
+            )                                                       # [B, N, H]
+
         # ── 2. Transformer ──────────────────────────────────────────────────
         repr_ctx = self.reasoner(repr_pad, batch["padding_mask"])
+
 
         # ── 3. Graph ────────────────────────────────────────────────────────
         repr_ctx = self.graph(
@@ -408,7 +442,9 @@ class TokenChangeReasonerMoE(nn.Module):
         class_logits_T1 = self.class_head_T1(self.sem_norm_T1(repr_ctx))  # [B, N, C]
         class_logits_T2 = self.class_head_T2(self.sem_norm_T2(repr_ctx))  # [B, N, C]
 
-        return {
+        # ── 9. Transition logits (Stage 5 Description experiment) ───────────
+        # Only for T1 tokens; predicts joint (c1→c2) as one of C*C classes.
+        outputs_dict: Dict[str, torch.Tensor] = {
             "change_logits":     change_logits,
             "delta_pred":        delta_pred,
             "delta_target":      batch["delta_target"],
@@ -418,6 +454,11 @@ class TokenChangeReasonerMoE(nn.Module):
             "class_logits_T1":   class_logits_T1,
             "class_logits_T2":   class_logits_T2,
         }
+        if hasattr(self, "transition_head"):
+            outputs_dict["transition_logits"] = self.transition_head(
+                self.trans_norm(repr_ctx)
+            )  # [B, N, C*C]
+        return outputs_dict
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -477,13 +518,32 @@ def compute_moe_loss(
             sem_loss = sem_loss / n_terms
             total = total + cfg.lambda_semantic * sem_loss
 
+    # ── Transition CE loss ───────────────────────────────────────────────────
+    # Supervise joint (class_T1 → class_T2) on T1 tokens that semantically changed.
+    # ignore_index=-1 skips BG tokens AND unchanged foreground (cls_T1==cls_T2).
+    trans_loss = torch.zeros(1, device=total.device).squeeze()
+    if cfg.lambda_transition > 0 and "transition_logits" in outputs:
+        trans_labels = batch.get("transition_labels_pad")
+        if trans_labels is not None:
+            time_ids = batch["time_ids_pad"]
+            padding  = batch["padding_mask"]
+            t1_valid = (~padding) & (time_ids == 0) & (trans_labels >= 0)
+            if t1_valid.any():
+                trans_loss = F.cross_entropy(
+                    outputs["transition_logits"][t1_valid],
+                    trans_labels[t1_valid],
+                    ignore_index=-1,
+                )
+                total = total + cfg.lambda_transition * trans_loss
+
     return {
-        "total_loss":    total,
-        "change_loss":   base["change_loss"],
-        "delta_loss":    base["delta_loss"],
-        "balance_loss":  balance_loss,
-        "entropy_loss":  entropy_loss,
-        "semantic_loss": sem_loss,
+        "total_loss":      total,
+        "change_loss":     base["change_loss"],
+        "delta_loss":      base["delta_loss"],
+        "balance_loss":    balance_loss,
+        "entropy_loss":    entropy_loss,
+        "semantic_loss":   sem_loss,
+        "transition_loss": trans_loss,
     }
 
 

@@ -313,11 +313,18 @@ class SampleData:
     # Optional stage 2 CV extracted features
     cvs_t1: Optional[torch.Tensor] = None
     cvs_t2: Optional[torch.Tensor] = None
+    # Optional stage 1.5 spectral features
+    spectral_t1: Optional[torch.Tensor] = None
+    spectral_t2: Optional[torch.Tensor] = None
     # Optional: per-token change labels  [N1+N2]  float 0/1
     # Pass None to use proxy labels derived from delta_norm
     change_labels: Optional[torch.Tensor] = None
     # Optional: per-token semantic labels [N1+N2] long (0-6)
     semantic_labels: Optional[torch.Tensor] = None
+    # Optional: per-T1-token joint transition label [N1] long (cls_T1*C + cls_T2)
+    # -1 = ignore (background or unchanged foreground)
+    transition_labels: Optional[torch.Tensor] = None
+
 
 
 def _proxy_labels(tokens_t1: torch.Tensor, tokens_t2: torch.Tensor,
@@ -380,11 +387,23 @@ def build_batch(
     else:
         semantic_labels_pad = None
 
+    has_transition = any(s.transition_labels is not None for s in samples)
+    if has_transition:
+        transition_labels_pad = torch.full((B, N_max), -1, dtype=torch.long)
+    else:
+        transition_labels_pad = None
+
     has_cvs = any(s.cvs_t1 is not None for s in samples)
     if has_cvs:
         cvs_pad = torch.zeros(B, N_max)
     else:
         cvs_pad = None
+
+    has_spectral = any(s.spectral_t1 is not None for s in samples)
+    if has_spectral:
+        spectral_pad = torch.zeros(B, N_max, 24)
+    else:
+        spectral_pad = None
 
     # ── 3. Pair lists ──────────────────────────────────────────────────────
     pair_b_list: List[int] = []
@@ -424,13 +443,25 @@ def build_batch(
             cvs_pad[b, :n1] = s.cvs_t1.float()
             cvs_pad[b, n1:n] = s.cvs_t2.float()
 
+        # -- Spectral features
+        if has_spectral and s.spectral_t1 is not None and s.spectral_t2 is not None:
+            spectral_pad[b, :n1] = s.spectral_t1.float()
+            spectral_pad[b, n1:n] = s.spectral_t2.float()
+
         # -- Semantic labels
         if has_semantic and s.semantic_labels is not None:
             semantic_labels_pad[b, :n] = s.semantic_labels.long()
 
+        # -- Transition labels (T1 tokens only; -1 = ignore)
+        if has_transition and s.transition_labels is not None:
+            tl = s.transition_labels.long()
+            transition_labels_pad[b, :len(tl)] = tl
+
         # -- Match pairs
         for p in s.match_pairs:
             i, j, score = int(p[0]), int(p[1]), float(p[2])
+            if i >= n1 or j >= n2:   # RC tokens may be truncated vs original match indices
+                continue
             pair_b_list.append(b)
             pair_i_list.append(i)         # T1 position in seq
             pair_j_list.append(n1 + j)   # T2 position in seq (offset)
@@ -476,8 +507,13 @@ def build_batch(
         batch["semantic_labels_pad"] = semantic_labels_pad.to(device)
     if has_cvs:
         batch["cvs_pad"] = cvs_pad.to(device)
-    
+    if has_transition:
+        batch["transition_labels_pad"] = transition_labels_pad.to(device)
+    if has_spectral:
+        batch["spectral_pad"] = spectral_pad.to(device)
+
     return batch
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────

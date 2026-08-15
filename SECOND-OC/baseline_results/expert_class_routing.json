@@ -1,0 +1,75 @@
+{
+  "expert_class_matrix": [
+    [
+      91,
+      3085,
+      3646,
+      251,
+      4503,
+      65031,
+      741
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      1,
+      8,
+      0
+    ],
+    [
+      39,
+      2518,
+      4636,
+      111,
+      5297,
+      59784,
+      868
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      4,
+      0
+    ]
+  ],
+  "class_names": [
+    "background",
+    "tree",
+    "buildings",
+    "water",
+    "non_veg_ground",
+    "playground",
+    "low_veg"
+  ],
+  "specialization": [
+    {
+      "expert": 0,
+      "spec": 0.6634,
+      "dominant_class": "playground",
+      "dominant_pct": 0.8408
+    },
+    {
+      "expert": 1,
+      "spec": 0.8207,
+      "dominant_class": "playground",
+      "dominant_pct": 0.8889
+    },
+    {
+      "expert": 2,
+      "spec": 0.6337,
+      "dominant_class": "playground",
+      "dominant_pct": 0.8161
+    },
+    {
+      "expert": 3,
+      "spec": 1.0,
+      "dominant_class": "playground",
+      "dominant_pct": 1.0
+    }
+  ]
+}

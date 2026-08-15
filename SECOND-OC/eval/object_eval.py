@@ -44,13 +44,27 @@ def bbox_iou(a: list, b: list) -> float:
 
 def match_predictions(gt_list: list[dict],
                       pred_list: list[dict],
-                      iou_thresh: float) -> tuple[int, int, int]:
+                      iou_thresh: float,
+                      many_to_one: bool = False) -> tuple[int, int, int]:
     """
-    Greedy matching of predictions to GT instances by bbox IoU.
+    Greedy or many-to-one matching of predictions to GT instances by bbox IoU.
     Returns (tp, fp, fn) for binary change detection.
     """
     gt_changed   = [g for g in gt_list  if g["change_type"] != "unchanged"]
     pred_changed = [p for p in pred_list if p.get("change_type", "") != "unchanged"]
+
+    if many_to_one:
+        matched_gts = set()
+        matched_preds = set()
+        for j, pred in enumerate(pred_changed):
+            for i, gt in enumerate(gt_changed):
+                if bbox_iou(pred["bbox"], gt["bbox"]) >= iou_thresh:
+                    matched_preds.add(j)
+                    matched_gts.add(i)
+        tp = len(matched_gts)
+        fp = len(pred_changed) - len(matched_preds)
+        fn = len(gt_changed) - tp
+        return tp, fp, fn
 
     matched_gt = set()
     tp = 0
@@ -74,13 +88,28 @@ def match_predictions(gt_list: list[dict],
 
 def match_semantic(gt_list: list[dict],
                    pred_list: list[dict],
-                   iou_thresh: float) -> tuple[int, int, int]:
+                   iou_thresh: float,
+                   many_to_one: bool = False) -> tuple[int, int, int]:
     """
     Like match_predictions but TP additionally requires correct class_T2.
     Only considers non-unchanged instances.
     """
     gt_changed   = [g for g in gt_list  if g["change_type"] != "unchanged"]
     pred_changed = [p for p in pred_list if p.get("change_type", "") != "unchanged"]
+
+    if many_to_one:
+        matched_gts = set()
+        matched_preds = set()
+        for j, pred in enumerate(pred_changed):
+            for i, gt in enumerate(gt_changed):
+                if (bbox_iou(pred["bbox"], gt["bbox"]) >= iou_thresh
+                        and pred.get("class_T2") == gt["class_name_T2"]):
+                    matched_preds.add(j)
+                    matched_gts.add(i)
+        tp = len(matched_gts)
+        fp = len(pred_changed) - len(matched_preds)
+        fn = len(gt_changed) - tp
+        return tp, fp, fn
 
     matched_gt = set()
     tp = 0
@@ -112,7 +141,15 @@ def prf1(tp: int, fp: int, fn: int) -> dict:
             "TP": tp, "FP": fp, "FN": fn}
 
 
-def evaluate(gt_path: str, pred_path: str, iou_thresh: float = 0.5) -> dict:
+def _covered_stems(pred_path: str) -> set:
+    """Return set of stems that appear in predictions (have SAM2 coverage)."""
+    with open(pred_path) as f:
+        preds = json.load(f)
+    return {p["stem"] for p in preds}
+
+
+def evaluate(gt_path: str, pred_path: str, iou_thresh: float = 0.5,
+             coverage_only: bool = False, many_to_one: bool = False) -> dict:
     with open(gt_path) as f:
         gt_data = json.load(f)
     with open(pred_path) as f:
@@ -120,25 +157,53 @@ def evaluate(gt_path: str, pred_path: str, iou_thresh: float = 0.5) -> dict:
 
     # Group predictions by stem
     preds_by_stem: dict = defaultdict(list)
+    pred_change_ids: set = set()
     for p in pred_data:
         preds_by_stem[p["stem"]].append(p)
+        # Track which GT instances were explicitly predicted (for coverage filter)
+        if "change_id" in p:
+            pred_change_ids.add(p["change_id"])
 
     bin_tp = bin_fp = bin_fn = 0
     sem_tp = sem_fp = sem_fn = 0
+    n_gt_total = 0
+    n_gt_covered = 0
 
     for stem, gt_changes in gt_data["changes"].items():
         preds = preds_by_stem.get(stem, [])
 
-        a, b, c = match_predictions(gt_changes, preds, iou_thresh)
+        if coverage_only:
+            # Only evaluate GT instances whose change_id appears in predictions
+            # (i.e., the model actually saw this instance via SAM2)
+            pred_ids_this_stem = {p.get("change_id") for p in preds if "change_id" in p}
+            if pred_ids_this_stem:
+                gt_changes = [g for g in gt_changes if g["change_id"] in pred_ids_this_stem]
+            else:
+                # Fallback: skip stems with no predictions at all
+                n_gt_total += len(gt_changes)
+                continue
+
+        n_gt_total  += len(gt_changes)
+        n_gt_covered += len(gt_changes)
+
+        a, b, c = match_predictions(gt_changes, preds, iou_thresh, many_to_one)
         bin_tp += a; bin_fp += b; bin_fn += c
 
-        a, b, c = match_semantic(gt_changes, preds, iou_thresh)
+        a, b, c = match_semantic(gt_changes, preds, iou_thresh, many_to_one)
         sem_tp += a; sem_fp += b; sem_fn += c
 
+    coverage_pct = n_gt_covered / max(n_gt_total, 1)
+    sem_acc_on_tp = sem_tp / max(bin_tp, 1)
     results = {
-        "iou_threshold":     iou_thresh,
-        "Binary-Object-F1":  prf1(bin_tp, bin_fp, bin_fn),
+        "iou_threshold":      iou_thresh,
+        "coverage_only":      coverage_only,
+        "many_to_one":        many_to_one,
+        "gt_instances_total": n_gt_total,
+        "gt_instances_eval":  n_gt_covered,
+        "coverage_pct":       round(coverage_pct, 4),
+        "Binary-Object-F1":   prf1(bin_tp, bin_fp, bin_fn),
         "Semantic-Object-F1": prf1(sem_tp, sem_fp, sem_fn),
+        "Semantic-Acc-on-TP": round(sem_acc_on_tp, 4),
     }
     return results
 
@@ -148,17 +213,28 @@ def main():
     parser.add_argument("--gt",            required=True, help="GT change_annotations.json")
     parser.add_argument("--pred",          required=True, help="Predictions JSON")
     parser.add_argument("--iou-threshold", type=float, default=0.5)
+    parser.add_argument("--coverage-only", action="store_true",
+                        help="Only evaluate GT instances covered by model predictions (fair for token-based models)")
+    parser.add_argument("--many-to-one",   action="store_true",
+                        help="Allow many-to-one prediction matches to GT instances")
     parser.add_argument("--out",           default=None, help="Save results JSON")
     args = parser.parse_args()
 
-    results = evaluate(args.gt, args.pred, args.iou_threshold)
+    results = evaluate(args.gt, args.pred, args.iou_threshold,
+                       coverage_only=args.coverage_only, many_to_one=args.many_to_one)
 
-    print(f"\n── SECOND-OC Evaluation (IoU ≥ {args.iou_threshold}) ─────────────")
+    suffix_cov = " [coverage-only]" if args.coverage_only else ""
+    suffix_m21 = " [many-to-one]" if args.many_to_one else ""
+    print(f"\n── SECOND-OC Evaluation (IoU ≥ {args.iou_threshold}){suffix_cov}{suffix_m21} ─────────────")
+    print(f"   GT instances: {results['gt_instances_eval']:,} / {results['gt_instances_total']:,} "
+      f"({results['coverage_pct']:.1%} coverage)")
     for metric, vals in results.items():
         if isinstance(vals, dict):
             print(f"   {metric:<25} P={vals['P']:.4f}  R={vals['R']:.4f}  "
                   f"F1={vals['F1']:.4f}  "
                   f"(TP={vals['TP']} FP={vals['FP']} FN={vals['FN']})")
+    print(f"   {'Semantic-Acc-on-TP':<25} {results['Semantic-Acc-on-TP']:.1%}  "
+          f"({results['Semantic-Object-F1']['TP']}/{results['Binary-Object-F1']['TP']} TP with correct class)")
 
     if args.out:
         with open(args.out, "w") as f:

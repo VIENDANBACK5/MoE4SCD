@@ -49,6 +49,7 @@ phase0_report.json
 # Agent internal state
 # =============================================
 .agent/
+.agents/
 .claude/
 
 # =============================================
@@ -58,3 +59,31 @@ phase0_report.json
 .vscode/
 *.swp
 *.swo
+
+# =============================================
+# Large Datasets & Environments
+# =============================================
+data
+DeadTrees/
+cs2_venv/
+.backups/
+
+# =============================================
+# Checkpoints & Heavy Experiment Outputs
+# =============================================
+output/
+checkpoints/
+test_hier_output/
+SECOND-OC/predictions/
+SECOND-OC/benchmark.json
+SECOND-OC/baselines/
+predictions_scannet.json
+
+# =============================================
+# Visualizations & Temp PID files
+# =============================================
+report_vis/
+mask_quality_comparison/
+spectral_prompts_00004.png
+*.pid
+

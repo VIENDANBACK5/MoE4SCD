@@ -1,0 +1,20 @@
+{
+  "original": {
+    "intra_cv_mean": 0.2168,
+    "boundary_purity": 0.9584,
+    "coverage": 0.6456,
+    "n_masks_per_image": 92.74
+  },
+  "refined": {
+    "intra_cv_mean": 0.1647,
+    "boundary_purity": 0.9593,
+    "coverage": 0.6455,
+    "n_masks_per_image": 105.775
+  },
+  "spectral_guided": {
+    "intra_cv_mean": 0.3053,
+    "boundary_purity": 0.9541,
+    "coverage": 0.2168,
+    "n_masks_per_image": 50.84
+  }
+}

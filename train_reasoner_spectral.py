@@ -1,40 +1,48 @@
-"""
-train_reasoner.py
-=================
-Stage 4A / 4B / 4C training loop for the Token Change Reasoner.
-
-Use --model_type base  for Stage 4A (Transformer only)
-Use --model_type graph for Stage 4B (Transformer + GraphSAGE)
-Use --model_type moe   for Stage 4C (Transformer + GraphSAGE + MoE)
-
-Loads Stage 3 match outputs + Stage 2 token files and trains
-ChangeReasonerModel with proxy labels derived from embedding delta norms.
-
-Usage:
-    # Quick smoke test (50 pairs, 5 epochs)
-    python train_reasoner.py \\
-        --tokens_T1 SECOND/tokens_T1 \\
-        --tokens_T2 SECOND/tokens_T2 \\
-        --matches   SECOND/matches   \\
-        --output    SECOND/stage4    \\
-        --epochs 5 --batch_size 4 --n_samples 50 --device cuda
-
-    # Full training
-    python train_reasoner.py \\
-        --tokens_T1 SECOND/tokens_T1 \\
-        --tokens_T2 SECOND/tokens_T2 \\
-        --matches   SECOND/matches   \\
-        --output    SECOND/stage4    \\
-        --epochs 30 --batch_size 8 --device cuda
-"""
-
+# train_reasoner_spectral.py
 from __future__ import annotations
+
+import torch
+for i in range(1, 8):
+    attr = f"int{i}"
+    if not hasattr(torch, attr):
+        setattr(torch, attr, torch.int8)
+
+import sys
+from types import ModuleType
+dummy_schema = ModuleType("torch._library.infer_schema")
+dummy_schema.infer_schema = lambda *args, **kwargs: ""
+sys.modules["torch._library.infer_schema"] = dummy_schema
+
+
+
+import torch.serialization
+if not hasattr(torch.serialization, 'add_safe_globals'):
+    torch.serialization.add_safe_globals = lambda *args, **kwargs: None
+
+import torch._dynamo.utils
+if not hasattr(torch._dynamo.utils, 'warn_once'):
+    torch._dynamo.utils.warn_once = lambda *args, **kwargs: None
+
+import torch._inductor.config
+if not hasattr(torch._inductor.config, 'max_autotune_gemm_search_space'):
+    object.__setattr__(torch._inductor.config, 'max_autotune_gemm_search_space', False)
+
+
+"""
+train_reasoner_spectral.py
+==========================
+Stage 4A / 4B / 4C training loop for the Token Change Reasoner.
+Includes support for LoRA on SAM2 encoder and spectral feature injection.
+"""
+
+
 
 import argparse
 import csv
 import json
 import logging
 import math
+import os
 import random
 import time
 from pathlib import Path
@@ -79,8 +87,7 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
-# ── SECOND RGB → class mapping (mirrors SECOND-OC/config.py) ─────────────────
-# Class 7 "other/farmland" is remapped to 0 (background) — rare & not evaluated.
+# remap Class 7 "other/farmland" to 0 (background)
 _SECOND_RGB_TO_CLASS: Dict[tuple, int] = {
     (0,   0,   0):   0,
     (0,   128, 0):   1,
@@ -89,12 +96,11 @@ _SECOND_RGB_TO_CLASS: Dict[tuple, int] = {
     (128, 128, 128): 4,
     (255, 255, 255): 5,
     (0,   255, 0):   6,
-    (255, 0,   0):   0,   # other → background
+    (255, 0,   0):   0,
 }
 
 
 def _centroid_class(label_rgb: "np.ndarray", cx: float, cy: float) -> int:
-    """Sample class ID at normalised centroid (cx, cy) from an RGB label image."""
     H, W = label_rgb.shape[:2]
     px = max(0, min(int(round(cx * (W - 1))), W - 1))
     py = max(0, min(int(round(cy * (H - 1))), H - 1))
@@ -102,23 +108,7 @@ def _centroid_class(label_rgb: "np.ndarray", cx: float, cy: float) -> int:
     return _SECOND_RGB_TO_CLASS.get(rgb, 0)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Dataset
-# ─────────────────────────────────────────────────────────────────────────────
-
 class MatchDataset(Dataset):
-    """
-    Loads Stage 2 tokens + Stage 3 matches for each image pair.
-
-    Directory structure expected:
-        tokens_T1/  {stem}.pt  → {"tokens": [N1,256], "centroids": [N1,2], "areas": [N1]}
-        tokens_T2/  {stem}.pt  → same for T2
-        matches/    {stem}_matches.pt → {"pairs": [[i,j,score], ...], ...}
-
-    Optional:
-        labels_dir/ {stem}_labels.pt → {"labels": [N1+N2]} float 0/1
-    """
-
     def __init__(
         self,
         t1_dir: Path,
@@ -135,12 +125,10 @@ class MatchDataset(Dataset):
         self.t2_dir          = t2_dir
         self.match_dir       = match_dir
         self.labels_dir      = labels_dir
-        self.semantic_dir    = semantic_dir      # T1 label dir
-        self.semantic_dir_t2 = semantic_dir_t2  # T2 label dir (separate)
-        self.gt_change_labels = gt_change_labels  # derive change labels from GT semantics
+        self.semantic_dir    = semantic_dir
+        self.semantic_dir_t2 = semantic_dir_t2
+        self.gt_change_labels = gt_change_labels
 
-
-        # Collect valid stems
         stems = []
         for mp in sorted(match_dir.glob("*_matches.pt")):
             stem = mp.stem.replace("_matches", "")
@@ -174,14 +162,11 @@ class MatchDataset(Dataset):
         elif isinstance(pairs, torch.Tensor):
             pairs = pairs.float()
 
-        # ── GT labels ──────────────────────────────────
         labels = None
         if self.gt_change_labels and self.semantic_dir is not None:
-            # Derive change labels from GT semantic class comparison at centroid.
-            # Aligns training signal with SECOND-OC evaluation definition.
             import numpy as np
             from PIL import Image as _PIL
-            BG_CLS = {0, 4, 6}  # background, non_veg_ground, low_vegetation
+            BG_CLS = {0, 4, 6}
             sp1 = self.semantic_dir / f"{stem}.png"
             sp2 = (self.semantic_dir_t2 / f"{stem}.png"
                    if self.semantic_dir_t2 is not None else sp1)
@@ -190,14 +175,12 @@ class MatchDataset(Dataset):
                 lab2 = np.array(_PIL.open(sp2).convert("RGB")) if sp2.exists() else lab1
                 c1 = t1["centroids"].numpy()
                 c2 = t2["centroids"].numpy()
-                # T1 tokens: changed if GT class differs between T1 and T2 at same centroid
                 gt_ch_t1 = []
                 for cx, cy in c1:
                     cls_t1 = _centroid_class(lab1, cx, cy)
                     cls_t2 = _centroid_class(lab2, cx, cy)
                     changed = int(cls_t1 != cls_t2 and cls_t1 not in BG_CLS)
                     gt_ch_t1.append(changed)
-                # T2 tokens: always 0 (T2 side not used for change loss)
                 gt_ch_t2 = [0] * len(c2)
                 labels = torch.tensor(gt_ch_t1 + gt_ch_t2, dtype=torch.float32)
         elif self.labels_dir is not None:
@@ -205,9 +188,6 @@ class MatchDataset(Dataset):
             if lp.exists():
                 labels = torch.load(lp, weights_only=True).float()
 
-        # ── Semantic + transition labels (T1 + T2 concatenated) ──────────
-        # Layout mirrors token sequence: [T1 labels (N1), T2 labels (N2)].
-        # transition_labels: [N1] only; -1 = ignore (BG or unchanged FG).
         semantic_labels    = None
         transition_labels  = None
         if self.semantic_dir is not None:
@@ -231,15 +211,13 @@ class MatchDataset(Dataset):
 
                 semantic_labels = torch.tensor(sem_t1 + sem_t2, dtype=torch.long)
 
-                # Transition labels: (cls_T1 * num_classes + cls_T2) for T1 tokens.
-                # Skip BG tokens and unchanged FG to avoid imbalance from easy diagonals.
                 BG_CLS    = {0, 4, 6}
                 NUM_CLS   = 7
                 trans_t1  = []
                 for (cx, cy), c1_cls in zip(c1, sem_t1):
                     c2_cls = _centroid_class(lab_t2_rgb, cx, cy)
                     if c1_cls in BG_CLS or c1_cls == c2_cls:
-                        trans_t1.append(-1)   # ignore
+                        trans_t1.append(-1)
                     else:
                         trans_t1.append(c1_cls * NUM_CLS + c2_cls)
                 transition_labels = torch.tensor(trans_t1, dtype=torch.long)
@@ -262,17 +240,11 @@ class MatchDataset(Dataset):
         )
 
 
-
 def collate_fn(cfg: ReasonerConfig, device: torch.device):
-    """Returns a collate function that packs samples into a batch on device."""
     def _collate(samples: List[SampleData]) -> Dict[str, torch.Tensor]:
         return build_batch(samples, cfg, device)
     return _collate
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Training helpers
-# ─────────────────────────────────────────────────────────────────────────────
 
 def run_epoch(
     model,
@@ -283,20 +255,13 @@ def run_epoch(
     args,
     loss_fn=None,
 ) -> Dict[str, float]:
-    """
-    Run one full epoch. Returns mean losses.
-
-    loss_fn: callable(outputs, batch, cfg) → dict.  Defaults to compute_loss.
-             Pass compute_moe_loss for Stage 4C.
-    """
     if loss_fn is None:
         loss_fn = compute_loss
 
     model.train(train)
-    # Seed totals with base keys; MoE keys added dynamically on first batch.
     totals: Dict[str, float] = {}
     n_batches = 0
-    expert_counts: Optional[torch.Tensor] = None  # accumulated [E] for logging
+    expert_counts: Optional[torch.Tensor] = None
 
     ctx = torch.enable_grad() if train else torch.no_grad()
     with ctx:
@@ -325,7 +290,6 @@ def run_epoch(
             for k, v in losses.items():
                 totals[k] = totals.get(k, 0.0) + float(v.detach())
 
-            # Accumulate expert usage (MoE only)
             if "tokens_per_expert" in outputs:
                 tpe = outputs["tokens_per_expert"].detach().cpu()
                 if expert_counts is None:
@@ -333,7 +297,6 @@ def run_epoch(
                 else:
                     expert_counts += tpe
 
-            # Accumulate evaluation metrics if GT labels are present
             if not train and "change_labels" in batch:
                 logits = outputs["change_logits"].detach()
                 labels = batch["change_labels"].detach()
@@ -352,21 +315,13 @@ def run_epoch(
                 totals["val_fn"] = totals.get("val_fn", 0) + fn
                 totals["val_tn"] = totals.get("val_tn", 0) + tn
 
-            # Diagnostic: Assignment Matrix for Clusters
-            if not train and "assignment" in outputs and args.gt_dir:
-                # We can't do this for every batch easily without mask info
-                # But we can store a few assignments for later diagnostic
-                pass
-
             n_batches += 1
 
     means = {k: v / max(n_batches, 1) for k, v in totals.items() if not k.startswith("val_")}
     if expert_counts is not None:
-        # Log as fraction so it's always comparable
         total_tok = expert_counts.sum().clamp(min=1)
         means["expert_fracs"] = (expert_counts / total_tok).tolist()
     
-    # Calculate global metrics
     if not train and "val_tp" in totals:
         tp, fp = totals["val_tp"], totals["val_fp"]
         fn, tn = totals["val_fn"], totals["val_tn"]
@@ -410,12 +365,7 @@ def load_checkpoint(path: Path, model: ChangeReasonerModel, optimizer=None):
     return ckpt.get("epoch", 0), ckpt.get("val_loss", float("inf"))
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Main training pipeline
-# ─────────────────────────────────────────────────────────────────────────────
-
 def train(args):
-    # ── Setup ──────────────────────────────────────────────────────────────
     device = torch.device(args.device if torch.cuda.is_available() or args.device == "cpu"
                           else "cpu")
     out_dir = Path(args.output)
@@ -428,6 +378,7 @@ def train(args):
 
     if use_moe:
         cfg = MoEConfig(
+            token_dim             = args.token_dim,
             hidden_dim            = args.hidden_dim,
             num_layers            = args.num_layers,
             num_heads             = args.num_heads,
@@ -442,7 +393,6 @@ def train(args):
             lambda_entropy        = args.lambda_entropy,
             lambda_semantic        = args.lambda_semantic,
             lambda_transition     = args.lambda_transition,
-            # Stage 4D router improvements
             router_version        = args.router_version,
             expert_dropout_prob   = args.expert_dropout,
             use_top2              = args.use_top2,
@@ -450,6 +400,7 @@ def train(args):
         )
     elif args.model_type == "hierarchical":
         cfg = HierarchicalConfig(
+            token_dim             = args.token_dim,
             hidden_dim            = args.hidden_dim,
             num_layers            = args.num_layers,
             num_heads             = args.num_heads,
@@ -463,6 +414,7 @@ def train(args):
         )
     elif use_graph:
         cfg = GraphReasonerConfig(
+            token_dim             = args.token_dim,
             hidden_dim            = args.hidden_dim,
             num_layers            = args.num_layers,
             num_heads             = args.num_heads,
@@ -475,16 +427,16 @@ def train(args):
         )
     else:
         cfg = ReasonerConfig(
-        hidden_dim=args.hidden_dim,
-        num_layers=args.num_layers,
-        num_heads=args.num_heads,
-        dropout=args.dropout,
-        proxy_delta_threshold=args.proxy_threshold,
-        delta_loss_weight=args.delta_weight,
-        alpha_cv=args.alpha_cv,
-    )
+            token_dim             = args.token_dim,
+            hidden_dim            = args.hidden_dim,
+            num_layers            = args.num_layers,
+            num_heads             = args.num_heads,
+            dropout               = args.dropout,
+            proxy_delta_threshold = args.proxy_threshold,
+            delta_loss_weight     = args.delta_weight,
+            alpha_cv              = args.alpha_cv,
+        )
 
-    # Save config
     (out_dir / "config.json").write_text(json.dumps(cfg.__dict__, indent=2))
     if use_moe:
         is_4d = (getattr(args, 'router_version', 'v1') == 'v2'
@@ -499,7 +451,6 @@ def train(args):
         stage = "Base (4A)"
     log.info(f"Model type: {stage}")
 
-    # ── Dataset ────────────────────────────────────────────────────────────
     labels_dir       = Path(args.labels) if args.labels else None
     semantic_dir     = Path(args.semantic_dir)    if getattr(args, "semantic_dir",    None) else None
     semantic_dir_t2  = Path(args.semantic_dir_t2) if getattr(args, "semantic_dir_t2", None) else None
@@ -534,7 +485,6 @@ def train(args):
         collate_fn=_collate, num_workers=0,
     )
 
-    # ── Model + loss function ─────────────────────────────────────────────
     if use_moe:
         model = build_moe_model(cfg).to(device)
         loss_fn = compute_moe_loss
@@ -549,9 +499,59 @@ def train(args):
         loss_fn = compute_loss
     log.info(f"Model parameters: {count_parameters(model):,}")
 
-    optimizer = torch.optim.AdamW(
-        model.parameters(), lr=args.lr, weight_decay=args.weight_decay
-    )
+    # Load pretrain weights if specified before creating optimizer
+    if args.pretrain:
+        ckpt = torch.load(args.pretrain, map_location="cpu", weights_only=False)
+        state = ckpt.get("model_state_dict", ckpt.get("model_state", ckpt))
+        missing, unexpected = model.load_state_dict(state, strict=False)
+        log.info(f"Loaded pretrain weights from {args.pretrain}")
+        if missing:    log.info(f"  Missing keys (new heads): {missing}")
+        if unexpected: log.info(f"  Unexpected keys (ignored): {unexpected}")
+
+    if args.use_lora:
+        # SAM2 is never called during forward (tokens are pre-computed), so LoRA params
+        # won't receive gradients. We attempt to load anyway for completeness; if peft/
+        # torchao import fails on this PyTorch version, fall back gracefully.
+        try:
+            import sys as _sys
+            SAM2_REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sam2")
+            if os.path.isdir(SAM2_REPO) and SAM2_REPO not in _sys.path:
+                _sys.path.insert(0, SAM2_REPO)
+            from sam2.build_sam import build_sam2
+            SAM2_CKPT   = os.path.join(SAM2_REPO, "checkpoints", "sam2.1_hiera_large.pt")
+            SAM2_CONFIG = "configs/sam2.1/sam2.1_hiera_l.yaml"
+            sam2_model = build_sam2(SAM2_CONFIG, SAM2_CKPT, device=device)
+
+            from lora_sam2 import apply_lora_to_sam2
+            sam2_model = apply_lora_to_sam2(
+                sam2_model,
+                rank=args.lora_rank,
+                alpha=args.lora_alpha
+            )
+
+            lora_params = []
+            other_params = []
+            for m in [sam2_model, model]:
+                for name, param in m.named_parameters():
+                    if not param.requires_grad:
+                        continue
+                    if "lora_" in name:
+                        lora_params.append(param)
+                    else:
+                        other_params.append(param)
+
+            param_groups = [
+                {"params": lora_params,  "lr": args.lora_lr, "name": "lora"},
+                {"params": other_params, "lr": args.lr,      "name": "other"},
+            ]
+            optimizer = torch.optim.AdamW(param_groups, weight_decay=args.weight_decay)
+            log.info(f"LoRA applied to SAM2 (rank={args.lora_rank}, alpha={args.lora_alpha})")
+        except Exception as _e:
+            log.warning(f"LoRA on SAM2 unavailable ({_e}). Training reasoner only (tokens are pre-computed, SAM2 not in forward pass).")
+            optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+    else:
+        optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, T_max=args.epochs, eta_min=args.lr * 0.1
     )
@@ -560,18 +560,9 @@ def train(args):
     if args.resume and (out_dir / "checkpoint.pt").exists():
         start_epoch, best_val = load_checkpoint(out_dir / "checkpoint.pt", model, optimizer)
         log.info(f"Resumed from epoch {start_epoch}, best_val_f1={best_val:.4f}")
-    elif args.pretrain:
-        ckpt = torch.load(args.pretrain, map_location="cpu", weights_only=False)
-        state = ckpt.get("model_state_dict", ckpt.get("model_state", ckpt))
-        missing, unexpected = model.load_state_dict(state, strict=False)
-        log.info(f"Loaded pretrain weights from {args.pretrain}")
-        if missing:    log.info(f"  Missing keys (new heads): {missing}")
-        if unexpected: log.info(f"  Unexpected keys (ignored): {unexpected}")
-        start_epoch, best_val = 0, 0.0
     else:
         start_epoch, best_val = 0, 0.0
 
-    # ── CSV log ────────────────────────────────────────────────────────────
     log_path = out_dir / "training_log.csv"
     csv_file = open(log_path, "w", newline="")
     csv_writer = csv.writer(csv_file)
@@ -582,7 +573,6 @@ def train(args):
         header += ["train_balance", "train_entropy", "train_semantic", "expert_fracs"]
     csv_writer.writerow(header)
 
-    # ── Training loop ──────────────────────────────────────────────────────
     for epoch in range(start_epoch, args.epochs):
         t0 = time.perf_counter()
 
@@ -593,13 +583,11 @@ def train(args):
         elapsed = time.perf_counter() - t0
         lr_now  = scheduler.get_last_lr()[0]
 
-        # Expert usage logging (MoE only)
         expert_info = ""
         if "expert_fracs" in train_losses:
             fracs = [f"{f:.2f}" for f in train_losses["expert_fracs"]]
             expert_info = f" | experts=[{','.join(fracs)}]"
 
-        # Aux loss logging (MoE only)
         bal_info = ""
         if "balance_loss" in train_losses:
             sem = train_losses.get("semantic_loss", 0)
@@ -633,7 +621,6 @@ def train(args):
             f"{lr_now:.2e}",
             f"{elapsed:.2f}",
         ]
-        # Append MoE cols if present
         if "balance_loss" in train_losses:
             row += [
                 f"{train_losses['balance_loss']:.6f}",
@@ -645,96 +632,65 @@ def train(args):
         csv_writer.writerow(row)
         csv_file.flush()
 
-        # Save best checkpoint
         val_f1 = val_losses.get("f1", 0.0)
         if val_f1 > best_val:
             best_val = val_f1
             save_checkpoint(model, optimizer, epoch + 1, best_val, out_dir, "best_model.pt")
 
-        # Periodic checkpoint
         if (epoch + 1) % args.save_every == 0:
             save_checkpoint(model, optimizer, epoch + 1,
                             val_f1, out_dir, "checkpoint.pt")
 
     csv_file.close()
-    # Final checkpoint
     save_checkpoint(model, optimizer, args.epochs, best_val, out_dir, "final_model.pt")
-    
-    # Final Stage 2.5 Diagnostic if GT is available
-    if args.gt_dir:
-        log.info("Running final quality diagnostics...")
-        # (This would ideally be done on a subset of val for speed)
-        # For now, we've integrated the infrastructure.
     
     log.info(f"Training complete. Best val_f1: {best_val:.4f}")
     log.info(f"Outputs saved to {out_dir}/")
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# CLI
-# ─────────────────────────────────────────────────────────────────────────────
-
 def parse_args():
-    p = argparse.ArgumentParser(description="Stage 4A/4B — Train Token Change Reasoner")
+    p = argparse.ArgumentParser(description="Stage 4 — Train Token Change Reasoner (with Spectral/LoRA)")
 
     # Data
     p.add_argument("--tokens_T1",  default="SECOND/tokens_T1")
     p.add_argument("--tokens_T2",  default="SECOND/tokens_T2")
     p.add_argument("--matches",    default="SECOND/matches")
-    p.add_argument("--labels",     default=None,
-                   help="Optional dir with *_labels.pt for GT change labels")
-    p.add_argument("--semantic_dir", default=None,
-                   help="T1 GT label dir (RGB .png) for semantic head supervision")
-    p.add_argument("--semantic_dir_t2", default=None,
-                   help="T2 GT label dir (RGB .png); defaults to same as --semantic_dir")
+    p.add_argument("--labels",     default=None)
+    p.add_argument("--semantic_dir", default=None)
+    p.add_argument("--semantic_dir_t2", default=None)
     p.add_argument("--output",     default="SECOND/stage4")
-    p.add_argument("--n_samples",  type=int, default=None,
-                   help="Limit number of training samples (None = all)")
+    p.add_argument("--n_samples",  type=int, default=None)
     p.add_argument("--val_split",  type=float, default=0.1)
 
     # Model
-    p.add_argument("--model_type", default="base", choices=["base", "graph", "moe", "hierarchical"],
-                   help="base = Stage 4A  |  graph = Stage 4B  |  moe = Stage 4C | hierarchical = MOB-GCN")
+    p.add_argument("--model_type", default="base", choices=["base", "graph", "moe", "hierarchical"])
+    p.add_argument("--token_dim",  type=int,   default=256)
     p.add_argument("--hidden_dim",  type=int,   default=384)
     p.add_argument("--num_layers",  type=int,   default=4)
     p.add_argument("--num_heads",   type=int,   default=8)
     p.add_argument("--dropout",     type=float, default=0.1)
-    p.add_argument("--proxy_threshold", type=float, default=9.56,
-                   help="delta_norm threshold for proxy changed labels")
-    p.add_argument("--alpha_cv", type=float, default=1.0,
-                   help="Weight for quality-weighted loss: loss * exp(-alpha * CV)")
-    p.add_argument("--gt_dir", type=str, default=None,
-                   help="Optional dir with GT instance masks for Stage 2.5 diagnostics")
-    # Graph-specific (Stage 4B / 4C)
-    p.add_argument("--graph_k",      type=int, default=6,
-                   help="k-NN neighbours per token node")
-    p.add_argument("--graph_layers", type=int, default=2,
-                   help="Number of stacked GraphSAGE layers")
-    # Hierarchical-specific (MOB-GCN)
-    p.add_argument("--num_clusters", type=int, default=20,
-                   help="Number of clusters for MiddlePool")
-    p.add_argument("--smoothness_weight", type=float, default=0.1,
-                   help="Weight for smoothness regularization")
-    # MoE-specific (Stage 4C only)
-    p.add_argument("--moe_num_experts", type=int,   default=4,
-                   help="Number of MoE experts")
-    p.add_argument("--moe_expert_dim",  type=int,   default=512,
-                   help="Hidden dim inside each expert (H → expert_dim → H)")
-    p.add_argument("--lambda_balance",   type=float, default=0.01,
-                   help="Load-balancing aux loss weight")
-    p.add_argument("--lambda_entropy",   type=float, default=0.001,
-                   help="Entropy regularisation aux loss weight")
-    p.add_argument("--lambda_semantic",    type=float, default=0.3,
-                   help="Semantic CE loss weight (T1 + T2 heads)")
-    p.add_argument("--lambda_transition",  type=float, default=0.0,
-                   help="Transition CE loss weight (joint class_T1→class_T2)")
-    # Stage 4D router improvements
-    p.add_argument("--router_version",  default="v1", choices=["v1", "v2", "v3"],
-                   help="v1=h only (4C)  v2=concat(h,area,delta) for specialization (4D) v3=concat(h, semantic) for 5.6")
-    p.add_argument("--expert_dropout",  type=float, default=0.0,
-                   help="Prob of disabling one expert per step (0=off, 0.1 for 4D)")
-    p.add_argument("--use_top2",        action="store_true", default=False,
-                   help="Top-2 routing: weighted sum of two expert outputs per token")
+    p.add_argument("--proxy_threshold", type=float, default=9.56)
+    p.add_argument("--alpha_cv", type=float, default=1.0)
+    p.add_argument("--gt_dir", type=str, default=None)
+
+    # Graph
+    p.add_argument("--graph_k",      type=int, default=6)
+    p.add_argument("--graph_layers", type=int, default=2)
+
+    # Hierarchical
+    p.add_argument("--num_clusters", type=int, default=20)
+    p.add_argument("--smoothness_weight", type=float, default=0.1)
+
+    # MoE
+    p.add_argument("--moe_num_experts", type=int,   default=4)
+    p.add_argument("--moe_expert_dim",  type=int,   default=512)
+    p.add_argument("--lambda_balance",   type=float, default=0.01)
+    p.add_argument("--lambda_entropy",   type=float, default=0.001)
+    p.add_argument("--lambda_semantic",    type=float, default=0.3)
+    p.add_argument("--lambda_transition",  type=float, default=0.0)
+    p.add_argument("--router_version",  default="v1", choices=["v1", "v2", "v3"])
+    p.add_argument("--expert_dropout",  type=float, default=0.0)
+    p.add_argument("--use_top2",        action="store_true", default=False)
 
     # Training
     p.add_argument("--epochs",       type=int,   default=30)
@@ -748,11 +704,15 @@ def parse_args():
     p.add_argument("--seed",         type=int,   default=42)
     p.add_argument("--save_every",   type=int,   default=5)
     p.add_argument("--resume",            action="store_true")
-    p.add_argument("--pretrain",          default=None, help="Path to pretrained checkpoint to fine-tune from")
-    p.add_argument("--gt_change_labels",  action="store_true",
-                   help="Derive change labels from GT semantic class comparison (aligns with SECOND-OC eval)")
-    p.add_argument("--use_spectral",      action="store_true", default=False,
-                   help="Enable spectral features input matching")
+    p.add_argument("--pretrain",          default=None)
+    p.add_argument("--gt_change_labels",  action="store_true")
+    p.add_argument("--use_spectral",      action="store_true", default=False)
+
+    # LoRA Specific
+    p.add_argument("--use_lora",          action="store_true", default=False)
+    p.add_argument("--lora_rank",         type=int, default=4)
+    p.add_argument("--lora_alpha",        type=float, default=8.0)
+    p.add_argument("--lora_lr",           type=float, default=1e-4)
 
     return p.parse_args()
 

@@ -1,0 +1,25 @@
+{
+  "iou_threshold": 0.3,
+  "coverage_only": false,
+  "many_to_one": true,
+  "gt_instances_total": 146356,
+  "gt_instances_eval": 146356,
+  "coverage_pct": 1.0,
+  "Binary-Object-F1": {
+    "P": 0.5335,
+    "R": 0.4692,
+    "F1": 0.4992,
+    "TP": 10589,
+    "FP": 9261,
+    "FN": 11981
+  },
+  "Semantic-Object-F1": {
+    "P": 0.1875,
+    "R": 0.1639,
+    "F1": 0.1749,
+    "TP": 3700,
+    "FP": 16032,
+    "FN": 18870
+  },
+  "Semantic-Acc-on-TP": 0.3494
+}

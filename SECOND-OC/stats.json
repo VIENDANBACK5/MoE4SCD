@@ -1,0 +1,40 @@
+{
+  "n_images": 1694,
+  "n_change_events": 146356,
+  "change_type_dist": {
+    "semantic_change": 6091,
+    "unchanged": 123786,
+    "disappeared": 4950,
+    "appeared": 11529
+  },
+  "change_type_pct": {
+    "semantic_change": 4.2,
+    "unchanged": 84.6,
+    "disappeared": 3.4,
+    "appeared": 7.9
+  },
+  "top_class_transitions": {
+    "background\u2192buildings": 9322,
+    "buildings\u2192background": 2939,
+    "tree\u2192buildings": 2184,
+    "background\u2192tree": 1978,
+    "tree\u2192background": 1861,
+    "buildings\u2192tree": 1303,
+    "buildings\u2192playground": 1162,
+    "tree\u2192playground": 931,
+    "background\u2192other": 128,
+    "water\u2192tree": 121,
+    "tree\u2192water": 118,
+    "background\u2192water": 101,
+    "water\u2192background": 88,
+    "water\u2192buildings": 85,
+    "other\u2192background": 62,
+    "buildings\u2192water": 40,
+    "water\u2192playground": 34,
+    "tree\u2192other": 32,
+    "other\u2192buildings": 31,
+    "other\u2192tree": 25
+  },
+  "tier1_n": 14648,
+  "tier1_pct": 10.0
+}
