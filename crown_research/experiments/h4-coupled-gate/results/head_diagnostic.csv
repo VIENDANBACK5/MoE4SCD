@@ -1,0 +1,9 @@
+split,head,target,pos_rate_%,pred_mean,pred_p50,pred_p99,pred_max,mean_on_pos,mean_on_neg,AUROC,AP,AP_over_chance
+eval30,boundary B,GT seam band (r=3),6.296,0.0183,0.0013,0.498,0.8359,0.0917,0.0134,0.8395,0.2542,4.04
+eval30,canopy C,GT foreground,66.464,0.6795,0.875,0.9961,1.0,0.8682,0.3058,0.9301,0.9631,1.45
+eval30,1 - canopy C,GT seam band (r=3),6.296,0.3205,,,,0.4114,0.3143,0.6413,0.0772,1.23
+eval30,surface U,GT foreground,66.464,0.1728,0.0693,0.7695,0.8906,0.24,0.0398,0.8629,0.9237,1.39
+evalhold60,boundary B,GT seam band (r=3),6.298,0.0189,0.0011,0.5117,0.8164,0.1052,0.0131,0.8659,0.2903,4.61
+evalhold60,canopy C,GT foreground,57.519,0.5495,0.6875,0.9961,1.0,0.8475,0.1461,0.961,0.9716,1.69
+evalhold60,1 - canopy C,GT seam band (r=3),6.298,0.4505,,,,0.5285,0.4452,0.5669,0.0648,1.03
+evalhold60,surface U,GT foreground,57.519,0.1538,0.0332,0.793,0.9375,0.25,0.0236,0.9044,0.9331,1.62
