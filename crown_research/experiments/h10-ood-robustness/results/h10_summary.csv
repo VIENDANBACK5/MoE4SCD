@@ -1,0 +1,4 @@
+split,domain,old_best_AP,old_best_cell,old_common_AP,new_best_AP,new_best_cell,new_common_AP,dAP_best,dAP_rel_best_%,dAP_common,dAP_rel_common_%
+evalhold60,val (in-domain),24.116,"md=160,ma=0.35",21.239,27.281,"md=160,ma=0.35",23.968,3.165,13.1,2.729,12.8
+test2,in-domain,21.323,"md=160,ma=0.35",20.547,25.284,"md=160,ma=0.35",24.076,3.961,18.6,3.529,17.2
+test1,OUT-of-domain,2.981,"md=240,ma=0.5",2.863,5.455,"md=280,ma=0.5",4.691,2.474,83.0,1.828,63.8

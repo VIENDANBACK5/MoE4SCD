@@ -1,0 +1,91 @@
+split,domain,checkpoint,min_dist,min_apex,COCO AP,AP50,F1@50
+evalhold60,val (in-domain),old (best_sharp),160,0.35,24.116,57.337,64.144
+evalhold60,val (in-domain),old (best_sharp),160,0.5,23.848,56.185,65.537
+evalhold60,val (in-domain),old (best_sharp),160,0.65,23.016,52.229,64.569
+evalhold60,val (in-domain),old (best_sharp),200,0.35,21.49,50.38,61.933
+evalhold60,val (in-domain),old (best_sharp),200,0.5,21.239,49.668,62.451
+evalhold60,val (in-domain),old (best_sharp),200,0.65,20.612,47.393,61.559
+evalhold60,val (in-domain),old (best_sharp),240,0.35,18.778,43.425,57.955
+evalhold60,val (in-domain),old (best_sharp),240,0.5,18.462,42.568,57.894
+evalhold60,val (in-domain),old (best_sharp),240,0.65,17.715,40.115,56.033
+evalhold60,val (in-domain),old (best_sharp),280,0.35,16.093,36.875,53.204
+evalhold60,val (in-domain),old (best_sharp),280,0.5,16.062,36.119,53.078
+evalhold60,val (in-domain),old (best_sharp),280,0.65,15.353,34.306,51.507
+evalhold60,val (in-domain),old (best_sharp),320,0.35,14.602,32.588,49.531
+evalhold60,val (in-domain),old (best_sharp),320,0.5,14.376,31.725,49.162
+evalhold60,val (in-domain),old (best_sharp),320,0.65,13.994,30.829,47.806
+evalhold60,val (in-domain),H6 (calibrated),160,0.35,27.281,59.539,66.717
+evalhold60,val (in-domain),H6 (calibrated),160,0.5,26.839,58.057,66.975
+evalhold60,val (in-domain),H6 (calibrated),160,0.65,25.866,55.298,66.359
+evalhold60,val (in-domain),H6 (calibrated),200,0.35,24.177,52.038,64.271
+evalhold60,val (in-domain),H6 (calibrated),200,0.5,23.968,51.301,64.346
+evalhold60,val (in-domain),H6 (calibrated),200,0.65,23.67,50.291,63.7
+evalhold60,val (in-domain),H6 (calibrated),240,0.35,20.842,43.579,58.619
+evalhold60,val (in-domain),H6 (calibrated),240,0.5,20.612,42.767,58.678
+evalhold60,val (in-domain),H6 (calibrated),240,0.65,20.258,42.103,58.025
+evalhold60,val (in-domain),H6 (calibrated),280,0.35,18.299,37.999,55.089
+evalhold60,val (in-domain),H6 (calibrated),280,0.5,18.158,38.013,54.837
+evalhold60,val (in-domain),H6 (calibrated),280,0.65,17.509,36.174,53.418
+evalhold60,val (in-domain),H6 (calibrated),320,0.35,16.145,33.414,50.679
+evalhold60,val (in-domain),H6 (calibrated),320,0.5,15.918,32.559,50.119
+evalhold60,val (in-domain),H6 (calibrated),320,0.65,15.392,30.752,48.518
+test2,in-domain,old (best_sharp),160,0.35,21.323,49.99,60.645
+test2,in-domain,old (best_sharp),160,0.5,21.291,49.963,63.847
+test2,in-domain,old (best_sharp),160,0.65,18.693,42.21,58.905
+test2,in-domain,old (best_sharp),200,0.35,20.853,48.275,61.344
+test2,in-domain,old (best_sharp),200,0.5,20.547,47.63,62.469
+test2,in-domain,old (best_sharp),200,0.65,18.32,41.517,58.17
+test2,in-domain,old (best_sharp),240,0.35,17.984,41.209,57.451
+test2,in-domain,old (best_sharp),240,0.5,17.704,40.346,57.083
+test2,in-domain,old (best_sharp),240,0.65,16.251,36.129,54.004
+test2,in-domain,old (best_sharp),280,0.35,16.011,35.428,53.178
+test2,in-domain,old (best_sharp),280,0.5,15.727,34.605,52.582
+test2,in-domain,old (best_sharp),280,0.65,14.759,31.953,49.757
+test2,in-domain,old (best_sharp),320,0.35,14.119,30.817,48.449
+test2,in-domain,old (best_sharp),320,0.5,14.082,31.025,48.268
+test2,in-domain,old (best_sharp),320,0.65,13.047,28.514,45.254
+test2,in-domain,H6 (calibrated),160,0.35,25.284,54.409,63.987
+test2,in-domain,H6 (calibrated),160,0.5,25.239,53.179,65.525
+test2,in-domain,H6 (calibrated),160,0.65,23.229,48.361,63.169
+test2,in-domain,H6 (calibrated),200,0.35,24.768,52.154,64.865
+test2,in-domain,H6 (calibrated),200,0.5,24.076,49.767,64.326
+test2,in-domain,H6 (calibrated),200,0.65,22.456,46.564,62.202
+test2,in-domain,H6 (calibrated),240,0.35,21.094,43.392,58.954
+test2,in-domain,H6 (calibrated),240,0.5,20.857,42.662,58.844
+test2,in-domain,H6 (calibrated),240,0.65,19.858,40.11,57.281
+test2,in-domain,H6 (calibrated),280,0.35,18.197,37.079,54.227
+test2,in-domain,H6 (calibrated),280,0.5,17.891,36.241,53.69
+test2,in-domain,H6 (calibrated),280,0.65,17.106,34.515,52.147
+test2,in-domain,H6 (calibrated),320,0.35,15.648,31.779,49.043
+test2,in-domain,H6 (calibrated),320,0.5,15.335,30.897,48.402
+test2,in-domain,H6 (calibrated),320,0.65,14.615,29.15,46.509
+test1,OUT-of-domain,old (best_sharp),160,0.35,2.234,8.941,21.862
+test1,OUT-of-domain,old (best_sharp),160,0.5,2.479,9.155,24.101
+test1,OUT-of-domain,old (best_sharp),160,0.65,2.476,8.664,19.976
+test1,OUT-of-domain,old (best_sharp),200,0.35,2.614,9.841,22.303
+test1,OUT-of-domain,old (best_sharp),200,0.5,2.863,10.369,24.71
+test1,OUT-of-domain,old (best_sharp),200,0.65,2.481,8.683,20.032
+test1,OUT-of-domain,old (best_sharp),240,0.35,2.876,10.347,22.853
+test1,OUT-of-domain,old (best_sharp),240,0.5,2.981,10.556,25.448
+test1,OUT-of-domain,old (best_sharp),240,0.65,2.608,9.03,20.222
+test1,OUT-of-domain,old (best_sharp),280,0.35,2.968,11.142,26.247
+test1,OUT-of-domain,old (best_sharp),280,0.5,2.911,10.703,26.829
+test1,OUT-of-domain,old (best_sharp),280,0.65,2.317,8.419,20.241
+test1,OUT-of-domain,old (best_sharp),320,0.35,2.73,10.425,25.208
+test1,OUT-of-domain,old (best_sharp),320,0.5,2.556,9.678,25.362
+test1,OUT-of-domain,old (best_sharp),320,0.65,2.108,7.736,19.1
+test1,OUT-of-domain,H6 (calibrated),160,0.35,3.456,12.086,25.297
+test1,OUT-of-domain,H6 (calibrated),160,0.5,4.322,15.676,31.098
+test1,OUT-of-domain,H6 (calibrated),160,0.65,4.466,13.396,28.423
+test1,OUT-of-domain,H6 (calibrated),200,0.35,4.438,15.59,29.295
+test1,OUT-of-domain,H6 (calibrated),200,0.5,4.691,17.252,32.063
+test1,OUT-of-domain,H6 (calibrated),200,0.65,4.426,13.632,28.898
+test1,OUT-of-domain,H6 (calibrated),240,0.35,5.173,16.777,31.816
+test1,OUT-of-domain,H6 (calibrated),240,0.5,5.454,17.22,32.332
+test1,OUT-of-domain,H6 (calibrated),240,0.65,4.757,13.826,29.282
+test1,OUT-of-domain,H6 (calibrated),280,0.35,5.436,17.257,33.148
+test1,OUT-of-domain,H6 (calibrated),280,0.5,5.455,16.73,32.413
+test1,OUT-of-domain,H6 (calibrated),280,0.65,4.726,13.791,29.226
+test1,OUT-of-domain,H6 (calibrated),320,0.35,5.225,16.238,32.151
+test1,OUT-of-domain,H6 (calibrated),320,0.5,5.098,15.444,31.098
+test1,OUT-of-domain,H6 (calibrated),320,0.65,4.369,12.689,27.974

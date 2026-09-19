@@ -1,0 +1,7 @@
+split,checkpoint,B_on_seam,B_off_seam,B_separation,B_AUROC,C_AUROC,C_on_fg
+evalhold60,old (best_sharp),0.1052,0.0131,8.017,0.8659,0.961,0.8475
+evalhold60,H6 (calibrated),0.1858,0.0414,4.4848,0.8722,0.9616,0.8595
+test2,old (best_sharp),0.099,0.0137,7.2324,0.8531,0.9291,0.8504
+test2,H6 (calibrated),0.1791,0.0467,3.8392,0.8569,0.9276,0.8509
+test1,old (best_sharp),0.0566,0.0065,8.6905,0.7664,0.9211,0.7283
+test1,H6 (calibrated),0.1075,0.0286,3.7635,0.7784,0.9052,0.7413

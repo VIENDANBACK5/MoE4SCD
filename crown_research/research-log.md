@@ -249,3 +249,35 @@ multi-factor shift, not the cause. A scale-only remedy may not help, so the next
 experiment must separate the factors — cheapest is test-time rescaling of TestSet1.
 
 Both corrections applied in place to the affected analyses rather than left standing.
+
+## 2026-09-20 — H9 and H10: the domain gap, decomposed
+
+**H9** (test-time rescaling) came back a clean, well-powered null on its main
+prediction. Both controls behaved: TestSet1's optimum landed *exactly* on the
+scale-matching factor s = 0.672, and the TestSet2 control was perfectly flat (delta
+0.00, rescaling strictly harmful). So the effect measured really is the scale axis —
+and it recovers only **7.3%** of the gap. ~93% of the transfer failure is appearance and
+structure. Crown-diameter framing dropped as an explanation of the domain gap;
+multi-scale training deprioritised.
+
+**H10** resolved the confound H9 logged rather than leaving it hanging. Both checkpoints
+swept the same 15-cell decode grid on the same crops. **P3 failed — and P3 was my bet
+against my own earlier observation.** The +83% was not a decode artefact: at matched
+decode it is +83.0% out-of-domain against +18.6% in-domain, and the in/out ratio narrows
+7.15x -> 4.63x. First intervention in the project to move that ratio.
+
+**The mechanism was not what I assumed.** I expected calibrated heads to degrade more
+gracefully. They do not: both lose the same ~40% of seam magnitude under the shift and
+their AUROC degrades identically. What differs is the absolute level — the flood runs on
+`boundary*255`, so out-of-domain the old head sits at ~14/255 and the calibrated one at
+~27/255. **There is an absolute usability floor; the shift costs both heads the same and
+only one can afford it.** Confirmed by the old head's seam/background *ratio* actually
+being higher out-of-domain (8.69 vs 7.23) — ranking is fine, magnitude is not — and by
+the canopy head barely degrading.
+
+This makes H6's pre-registered fallback (widen the seam target) the highest-value
+remaining training change: it is now a robustness lever, not just an accuracy one.
+
+Also caught a real bug: `pred_cache`'s CLI ignored `--ckpt` and always loaded
+`best_sharp`, so H10's first caches were duplicates. Verified by diffing cached boundary
+means before trusting them. Added to Lessons.

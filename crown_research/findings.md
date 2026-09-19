@@ -223,6 +223,38 @@ Every improvement produced here — +8.0 AP from the decode constants, +2.5 from
 calibrated head — is smaller than that gap. It belongs in any results table as a
 headline pair, per the project's standing constraint in `CLAUDE.md`.
 
+**16. Boundary calibration is an out-of-domain robustness intervention, and the reason
+is an absolute usability floor in the decoder.**
+At matched decode settings on the same crops, the H6 calibrated checkpoint gains
+**+18.6%** AP in-domain (test2) but **+83.0%** out-of-domain (test1) — 4.5x more in
+relative terms. The in/out ratio narrows from **7.15x to 4.63x**, the first thing in
+this project to move it at all.
+
+The mechanism is *not* graceful degradation, which is what I assumed. Measured directly,
+both checkpoints lose the **same ~40%** of their seam magnitude under the shift
+(old 0.099 → 0.057, H6 0.179 → 0.108) and their AUROC degrades identically. What differs
+is the absolute level they land on. The flood runs on `boundary * 255`, so:
+
+| checkpoint | out-of-domain barrier height |
+|---|---|
+| old | ~14 / 255 |
+| H6 | ~27 / 255 |
+
+**Below some ridge height the watershed cannot hold a boundary at all.** The shift costs
+both heads the same 40%; only one could afford it. Confirmed by two details: the old
+head's seam-to-background *ratio* is actually higher out-of-domain (8.69 vs 7.23), so
+ranking is not the problem; and the canopy head barely degrades (AUROC 0.929 → 0.921),
+so the fragility is specific to the collapsed head.
+
+This reframes finding 11's leftover. Pushing seam magnitude past H6's 0.186 toward the
+0.40 originally aimed at is now a **robustness** lever, not just an accuracy one — and
+it makes the pre-registered H6 fallback (widen the seam target) the highest-value
+remaining training change.
+
+Caveat: TestSet1's absolute numbers are small (2.98 → 5.46), so +83% is change on a low
+base and must be quoted with absolutes beside it. The ordering holds at all 15 decode
+cells, but this is one out-of-domain split of one benchmark.
+
 ## Lessons and constraints
 
 - `min_distance` 144-160 px, `min_apex` 0.50, `min_canopy` 0.25, `min_area` 25 is the
@@ -280,10 +312,13 @@ Arc in COCO AP: published 15.81 -> H1 tuned 23.85 -> H5 merge 24.32 -> **H6 26.8
    it accounts for ~7%. See finding 14. The live version of this question is now
    **which appearance factor dominates** (colour/sensor response, illumination and
    shadow, or canopy structure), and whether photometric augmentation closes any of it.
-8. **Does boundary calibration improve out-of-domain robustness disproportionately?**
-   TestSet1 went 2.98 -> 5.46 AP between the old and calibrated checkpoints (+83%) vs
-   ~+10% in-domain — but the two runs used different suppression radii, so this is
-   confounded. Needs a paired re-run at identical decode settings before it is claimed.
+8. ~~Does boundary calibration improve out-of-domain robustness disproportionately?~~
+   **ANSWERED (H10):** yes, +83.0% OOD vs +18.6% in-domain at matched decode, via an
+   absolute usability floor rather than graceful degradation. See finding 16.
+9. **Does pushing seam magnitude further buy disproportionately more out-of-domain?**
+   The floor mechanism predicts it should. This is now the highest-value remaining
+   training change — widen the seam target (3 px at sigma 0.8 is likely too thin to
+   supervise) rather than reweight the loss further.
 7. **Does a learned merge criterion on H6's improved basins close any of the gap to
    TreeCoG?** H2's threshold merge failed because B was uninformative in magnitude, and
    TreeCoG shows a learned merger over a good over-segmentation reaches AP 53.21.
