@@ -1,0 +1,9 @@
+split,factor,main_effect_ap50,main_effect_sq
+eval30 (tune),seed,8.36,-0.265
+eval30 (tune),energy,23.145,15.717
+eval30 (tune),canopy,-3.547,4.513
+eval30 (tune),seed x canopy interaction,-8.354,
+evalhold60 (hold-out),seed,6.974,0.852
+evalhold60 (hold-out),energy,8.665,14.408
+evalhold60 (hold-out),canopy,11.683,6.041
+evalhold60 (hold-out),seed x canopy interaction,-6.111,
