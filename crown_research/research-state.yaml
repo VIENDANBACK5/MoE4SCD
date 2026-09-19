@@ -111,7 +111,7 @@ hypotheses:
 
   - id: H7
     name: "Scale-invariant apex head for seeding"
-    status: LOCKED, queued behind H6 (needs its checkpoint as warm start)
+    status: DONE — 3/3 refuted; apex target too sparse to learn (Tversky flat at 1.00)
     priority: 2
     statement: >
       Missed crowns are never_lit small crowns (median 1,899 px vs 24,382 px overall),
@@ -130,6 +130,18 @@ hypotheses:
       "suppression radius ~ mean crown diameter".
     prediction: "frozen (160,0.50) beats published by >=10 F1@50 on both test splits; each split's optimum within +/-30% of its measured crown diameter; frozen within 2 F1@50 of per-split optimum"
 
+generalisation_gap:
+  source: "H10, matched decode, COCO AP"
+  old_checkpoint: "in-domain 21.32 / out-of-domain 2.98 = 7.15x"
+  calibrated_checkpoint: "in-domain 25.28 / out-of-domain 5.46 = 4.63x"
+  mechanism: >
+    Not graceful degradation — both checkpoints lose the same ~40% of seam magnitude
+    under the shift with identical AUROC loss. The flood runs on boundary*255, so the
+    old head lands at ~14/255 out-of-domain and the calibrated one at ~27/255. There is
+    an ABSOLUTE USABILITY FLOOR below which the watershed cannot hold a boundary; the
+    shift costs both heads the same and only one can afford it.
+  scale_contribution: "H9: crown scale explains only 7.3% of the gap; ~93% is appearance/structure"
+
 headroom_decomposition:
   source: "H3 factorial on evalhold60"
   boundary_and_canopy_quality: "65.5 -> 78.0 F1@50 (~+12) — addressed by H6"
@@ -140,4 +152,4 @@ protocol_discipline: "Every hypothesis committed to git with numeric predictions
 known_issues:
   - "evaluate_metrics reports F1 at a fixed IoU but labels it ap50 — rename or replace with true COCO AP before publication."
   - "The historical 30-crop eval subset is unrepresentatively hard (baseline 31.33 there vs 44.29 on 60 disjoint crops); previously published cross-paradigm numbers are pessimistic by ~13 points."
-next_action: "H7 apex head (warm start from best_calibrated_watershed.pth); then scale-generalisation for TestSet1"
+next_action: "H11 (running, matched-epoch control for H7 confound); then H12 (widen seam target — tests H10 floor mechanism); then write up"

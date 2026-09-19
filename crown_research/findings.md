@@ -255,6 +255,27 @@ Caveat: TestSet1's absolute numbers are small (2.98 → 5.46), so +83% is change
 base and must be quoted with absolutes beside it. The ordering holds at all 15 decode
 cells, but this is one out-of-domain split of one benchmark.
 
+**17. The apex-head remedy failed the same way the disease did — the target was too
+sparse to learn.**
+H7 added the discarded scale-invariant apex target as a fourth head. All three
+predictions failed: the head emits **0.40 seeds per crown** and leaves **60%** of crowns
+unlit (against 18.5% for surface seeding), scoring AP 17.58 vs 29.07. Its loss went
+1.745 → 1.015 → **1.003** and flattened — a Tversky term at 1.0 means essentially **zero
+overlap** with the target.
+
+The cause is sparsity. The seam band that collapsed the original boundary head covers
+~6% of pixels; a fixed-sigma Gaussian centroid peak covers a small fraction of **one**
+percent. The property that made the apex target attractive — a peak that does not grow
+with the crown — is also what makes it unlearnable here.
+
+**The diagnosis in finding 6 is untouched**; the specific remedy is refuted. If pursued,
+change the target before the loss: a sigma that scales with crown size but a **peak
+value** that does not, which keeps scale-invariance at the maximum while giving the head
+enough positive area. That is the same conclusion H6 reached from the other direction —
+**widen the target rather than reweight the loss further**, which is now the single
+recurring lesson across three separate head failures (boundary, apex, and H5's rank
+attempt).
+
 ## Lessons and constraints
 
 - `min_distance` 144-160 px, `min_apex` 0.50, `min_canopy` 0.25, `min_area` 25 is the
