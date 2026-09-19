@@ -120,3 +120,6 @@ crown_segmentation_research/papers/
 
 # Research workspace experiments are tracked (overrides the generic experiments/ rule)
 !crown_research/experiments/
+
+# Cached network outputs for research sweeps (regenerable)
+crown_research/data/cache/
