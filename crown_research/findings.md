@@ -304,6 +304,32 @@ the ranking, its gradient carries crown-centre localisation into the shared trun
 is more than the entire H5 decode-side programme and about half of H6's gain, costs
 nothing at inference, and uses a target that already existed in the codebase.
 
+**20. Widening the target does what reweighting the loss could not.**
+H12 dilated the seam band from ~3 px to ~7 px (positive rate 2.70% → 7.47% at
+threshold 0.1, peak values unchanged) and changed nothing else. Mean predicted B on
+true seam pixels:
+
+| split | H11 (narrow target, matched epochs) | H12 (wide target) |
+|---|---:|---:|
+| evalhold60 | 0.1858 | **0.3567** |
+| test2 (in-domain) | 0.1797 | **0.3520** |
+| test1 (out-of-domain) | 0.1134 | **0.2421** |
+
+Magnitude nearly doubled again and now approaches the 0.40 that H6's success criterion
+originally aimed at, **with ranking preserved** (AUROC 0.8707 → 0.8728 in-domain). This
+is the third confirmation of the recurring lesson, and the cleanest: class-balanced
+weighting took the boundary head 0.105 → 0.186; widening the target took it
+0.186 → 0.357 in the same number of epochs.
+
+In barrier-height terms — the quantity H10 showed actually matters — out-of-domain goes
+from **29/255 to 62/255**, far clear of the usability floor that the original head fell
+through at 14/255.
+
+Note the separation ratio keeps falling (8.0 → 4.5 → 3.3): every magnitude intervention
+so far raises the background alongside the signal. Ranking has not improved at any step;
+only the absolute level has. That is consistent with finding 18 — these heads know where
+the structure is and the interventions are only changing how loudly they say it.
+
 ## Lessons and constraints
 
 - `min_distance` 144-160 px, `min_apex` 0.50, `min_canopy` 0.25, `min_area` 25 is the
