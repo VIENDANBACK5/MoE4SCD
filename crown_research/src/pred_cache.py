@@ -90,5 +90,6 @@ if __name__ == "__main__":
     ap.add_argument("--tag", type=str, default="eval30")
     ap.add_argument("--split", type=str, default="eval")
     ap.add_argument("--start", type=int, default=0)
+    ap.add_argument("--ckpt", type=str, default=CKPT)
     a = ap.parse_args()
-    build_cache(num_crops=a.num_crops, tag=a.tag, split=a.split, start=a.start)
+    build_cache(num_crops=a.num_crops, tag=a.tag, split=a.split, start=a.start, ckpt=a.ckpt)
