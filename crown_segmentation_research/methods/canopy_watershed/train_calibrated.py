@@ -186,12 +186,16 @@ def main():
     parser.add_argument("--epochs", type=int, default=12)
     parser.add_argument("--batch_size", type=int, default=2)
     parser.add_argument("--lr", type=float, default=1e-4)
+    # Optional overrides so a matched-epoch continuation control can reuse this exact
+    # script without forking it (H11). Defaults preserve the original H6 behaviour.
+    parser.add_argument("--init_ckpt", type=str, default=None)
+    parser.add_argument("--out_name", type=str, default="best_calibrated_watershed.pth")
     parser.add_argument("--out_dir", type=str, default="DeadTrees/experiments/canopy_watershed")
     args = parser.parse_args()
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    best_ckpt_path = out_dir / "best_calibrated_watershed.pth"
+    best_ckpt_path = out_dir / args.out_name
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"[Stage 2 Training] Initializing on {device}...", flush=True)
@@ -222,7 +226,7 @@ def main():
     model = CanopyWatershedNet(pretrained=True).to(device)
 
     # Initialize from previous best watershed weights if available
-    init_ckpt = out_dir / "best_sharp_watershed.pth"
+    init_ckpt = Path(args.init_ckpt) if args.init_ckpt else out_dir / "best_sharp_watershed.pth"
     if init_ckpt.exists():
         print(f"[Stage 2 Training] Warm-starting weights from {init_ckpt}...", flush=True)
         ckpt = torch.load(init_ckpt, map_location=device, weights_only=False)

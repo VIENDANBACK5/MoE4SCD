@@ -1,0 +1,3 @@
+seed_field,min_dist,min_apex,missed_%,never_lit_%,n_gt
+surface,140,0.35,20.98,18.48,1039
+apex,100,0.1,60.06,60.06,1039
