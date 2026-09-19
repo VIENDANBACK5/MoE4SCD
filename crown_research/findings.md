@@ -199,6 +199,30 @@ say so plainly.
   midday. Crown scale (D 314 vs 211 px) is one symptom of a multi-factor shift, not the
   cause. A scale-only remedy may not help.
 
+**14. Crown scale explains only ~7% of the out-of-domain collapse.**
+Test-time rescaling of TestSet1 (fully convolutional network, no retraining) peaked
+**exactly** at the scale-matching factor `s = D_train/D_test1 = 0.672`, lifting COCO AP
+5.46 -> 6.91, while the TestSet2 control was **perfectly flat** (s = 1.0 optimal,
+rescaling strictly harmful: 25.24 -> 19.33 -> 12.00). Both controls behaving correctly
+means the measured effect is the scale axis and nothing else — and it recovers
+
+```
+(6.91 - 5.46) / (25.24 - 5.46) = 7.3% of the domain gap
+```
+
+So **~93% of the transfer failure is appearance and structure**, not geometry: city-park
+canopy rather than managed forest, a different sensor's colour response, and low-sun
+illumination with long shadows. The crown-diameter framing is now **dropped** as an
+explanation of the domain gap (it remains the correct account of the *decode constant*,
+which is a separate claim). Multi-scale training targets the 7% and is deprioritised;
+photometric augmentation or domain adaptation is the lever.
+
+**15. The generalisation gap is larger than everything this project has fixed.**
+In-domain AP 25.24 (TestSet2) vs out-of-domain AP 5.46 (TestSet1) is a **4.6x drop**.
+Every improvement produced here — +8.0 AP from the decode constants, +2.5 from the
+calibrated head — is smaller than that gap. It belongs in any results table as a
+headline pair, per the project's standing constraint in `CLAUDE.md`.
+
 ## Lessons and constraints
 
 - `min_distance` 144-160 px, `min_apex` 0.50, `min_canopy` 0.25, `min_area` 25 is the
@@ -252,13 +276,14 @@ Arc in COCO AP: published 15.81 -> H1 tuned 23.85 -> H5 merge 24.32 -> **H6 26.8
    finding 6.
 4. ~~Does the tuned setting hold across splits?~~ **ANSWERED (H8):** yes — within 1.35
    F1@50 of each split's own optimum on TestSet1 and TestSet2. See finding 10.
-6. **Highest priority: why does the model collapse on TestSet1, and which factor
-   dominates?** It is the benchmark's designated out-of-domain split and confounds
-   site type, sensor, platform, altitude, date and illumination — crown scale is only
-   one symptom. The cheapest separating experiment is **test-time rescaling of TestSet1
-   imagery to the training crown scale**: if that recovers most of the 7x AP gap, scale
-   dominates and multi-scale training is the fix; if it does not, the shift is
-   photometric/structural and augmentation or domain adaptation is needed instead.
+6. ~~Which factor dominates the TestSet1 collapse?~~ **ANSWERED (H9):** not scale —
+   it accounts for ~7%. See finding 14. The live version of this question is now
+   **which appearance factor dominates** (colour/sensor response, illumination and
+   shadow, or canopy structure), and whether photometric augmentation closes any of it.
+8. **Does boundary calibration improve out-of-domain robustness disproportionately?**
+   TestSet1 went 2.98 -> 5.46 AP between the old and calibrated checkpoints (+83%) vs
+   ~+10% in-domain — but the two runs used different suppression radii, so this is
+   confounded. Needs a paired re-run at identical decode settings before it is claimed.
 7. **Does a learned merge criterion on H6's improved basins close any of the gap to
    TreeCoG?** H2's threshold merge failed because B was uninformative in magnitude, and
    TreeCoG shows a learned merger over a good over-segmentation reaches AP 53.21.
