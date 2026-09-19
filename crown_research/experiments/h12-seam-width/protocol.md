@@ -34,7 +34,10 @@ bound_wide = F.max_pool2d(bound_tgt, kernel_size=5, stride=1, padding=2)
 ```
 
 A 5x5 morphological dilation takes the ~3 px seam band to ~7 px while preserving peak
-values, roughly tripling positive area (~6% → ~15%). Done on GPU in the loop so
+values. **Measured before launching** on four eval crops: positive rate (target > 0.1)
+goes **2.70% → 7.47%**, a 2.8x increase, with the peak value unchanged (0.886 both
+ways). (My initial estimate in this protocol was "~6% → ~15%" at an unstated threshold;
+the measured figures above are the ones to hold me to.) Done on GPU in the loop so
 `dataset.py`, `targets_sharp.py`, `train_sharp.py` and `train_calibrated.py` all stay
 untouched and every earlier baseline stays reproducible.
 
