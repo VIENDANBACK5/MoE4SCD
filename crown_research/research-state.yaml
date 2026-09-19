@@ -6,7 +6,7 @@ question: >
   the learned boundary energy field, or contour geometry — and what is the
   highest-leverage intervention?
 created: 2026-09-19
-status: bootstrap
+status: active — pivoted from decode-side to training-side after H5
 
 baseline:
   method: "Flat-Basin Watershed (Unrefined)"
@@ -22,11 +22,23 @@ baseline:
   dao_ED: 0.6134
 
 best_so_far:
-  method: "Mode B: Organic MorphSnake Snapped"
-  mAP50: 32.99
-  PQ: 22.85
-  BIoU: 12.89
-  dao_ED: 0.5928
+  method: "H1 tuned decode (md=160, ma=0.50) + H5 percentile seam merge (q=50, L=30)"
+  split: "evalhold60 (60 held-out crops, never tuned on)"
+  mAP50: 66.91
+  mAP75: 30.45
+  PQ: 48.82
+  SQ: 72.78
+  BIoU: 12.84
+  dao_ED: 0.638
+  vs_published_settings_on_same_split: "44.29 mAP50 / 31.01 PQ"
+
+ceiling:
+  method: "H3 full oracle — same unmodified decoder, all three heads correct"
+  split: "evalhold60"
+  mAP50: 97.30
+  mAP75: 93.10
+  PQ: 89.69
+  note: "~30 points of headroom, all of it in the network heads, none in the decoder"
 
 primary_metric: "mAP@50 on 30 BAMFORESTS val crops (higher better)"
 secondary_metrics: ["PQ", "RQ", "Dao ED (lower better)", "Boundary-IoU"]
@@ -34,8 +46,8 @@ secondary_metrics: ["PQ", "RQ", "Dao ED (lower better)", "Boundary-IoU"]
 hypotheses:
   - id: H0
     name: "Error-budget decomposition (2x2 oracle ablation)"
-    status: planned
-    priority: 1
+    status: DONE — 3/3 predictions confirmed
+    priority: done
     statement: >
       PQ = SQ x RQ. SQ=68% is respectable; RQ=31% is the bottleneck. RQ failure is
       either (a) wrong number/placement of watershed markers, or (b) a boundary
@@ -48,8 +60,8 @@ hypotheses:
       dominates, the learned boundary head is the bottleneck.
   - id: H1
     name: "Seed-count calibration"
-    status: planned
-    priority: 2
+    status: DONE — 2/3 refuted; adaptive radius dropped, mis-calibrated constant found (+21.2)
+    priority: done
     statement: >
       Dao OS=0.47 / US=0.80 means matched predictions cover only 47% of their GT crown
       while being 80% inside it => systematic OVER-segmentation (crowns split ~2x).
@@ -57,12 +69,45 @@ hypotheses:
     prediction: "Scale-adaptive seed suppression raises OS toward 0.65 and mAP50 by >5 pts."
   - id: H2
     name: "Learned region-adjacency merging"
-    status: planned
-    priority: 3
+    status: DONE — 3/3 refuted; merge framework ceiling is 69.74
+    priority: done
     statement: >
       Even with good seeds, residual fragments can be repaired post-hoc by merging
       adjacent basins whose shared seam has low predicted boundary evidence.
     prediction: "RAG merge on mean-seam-boundary threshold lifts mAP50 by >3 pts over flat-basin."
 
+  - id: H3
+    name: "Canopy gate as third factor (2^3 factorial)"
+    status: DONE — 2/3 refuted; heads non-separable, decoder reaches 97.30 with correct heads
+    priority: done
+  - id: H4
+    name: "Decode-time consistency coupling (canopy - lambda*B)"
+    status: DONE — null result; flat across lambda, diagnostic of a collapsed B
+    priority: done
+  - id: H5
+    name: "Boundary-head calibration (rank / percentile use)"
+    status: DONE — 2/3 refuted; rank transform amplifies noise, percentile merge +1.4
+    priority: done
+  - id: H6
+    name: "Class-balanced boundary loss (first training hypothesis)"
+    status: planned
+    priority: 1
+    statement: >
+      The boundary head scores AUROC 0.866 against GT seams but has median output
+      0.0011 and averages 0.105 on true seam pixels — it learned the ranking and lost
+      its magnitude to the ~6% positive rate of the seam class. Every downstream use so
+      far has been an absolute-magnitude use (H2's merge threshold, H4's gate coupling)
+      and each failed for exactly that reason. Retrain with Tversky/focal on the seam
+      band, or seam-restricted BCE with positive weighting.
+    prediction: >
+      Mean B on true seam pixels rises above ~0.4 (from 0.105) while AUROC holds at or
+      above 0.866; H2's absolute-threshold merge and H4's gate coupling then become
+      non-null for the first time.
+    success_criterion: "calibration, not ranking — mean_on_pos > 0.4"
+
 decisions_pending: []
-next_action: "Run H0 2x2 oracle ablation on 30 val crops"
+protocol_discipline: "Every hypothesis committed to git with numeric predictions before running; see git log for research(protocol) commits preceding each research(results) commit."
+known_issues:
+  - "evaluate_metrics reports F1 at a fixed IoU but labels it ap50 — rename or replace with true COCO AP before publication."
+  - "The historical 30-crop eval subset is unrepresentatively hard (baseline 31.33 there vs 44.29 on 60 disjoint crops); previously published cross-paradigm numbers are pessimistic by ~13 points."
+next_action: "H6 — lock protocol, then retrain the boundary head with a class-balanced objective"

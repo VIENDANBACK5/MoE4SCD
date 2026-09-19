@@ -1,0 +1,373 @@
+<title>Crown Segmentation Error Budget</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap">
+<style>
+  :root {
+    --ground: #eef1ec;
+    --surface: #ffffff;
+    --surface-2: #f6f8f5;
+    --ink: #161a15;
+    --muted: #5d6a5c;
+    --faint: #8b978a;
+    --line: #d7ded4;
+    --line-strong: #bcc7b8;
+    --accent: #1f6f4a;
+    --accent-soft: #d8ebe0;
+    --ceiling: #9a6a12;
+    --ceiling-soft: #f3e6cb;
+    --refuted: #9e3b2f;
+    --refuted-soft: #f6dcd8;
+    --confirmed: #1f6f4a;
+    --shadow: 0 1px 2px rgba(22, 26, 21, .06), 0 8px 24px rgba(22, 26, 21, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #101310;
+      --surface: #1a1e19;
+      --surface-2: #212620;
+      --ink: #e6ebe4;
+      --muted: #9fac9c;
+      --faint: #788576;
+      --line: #2c332b;
+      --line-strong: #3d463b;
+      --accent: #5cbd8b;
+      --accent-soft: #1b3b2b;
+      --ceiling: #d9a749;
+      --ceiling-soft: #3a2f16;
+      --refuted: #e08076;
+      --refuted-soft: #3d201c;
+      --confirmed: #5cbd8b;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #101310;
+    --surface: #1a1e19;
+    --surface-2: #212620;
+    --ink: #e6ebe4;
+    --muted: #9fac9c;
+    --faint: #788576;
+    --line: #2c332b;
+    --line-strong: #3d463b;
+    --accent: #5cbd8b;
+    --accent-soft: #1b3b2b;
+    --ceiling: #d9a749;
+    --ceiling-soft: #3a2f16;
+    --refuted: #e08076;
+    --refuted-soft: #3d201c;
+    --confirmed: #5cbd8b;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .3);
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.62;
+    padding-inline: 20px;
+    padding-block: 0;
+  }
+  .wrap { max-width: 860px; margin-inline: auto; padding-block: 56px 96px; }
+  .prose { max-width: 68ch; }
+
+  h1, h2, h3 { font-family: "Newsreader", Georgia, serif; font-weight: 600; text-wrap: balance; line-height: 1.18; }
+  h1 { font-size: clamp(2.1rem, 6vw, 3.1rem); letter-spacing: -.015em; margin: 0 0 .4em; }
+  h2 { font-size: clamp(1.45rem, 3.6vw, 1.9rem); margin: 0 0 .5em; }
+  h3 { font-size: 1.14rem; margin: 0 0 .35em; }
+  p { margin: 0 0 1em; }
+  a { color: var(--accent); }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--faint); margin: 0 0 1.2em;
+  }
+  .lede { font-size: 1.14rem; color: var(--muted); }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  section { margin-block: 64px 0; }
+  section > * + * { margin-top: 0; }
+
+  hr { border: 0; border-top: 1px solid var(--line); margin-block: 0; }
+
+  /* headline figures */
+  .headline {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1px; background: var(--line); border: 1px solid var(--line);
+    border-radius: 3px; overflow: hidden; margin-block: 36px;
+  }
+  .headline div { background: var(--surface); padding: 22px 20px; }
+  .headline .k {
+    font-family: "IBM Plex Mono", monospace; font-size: .68rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--faint);
+  }
+  .headline .v {
+    font-family: "IBM Plex Mono", monospace; font-size: 2rem; font-weight: 600;
+    font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 8px;
+  }
+  .headline .n { font-size: .84rem; color: var(--muted); margin-top: 6px; }
+  .v.up { color: var(--accent); }
+  .v.cap { color: var(--ceiling); }
+
+  /* tables */
+  .scroll { overflow-x: auto; margin-block: 22px; border: 1px solid var(--line); border-radius: 3px; }
+  table { border-collapse: collapse; width: 100%; font-size: .88rem; background: var(--surface); }
+  th, td { padding: 9px 13px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  thead th {
+    font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--faint); font-weight: 500;
+    background: var(--surface-2); position: sticky; top: 0;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.num { text-align: right; font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+  tr.best td { background: var(--accent-soft); font-weight: 600; }
+  tr.ceil td { background: var(--ceiling-soft); }
+  td.lead { white-space: normal; min-width: 210px; }
+
+  /* verdict chips */
+  .chip {
+    display: inline-block; font-family: "IBM Plex Mono", monospace;
+    font-size: .66rem; letter-spacing: .08em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 2px; font-weight: 600; white-space: nowrap;
+  }
+  .chip.ok { background: var(--accent-soft); color: var(--confirmed); }
+  .chip.no { background: var(--refuted-soft); color: var(--refuted); }
+
+  /* hypothesis ledger */
+  .ledger { display: flex; flex-direction: column; gap: 14px; margin-block: 26px; }
+  .h {
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--line-strong); border-radius: 3px;
+    padding: 18px 20px; box-shadow: var(--shadow);
+  }
+  .h.refuted { border-left-color: var(--refuted); }
+  .h.confirmed { border-left-color: var(--confirmed); }
+  .h-top { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; justify-content: space-between; }
+  .h-id {
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: .78rem;
+    letter-spacing: .08em; color: var(--faint);
+  }
+  .h h3 { margin: 6px 0 8px; }
+  .h p { font-size: .94rem; color: var(--muted); margin-bottom: .6em; }
+  .h p:last-child { margin-bottom: 0; }
+  .h p strong { color: var(--ink); }
+
+  /* figures */
+  figure { margin: 30px 0; }
+  figure img { width: 100%; display: block; border: 1px solid var(--line); border-radius: 3px; background: var(--surface); }
+  figcaption { font-size: .85rem; color: var(--muted); margin-top: 10px; max-width: 68ch; }
+  figcaption b { color: var(--ink); font-weight: 600; }
+
+  .callout {
+    background: var(--surface); border: 1px solid var(--line);
+    border-top: 3px solid var(--accent); border-radius: 3px;
+    padding: 20px 22px; margin-block: 26px; box-shadow: var(--shadow);
+  }
+  .callout.warn { border-top-color: var(--ceiling); }
+  .callout h3 { margin-bottom: .4em; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  code, .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: .86em; }
+  code { background: var(--surface-2); padding: 1px 5px; border-radius: 2px; }
+  pre {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 3px;
+    padding: 16px 18px; overflow-x: auto; font-size: .82rem; line-height: 1.7; margin-block: 18px;
+  }
+  pre code { background: none; padding: 0; }
+
+  ul, ol { margin: 0 0 1em; padding-left: 1.25em; }
+  li { margin-bottom: .45em; }
+  li::marker { color: var(--faint); }
+
+  footer {
+    margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line);
+    font-size: .84rem; color: var(--faint);
+  }
+</style>
+
+<div class="wrap">
+
+  <p class="eyebrow">Autoresearch log · BAMFORESTS · 19 Sep 2026</p>
+  <h1>Where the crown segmentation error actually lives</h1>
+  <p class="lede prose">Six pre-registered hypotheses over one afternoon. <strong>Four of them were refuted</strong> — including both of my headline predictions about how to fix the pipeline. The refutations located the problem far more precisely than the confirmations did: the published decode constant was about six times too small, the boundary head has collapsed under class imbalance, and the watershed decoder everyone suspected turns out to be nearly perfect.</p>
+
+  <div class="headline">
+    <div>
+      <div class="k">Held-out mAP@50</div>
+      <div class="v up">66.91</div>
+      <div class="n">from 44.29 at the published settings · <b>+22.6</b></div>
+    </div>
+    <div>
+      <div class="k">Held-out PQ</div>
+      <div class="v up">48.82</div>
+      <div class="n">from 31.01 · +17.8</div>
+    </div>
+    <div>
+      <div class="k">Same decoder, correct heads</div>
+      <div class="v cap">97.30</div>
+      <div class="n">the ceiling that is still on the table</div>
+    </div>
+  </div>
+
+  <p class="prose">Every number on this page is measured on <b>60 held-out crops</b> (BAMFORESTS eval indices 100–159) that took no part in any sweep. Tuning was done on a separate 30-crop split. Nothing was retrained — the network is the existing <code>best_sharp_watershed.pth</code> throughout.</p>
+
+  <section>
+    <h2>The read that started it</h2>
+    <p class="prose">Panoptic quality factorises as <code>PQ = SQ × RQ</code>. The published pipeline scored <b>SQ 67.7</b> and <b>RQ 31.3</b>. That says the masks are broadly fine and the <em>recognition</em> is broken — crowns that never get matched at all. Meanwhile the effort in flight was boundary refinement: MorphSnakes and adaptive spline smoothing, which moved mAP@50 from 31.33 to 32.99.</p>
+    <p class="prose">A +1.66 intervention was being applied to a problem whose recoverable budget, as the first experiment showed, was about +40.</p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>The hypothesis ledger</h2>
+    <p class="prose">Each hypothesis was committed to git with numeric predictions <em>before</em> it ran. Verdicts are against those pre-registered thresholds, not against what looked good afterwards.</p>
+
+    <div class="ledger">
+      <div class="h confirmed">
+        <div class="h-top"><span class="h-id">H0 · error budget</span><span class="chip ok">3 / 3 confirmed</span></div>
+        <h3>A 2×2 oracle ablation over seeds and boundary energy</h3>
+        <p>Swapping in oracle seeds while keeping the <em>predicted</em> boundary field: <b>31.3 → 70.8</b>. Swapping in oracle energy while keeping predicted seeds: <b>31.3 → 29.9</b>. Marker selection owned essentially the whole budget.</p>
+        <p>The mechanism was visible in one number: the pipeline emitted <b>1.90 seeds per true crown</b>, which is exactly what the Dao over-segmentation index (OS = 0.47) had been reporting all along.</p>
+      </div>
+
+      <div class="h refuted">
+        <div class="h-top"><span class="h-id">H1 · adaptive seeding</span><span class="chip no">2 of 3 refuted</span></div>
+        <h3>Scale-adaptive suppression radius from the surface head</h3>
+        <p>The surface target is normalised per instance (<code>mask_edt / mask_edt.max()</code>), so every crown peaks at 1.0 and the head is scale-blind by construction. I predicted a per-peak radius read off the superlevel sets would beat any global radius. <strong>It lost</strong> — 51.20 against 52.87 — because the estimator is noise-dominated: components merge at low thresholds and shatter at high ones.</p>
+        <p>The more embarrassing failure was mine. My locked grid peaked at its own upper corner, which means it never found an optimum. Extending it revealed the real story: BAMFORESTS crowns average <b>~146 px equivalent diameter</b>, and the published <code>min_distance</code> was <b>24 px</b>. Setting it to one crown diameter is worth <strong>+21.2 mAP@50</strong> on held-out data.</p>
+      </div>
+
+      <div class="h refuted">
+        <div class="h-top"><span class="h-id">H2 · over-seed then merge</span><span class="chip no">3 / 3 refuted</span></div>
+        <h3>Keep loose seeding's recall, repair the splits afterwards</h3>
+        <p>Loose suppression finds <b>83.1%</b> of all crowns but plants 0.82 duplicate seeds in each; tight suppression removes the duplicates and misses <b>37.5%</b> of crowns. I expected merging to escape that trade-off and predicted an oracle-merge ceiling above 80.</p>
+        <p><strong>The oracle merge reached only 69.74.</strong> That is the result that reframed the project — see below.</p>
+      </div>
+
+      <div class="h refuted">
+        <div class="h-top"><span class="h-id">H3 · the third head</span><span class="chip no">2 of 3 refuted</span></div>
+        <h3>Completing the budget with the canopy gate</h3>
+        <p>H0 varied two factors and silently held the canopy gate fixed in all four cells — a gap in my own design. The full 2³ factorial inverted both of my predictions and produced the sharpest result of the day.</p>
+        <p><strong>Every single-factor oracle makes things worse.</strong> Correct canopy alone: <b>−24.3</b>. Correct boundary alone: <b>−32.5</b>. Correct <em>both</em>: <b>+12.4</b>. Add correct seeds and the same unmodified decoder reaches <b>97.30 mAP@50 / 93.10 mAP@75</b>.</p>
+      </div>
+
+      <div class="h refuted">
+        <div class="h-top"><span class="h-id">H4 · decode-time coupling</span><span class="chip no">1 of 3 refuted</span></div>
+        <h3>Carving the boundary ridge into the gate: <code>canopy − λ·B</code></h3>
+        <p>Flat across the entire sweep — λ from 0 to 2 moved mAP@50 by less than 0.2. A null result, but a diagnostic one: it can only happen if <code>B</code> is essentially zero everywhere.</p>
+      </div>
+
+      <div class="h refuted">
+        <div class="h-top"><span class="h-id">H5 · head calibration</span><span class="chip no">2 of 3 refuted</span></div>
+        <h3>The boundary head ranks seams well but has no magnitude</h3>
+        <p>Measured against ground-truth seams, <code>B</code> scores <b>AUROC 0.866</b> — it knows where the seams are — while its median output is <b>0.0011</b> and it averages just <b>0.105 on true seam pixels</b>. That is a calibration failure from the ~6% positive rate, not a failure to learn.</p>
+        <p>I predicted a rank transform would recover the information. <strong>It cost 9.4 points.</strong> The ordering inside the near-zero bulk is noise, and spreading it across the full range manufactures ridges everywhere. Percentile-based merging did give a small real gain (+1.4) and is the best configuration found.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Three independent oracles converge at 70 — and one leaps to 97</h2>
+    <figure>
+      <img src="figures/trajectory.png" alt="Bar chart of mAP@50 across the research arc, showing published settings at 44.3, tuned decode at 65.5, merge variants at 66.6 and 66.9, three oracle routes clustered at 69-70, and oracle heads at 97.3.">
+      <figcaption><b>The shape of the problem.</b> Tuning the decode constants (blue) is worth +21. Everything else decode-side is worth +1.4 in total. Three structurally unrelated routes to perfect markers — oracle seeds, oracle seeds plus oracle seams, oracle merging — all land in the shaded band at 69–70. Then correct heads jump to 97.3 with <em>no change to the decoder</em>.</figcaption>
+    </figure>
+    <p class="prose">That convergence is the load-bearing result. If perfect markers cannot get past 70, marker selection is finished as a research direction. And since the same decoder reaches 97.3 when the heads are right, the decoder was never the constraint either — despite H2 pointing that way.</p>
+  </section>
+
+  <section>
+    <h2>The heads are not separable</h2>
+    <figure>
+      <img src="figures/h3_cube.png" alt="Bar chart of all eight cells of the 2-by-2-by-2 factorial over seeds, energy and canopy, showing that mixed-oracle cells fall below the all-predicted baseline while the two cells with both energy and canopy correct rise far above it.">
+      <figcaption><b>Every mixed cell falls below the all-predicted baseline.</b> An exact foreground mask paired with a near-zero boundary field leaves a correctly-masked blob with nothing to partition it. Ground-truth seams paired with an over-inclusive predicted mask stop the flood at the true crown edge and leave an unclaimed annulus outside it. Only when the mask edge and the ridge field agree does either one pay.</figcaption>
+    </figure>
+    <div class="callout warn">
+      <h3>A claim I withdrew mid-project</h3>
+      <p>H3's write-up proposed that the predicted canopy gate had quietly become the system's seam detector. The head diagnostic contradicted that — <code>1 − canopy</code> scores AUROC 0.567 against seams, essentially chance — so I withdrew it and tested the replacement directly. The corrected version holds: the gate is a poor <em>graded</em> seam detector but a strong <em>hard-barrier</em> one. <b>32.1%</b> of true crown-crown seam pixels already fall in predicted background, against 5.2% of crown interiors — a six-fold enrichment.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why the decode side is now exhausted</h2>
+    <figure>
+      <img src="figures/seeding_frontier.png" alt="Scatter of mAP@50 against seeds per ground-truth crown, coloured by suppression radius, showing a single frontier that peaks near one seed per crown and stays below the oracle line.">
+      <figcaption><b>Global suppression rides one frontier and cannot leave it.</b> Each point is a <code>(min_dist, min_apex)</code> setting. Loosening the radius buys recall at the cost of duplicates; tightening it does the reverse. The oracle line sits above the whole cloud because it has both at once.</figcaption>
+    </figure>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Configuration</th><th>mAP@50</th><th>mAP@75</th><th>PQ</th><th>SQ</th><th>B-IoU</th><th>Dao ED</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Published settings <span class="mono">(md=24, ma=0.25)</span></td><td class="num">44.29</td><td class="num">16.13</td><td class="num">31.01</td><td class="num">69.17</td><td class="num">11.22</td><td class="num">0.598</td></tr>
+          <tr><td class="lead">H1 tuned constants <span class="mono">(md=160, ma=0.50)</span></td><td class="num">65.54</td><td class="num">28.47</td><td class="num">47.42</td><td class="num">72.13</td><td class="num">11.65</td><td class="num">0.644</td></tr>
+          <tr><td class="lead">+ H2 seam merge</td><td class="num">66.57</td><td class="num">30.18</td><td class="num">48.54</td><td class="num">72.83</td><td class="num">12.85</td><td class="num">0.646</td></tr>
+          <tr class="best"><td class="lead">+ H5 percentile merge <span class="mono">(best found)</span></td><td class="num">66.91</td><td class="num">30.45</td><td class="num">48.82</td><td class="num">72.78</td><td class="num">12.84</td><td class="num">0.638</td></tr>
+          <tr class="ceil"><td class="lead">Oracle seeds <span class="mono">(H0)</span></td><td class="num">69.03</td><td class="num">29.16</td><td class="num">49.84</td><td class="num">72.09</td><td class="num">12.17</td><td class="num">0.469</td></tr>
+          <tr class="ceil"><td class="lead">Oracle merge <span class="mono">(H2 framework ceiling)</span></td><td class="num">69.74</td><td class="num">32.49</td><td class="num">51.17</td><td class="num">73.18</td><td class="num">13.38</td><td class="num">0.513</td></tr>
+          <tr class="ceil"><td class="lead">Oracle heads, same decoder <span class="mono">(H3)</span></td><td class="num">97.30</td><td class="num">93.10</td><td class="num">89.69</td><td class="num">92.19</td><td class="num">59.20</td><td class="num">0.103</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">After H1's +21.2, five decode-side hypotheses have collectively returned <b>+1.4</b>. The remaining ~30 points are in the network.</p>
+  </section>
+
+  <section>
+    <h2>The target: a boundary head with no confidence</h2>
+    <figure>
+      <img src="figures/head_calibration.png" alt="Two panels: mean predicted boundary value on true seams versus elsewhere, both far below the merge threshold; and AUROC for each head against its target.">
+      <figcaption><b>It knows, but it will not say.</b> On true seam pixels the boundary head averages 0.105 — well under the 0.35 merge threshold that consequently never fired in H2, and far too small for the <code>canopy − λ·B</code> coupling in H4 to do anything. Its AUROC of 0.866 says the information is there. Every use of it so far has been an absolute-magnitude use, which is precisely the use a collapsed head cannot support.</figcaption>
+    </figure>
+    <div class="callout">
+      <h3>H6 — the first training hypothesis of the project</h3>
+      <p>Retrain the boundary head with a class-balanced objective (Tversky or focal on the seam band, or seam-restricted BCE with positive weighting) so its magnitudes survive the ~6% positive rate. The success criterion is calibration rather than ranking: <b>mean B on true seam pixels above ~0.4</b>, up from 0.105. That would make the merge criterion and the gate coupling viable for the first time, and it is the only lever identified that addresses the 30-point gap.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What it looks like</h2>
+    <figure>
+      <img src="figures/preview_crop_0.png" alt="Six panels on one held-out crop: RGB input, ground truth crowns, the published over-segmented prediction, the tuned prediction, the oracle-head prediction, and the raw boundary head shown as a heat map.">
+      <figcaption><b>Held-out crop 0.</b> The published setting splits crowns into 18 fragments against 17 true crowns. The tuned setting recovers coherent crowns at mAP@50 82.8. The bottom-right panel is the boundary head at full scale — the seam curves are crisp and correctly placed, and almost entirely dim. That picture is the whole argument for H6.</figcaption>
+    </figure>
+    <figure>
+      <img src="figures/preview_crop_1.png" alt="The same six-panel comparison on a second held-out crop.">
+      <figcaption>Held-out crop 1.</figcaption>
+    </figure>
+    <figure>
+      <img src="figures/preview_crop_2.png" alt="The same six-panel comparison on a third held-out crop.">
+      <figcaption>Held-out crop 2.</figcaption>
+    </figure>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Two things that need fixing in the existing repo</h2>
+    <ul class="prose">
+      <li><b>The metric is misnamed.</b> <code>evaluate_metrics</code> reports the F1 score at a fixed IoU threshold while labelling it <code>ap50</code>. Every comparison here is internally consistent, but it must be renamed or replaced with a true interpolated COCO AP before any of it goes into a paper.</li>
+      <li><b>The published 30-crop subset is unrepresentatively hard.</b> The same baseline scores 31.33 on it and 44.29 on 60 disjoint crops. Previously reported numbers on that subset — including the MorphSnakes 32.99 — are pessimistic by roughly 13 points, so the cross-paradigm comparison table should be re-run on a larger split.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Reproducing this</h2>
+    <p class="prose">Head outputs are cached once, after which every sweep above runs on CPU in seconds.</p>
+<pre><code>python crown_research/src/pred_cache.py --num_crops 30 --tag eval30
+python crown_research/src/pred_cache.py --split eval --start 100 --num_crops 60 --tag evalhold60
+
+python crown_research/experiments/h0-error-budget/code/run_h0.py --num_val 30
+python crown_research/experiments/h1-adaptive-seeding/code/run_h1_holdout.py
+python crown_research/experiments/h3-canopy-gate/code/run_h3.py
+python crown_research/experiments/h5-boundary-calibration/code/run_h5.py
+python crown_research/src/make_figures.py</code></pre>
+    <p class="prose">Every protocol was committed to git before its run, so the history separates what was predicted from what was found. Narrative and accumulated constraints live in <code>crown_research/findings.md</code>; the decision timeline is in <code>crown_research/research-log.md</code>.</p>
+  </section>
+
+  <footer>
+    Autoresearch session · 6 hypotheses · tuning split <span class="mono">eval30</span>, hold-out split <span class="mono">evalhold60</span> · no retraining · <span class="mono">best_sharp_watershed.pth</span>
+  </footer>
+
+</div>

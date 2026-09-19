@@ -1,6 +1,6 @@
 # Findings — ITC Crown Segmentation, Closing the Recognition-Quality Gap
 
-*Last updated: 2026-09-19, after H0 and H1.*
+*Last updated: 2026-09-19, after H0-H5. Report: crown_research/to_human/report.html*
 
 ## The question
 
@@ -28,6 +28,22 @@ Loose suppression finds **83.1%** of all crowns but plants 0.82 duplicate seeds 
 each one. Tight suppression drops duplicates to 0.04/crown but misses **37.5%** of
 crowns. The oracle beats both because it is off the frontier entirely: 100% hit, zero
 duplicates. Tuning slides along the frontier; it does not leave it.
+
+**3b. But marker selection is now CLOSED, and it was not the whole story.**
+Three structurally independent perfect-marker routes — oracle seeds (69.0), oracle
+seeds plus oracle seams (68.6 on the tuning split), oracle merging (69.7) — all
+converge at 69-70 on held-out data. No marker method can pass that. Meanwhile the same
+unmodified decoder reaches **97.30 mAP@50 / 93.10 mAP@75 / PQ 89.69** when all three
+heads are correct (H3). The decoder is not the limit; the heads are.
+
+**3c. The heads are non-separable, and the boundary head is mis-calibrated.**
+Correcting the canopy gate alone costs -24.3; correcting the boundary field alone costs
+-32.5; correcting both gains +12.4. The boundary head scores **AUROC 0.866** against GT
+seams but has median output **0.0011** and averages **0.105 on true seam pixels** — it
+learned the ranking and lost its magnitude to the ~6% positive rate. Every use of it so
+far (H2's absolute merge threshold, H4's `canopy - lambda*B`) was an absolute-magnitude
+use, which is exactly what a collapsed head cannot support. A rank transform does *not*
+fix it (-9.4): the ordering inside the near-zero bulk is noise.
 
 **4. Boundary refinement was optimising a second-order term.**
 MorphSnakes bought +1.66 mAP@50 against a 40-point marker problem. Its real value is
@@ -70,15 +86,25 @@ crops. Every number previously reported on those 30 crops is pessimistic by roug
 - Cached head outputs (`crown_research/src/pred_cache.py`) turn a sweep from
   GPU-minutes into CPU-seconds. Use them for anything decode-side.
 
+## Current best configuration
+
+`min_dist=160`, `min_apex=0.50`, `min_canopy=0.25`, `min_area=25`, flat-basin relief,
+plus percentile seam merge (`q=50`, `L_min=30`). On 60 held-out crops:
+**mAP@50 66.91 · mAP@75 30.45 · PQ 48.82 · SQ 72.78 · B-IoU 12.84 · Dao ED 0.638**,
+against 44.29 / 16.13 / 31.01 at the published settings.
+
 ## Open questions
 
-1. **Can over-seed + merge escape the frontier?** (H2, next.) Loose seeding's 83% hit
-   rate with duplicates removed post-flood implies a ceiling well above the tuned 66.
-2. What is the oracle ceiling on the *hold-out* split? H0 cell B (70.79) was measured
-   only on the harder 30 crops, so the true headroom above 65.5 is not yet known.
+1. **Does a class-balanced boundary loss restore magnitude?** (H6, next — the first
+   hypothesis in this project that needs a training run.) Target: mean B on true seam
+   pixels above ~0.4, up from 0.105.
+2. If the boundary head is fixed, do H2's merge and H4's gate coupling — both of which
+   failed purely because B was too small — become viable? They should be re-run, not
+   assumed dead.
 3. Why does the pipeline miss 16.9% of crowns even under loose seeding? Suppressed
    peaks, or crowns the surface head never lights up at all?
 4. Does the tuned setting hold across biomes, or is 160 px a Bamberg-specific scale?
    BAMFORESTS `test1`/`test2` and DTE-Aerial are available and untouched.
-5. Now that RQ is no longer binding, is the boundary head's ~7-point SQ deficit (H0
-   cell C) the next-largest term?
+5. The canopy head reaches AUROC 0.961 and looks healthy, yet H3 shows the system
+   depends on its *hard barriers* (32.1% of true seams) rather than its ranking. Is
+   there a supervision change that makes that dependence explicit rather than accidental?
