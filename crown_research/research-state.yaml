@@ -22,15 +22,19 @@ baseline:
   dao_ED: 0.6134
 
 best_so_far:
-  method: "H1 tuned decode (md=160, ma=0.50) + H5 percentile seam merge (q=50, L=30)"
+  method: "H6 calibrated checkpoint + tuned decode (md=160, ma=0.50), NO merge"
+  checkpoint: "DeadTrees/experiments/canopy_watershed/best_calibrated_watershed.pth"
   split: "evalhold60 (60 held-out crops, never tuned on)"
-  mAP50: 66.91
-  mAP75: 30.45
-  PQ: 48.82
-  SQ: 72.78
-  BIoU: 12.84
-  dao_ED: 0.638
-  vs_published_settings_on_same_split: "44.29 mAP50 / 31.01 PQ"
+  coco_AP: 26.84
+  coco_AP50: 58.06
+  coco_AP75: 20.40
+  F1_50: 66.98
+  PQ: 49.55
+  SQ: 73.79
+  BIoU: 13.72
+  dao_ED: 0.594
+  vs_published_settings_on_same_split: "COCO AP 15.81 / F1@50 44.29 / PQ 31.01"
+  note: "merge steps now HURT under the calibrated head (26.84 no-merge vs 26.29 percentile) — drop them"
 
 ceiling:
   method: "H3 full oracle — same unmodified decoder, all three heads correct"
@@ -90,7 +94,7 @@ hypotheses:
     priority: done
   - id: H6
     name: "Class-balanced boundary loss (first training hypothesis)"
-    status: RUNNING — train_calibrated.py, 12 epochs, launched 2026-09-19
+    status: DONE — 3/4 predictions refuted, but +2.52 COCO AP / +3.92 AP75; merge step retired
     priority: 1
     statement: >
       The boundary head scores AUROC 0.866 against GT seams but has median output
@@ -118,7 +122,7 @@ hypotheses:
     prediction: "never_lit < 15% at the tuned operating point; apex seeding >= +3 F1@50; combined >= 73"
   - id: H8
     name: "Cross-site transfer of the crown-diameter suppression rule"
-    status: RUNNING — BAMFORESTS TestSet1/TestSet2, 40 crops each
+    status: DONE — 6/6 confirmed; but model collapses on TestSet1 (AP 2.98 vs 23.85), a scale shift
     priority: 1
     statement: >
       Everything so far is measured on the eval split of one site. Tests whether
@@ -136,4 +140,4 @@ protocol_discipline: "Every hypothesis committed to git with numeric predictions
 known_issues:
   - "evaluate_metrics reports F1 at a fixed IoU but labels it ap50 — rename or replace with true COCO AP before publication."
   - "The historical 30-crop eval subset is unrepresentatively hard (baseline 31.33 there vs 44.29 on 60 disjoint crops); previously published cross-paradigm numbers are pessimistic by ~13 points."
-next_action: "Collect H6 (training) and H8 (running) results; then H7 apex head"
+next_action: "H7 apex head (warm start from best_calibrated_watershed.pth); then scale-generalisation for TestSet1"

@@ -142,6 +142,32 @@ the 69-70 marker wall and the 97.3 oracle ceiling were all measured at one crown
 and TestSet1 shows the model degrades severely under a 1.5x scale shift. H6 and H7 may
 be optimising inside a regime the model cannot leave.
 
+**11. A class-balanced boundary loss buys geometry, not recognition — and retires the
+merge step.**
+Retraining only the boundary term (per-batch balanced BCE + Tversky alpha=0.3/beta=0.7,
+12 epochs, everything else held fixed) moved the hold-out from **COCO AP 24.32 to
+26.84** and **AP75 16.48 to 20.40**, with F1@75 30.45 -> 37.06, SQ +1.8, B-IoU +2.4 and
+Dao ED 0.638 -> 0.595. F1@50 is flat (+0.07): the gain is entirely in where masks land,
+not in how many crowns are found — which is correct, since recognition is bounded by
+seeding and H6 did not touch seeding.
+
+Two things this settles:
+- **Merging has expired.** Under the calibrated head, no-merge (AP 26.84) beats
+  percentile merge (26.29) and absolute-threshold merge (25.66). Merging existed to
+  repair over-separation caused by a weak ridge; a stronger ridge separates correctly,
+  so the repair now deletes real boundaries.
+- **The calibration is only half-fixed.** Mean B on true seams rose 0.105 -> 0.186
+  (target was 0.40), but background rose 0.013 -> 0.041, so the seam-to-background
+  ratio *fell* from 8.0x to 4.5x. Class-balanced weighting raises the whole field
+  rather than sharpening contrast. Further boundary work should change the **target**
+  (a 3 px band blurred at sigma 0.8 may be too thin to supervise at this resolution),
+  not the loss weighting.
+
+My 0.40 success criterion was invented rather than derived. The flood relief is
+`boundary * 255`, so 0.105 -> 0.186 nearly doubles the barrier height between crowns
+(27/255 -> 47/255), which is plainly enough to change flooding — and did. The criterion
+failed while the mechanism it was meant to test held.
+
 ## Lessons and constraints
 
 - `min_distance` 144-160 px, `min_apex` 0.50, `min_canopy` 0.25, `min_area` 25 is the
@@ -168,19 +194,28 @@ be optimising inside a regime the model cannot leave.
 
 ## Current best configuration
 
-`min_dist=160`, `min_apex=0.50`, `min_canopy=0.25`, `min_area=25`, flat-basin relief,
-plus percentile seam merge (`q=50`, `L_min=30`). On 60 held-out crops:
-**mAP@50 66.91 · mAP@75 30.45 · PQ 48.82 · SQ 72.78 · B-IoU 12.84 · Dao ED 0.638**,
-against 44.29 / 16.13 / 31.01 at the published settings.
+`best_calibrated_watershed.pth` (H6) with `min_dist=160`, `min_apex=0.50`,
+`min_canopy=0.25`, `min_area=25`, flat-basin relief, **no merge**. On 60 held-out crops:
+
+| | published settings | **current best** |
+|---|---:|---:|
+| COCO AP | 15.81 | **26.84** |
+| COCO AP50 | 40.34 | **58.06** |
+| COCO AP75 | 9.48 | **20.40** |
+| F1@50 | 44.29 | 66.98 |
+| PQ | 31.01 | 49.55 |
+| Dao ED | 0.598 | 0.594 |
+
+Arc in COCO AP: published 15.81 -> H1 tuned 23.85 -> H5 merge 24.32 -> **H6 26.84**.
 
 ## Open questions
 
-1. **Does a class-balanced boundary loss restore magnitude?** (H6, next — the first
-   hypothesis in this project that needs a training run.) Target: mean B on true seam
-   pixels above ~0.4, up from 0.105.
-2. If the boundary head is fixed, do H2's merge and H4's gate coupling — both of which
-   failed purely because B was too small — become viable? They should be re-run, not
-   assumed dead.
+1. ~~Does a class-balanced boundary loss restore magnitude?~~ **ANSWERED (H6):**
+   partially — 0.105 -> 0.186, not the 0.40 aimed at, and the seam-to-background ratio
+   worsened. Still worth +2.5 COCO AP. Further boundary work should target the **seam
+   target's width**, not the loss weighting.
+2. ~~Do merge and gate coupling become viable with a better B?~~ **ANSWERED (H6):** no
+   — merging now *hurts* (26.84 no-merge vs 26.29 merged). The workaround has expired.
 3. ~~Why does the pipeline miss 16.9% of crowns under loose seeding?~~ **ANSWERED:**
    `never_lit` small crowns (median 1,899 px vs 24,382 px), not suppression. See
    finding 6.

@@ -197,3 +197,27 @@ extension (11% off instead of 24%), so H8's verdicts are unchanged.
 
 Also noted: on test1 the two metrics disagree about the optimum (F1@50 peaks at 280,
 COCO AP at 240) — further evidence that test1 is a degenerate regime, not a harder one.
+
+## 2026-09-19 — H6 result: predictions wrong, intervention right
+
+Three of four predictions failed, and the run is still the biggest single step since
+the decode constants: **COCO AP 24.32 -> 26.84, AP75 16.48 -> 20.40**, F1@75
+30.45 -> 37.06, SQ +1.8, B-IoU +2.4, ED 0.638 -> 0.595. F1@50 flat (+0.07).
+
+The failures were mine, not the data's:
+- **P1's 0.40 threshold was invented.** The flood relief is `boundary*255`, so
+  0.105 -> 0.186 raises the inter-crown barrier from ~27/255 to ~47/255 — nearly double,
+  and plainly enough to change flooding. The criterion failed; the mechanism held.
+- **P4 predicted a recognition gain from a boundary intervention**, which was an error
+  in reasoning: recognition is seeding-bound and H6 did not touch seeding.
+- **P3 failed informatively.** Under the new head merging now *hurts* (26.84 no-merge
+  vs 26.29 percentile, 25.66 absolute). Merging existed to repair over-separation from
+  a weak ridge; the ridge is stronger, so the repair deletes real boundaries. **Merge
+  step retired.**
+
+Calibration is half-fixed: seams 0.105 -> 0.186 but background 0.013 -> 0.041, so the
+separation ratio *fell* 8.0x -> 4.5x. Balanced weighting lifts the whole field instead
+of sharpening contrast. The protocol's pre-registered fallback now applies — change the
+**target** (3 px band at sigma 0.8 may be too thin to supervise), not the loss.
+
+Next: H7 apex head, warm-started from the H6 checkpoint.

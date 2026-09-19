@@ -1,0 +1,7 @@
+checkpoint,variant,COCO AP,AP50,AP75,F1@50,F1@75
+old (best_sharp),no merge,23.848,56.185,15.77,65.537,28.465
+old (best_sharp),absolute tau=0.15,22.726,53.711,15.143,66.565,30.176
+old (best_sharp),percentile q=50,24.321,56.562,16.478,66.91,30.445
+H6 calibrated (12ep),no merge,26.839,58.057,20.402,66.975,34.509
+H6 calibrated (12ep),absolute tau=0.15,25.665,55.391,19.981,66.902,36.505
+H6 calibrated (12ep),percentile q=50,26.285,56.254,21.01,66.741,37.063
