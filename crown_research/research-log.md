@@ -153,3 +153,29 @@ quality at strict IoU is the larger deficit.
 
 That trade is mechanically sensible — a stronger ridge tightens masks and over-separates
 — but it means P4 may fail even if P1 succeeds. Letting the run finish before judging.
+
+## 2026-09-19 — H8: the rule transfers, the model does not
+
+All six pre-registered predictions passed — the first clean sweep since H0. One
+`eval`-chosen suppression setting is within 1.35 F1@50 of each test split's own
+optimum, and the published 24 px collapses off its tuning split (3.18 seeds/crown and
+COCO AP 0.86 on TestSet1). The practical recommendation is now supported at three
+splits.
+
+**But the more important result is the one the predictions did not ask about.**
+TestSet1 scores COCO AP 2.98 even at its own optimum, against 23.85 on the eval
+hold-out, while TestSet2 matches eval (21.3). The distinguishing statistic is crown
+scale: TestSet1's crowns are 2.2x larger in area (D = 314 px vs 211 px). The decoder
+conclusions hold there; the heads do not. Every ceiling and error budget in this
+project was measured at one crown scale, so their external validity is now explicitly
+bounded.
+
+Caught my own repeated mistake: test1's swept optimum landed on the upper edge of the
+grid (240 of a 40-240 range) — the same boundary failure that made H1 report a false
+optimum. Extending the grid before quoting the exploratory `min_dist ~ 0.76 x D` ratio
+as a rule; it currently rests on two resolved points (eval 0.760, test2 0.756), not
+three. Added to Lessons so it stops recurring.
+
+**Priority change.** Scale generalisation is now the top open question, ahead of
+further head work — if the model cannot survive a 1.5x scale shift, H6 and H7 are
+optimising inside a regime it cannot leave.

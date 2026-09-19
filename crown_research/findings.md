@@ -118,6 +118,30 @@ vs 56.6) while the oracle keeps 84.5 vs 96.0 — mask quality at strict IoU is a
 bigger deficit than F1@50 ever showed, which independently corroborates finding 8's
 split of the headroom.
 
+**10. The suppression rule transfers across splits; the model does not transfer across
+crown scale.**
+Scored on BAMFORESTS TestSet1 (39 crops) and TestSet2 (40), both untouched by any
+tuning. The single `eval`-chosen setting lands within **1.35 F1@50** of each test
+split's own swept optimum, while the published 24 px setting degrades catastrophically
+off its tuning split — on TestSet1 it emits **3.18 seeds per crown** and collapses to
+COCO AP 0.86.
+
+| split | crown diameter D | published | frozen (160, 0.50) |
+|---|---:|---:|---:|
+| evalhold60 | 211 px | AP 15.81 | **AP 23.85** |
+| test2 | 212 px | AP 13.18 | **AP 21.29** |
+| test1 | **314 px** | AP 0.86 | AP 2.48 |
+
+But TestSet1 is an order of magnitude worse *even at its own optimum* (AP 2.98), while
+TestSet2 matches eval. The distinguishing statistic is crown scale: TestSet1's crowns
+are **2.2x larger in area** (D 314 vs 211 px). The decoder conclusions still hold there
+— the suppression rule works — but the heads produce almost nothing usable.
+
+**This bounds the external validity of everything above.** The error budget (H0, H3),
+the 69-70 marker wall and the 97.3 oracle ceiling were all measured at one crown scale,
+and TestSet1 shows the model degrades severely under a 1.5x scale shift. H6 and H7 may
+be optimising inside a regime the model cannot leave.
+
 ## Lessons and constraints
 
 - `min_distance` 144-160 px, `min_apex` 0.50, `min_canopy` 0.25, `min_area` 25 is the
@@ -160,8 +184,12 @@ against 44.29 / 16.13 / 31.01 at the published settings.
 3. ~~Why does the pipeline miss 16.9% of crowns under loose seeding?~~ **ANSWERED:**
    `never_lit` small crowns (median 1,899 px vs 24,382 px), not suppression. See
    finding 6.
-4. Does the tuned setting hold across biomes, or is 160 px a Bamberg-specific scale?
-   BAMFORESTS `test1`/`test2` and DTE-Aerial are available and untouched.
+4. ~~Does the tuned setting hold across splits?~~ **ANSWERED (H8):** yes — within 1.35
+   F1@50 of each split's own optimum on TestSet1 and TestSet2. See finding 10.
+6. **NEW, now highest priority: why does the model collapse on TestSet1?** Crown
+   diameter there is 314 px vs 211 px elsewhere. Is scale the cause, and does
+   multi-scale training or test-time rescaling recover it? If the model cannot survive
+   a 1.5x scale shift, that matters more than the remaining head work.
 5. The canopy head reaches AUROC 0.961 and looks healthy, yet H3 shows the system
    depends on its *hard barriers* (32.1% of true seams) rather than its ranking. Is
    there a supervision change that makes that dependence explicit rather than accidental?
