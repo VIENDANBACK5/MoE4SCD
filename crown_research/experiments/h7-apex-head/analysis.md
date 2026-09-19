@@ -18,6 +18,17 @@
 | **surface** | 140 | 0.35 | **29.07** | 61.61 | 23.98 | **68.48** | 0.93 | 20.98% | 18.48% |
 | apex | 100 | 0.10 | 17.58 | 35.33 | 14.51 | 48.03 | **0.40** | 60.06% | 60.06% |
 
+> **CORRECTION (2026-09-20, after H11).** The section title below and its claim that
+> the head "never learned" are **wrong**. Measured directly, the apex head reaches
+> **AUROC 0.841** against "within 15 px of a crown centre" — almost the surface head's
+> 0.863. What it lacks is *magnitude*: mean 0.0041, p99 0.0212, so the `min_apex=0.10`
+> seeding threshold sits **above its 99th percentile**. The Tversky flatline at ~1.00
+> reflected magnitude collapse, not absence of learning (with beta=0.7 on a ~1% target
+> the false-negative term dominates any small true intersection). H7's *conclusion* —
+> apex seeding fails, this remedy is refuted — stands. Its *reason* is replaced by the
+> corrected one, and H11 shows the head's gradient was worth +1.22 AP to the shared
+> trunk despite being unusable as an output. See `../h11-aux-task/analysis.md`.
+
 ## Why it failed: the apex head never learned
 
 The apex loss (balanced BCE + Tversky) went **1.745 → 1.015 → 1.003** and flattened

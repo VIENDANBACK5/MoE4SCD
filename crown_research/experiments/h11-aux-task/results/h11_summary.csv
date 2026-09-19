@@ -1,0 +1,4 @@
+checkpoint,best_AP,best_cell,best_AP50,best_AP75,best_F1@50,"common_AP (md=160,ma=0.35)"
+H6 calibrated (12 ep),27.281,"md=160,ma=0.35",59.539,20.381,66.717,27.281
+"H11 +12 ep, no apex",27.852,"md=140,ma=0.35",59.542,21.383,66.732,27.823
+"H7 +12 ep, with apex",29.074,"md=140,ma=0.35",61.609,23.977,68.48,28.809

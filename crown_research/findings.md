@@ -255,18 +255,23 @@ Caveat: TestSet1's absolute numbers are small (2.98 → 5.46), so +83% is change
 base and must be quoted with absolutes beside it. The ordering holds at all 15 decode
 cells, but this is one out-of-domain split of one benchmark.
 
-**17. The apex-head remedy failed the same way the disease did — the target was too
-sparse to learn.**
+**17. The apex-head remedy failed the same way the disease did — but the head *did*
+learn; it could not express magnitude.**
 H7 added the discarded scale-invariant apex target as a fourth head. All three
 predictions failed: the head emits **0.40 seeds per crown** and leaves **60%** of crowns
 unlit (against 18.5% for surface seeding), scoring AP 17.58 vs 29.07. Its loss went
 1.745 → 1.015 → **1.003** and flattened — a Tversky term at 1.0 means essentially **zero
 overlap** with the target.
 
-The cause is sparsity. The seam band that collapsed the original boundary head covers
-~6% of pixels; a fixed-sigma Gaussian centroid peak covers a small fraction of **one**
-percent. The property that made the apex target attractive — a peak that does not grow
-with the crown — is also what makes it unlearnable here.
+*Corrected after H11:* the flatline measured magnitude collapse, not absence of
+learning. The apex head reaches **AUROC 0.841** against "within 15 px of a crown centre"
+— almost the surface head's 0.863 — but its mean output is **0.0041** and its p99 is
+**0.0212**, so the `min_apex = 0.10` threshold sits *above its 99th percentile*. That is
+the whole reason it emits 0.40 seeds per crown.
+
+The cause is sparsity. The seam band covers ~6% of pixels; a fixed-sigma Gaussian
+centroid peak covers ~1.2%. The property that made the apex target attractive — a peak
+that does not grow with the crown — is also what starves it of positive area.
 
 **The diagnosis in finding 6 is untouched**; the specific remedy is refuted. If pursued,
 change the target before the loss: a sigma that scales with crown size but a **peak
@@ -275,6 +280,29 @@ enough positive area. That is the same conclusion H6 reached from the other dire
 **widen the target rather than reweight the loss further**, which is now the single
 recurring lesson across three separate head failures (boundary, apex, and H5's rank
 attempt).
+
+**18. The unifying law of this project: ranking survives sparsity, magnitude does not.**
+Four heads, one monotone relationship:
+
+| head | positive rate | mean output | AUROC | usable as a magnitude? |
+|---|---:|---:|---:|---|
+| canopy | ~60% | 0.85 | 0.96 | yes |
+| boundary (pre-H6) | ~6% | 0.105 | 0.866 | barely — H2 and H4 both failed on it |
+| boundary (post-H6) | ~6% | 0.186 | 0.872 | yes; narrowed the domain gap (H10) |
+| apex | ~1.2% | **0.0041** | 0.841 | no |
+
+**Every head learns *where* its structure is. Only heads with enough positive area learn
+*how strongly* to say so** — and every downstream consumer in this pipeline (watershed
+relief, merge threshold, gate coupling, seed threshold) reads magnitude. This single
+relationship retro-explains H2, H4, H5, H6, H7 and H10.
+
+**19. Training a head you never read was worth +1.22 AP.**
+H11's matched-epoch control decomposes H7's +1.79 over H6 into **+0.57 from extra
+epochs (32%)** and **+1.22 from the auxiliary apex task (68%)** — same ordering at a
+common decode cell. The apex head is useless as an output, but because it *did* learn
+the ranking, its gradient carries crown-centre localisation into the shared trunk. That
+is more than the entire H5 decode-side programme and about half of H6's gain, costs
+nothing at inference, and uses a target that already existed in the codebase.
 
 ## Lessons and constraints
 
