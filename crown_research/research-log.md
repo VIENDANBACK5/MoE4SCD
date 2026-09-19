@@ -104,3 +104,31 @@ protocol and tested the replacement rather than leaving it standing.
 **Direction: PIVOT to training.** Five decode-side hypotheses after H1 have returned
 +1.4 in total. Next is H6: retrain the boundary head with a class-balanced objective,
 success criterion mean B on true seams > ~0.4. Progress report published for review.
+
+## 2026-09-19 — H6 launched; two findings while it trains
+
+**H6 locked** (`train_calibrated.py`, a copy of `train_sharp.py` with only the boundary
+term changed: per-batch class-balanced BCE + asymmetric Tversky alpha=0.3/beta=0.7).
+`train_sharp.py` left untouched so the baseline stays reproducible. 12 epochs,
+warm-started from `best_sharp_watershed.pth`, seeded. ~76 min.
+
+The training log corroborated the diagnosis before the run even started: under the old
+loss the boundary term sits at 1.08 -> 1.05 through all of epoch 1 and never moves. It
+is essentially the Dice term pinned near 1.0, because predicted-vs-target overlap never
+materialises.
+
+**Open question 3 answered.** Missed crowns are not suppressed, they are `never_lit`:
+16.5% of GT crowns (loose) and 28.1% (tuned) never raise the surface head above
+`min_apex` anywhere inside them, and their median area is 1,899 px against 24,382 px
+for all crowns. Per-instance normalisation strikes twice — it defeated H1's adaptive
+radius and it caps recall here.
+
+**A discarded asset found.** `targets_sharp` computes a fourth target, a Gaussian apex
+peak with sigma fixed independent of crown size, and `dataset.py` ships it as
+`batch["apex"]` every step. Nothing reads it; the model has three channels. The one
+scale-invariant signal in the project is being thrown away, and it is exactly what the
+small-crown failure needs.
+
+**H7 locked now, queued behind H6** so its predictions are on record before H6's results
+are known. The headroom decomposes cleanly from the H3 cube: boundary+canopy quality is
+worth ~+12 (65.5 -> 78.0) and seeding is worth ~+19 (78.0 -> 97.3).

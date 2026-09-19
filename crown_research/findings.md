@@ -71,6 +71,33 @@ crops. Every number previously reported on those 30 crops is pessimistic by roug
 - **A grid whose optimum sits on its boundary has not found an optimum.** H1's locked
   grid reported 52.87 as "best"; the true plateau was at 66.15, far outside it.
 
+**6. The crowns the pipeline misses are the small ones, and the surface head simply
+never lights them.**
+Under loose seeding 16.5% of GT crowns receive no seed; at the tuned operating point
+that rises to 28.1%. Almost none of it is NMS suppression (0.1-2.2%). The dominant
+cause is **`never_lit`**: the surface head never exceeds `min_apex` anywhere inside the
+crown. Those crowns have a **median area of 1,899 px against 24,382 px for all crowns**
+— below the 10th percentile. This is a second, independent consequence of the same
+per-instance normalisation identified in H1: the target says every crown peaks at 1.0,
+but after FPN smoothing a crown a tenth the typical size cannot produce a sharp
+isolated peak, so it falls under the threshold.
+
+**7. A scale-invariant apex target already exists in the codebase and is discarded.**
+`targets_sharp.compute_sharp_canopy_targets` returns a fourth tensor: a Gaussian peak
+at each crown centroid with a **fixed sigma regardless of crown size**. `dataset.py`
+ships it to the training loop as `batch["apex"]` on every step. `train_sharp.py` never
+reads it, and `CanopyWatershedNet` has only three output channels — so the one signal
+in the project that is scale-invariant by construction is computed and thrown away.
+That is exactly the signal finding 6 says is missing.
+
+**8. The remaining headroom splits into two learnable deficits.**
+From the H3 cube on the hold-out: predicted seeds with both other heads correct reaches
+**77.96**; adding correct seeds reaches **97.30**.
+- boundary + canopy quality: 65.5 -> 78.0, about **+12**
+- seeding (i.e. the surface head's small-crown blindness): 78.0 -> 97.3, about **+19**
+
+H6 addresses the first. The second needs the apex head.
+
 ## Lessons and constraints
 
 - `min_distance` 144-160 px, `min_apex` 0.50, `min_canopy` 0.25, `min_area` 25 is the
@@ -78,6 +105,11 @@ crops. Every number previously reported on those 30 crops is pessimistic by roug
 - `min_apex >= 0.60` collapses recall fast (ratio 0.62, mAP@50 -> 61.6). 0.50 is the knee.
 - Superlevel-set radius estimation: `t = 0.7` shatters components (seed ratio 7.8).
   Unusable above `t = 0.5`. The whole approach is dropped.
+- `train_sharp.py` warm-starts from `best_canopy_watershed.pth`; `train_calibrated.py`
+  (H6) warm-starts from `best_sharp_watershed.pth` instead, so it is a fine-tune of the
+  current best rather than a re-run from the older checkpoint. Keep that in mind when
+  comparing training curves — the boundary loss values are on different scales and are
+  not comparable across the two scripts.
 - `evaluate_metrics` reports **F1 at a fixed IoU**, not interpolated average precision,
   while labelling it `ap50`. Internally consistent, but must be renamed or replaced
   with true COCO AP before publication.
@@ -101,8 +133,9 @@ against 44.29 / 16.13 / 31.01 at the published settings.
 2. If the boundary head is fixed, do H2's merge and H4's gate coupling — both of which
    failed purely because B was too small — become viable? They should be re-run, not
    assumed dead.
-3. Why does the pipeline miss 16.9% of crowns even under loose seeding? Suppressed
-   peaks, or crowns the surface head never lights up at all?
+3. ~~Why does the pipeline miss 16.9% of crowns under loose seeding?~~ **ANSWERED:**
+   `never_lit` small crowns (median 1,899 px vs 24,382 px), not suppression. See
+   finding 6.
 4. Does the tuned setting hold across biomes, or is 160 px a Bamberg-specific scale?
    BAMFORESTS `test1`/`test2` and DTE-Aerial are available and untouched.
 5. The canopy head reaches AUROC 0.961 and looks healthy, yet H3 shows the system
