@@ -1,0 +1,3 @@
+arm,n_gt,n_seed,hit_rate_%,dup_per_gt,orphan_per_gt,missed_rate_%
+baseline md=24 ma=0.25,467,860,83.08,0.82,0.191,16.92
+tuned md=112 ma=0.55,467,329,62.53,0.039,0.041,37.47

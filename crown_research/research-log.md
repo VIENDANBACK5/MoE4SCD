@@ -38,3 +38,35 @@ SQ and over half the attainable B-IoU (visible in cell C).
 selection. Cell B (70.79 mAP@50) becomes the target to approach without an oracle.
 Next: H1 scale-adaptive seed suppression, using the surface head U as its own local
 crown-radius estimate.
+
+## 2026-09-19 — H1 run: two of three predictions refuted
+
+Locked H1 at `59ec567`. Arm A (global radius) vs Arm B (scale-adaptive radius from
+superlevel-set extent).
+
+**Both headline predictions failed.** Arm B lost to Arm A (51.20 vs 52.87), and Arm A
+blew past its predicted <= 48% ceiling. The cause of the second failure was my own
+grid: it peaked at its upper corner (md=56, ma=0.45), which means it never found an
+optimum. Extending to md <= 192 revealed an interior plateau at **66.15** (md=160,
+ma=0.50).
+
+Root cause, in hindsight obvious: BAMFORESTS crowns average ~146 px equivalent
+diameter at 1024 px crops, and the published decode constant was `min_distance = 24`.
+Off by ~6x. That single constant accounts for most of the gap H0 measured.
+
+Dropped H1-b. The superlevel-set radius estimator is too noisy — components merge at
+low `t` and shatter at high `t` — and per-instance target normalisation means scale
+would have to be *supervised* to be usable, not recovered at decode time.
+
+**Integrity check run before believing any of it.** The settings were selected on the
+same 30 crops used to report, so I re-scored frozen settings on 60 disjoint crops
+(eval idx 100-159). Tuned setting transfers at -0.61 (66.15 -> 65.54): not overfit.
+But the baseline jumps 31.33 -> 44.29 on the hold-out, so **the original 30-crop
+subset is unrepresentatively hard** and all previously published numbers on it —
+including the MorphSnakes 32.99 — are pessimistic by ~13 points. Honest headline is
+the hold-out delta: **44.29 -> 65.54 (+21.2)**.
+
+**Direction: DEEPEN.** The seed audit found the real structure: loose suppression hits
+83.1% of crowns with 0.82 duplicates each; tight suppression kills duplicates but
+misses 37.5% of crowns. Global NMS is stuck on that frontier. Next (H2): over-seed to
+keep the 83% hit rate, then merge fragments using the boundary head's seam evidence.

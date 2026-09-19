@@ -24,7 +24,7 @@ CKPT = "DeadTrees/experiments/canopy_watershed/best_sharp_watershed.pth"
 
 
 def build_cache(num_crops: int = 30, split: str = "eval", crop_size: int = 1024,
-                ckpt: str = CKPT, tag: str = "eval30") -> Path:
+                ckpt: str = CKPT, tag: str = "eval30", start: int = 0) -> Path:
     from crown_segmentation_research.methods.canopy_watershed.dataset import BAMCanopyWatershedDataset
     from crown_segmentation_research.methods.canopy_watershed.model import CanopyWatershedNet
 
@@ -37,9 +37,9 @@ def build_cache(num_crops: int = 30, split: str = "eval", crop_size: int = 1024,
     model.eval()
 
     ds = BAMCanopyWatershedDataset(split=split, crop_size=crop_size, augment=False, compute_targets=False)
-    n = min(num_crops, len(ds))
+    n = min(start + num_crops, len(ds))
     kept = 0
-    for idx in range(n):
+    for idx in range(start, n):
         f = out / f"crop_{idx:04d}.npz"
         if f.exists():
             kept += 1
@@ -89,4 +89,6 @@ if __name__ == "__main__":
     ap.add_argument("--num_crops", type=int, default=30)
     ap.add_argument("--tag", type=str, default="eval30")
     ap.add_argument("--split", type=str, default="eval")
-    build_cache(num_crops=ap.parse_args().num_crops, tag=ap.parse_args().tag, split=ap.parse_args().split)
+    ap.add_argument("--start", type=int, default=0)
+    a = ap.parse_args()
+    build_cache(num_crops=a.num_crops, tag=a.tag, split=a.split, start=a.start)
