@@ -50,26 +50,40 @@ produce almost nothing usable.
 None of them has been shown to hold under a scale shift, and TestSet1 shows the model
 degrades severely under exactly that shift.
 
-## An exploratory regularity (not pre-registered)
+## An exploratory regularity that did not survive its own check
 
-The per-split optima sit at a near-constant fraction of crown diameter:
+test1's reported optimum landed on the upper edge of the swept grid (240 of a 40-240
+range) — the same failure that made H1's locked grid report a false optimum. Before
+quoting anything, the grid was extended to 460.
 
-| split | D | optimum min_dist | ratio |
+With test1 resolved at an interior optimum:
+
+| split | D | optimum min_dist | ratio min_dist / D |
 |---|---:|---:|---:|
 | evalhold60 | 210.6 | 160 | 0.760 |
 | test2 | 211.6 | 160 | 0.756 |
-| test1 | 314.0 | (see below) | — |
+| **test1** | 314.0 | **280** | **0.892** |
 
-evalhold60 and test2 agree to three decimals, which is more agreement than a 20 px
-grid can really resolve and should not be over-read. **test1's reported optimum landed
-on the upper edge of the swept grid (240 of a 40-240 range)** — the same failure that
-made H1's locked grid report a false optimum. The grid is being extended before the
-ratio is quoted as a rule; until that returns, `min_dist ~ 0.76 x D` rests on two
-points, not three.
+**There is no tight constant ratio.** On the two splits at the same crown scale the
+ratio agrees to three decimals (0.760, 0.756), which is why it looked like a law; the
+split at a *different* scale sits at 0.892. So the agreement between eval and test2 was
+telling me they share a scale, not that a universal coefficient exists.
+
+Had the grid not been extended, `min_dist ~ 0.76 x D` would have been reported as a
+rule on two unresolved points and been wrong. The honest statement is the weaker one:
+**the optimum lies at roughly 0.75-0.9 x mean crown diameter**, which is enough to
+replace a blind 24 px constant but is not a precise calibration law.
+
+(The pre-registered ±30% prediction passes more comfortably after the extension: 280 vs
+D=314 is 11% off, against 24% at the truncated grid.)
 
 Note also that the naive `min_dist = D` rule is *worse* than the frozen 160 on both
-eval (61.59 vs 65.54) and test2 (60.52 vs 63.85). Whatever the correct coefficient is,
-it is not 1.0.
+eval (61.59 vs 65.54) and test2 (60.52 vs 63.85). Whatever the coefficient is, it is
+below 1.0.
+
+Metric footnote: on test1, F1@50 peaks at md=280 (26.83) while COCO AP peaks at md=240
+(2.98 vs 2.91). The two metrics disagree about the optimum on this split — a further
+sign that test1 is a degenerate operating regime rather than a slightly harder one.
 
 ## Consequences
 

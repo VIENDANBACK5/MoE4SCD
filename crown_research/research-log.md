@@ -179,3 +179,21 @@ three. Added to Lessons so it stops recurring.
 **Priority change.** Scale generalisation is now the top open question, ahead of
 further head work — if the model cannot survive a 1.5x scale shift, H6 and H7 are
 optimising inside a regime it cannot leave.
+
+## 2026-09-19 — H8 follow-up: the ratio did not survive the boundary check
+
+Extended test1's grid to 460 and its optimum resolved at md=280, interior. The
+exploratory `min_dist ~ 0.76 x D` regularity **does not hold**: ratios are 0.760
+(eval), 0.756 (test2), 0.892 (test1). The first two agree to three decimals because
+they share a crown scale (D ~ 211 px), not because a universal coefficient exists.
+
+This is the second time the boundary check changed a conclusion, and the first time it
+stopped me reporting something false rather than merely finding a better number. The
+honest statement is weaker: the optimum sits at roughly **0.75-0.9 x mean crown
+diameter**, enough to replace a blind 24 px constant, not a calibration law.
+
+The pre-registered ±30% prediction actually passes more comfortably after the
+extension (11% off instead of 24%), so H8's verdicts are unchanged.
+
+Also noted: on test1 the two metrics disagree about the optimum (F1@50 peaks at 280,
+COCO AP at 240) — further evidence that test1 is a degenerate regime, not a harder one.
