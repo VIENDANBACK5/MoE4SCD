@@ -29,6 +29,7 @@ from deadtrees_pipeline.metrics import hungarian_match, overlap_matrices
 
 
 DEFAULT_INSTANCES = Path("DeadTrees/instances_gt/instances.gpkg")
+DEFAULT_TREECOVER_INSTANCES = Path("DeadTrees/instances_gt/tree_cover_instances.gpkg")
 DEFAULT_IMAGE_ROOT = Path(
     "DeadTrees/raw/image-tiles-1024-global-aerial-sampled-20-random"
 )
@@ -36,6 +37,14 @@ DEFAULT_SAM_DIR = Path("DeadTrees/sam2_masks")
 DEFAULT_OUTPUT = Path("DeadTrees/experiments/classification_v1")
 POSITIVE_IOU = 0.25
 CLEAN_NEGATIVE_OVERLAP = 0.10
+# An object must sit mostly inside a tree_cover polygon (and clear of any
+# standing_deadwood overlap) before this pipeline calls it "alive". This is a
+# coarse canopy-presence proxy, not an audited individual-tree label: the
+# tree_cover layer carries the same unresolved crown-vs-group ambiguity as
+# standing_deadwood (see audit/annotation_schema.md). 0.50 is an unvalidated
+# starting threshold (majority-of-footprint rule), not a value derived from
+# the data; revisit once the G0.2 semantic audit is complete.
+ALIVE_MIN_TREECOVER_OVERLAP = 0.50
 
 SHAPE_FEATURES = (
     "shape_log_area",
@@ -112,8 +121,37 @@ def _feature_row(mask: np.ndarray, image: np.ndarray) -> dict[str, float]:
     return {**extract_shape_features(mask), **extract_rgb_features(image, mask)}
 
 
+def classify_condition(
+    is_dead_positive: bool,
+    dead_overlap_pred: float,
+    treecover_overlap_pred: float,
+) -> tuple[int | None, str]:
+    """Coarse alive/dead proxy label for one object.
+
+    `tree_cover` is a canopy-presence layer, not an audited individual-tree
+    instance -- it carries the same unresolved crown-vs-group ambiguity as
+    `standing_deadwood` (see `audit/annotation_schema.md`). This function
+    only distinguishes "flagged dead", "mostly inside live-looking canopy and
+    clear of any dead overlap", or "neither" (bare ground, shadow, ambiguous
+    dead-adjacent object); it does not claim to identify one biological tree.
+
+    Returns (condition_label, condition_label_name). condition_label is None
+    for rows that should be excluded from a binary alive-vs-dead classifier,
+    mirroring how `label_name == "ambiguous"` is already excluded for the
+    deadwood-vs-other classifier.
+    """
+    if is_dead_positive:
+        return 1, "dead"
+    if dead_overlap_pred >= CLEAN_NEGATIVE_OVERLAP:
+        return None, "ambiguous_dead_overlap"
+    if treecover_overlap_pred >= ALIVE_MIN_TREECOVER_OVERLAP:
+        return 0, "alive"
+    return None, "background"
+
+
 def build_object_table(
     instances_path: Path = DEFAULT_INSTANCES,
+    treecover_instances_path: Path = DEFAULT_TREECOVER_INSTANCES,
     image_root: Path = DEFAULT_IMAGE_ROOT,
     sam_dir: Path = DEFAULT_SAM_DIR,
     output_csv: Path | None = None,
@@ -122,6 +160,14 @@ def build_object_table(
 ) -> pd.DataFrame:
     instances = gpd.read_file(instances_path, layer="instances")
     grouped = {stem: group for stem, group in instances.groupby("stem", sort=True)}
+    treecover_available = treecover_instances_path.exists()
+    if treecover_available:
+        treecover_instances = gpd.read_file(treecover_instances_path, layer="instances")
+        treecover_grouped = {
+            stem: group for stem, group in treecover_instances.groupby("stem", sort=True)
+        }
+    else:
+        treecover_grouped = {}
     image_paths = sorted(image_root.glob("**/*.tif"))
     rows: list[dict] = []
 
@@ -146,6 +192,16 @@ def build_object_table(
                     f"[{float(image.min())}, {float(image.max())}]: {image_path}"
                 )
             gt_masks, gt_ids = rasterize_instances(group, src)
+            if treecover_available:
+                treecover_group = treecover_grouped.get(stem, treecover_instances.iloc[0:0])
+                treecover_masks, _ = rasterize_instances(treecover_group, src)
+                canopy_union = (
+                    treecover_masks.any(axis=0)
+                    if len(treecover_masks)
+                    else np.zeros(image.shape[:2], dtype=bool)
+                )
+            else:
+                canopy_union = np.zeros(image.shape[:2], dtype=bool)
 
         gt_areas = (
             gt_masks.reshape(len(gt_masks), -1).sum(axis=1)
@@ -189,6 +245,12 @@ def build_object_table(
             else:
                 label, label_name = None, "ambiguous"
                 matched_gt_id, matched_iou = "", 0.0
+            treecover_overlap_pred = float((mask & canopy_union).sum()) / max(area, 1)
+            condition_label, condition_label_name = classify_condition(
+                is_dead_positive=(label_name == "positive"),
+                dead_overlap_pred=max_overlap_pred,
+                treecover_overlap_pred=treecover_overlap_pred,
+            )
             rows.append({
                 "sample_id": f"sam2:{stem}:{int(source_index)}",
                 "source": "sam2",
@@ -197,6 +259,8 @@ def build_object_table(
                 "object_index": int(source_index),
                 "label": label,
                 "label_name": label_name,
+                "condition_label": condition_label,
+                "condition_label_name": condition_label_name,
                 "area_px": int(area),
                 "sam_stability_score": float(score),
                 "best_iou": best_iou,
@@ -204,10 +268,12 @@ def build_object_table(
                 "matched_gt_instance_id": matched_gt_id,
                 "max_overlap_gt": max_overlap_gt,
                 "max_overlap_pred": max_overlap_pred,
+                "treecover_overlap_pred": treecover_overlap_pred,
                 **_feature_row(mask, image),
             })
 
         for gt_index, (instance_id, mask, area) in enumerate(zip(gt_ids, gt_masks, gt_areas)):
+            treecover_overlap_pred = float((mask & canopy_union).sum()) / max(int(area), 1)
             rows.append({
                 "sample_id": f"gt:{instance_id}",
                 "source": "gt",
@@ -216,6 +282,8 @@ def build_object_table(
                 "object_index": gt_index,
                 "label": 1,
                 "label_name": "positive",
+                "condition_label": 1,
+                "condition_label_name": "dead",
                 "area_px": int(area),
                 "sam_stability_score": "",
                 "best_iou": 1.0,
@@ -223,6 +291,7 @@ def build_object_table(
                 "matched_gt_instance_id": instance_id,
                 "max_overlap_gt": 1.0,
                 "max_overlap_pred": 1.0,
+                "treecover_overlap_pred": treecover_overlap_pred,
                 **_feature_row(mask, image),
             })
 
@@ -275,6 +344,7 @@ def _select_threshold_inner_loso(
     feature_names: tuple[str, ...],
     n_estimators: int,
     random_state: int,
+    label_column: str = "label",
 ) -> tuple[float, dict]:
     """Select an operating threshold without seeing the outer held-out site."""
     inner_probabilities = np.zeros(len(train), dtype=float)
@@ -285,7 +355,7 @@ def _select_threshold_inner_loso(
             train["dataset_id"].to_numpy() == inner_site
         )
         inner_valid = train.iloc[inner_valid_positions]
-        y_inner_train = inner_train["label"].astype(int).to_numpy()
+        y_inner_train = inner_train[label_column].astype(int).to_numpy()
         if len(np.unique(y_inner_train)) != 2:
             raise RuntimeError(f"Inner training split lacks a class for site {inner_site}")
         model = _new_classifier(n_estimators, random_state)
@@ -297,7 +367,7 @@ def _select_threshold_inner_loso(
             inner_valid[list(feature_names)].to_numpy(float)
         )[:, 1]
 
-    y_train = train["label"].astype(int).to_numpy()
+    y_train = train[label_column].astype(int).to_numpy()
     candidates = np.linspace(0.05, 0.95, 91)
     scored = []
     for threshold in candidates:
@@ -327,6 +397,11 @@ def run_loso_ablation(
         ("raw_rgb", "raw_sam2", RGB_FEATURES),
         ("raw_shape_rgb", "raw_sam2", SHAPE_FEATURES + RGB_FEATURES),
         ("gt_upper_shape_rgb", "gt_upper_bound", SHAPE_FEATURES + RGB_FEATURES),
+        # Answers the actual "alive vs dead" question instead of "deadwood vs
+        # other". There is no clean alive-instance ground truth (only the
+        # tree_cover canopy proxy, see classify_condition), so this universe
+        # has no gt_upper_bound counterpart.
+        ("alive_dead_shape_rgb", "raw_condition", SHAPE_FEATURES + RGB_FEATURES),
     )
     experiments = tuple(
         experiment
@@ -346,16 +421,25 @@ def run_loso_ablation(
         frame[frame["source"] == "gt"],
         raw[raw["label_name"] == "clean_negative"],
     ], ignore_index=True)
+    condition_labeled = raw[raw["condition_label_name"].isin(["dead", "alive"])].copy()
+
+    # universe -> (frame used to select train/test rows and fit the model,
+    # frame used to score *every* object for the OOF predictions CSV,
+    # column holding the binary target, column holding the human-readable name)
+    universes = {
+        "raw_sam2": (raw_labeled, raw, "label", "label_name"),
+        "gt_upper_bound": (gt_upper, gt_upper, "label", "label_name"),
+        "raw_condition": (condition_labeled, raw, "condition_label", "condition_label_name"),
+    }
 
     for experiment, universe, feature_names in experiments:
-        metric_frame = raw_labeled if universe == "raw_sam2" else gt_upper
-        prediction_frame = raw if universe == "raw_sam2" else gt_upper
+        metric_frame, prediction_frame, label_column, label_name_column = universes[universe]
         for heldout_site in sites:
             train = metric_frame[metric_frame["dataset_id"] != heldout_site]
             test = metric_frame[metric_frame["dataset_id"] == heldout_site]
             predict_test = prediction_frame[prediction_frame["dataset_id"] == heldout_site]
-            y_train = train["label"].astype(int).to_numpy()
-            y_test = test["label"].astype(int).to_numpy()
+            y_train = train[label_column].astype(int).to_numpy()
+            y_test = test[label_column].astype(int).to_numpy()
             if len(np.unique(y_train)) != 2 or len(np.unique(y_test)) != 2:
                 raise RuntimeError(
                     f"Both classes are required in train/test for {experiment}, site {heldout_site}"
@@ -366,6 +450,7 @@ def run_loso_ablation(
                 feature_names,
                 n_estimators,
                 random_state,
+                label_column=label_column,
             )
             model = _new_classifier(n_estimators, random_state)
             model.fit(train[list(feature_names)].to_numpy(float), y_train)
@@ -388,6 +473,7 @@ def run_loso_ablation(
             importances[experiment].append(model.feature_importances_)
 
             for (_, row), probability in zip(predict_test.iterrows(), all_prob):
+                true_label = row[label_column]
                 prediction_rows.append({
                     "experiment": experiment,
                     "universe": universe,
@@ -397,9 +483,9 @@ def run_loso_ablation(
                     "stem": row["stem"],
                     "dataset_id": int(row["dataset_id"]),
                     "object_index": int(row["object_index"]),
-                    "label_name": row["label_name"],
-                    "true_label": "" if pd.isna(row["label"]) else int(row["label"]),
-                    "used_in_metrics": row["label_name"] != "ambiguous",
+                    "label_name": row[label_name_column],
+                    "true_label": "" if pd.isna(true_label) else int(true_label),
+                    "used_in_metrics": not pd.isna(true_label),
                     "selected_threshold": float(threshold),
                     "probability": float(probability),
                     "prediction": int(probability >= threshold),
@@ -431,6 +517,15 @@ def run_loso_ablation(
             ),
             "ambiguous_rule": "all remaining SAM2 proposals; excluded from classifier metrics",
             "gt_upper_bound": "GT positive masks plus the same clean-negative SAM2 universe",
+            "condition_label_caveat": (
+                "condition_label (dead/alive) is a coarse proxy: 'dead' reuses the "
+                "same positive_rule as label; 'alive' requires "
+                f">= {ALIVE_MIN_TREECOVER_OVERLAP} of the object's footprint inside a "
+                f"tree_cover polygon and < {CLEAN_NEGATIVE_OVERLAP} overlap with any "
+                "standing_deadwood polygon. Neither layer has been audited for "
+                "individual-tree semantics (see audit/annotation_schema.md); this is "
+                "not a validated alive/dead ground truth."
+            ),
         },
         "dataset": {
             "n_rows": int(len(frame)),
@@ -442,6 +537,21 @@ def run_loso_ablation(
                 str(site): {
                     name: int(((raw["dataset_id"] == site) & (raw["label_name"] == name)).sum())
                     for name in ("positive", "clean_negative", "ambiguous")
+                }
+                for site in sites
+            },
+            "n_raw_condition_dead": int((raw["condition_label_name"] == "dead").sum()),
+            "n_raw_condition_alive": int((raw["condition_label_name"] == "alive").sum()),
+            "n_raw_condition_background": int((raw["condition_label_name"] == "background").sum()),
+            "n_raw_condition_ambiguous_dead_overlap": int(
+                (raw["condition_label_name"] == "ambiguous_dead_overlap").sum()
+            ),
+            "raw_condition_distribution_by_site": {
+                str(site): {
+                    name: int(
+                        ((raw["dataset_id"] == site) & (raw["condition_label_name"] == name)).sum()
+                    )
+                    for name in ("dead", "alive", "background", "ambiguous_dead_overlap")
                 }
                 for site in sites
             },
@@ -504,6 +614,9 @@ def run_loso_ablation(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--instances", type=Path, default=DEFAULT_INSTANCES)
+    parser.add_argument(
+        "--treecover-instances", type=Path, default=DEFAULT_TREECOVER_INSTANCES
+    )
     parser.add_argument("--image-root", type=Path, default=DEFAULT_IMAGE_ROOT)
     parser.add_argument("--sam-dir", type=Path, default=DEFAULT_SAM_DIR)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
@@ -527,6 +640,7 @@ def main() -> None:
     else:
         frame = build_object_table(
             instances_path=args.instances,
+            treecover_instances_path=args.treecover_instances,
             image_root=args.image_root,
             sam_dir=args.sam_dir,
             output_csv=object_table,

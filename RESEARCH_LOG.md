@@ -4,6 +4,23 @@ Nhật ký nghiên cứu theo session. Mỗi session ghi: việc đã làm, phá
 
 ---
 
+## 2026-09-17 — Session 4: Neuro-Algorithmic Reasoning & Track 2 Tree Crown Segmentation Focus
+
+### Việc đã làm & Đột phá Lý thuyết
+- Phân tích và tiếp thu toàn diện bài giảng & nghiên cứu của **Giáo sư Yusu Wang** (UCSD) về *Algorithmic Alignment, Size Generalization, $\varepsilon$-Kernels (NeurIPS 2025), và Spectral Graph Modularity*.
+- Ứng dụng skill `/creative-thinking-for-research` (8 cognitive frameworks) để giải quyết các nút thắt cổ chai đã đo lường được ở v6/v7:
+  - **Vấn đề v7**: Cắt giảm 51% `split_rate` nhờ embedding head nhưng tăng +15% `miss_rate`; chẩn đoán chỉ ra **70% ca miss là "blind spots" (prob < 0.01)** do sự sụp đổ của việc dò tâm đỉnh (peak finding) trong các vùng tán cây rậm rạp (`val:203`).
+- Khóa ưu tiên chiến lược: **Tập trung toàn lực vào Track 2: Segmentation trên bộ dữ liệu DeadTrees** trước, hoàn thiện bài toán phân đoạn cây chết / standing deadwood / fallen logs trước khi tiến hành downstream classification.
+- Phân tích thách thức hình học đặc thù của DeadTrees:
+  - Thân cây đổ (fallen logs) có tỷ lệ chiều dài/rộng cực lớn ($L/W > 10:1$, chỉ dày 2-5 pixel) khiến biểu diễn tia tròn StarDist bị lãng phí $>85\%$ tia và gãy vụn.
+  - Cây chết đứng (standing snags) là bộ xương cành trơ trụi không lồi (non-convex), vi phạm giả định star-convex.
+  - Khối gỗ đổ đan xen ("pick-up sticks") làm sụp đổ hoàn toàn tâm điểm hình học và phép lọc NMS truyền thống.
+- Soạn thảo và lưu trữ 2 bản thiết kế phương pháp v8 & v9:
+  - `crown_segmentation_research/design_docs/method_design_neuro_algorithmic_crown_segmentation_v8.md` (Khung lý thuyết Neuro-Algorithmic tổng quát)
+  - `crown_segmentation_research/design_docs/deadtrees_neuro_algorithmic_segmentation_v9.md` (Thiết kế chuyên sâu cho **DeadTrees**: $\varepsilon$-Kernel định hướng bất đẳng hướng, Bellman-Ford Medial Axis Tracing, và Spectral Modularity Cut cho thân cây đan xen).
+
+---
+
 ## 2026-07-01 — Session 3: SECOND-OC Benchmark + Git Setup
 
 ### Việc đã làm

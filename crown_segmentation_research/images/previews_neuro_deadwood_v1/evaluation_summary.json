@@ -1,0 +1,13 @@
+{
+  "val_evaluation": {
+    "model": "DeadTrees/experiments/tree_flow_unified_v1/epoch_checkpoints/epoch_0039.pth",
+    "tp": 86,
+    "fp": 190,
+    "fn": 130,
+    "precision": 0.3115942028985507,
+    "recall": 0.39814814814814814,
+    "f1": 0.3495934959349593,
+    "mean_canopy_iou": 0.2917054572305287
+  },
+  "preview_directory": "crown_segmentation_research/images/previews_neuro_deadwood_v1"
+}

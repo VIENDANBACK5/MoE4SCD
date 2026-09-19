@@ -77,13 +77,43 @@ test_hier_output/
 SECOND-OC/predictions/
 SECOND-OC/benchmark.json
 SECOND-OC/baselines/
-predictions_scannet.json
+# =============================================
+# Large Datasets, Weights & Binary Archives
+# =============================================
+DTE-Aerial-Data-public/
+DTE-aerial-model/
+DTE-aerial-official/
+*.pth
+*.pt
+*.npz
+*.tar.gz
+*.zip
+*.tif
+*.tiff
+*.bin
 
-# =============================================
-# Visualizations & Temp PID files
-# =============================================
+# Spot-check visualizations & temp files
+phase1_viz_*.png
+phase0_report.json
+scratch_*.png
+scratch_*.py
+spectral_prompts_*.png
+predictions_scannet.json
 report_vis/
 mask_quality_comparison/
-spectral_prompts_00004.png
 *.pid
+audit/
+benchmark/
+qc/
+reports/
+data_manifest/
+experiments/
+deadtrees_gate0/
+crown_segmentation_research/experiments/
+crown_segmentation_research/literature/
+crown_segmentation_research/paper/
+crown_segmentation_research/papers/
+*.pdf
+
+
 

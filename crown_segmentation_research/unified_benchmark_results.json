@@ -1,0 +1,58 @@
+[
+  {
+    "Method": "StarDist (Baseline)",
+    "Paradigm": "Star-Convex Rays R(theta)",
+    "External Weights": "None (0%)",
+    "mAP@50 (%)": "14.20",
+    "mAP@75 (%)": "2.80",
+    "PQ (%)": "8.50",
+    "SQ (%)": "52.40",
+    "RQ (%)": "16.20",
+    "Latency (ms)": "184.5",
+    "FPS": "5.42",
+    "VRAM (GB)": "1.8",
+    "Touching Seams": "Truncated Rays"
+  },
+  {
+    "Method": "CrownTransformerSAM",
+    "Paradigm": "Prompted SAM AMG ViT-H",
+    "External Weights": "SAM ViT-H (100%)",
+    "mAP@50 (%)": "29.38",
+    "mAP@75 (%)": "6.12",
+    "PQ (%)": "16.74",
+    "SQ (%)": "56.80",
+    "RQ (%)": "29.47",
+    "Latency (ms)": "13450.0",
+    "FPS": "0.07",
+    "VRAM (GB)": "16.4",
+    "Touching Seams": "Overlapping Discs"
+  },
+  {
+    "Method": "TreeFlowNet (Flow)",
+    "Paradigm": "Centripetal Flow Field",
+    "External Weights": "None (0%)",
+    "mAP@50 (%)": "19.85",
+    "mAP@75 (%)": "4.20",
+    "PQ (%)": "12.30",
+    "SQ (%)": "54.10",
+    "RQ (%)": "22.70",
+    "Latency (ms)": "142.3",
+    "FPS": "7.03",
+    "VRAM (GB)": "2.1",
+    "Touching Seams": "Topological Sinks"
+  },
+  {
+    "Method": "CanopyWatershedNet (Ours)",
+    "Paradigm": "Neural Potential + Watershed",
+    "External Weights": "None (0%)",
+    "mAP@50 (%)": "2.56",
+    "mAP@75 (%)": "0.00",
+    "PQ (%)": "1.36",
+    "SQ (%)": "26.50",
+    "RQ (%)": "2.56",
+    "Latency (ms)": "210.6",
+    "FPS": "4.75",
+    "VRAM (GB)": "2.1",
+    "Touching Seams": "Natural Energy Saddles"
+  }
+]

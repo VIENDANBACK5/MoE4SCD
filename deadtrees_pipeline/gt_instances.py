@@ -62,8 +62,19 @@ def extract_instances(
     image_root: Path = DEFAULT_IMAGE_ROOT,
     vector_root: Path = DEFAULT_VECTOR_ROOT,
     output_path: Path = DEFAULT_OUTPUT,
+    layer: str = "standing_deadwood",
     overwrite: bool = False,
 ) -> dict:
+    """Clip one DeadTrees vector layer to each tile footprint.
+
+    `layer` defaults to `standing_deadwood` (the original deadwood-instance
+    extraction). Pass `layer="tree_cover"` to run the identical procedure
+    against the tree-cover polygons instead, producing a parallel instance
+    GeoPackage that `classify_objects.py` uses as a coarse "alive canopy"
+    proxy. Both layers carry the same unresolved crown-vs-group ambiguity
+    documented in `audit/annotation_schema.md`; this function does not
+    resolve that, it only clips whichever layer is requested.
+    """
     image_paths = sorted(image_root.glob("**/*.tif"))
     if not image_paths:
         raise FileNotFoundError(f"No GeoTIFF images found under {image_root}")
@@ -82,7 +93,7 @@ def extract_instances(
     where = "dataset_id IN ({})".format(",".join(map(str, dataset_ids)))
     source = gpd.read_file(
         source_gpkg,
-        layer="standing_deadwood",
+        layer=layer,
         where=where,
         fid_as_index=True,
     )
@@ -180,6 +191,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--image-root", type=Path, default=DEFAULT_IMAGE_ROOT)
     parser.add_argument("--vector-root", type=Path, default=DEFAULT_VECTOR_ROOT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--layer",
+        type=str,
+        default="standing_deadwood",
+        help="GeoPackage layer to clip (e.g. standing_deadwood or tree_cover)",
+    )
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
 
@@ -190,6 +207,7 @@ def main() -> None:
         image_root=args.image_root,
         vector_root=args.vector_root,
         output_path=args.output,
+        layer=args.layer,
         overwrite=args.overwrite,
     )
     print(json.dumps({k: v for k, v in summary.items() if k != "instances_per_image"}, indent=2))
