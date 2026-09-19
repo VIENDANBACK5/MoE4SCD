@@ -90,7 +90,7 @@ hypotheses:
     priority: done
   - id: H6
     name: "Class-balanced boundary loss (first training hypothesis)"
-    status: planned
+    status: RUNNING — train_calibrated.py, 12 epochs, launched 2026-09-19
     priority: 1
     statement: >
       The boundary head scores AUROC 0.866 against GT seams but has median output
@@ -105,9 +105,35 @@ hypotheses:
       non-null for the first time.
     success_criterion: "calibration, not ranking — mean_on_pos > 0.4"
 
+  - id: H7
+    name: "Scale-invariant apex head for seeding"
+    status: LOCKED, queued behind H6 (needs its checkpoint as warm start)
+    priority: 2
+    statement: >
+      Missed crowns are never_lit small crowns (median 1,899 px vs 24,382 px overall),
+      not NMS suppression. targets_sharp already computes a fixed-sigma Gaussian apex
+      target that dataset.py ships as batch["apex"] every step and nothing reads; the
+      model has only 3 channels. Add the 4th head, supervise it with the balanced
+      objective H6 validates, and seed from it instead of the surface head.
+    prediction: "never_lit < 15% at the tuned operating point; apex seeding >= +3 F1@50; combined >= 73"
+  - id: H8
+    name: "Cross-site transfer of the crown-diameter suppression rule"
+    status: RUNNING — BAMFORESTS TestSet1/TestSet2, 40 crops each
+    priority: 1
+    statement: >
+      Everything so far is measured on the eval split of one site. Tests whether
+      min_dist=160 is a Bamberg-specific constant or an instance of the rule
+      "suppression radius ~ mean crown diameter".
+    prediction: "frozen (160,0.50) beats published by >=10 F1@50 on both test splits; each split's optimum within +/-30% of its measured crown diameter; frozen within 2 F1@50 of per-split optimum"
+
+headroom_decomposition:
+  source: "H3 factorial on evalhold60"
+  boundary_and_canopy_quality: "65.5 -> 78.0 F1@50 (~+12) — addressed by H6"
+  seeding_small_crowns: "78.0 -> 97.3 F1@50 (~+19) — addressed by H7"
+
 decisions_pending: []
 protocol_discipline: "Every hypothesis committed to git with numeric predictions before running; see git log for research(protocol) commits preceding each research(results) commit."
 known_issues:
   - "evaluate_metrics reports F1 at a fixed IoU but labels it ap50 — rename or replace with true COCO AP before publication."
   - "The historical 30-crop eval subset is unrepresentatively hard (baseline 31.33 there vs 44.29 on 60 disjoint crops); previously published cross-paradigm numbers are pessimistic by ~13 points."
-next_action: "H6 — lock protocol, then retrain the boundary head with a class-balanced objective"
+next_action: "Collect H6 (training) and H8 (running) results; then H7 apex head"

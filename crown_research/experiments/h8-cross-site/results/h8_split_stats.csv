@@ -1,0 +1,4 @@
+split,n_crowns,mean_area,median_area,D_mean,D_median
+evalhold60,1039,34829.8,24382.0,210.6,176.2
+test1,290,77447.2,45771.5,314.0,241.4
+test2,746,35163.7,27373.5,211.6,186.7
