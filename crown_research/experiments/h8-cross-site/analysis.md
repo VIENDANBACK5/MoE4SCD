@@ -81,9 +81,25 @@ Note also that the naive `min_dist = D` rule is *worse* than the frozen 160 on b
 eval (61.59 vs 65.54) and test2 (60.52 vs 63.85). Whatever the coefficient is, it is
 below 1.0.
 
-Metric footnote: on test1, F1@50 peaks at md=280 (26.83) while COCO AP peaks at md=240
-(2.98 vs 2.91). The two metrics disagree about the optimum on this split — a further
-sign that test1 is a degenerate operating regime rather than a slightly harder one.
+Metric footnote, and it cuts deeper than a footnote. The optima above were located by
+F1@50. Under **COCO AP** they shift lower on every split:
+
+| split | D | optimum by F1@50 | optimum by COCO AP | ratio by AP |
+|---|---:|---:|---:|---:|
+| evalhold60 | 211 | 160 | ~120 | 0.57 |
+| test2 | 212 | 160 | ~140 | 0.66 |
+| test1 | 314 | 280 | 240 | 0.76 |
+
+So the ratio spread widens from 0.756-0.892 to **0.57-0.76** once the better metric is
+used. Whatever regularity exists is coarser still, and the conclusion above — a rule of
+thumb, not a calibration law — is if anything understated. The frozen 160 remains within
+~0.5 COCO AP of each split's AP-optimum on eval and test2, so the practical
+recommendation is unaffected.
+
+That the two metrics disagree about the optimum at all is itself informative: F1@50
+rewards raising the seed count until precision and recall balance, while AP is sensitive
+to the confidence ranking of the extra detections. Where they disagree, AP is the one
+to trust.
 
 ## Consequences
 

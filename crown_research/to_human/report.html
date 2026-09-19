@@ -188,29 +188,34 @@
 
 <div class="wrap">
 
-  <p class="eyebrow">Autoresearch log · BAMFORESTS · 19 Sep 2026</p>
+  <p class="eyebrow">Autoresearch log · BAMFORESTS · 19 Sep 2026 · updated after H6–H8</p>
   <h1>Where the crown segmentation error actually lives</h1>
-  <p class="lede prose">Six pre-registered hypotheses over one afternoon. <strong>Four of them were refuted</strong> — including both of my headline predictions about how to fix the pipeline. The refutations located the problem far more precisely than the confirmations did: the published decode constant was about six times too small, the boundary head has collapsed under class imbalance, and the watershed decoder everyone suspected turns out to be nearly perfect.</p>
+  <p class="lede prose">Eight pre-registered hypotheses. <strong>Five were refuted</strong> — including every headline prediction I made about how to fix the pipeline. The refutations located the problem far more precisely than the confirmations did: the published decode constant was about six times too small, the boundary head had collapsed under class imbalance, the watershed decoder everyone suspected turns out to be nearly perfect, and the model does not survive a change of crown scale.</p>
 
   <div class="headline">
     <div>
-      <div class="k">Held-out mAP@50</div>
-      <div class="v up">66.91</div>
-      <div class="n">from 44.29 at the published settings · <b>+22.6</b></div>
+      <div class="k">Held-out COCO AP</div>
+      <div class="v up">26.84</div>
+      <div class="n">from 15.81 at the published settings · <b>+11.0</b></div>
     </div>
     <div>
-      <div class="k">Held-out PQ</div>
-      <div class="v up">48.82</div>
-      <div class="n">from 31.01 · +17.8</div>
+      <div class="k">Held-out COCO AP75</div>
+      <div class="v up">20.40</div>
+      <div class="n">from 9.48 · +10.9</div>
     </div>
     <div>
       <div class="k">Same decoder, correct heads</div>
-      <div class="v cap">97.30</div>
+      <div class="v cap">84.48</div>
       <div class="n">the ceiling that is still on the table</div>
     </div>
   </div>
 
-  <p class="prose">Every number on this page is measured on <b>60 held-out crops</b> (BAMFORESTS eval indices 100–159) that took no part in any sweep. Tuning was done on a separate 30-crop split. Nothing was retrained — the network is the existing <code>best_sharp_watershed.pth</code> throughout.</p>
+  <p class="prose">Every number on this page is measured on <b>60 held-out crops</b> (BAMFORESTS eval indices 100–159) that took no part in any sweep, with tuning done on a separate 30-crop split. Transfer is additionally checked on <b>TestSet1 and TestSet2</b>, untouched by all of it.</p>
+
+  <div class="callout warn">
+    <h3>The metric changed under me, and it matters</h3>
+    <p>The repo's <code>evaluate_metrics</code> reports the <b>F1 score at a fixed IoU</b> while naming it <code>ap50</code>. I built <a href="#repro">a real 101-point interpolated AP</a> and re-scored everything. The <b>ordering is unchanged</b>, so no conclusion moved — but the absolute numbers are much lower, and this page now quotes COCO AP throughout. Where the two disagree, AP is the one to trust. Earlier F1 figures are kept only where they make a comparison clearer, and labelled as such.</p>
+  </div>
 
   <section>
     <h2>The read that started it</h2>
@@ -265,6 +270,55 @@
         <p>Measured against ground-truth seams, <code>B</code> scores <b>AUROC 0.866</b> — it knows where the seams are — while its median output is <b>0.0011</b> and it averages just <b>0.105 on true seam pixels</b>. That is a calibration failure from the ~6% positive rate, not a failure to learn.</p>
         <p>I predicted a rank transform would recover the information. <strong>It cost 9.4 points.</strong> The ordering inside the near-zero bulk is noise, and spreading it across the full range manufactures ridges everywhere. Percentile-based merging did give a small real gain (+1.4) and is the best configuration found.</p>
       </div>
+      <div class="h refuted">
+        <div class="h-top"><span class="h-id">H6 · boundary loss</span><span class="chip no">3 of 4 refuted</span></div>
+        <h3>Retraining the boundary head with a class-balanced objective</h3>
+        <p>The first training run of the project — a copy of the training script with <em>only</em> the boundary term changed (per-batch balanced BCE + asymmetric Tversky), so the comparison isolates one factor. Three predictions failed, and it is still the largest single step since the decode constants: <b>COCO AP 24.32 → 26.84</b>, <b>AP75 16.48 → 20.40</b>, F1@75 30.45 → 37.06.</p>
+        <p>My success criterion of "mean boundary response above 0.40 on true seams" was <strong>invented, not derived</strong>. It reached 0.186. But the flood relief is <code>boundary × 255</code>, so that nearly doubles the barrier between crowns — plainly enough to change flooding, and it did. The criterion failed while the mechanism it was meant to test held.</p>
+      </div>
+
+      <div class="h confirmed">
+        <div class="h-top"><span class="h-id">H8 · cross-site transfer</span><span class="chip ok">6 / 6 confirmed</span></div>
+        <h3>Does the tuned constant transfer, or is it a Bamberg artefact?</h3>
+        <p>One <code>eval</code>-chosen setting lands within <b>1.35 F1@50</b> of each test split's own swept optimum, on two splits untouched by any tuning. The published 24 px collapses off-split — on TestSet1 it emits <b>3.18 seeds per crown</b> and falls to COCO AP 0.86.</p>
+        <p><strong>But the result that matters was not one I predicted</strong> — see below.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>What actually moved the number</h2>
+    <figure>
+      <img src="figures/trajectory_ap.png" alt="Bar chart of COCO AP across the research arc: published 15.81, tuned decode 23.85, percentile merge 24.32, calibrated boundary head 26.84, oracle heads 84.48.">
+      <figcaption><b>The arc in true COCO AP.</b> Retuning two decode constants is worth +8.0. Five further decode-side hypotheses after that returned +0.5 between them. Retraining one head is worth +2.5. The ceiling with correct heads and the same decoder is 84.5.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>H6: a calibrated head buys geometry, and retires the merge step</h2>
+    <figure>
+      <img src="figures/h6_effect.png" alt="Left: old versus calibrated head across COCO AP, AP50, AP75, F1@75, PQ, SQ and B-IoU, all improved. Right: mean boundary response on true seams and elsewhere, both risen, against the missed 0.40 criterion.">
+      <figcaption><b>The gain is entirely in where masks land, not in how many crowns are found.</b> F1@50 moved +0.07 and is omitted from the left panel. That is the correct signature: recognition is bounded by seeding, and H6 did not touch seeding. The right panel shows the catch — the head got louder, but the background got louder faster, so the seam-to-background separation <em>fell</em> from 8.0× to 4.5×.</figcaption>
+    </figure>
+    <div class="callout">
+      <h3>A workaround expired</h3>
+      <p>Under the calibrated head, merging now <b>hurts</b>: no-merge scores COCO AP 26.84 against 26.29 for percentile merge and 25.66 for the absolute threshold. The merge step existed to repair over-separation caused by a weak ridge; a stronger ridge separates correctly in the first place, so the repair deletes real boundaries. <b>Drop the merge when using the calibrated checkpoint.</b></p>
+      <p>Because class-balanced weighting lifts the whole field rather than sharpening contrast, further boundary work should change the <em>target</em> — a 3 px seam band blurred at σ 0.8 may simply be too thin to supervise at this resolution — rather than the loss weighting. That was the pre-registered fallback, and it is now the live hypothesis.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The rule transfers. The model does not.</h2>
+    <figure>
+      <img src="figures/cross_site.png" alt="Left: COCO AP against min_dist for three splits, showing broad optima and a frozen 160px line near all of them, with test1 an order of magnitude lower. Right: published versus best-per-split COCO AP for the three splits.">
+      <figcaption><b>TestSet1 is not a harder split, it is a different regime.</b> It reaches COCO AP 2.98 even at its own optimum, against 23.85 on the eval hold-out, while TestSet2 matches eval. The distinguishing statistic is crown scale: <b>314 px mean diameter against 211 px</b> — 2.2× larger in area. The suppression rule still works there; the heads produce almost nothing.</figcaption>
+    </figure>
+    <div class="callout warn">
+      <h3>This bounds everything above</h3>
+      <p>The error budget, the 69–70 marker wall and the oracle ceiling were all measured at <em>one crown scale</em>. None has been shown to hold under a scale shift, and TestSet1 demonstrates the model degrades severely under exactly that shift. Scale generalisation is now the top open question — ahead of further head work, because H6 and H7 may be optimising inside a regime the model cannot leave.</p>
+      <p>I also nearly published a false rule here. The per-split optima looked like a constant fraction of crown diameter (0.760 and 0.756 on two splits) — until I noticed TestSet1's optimum had landed on the <em>edge of the swept grid</em>, the identical mistake that made H1 report a false optimum. Extending the grid resolved it at 0.892, and scoring by COCO AP instead of F1 widened the spread further to 0.57–0.76. There is no tight law: the honest statement is <b>roughly 0.75× crown diameter, give or take</b>, which is enough to replace a blind 24 px constant and nothing more.</p>
     </div>
   </section>
 
@@ -321,8 +375,9 @@
       <figcaption><b>It knows, but it will not say.</b> On true seam pixels the boundary head averages 0.105 — well under the 0.35 merge threshold that consequently never fired in H2, and far too small for the <code>canopy − λ·B</code> coupling in H4 to do anything. Its AUROC of 0.866 says the information is there. Every use of it so far has been an absolute-magnitude use, which is precisely the use a collapsed head cannot support.</figcaption>
     </figure>
     <div class="callout">
-      <h3>H6 — the first training hypothesis of the project</h3>
-      <p>Retrain the boundary head with a class-balanced objective (Tversky or focal on the seam band, or seam-restricted BCE with positive weighting) so its magnitudes survive the ~6% positive rate. The success criterion is calibration rather than ranking: <b>mean B on true seam pixels above ~0.4</b>, up from 0.105. That would make the merge criterion and the gate coupling viable for the first time, and it is the only lever identified that addresses the 30-point gap.</p>
+      <h3>H7 — the fourth head, and a signal already being thrown away</h3>
+      <p>Missed crowns are not suppressed by NMS (0.1–2.2%); they are <b><code>never_lit</code></b> — 28.1% of crowns at the tuned operating point never raise the surface head above threshold anywhere inside them, and their median area is <b>1,899 px against 24,382 px</b> for all crowns. The missed crowns are the small ones, and the cause is the same per-instance normalisation that defeated H1: the target asserts a peak of 1.0 for every crown regardless of size.</p>
+      <p>The fix is already in the codebase. <code>targets_sharp</code> computes a fourth target — a Gaussian apex peak with <b>σ fixed independent of crown size</b> — and the data loader ships it as <code>batch["apex"]</code> on every training step. Nothing reads it; the model has three channels. The one scale-invariant signal in the project is being computed and discarded, and it is exactly what the small-crown failure needs. H7 adds the channel and seeds from it. <b>Currently training.</b></p>
     </div>
   </section>
 
@@ -347,12 +402,13 @@
   <section>
     <h2>Two things that need fixing in the existing repo</h2>
     <ul class="prose">
-      <li><b>The metric is misnamed.</b> <code>evaluate_metrics</code> reports the F1 score at a fixed IoU threshold while labelling it <code>ap50</code>. Every comparison here is internally consistent, but it must be renamed or replaced with a true interpolated COCO AP before any of it goes into a paper.</li>
+      <li><b>The metric is misnamed.</b> <code>evaluate_metrics</code> reports the F1 score at a fixed IoU threshold while labelling it <code>ap50</code>. <code>crown_research/src/coco_ap.py</code> now provides the real metric — use both, and never quote the repo's <code>ap50</code> as AP in writing.</li>
+      <li><b>Check whether a swept optimum sits on the grid boundary before reporting it.</b> This has now bitten twice: H1's locked grid reported 52.87 as "best" when the true plateau was 66.15, and H8's TestSet1 sweep nearly produced a false calibration law. A boundary optimum means the grid failed, not that the optimum was found.</li>
       <li><b>The published 30-crop subset is unrepresentatively hard.</b> The same baseline scores 31.33 on it and 44.29 on 60 disjoint crops. Previously reported numbers on that subset — including the MorphSnakes 32.99 — are pessimistic by roughly 13 points, so the cross-paradigm comparison table should be re-run on a larger split.</li>
     </ul>
   </section>
 
-  <section>
+  <section id="repro">
     <h2>Reproducing this</h2>
     <p class="prose">Head outputs are cached once, after which every sweep above runs on CPU in seconds.</p>
 <pre><code>python crown_research/src/pred_cache.py --num_crops 30 --tag eval30
@@ -362,12 +418,19 @@ python crown_research/experiments/h0-error-budget/code/run_h0.py --num_val 30
 python crown_research/experiments/h1-adaptive-seeding/code/run_h1_holdout.py
 python crown_research/experiments/h3-canopy-gate/code/run_h3.py
 python crown_research/experiments/h5-boundary-calibration/code/run_h5.py
-python crown_research/src/make_figures.py</code></pre>
+python crown_research/experiments/h5-boundary-calibration/code/rescore_coco_ap.py
+python crown_research/experiments/h8-cross-site/code/run_h8.py
+python crown_research/src/make_figures.py &amp;&amp; python crown_research/src/make_figures_v2.py</code></pre>
+<p class="prose">The one training run so far:</p>
+<pre><code>python crown_segmentation_research/methods/canopy_watershed/train_calibrated.py --epochs 12
+python crown_research/experiments/h6-boundary-loss/code/run_h6_eval.py \
+    --ckpt DeadTrees/experiments/canopy_watershed/best_calibrated_watershed.pth \
+    --tag h6_final --label "H6 calibrated"</code></pre>
     <p class="prose">Every protocol was committed to git before its run, so the history separates what was predicted from what was found. Narrative and accumulated constraints live in <code>crown_research/findings.md</code>; the decision timeline is in <code>crown_research/research-log.md</code>.</p>
   </section>
 
   <footer>
-    Autoresearch session · 6 hypotheses · tuning split <span class="mono">eval30</span>, hold-out split <span class="mono">evalhold60</span> · no retraining · <span class="mono">best_sharp_watershed.pth</span>
+    Autoresearch session · 8 hypotheses, 5 refuted · tuning <span class="mono">eval30</span>, hold-out <span class="mono">evalhold60</span>, transfer <span class="mono">TestSet1/TestSet2</span> · current best <span class="mono">best_calibrated_watershed.pth</span> · H7 training
   </footer>
 
 </div>
