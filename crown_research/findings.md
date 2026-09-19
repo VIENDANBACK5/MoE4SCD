@@ -168,6 +168,37 @@ My 0.40 success criterion was invented rather than derived. The flood relief is
 (27/255 -> 47/255), which is plainly enough to change flooding — and did. The criterion
 failed while the mechanism it was meant to test held.
 
+**12. Where this project actually stands (literature, checked late).**
+The BAMFORESTS paper itself reports no baselines. Published results on the benchmark:
+**TreeCoG AP 53.21 / AP@50 73.14**; **FG-TreeSeg mAP@50 67.31**. This project's best is
+**AP 26.84 / AP@50 58.06** — roughly half TreeCoG's AP. Protocols are not verified to
+match (I score 1024 px crops from the 2048 px tiles on 60 held-out validation crops),
+so this is indicative of a large gap rather than a like-for-like ranking, but a 2x gap
+is too wide to be protocol alone.
+
+**The contribution here is diagnostic, not competitive.** It locates where a watershed
+ITC pipeline loses accuracy and shows the decoder is not the limit (84.48 AP with
+correct heads). It does not produce a state-of-the-art detector, and the write-up must
+say so plainly.
+
+**13. Two earlier conclusions were scoped too widely and are corrected.**
+- **H2's "the merge framework tops out at ~70" was too broad.** TreeCoG uses exactly
+  that paradigm — deliberate over-segmentation then merging — and is the published SOTA.
+  What H2's oracle bounded was merging *of this pipeline's basins*, flooded against a
+  boundary head with mean seam response 0.105. TreeCoG differs in both components H2
+  held fixed: a dedicated **contour network** for over-segmentation, and a **learned
+  GNN** merge criterion rather than a threshold on one scalar — which is precisely the
+  failure mode H2 and H5 diagnosed. H6 corroborates the reading: a stronger ridge
+  turned merging from mildly helpful to harmful, so merging's value tracks basin
+  quality.
+- **H8's "the model does not survive a 1.5x scale shift" under-described the cause.**
+  TestSet1 is the benchmark's *designated* out-of-domain split: the complete Hain-AOI,
+  a **city park** rather than managed forest, "of severely different structure",
+  5-20 km distant, captured with **another UAV and sensor** (DJI Phantom 4 at 85 m AGL
+  vs Trinity F90+ at 120 m), on a different date, flown after sunrise rather than at
+  midday. Crown scale (D 314 vs 211 px) is one symptom of a multi-factor shift, not the
+  cause. A scale-only remedy may not help.
+
 ## Lessons and constraints
 
 - `min_distance` 144-160 px, `min_apex` 0.50, `min_canopy` 0.25, `min_area` 25 is the
@@ -221,10 +252,16 @@ Arc in COCO AP: published 15.81 -> H1 tuned 23.85 -> H5 merge 24.32 -> **H6 26.8
    finding 6.
 4. ~~Does the tuned setting hold across splits?~~ **ANSWERED (H8):** yes — within 1.35
    F1@50 of each split's own optimum on TestSet1 and TestSet2. See finding 10.
-6. **NEW, now highest priority: why does the model collapse on TestSet1?** Crown
-   diameter there is 314 px vs 211 px elsewhere. Is scale the cause, and does
-   multi-scale training or test-time rescaling recover it? If the model cannot survive
-   a 1.5x scale shift, that matters more than the remaining head work.
+6. **Highest priority: why does the model collapse on TestSet1, and which factor
+   dominates?** It is the benchmark's designated out-of-domain split and confounds
+   site type, sensor, platform, altitude, date and illumination — crown scale is only
+   one symptom. The cheapest separating experiment is **test-time rescaling of TestSet1
+   imagery to the training crown scale**: if that recovers most of the 7x AP gap, scale
+   dominates and multi-scale training is the fix; if it does not, the shift is
+   photometric/structural and augmentation or domain adaptation is needed instead.
+7. **Does a learned merge criterion on H6's improved basins close any of the gap to
+   TreeCoG?** H2's threshold merge failed because B was uninformative in magnitude, and
+   TreeCoG shows a learned merger over a good over-segmentation reaches AP 53.21.
 5. The canopy head reaches AUROC 0.961 and looks healthy, yet H3 shows the system
    depends on its *hard barriers* (32.1% of true seams) rather than its ranking. Is
    there a supervision change that makes that dependence explicit rather than accidental?

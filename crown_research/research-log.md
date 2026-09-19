@@ -221,3 +221,31 @@ of sharpening contrast. The protocol's pre-registered fallback now applies — c
 **target** (3 px band at sigma 0.8 may be too thin to supervise), not the loss.
 
 Next: H7 apex head, warm-started from the H6 checkpoint.
+
+## 2026-09-19 — literature search (overdue), and two scoping corrections
+
+Stepped back and noticed a real gap in method: I entered an existing project and ran
+eight hypotheses without ever establishing the benchmark's published numbers. Fixed
+that. Notes in `crown_research/literature/survey.md`.
+
+**Where the project stands.** TreeCoG reports **AP 53.21 / AP@50 73.14** on BAMFORESTS;
+FG-TreeSeg reports mAP@50 67.31. This project's best is **AP 26.84 / AP@50 58.06** —
+roughly half. Protocols are not verified to match, but a 2x gap is too wide to be
+protocol alone. The contribution here is **diagnostic, not competitive**, and any
+write-up has to say so.
+
+**Correction 1 — H2 was scoped too widely.** TreeCoG uses exactly H2's paradigm
+(deliberate over-segmentation then merging) and is the SOTA. H2's oracle bounded
+merging *of this pipeline's basins*, not the paradigm. TreeCoG differs in both things
+H2 held fixed: a contour network for over-segmentation, and a learned GNN merger rather
+than a threshold on one scalar — precisely the failure H2 and H5 diagnosed. H6 supports
+the reading, since a stronger ridge made merging harmful.
+
+**Correction 2 — H8 under-described the TestSet1 collapse.** TestSet1 is the
+benchmark's *designated* out-of-domain split: the complete Hain-AOI, a city park rather
+than managed forest, "of severely different structure", captured with another UAV and
+sensor, at a different altitude, date and time of day. Crown scale is one symptom of a
+multi-factor shift, not the cause. A scale-only remedy may not help, so the next
+experiment must separate the factors — cheapest is test-time rescaling of TestSet1.
+
+Both corrections applied in place to the affected analyses rather than left standing.
