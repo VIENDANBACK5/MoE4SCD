@@ -1,0 +1,7 @@
+split,checkpoint,B_on_seam,B_off_seam,separation,B_AUROC
+evalhold60,H11 narrow target,0.1858,0.0413,4.4955,0.8707
+evalhold60,H12 wide target,0.3567,0.1074,3.3223,0.8728
+test2,H11 narrow target,0.1797,0.0467,3.8484,0.8573
+test2,H12 wide target,0.352,0.123,2.862,0.8571
+test1,H11 narrow target,0.1134,0.0309,3.6678,0.7806
+test1,H12 wide target,0.2421,0.0893,2.7099,0.7732

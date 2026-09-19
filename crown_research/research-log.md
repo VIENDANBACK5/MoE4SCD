@@ -281,3 +281,31 @@ remaining training change: it is now a robustness lever, not just an accuracy on
 Also caught a real bug: `pred_cache`'s CLI ignored `--ckpt` and always loaded
 `best_sharp`, so H10's first caches were duplicates. Verified by diffing cached boundary
 means before trusting them. Added to Lessons.
+
+## 2026-09-20 — H11 settles the attribution; the project finds its central law
+
+**H11** (matched-epoch control): both substantive predictions failed. H7's +1.79 AP over
+H6 decomposes into **+0.57 from extra epochs (32%)** and **+1.22 from the auxiliary apex
+task (68%)**, same ordering at a common decode cell. Training a head that is never read
+at inference beat the entire post-H1 decode-side programme.
+
+**That forced a correction to H7.** I had called the apex head "never learned" from its
+Tversky flatline at ~1.00. Wrong: it reaches **AUROC 0.841** against crown centres
+(surface head 0.863) with mean output **0.0041** and p99 **0.0212** — the `min_apex=0.10`
+threshold sat above its 99th percentile. The flatline measured *magnitude collapse*, not
+absence of learning. H7's conclusion stands; its reason is replaced. New standing rule:
+never diagnose a head from its loss value alone.
+
+**The correction produced the project's unifying law.** Across four heads the positive
+rate of the target predicts mean output over two orders of magnitude (0.85 → 0.004)
+while AUROC barely moves (0.96 → 0.84). *Ranking survives sparsity; magnitude does not.*
+Every consumer in this pipeline reads magnitude, so one relationship retro-explains H2,
+H4, H5, H6, H7 and H10.
+
+Report republished (v3) restructured around that law, with the honest standing stated up
+front: TreeCoG reports AP 53.21 against our best 29.07, so this work is diagnostic, not
+competitive.
+
+**H12** trained and cached; evaluation running. It is the last planned experiment — a
+direct test of H10's floor mechanism via prediction 3 (out-of-domain must gain more,
+relatively, than in-domain). After it, the research is complete enough to write up.

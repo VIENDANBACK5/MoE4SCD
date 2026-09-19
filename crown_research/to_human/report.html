@@ -188,20 +188,20 @@
 
 <div class="wrap">
 
-  <p class="eyebrow">Autoresearch log · BAMFORESTS · 19 Sep 2026 · updated after H6–H8</p>
+  <p class="eyebrow">Autoresearch log · BAMFORESTS · 20 Sep 2026 · updated after H11</p>
   <h1>Where the crown segmentation error actually lives</h1>
-  <p class="lede prose">Eight pre-registered hypotheses. <strong>Five were refuted</strong> — including every headline prediction I made about how to fix the pipeline. The refutations located the problem far more precisely than the confirmations did: the published decode constant was about six times too small, the boundary head had collapsed under class imbalance, the watershed decoder everyone suspected turns out to be nearly perfect, and the model does not survive a change of crown scale.</p>
+  <p class="lede prose">Eleven pre-registered hypotheses. <strong>Seven were refuted</strong>, including every headline prediction I made about how to fix the pipeline — and the refutations located the problem far more precisely than the confirmations did. They converge on one relationship that explains six separate failures at once: <strong>every head in this network learns <em>where</em> its structure is; only heads with enough positive area learn <em>how strongly</em> to say so</strong>. Every consumer in the pipeline reads magnitude.</p>
 
   <div class="headline">
     <div>
       <div class="k">Held-out COCO AP</div>
-      <div class="v up">26.84</div>
-      <div class="n">from 15.81 at the published settings · <b>+11.0</b></div>
+      <div class="v up">29.07</div>
+      <div class="n">from 15.81 at the published settings · <b>+13.3</b></div>
     </div>
     <div>
-      <div class="k">Held-out COCO AP75</div>
-      <div class="v up">20.40</div>
-      <div class="n">from 9.48 · +10.9</div>
+      <div class="k">Generalisation gap</div>
+      <div class="v up">4.63&times;</div>
+      <div class="n">narrowed from 7.15&times; by calibration alone</div>
     </div>
     <div>
       <div class="k">Same decoder, correct heads</div>
@@ -210,7 +210,48 @@
     </div>
   </div>
 
-  <p class="prose">Every number on this page is measured on <b>60 held-out crops</b> (BAMFORESTS eval indices 100–159) that took no part in any sweep, with tuning done on a separate 30-crop split. Transfer is additionally checked on <b>TestSet1 and TestSet2</b>, untouched by all of it.</p>
+  <p class="prose">Every number on this page is measured on <b>60 held-out crops</b> (BAMFORESTS eval indices 100–159) that took no part in any sweep, with tuning on a separate 30-crop split. Transfer is checked on <b>TestSet1 and TestSet2</b>, untouched by all of it.</p>
+
+  <div class="callout warn">
+    <h3>Where this actually stands, and it is not competitive</h3>
+    <p>I ran eight hypotheses before checking what good looks like on this benchmark. <b>TreeCoG reports COCO AP 53.21</b> and FG-TreeSeg reports mAP@50 67.31; the best configuration here is <b>AP 29.07</b>. Published protocols are not verified to match mine, so treat it as indicative of a large gap rather than a ranking — but 2× is too wide to be protocol alone.</p>
+    <p><b>This work is diagnostic, not competitive.</b> It explains where a watershed ITC pipeline loses its accuracy, and shows the decoder is not the limit. It does not produce a state-of-the-art detector. Checking the literature earlier would also have surfaced that TreeCoG uses the same over-segment-then-merge paradigm I tested in H2 — which means my "the framework tops out at ~70" claim was scoped too widely and bounds only <em>this pipeline's basins</em>. Corrected in place.</p>
+  </div>
+
+  <section>
+    <h2>The finding that ties it together</h2>
+    <figure>
+      <img src="figures/sparsity_law.png" alt="Left: log-log scatter of target positive rate against mean predicted value for four heads, falling steeply with sparsity, with a shaded region marking the decoder's usability floor. Right: paired bars of AUROC and mean output per head, showing AUROC flat near 0.85-0.96 while mean output collapses.">
+      <figcaption><b>Ranking survives sparsity. Magnitude does not.</b> Four heads, one monotone relationship. AUROC barely moves across a 50× range of target density (0.96 → 0.84) while the mean output falls by more than two orders of magnitude (0.85 → 0.004). Every downstream consumer here — the watershed relief, the merge threshold, the gate coupling, the seed threshold — reads magnitude, so each one fails on a head that ranks perfectly well.</figcaption>
+    </figure>
+    <p class="prose">This one relationship retro-explains six results: why the merge threshold in H2 never fired at any value ≥ 0.35, why <code>canopy − λ·B</code> in H4 was flat across the whole sweep, why the rank transform in H5 amplified noise instead of recovering signal, why the calibrated loss in H6 helped, why apex seeding in H7 collapsed, and why calibration turned out to be a robustness intervention in H10.</p>
+    <div class="callout">
+      <h3>A diagnosis I got wrong, and how it was caught</h3>
+      <p>I originally wrote that H7's apex head "never learned", reading its loss flatline at ~1.00 as zero overlap with the target. <b>That was wrong.</b> The head reaches <b>AUROC 0.841</b> against crown centres — almost the surface head's 0.863. What it lacks is magnitude: mean 0.0041, p99 0.0212, so the seeding threshold of 0.10 sat <em>above its 99th percentile</em>. The flatline was measuring magnitude collapse, not absence of learning. H7's conclusion survived; its reason did not. The lesson is now standing policy: never diagnose a head from its loss value alone — check AUROC separately from the output distribution.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Training a head you never read was worth +1.22 AP</h2>
+    <figure>
+      <img src="figures/aux_task.png" alt="Left: three bars for H6, H11 and H7 at 27.28, 27.85 and 29.07 COCO AP. Right: horizontal decomposition of H7's gain into 0.57 from extra epochs and 1.22 from the auxiliary task.">
+      <figcaption><b>The matched-epoch control settles an attribution I refused to guess at.</b> H7 added an apex head that failed at its own job, yet its checkpoint scored +1.79 AP over H6 — confounded, because it also trained 12 epochs longer. Running those 12 epochs <em>without</em> the apex head recovers only 32% of the gain. The auxiliary task supplies the other <b>68%</b>, because the head did learn the ranking even though its output is unusable, and that gradient carries crown-centre localisation into the shared trunk.</figcaption>
+    </figure>
+    <p class="prose">It costs nothing at inference, needs no change to the decoder, and uses a target that was already being computed and thrown away on every training step.</p>
+  </section>
+
+  <section>
+    <h2>Calibration narrows the generalisation gap — via a floor, not a slope</h2>
+    <figure>
+      <img src="figures/domain_gap.png" alt="Left: in-domain and out-of-domain COCO AP for the old and calibrated heads, showing the gap narrowing from 7.15x to 4.63x. Right: both heads lose about 40 percent of seam magnitude under the shift, but land at 14/255 and 27/255 respectively against an approximate usability floor.">
+      <figcaption><b>The mechanism is not what I assumed.</b> I expected the calibrated head to degrade more gracefully under domain shift. It does not — both checkpoints lose the <em>same ~40%</em> of their seam magnitude, with identical AUROC loss. What differs is where that leaves them: the flood runs on <code>boundary × 255</code>, so out-of-domain the old head sits at ~14/255 and the calibrated one at ~27/255. Below some ridge height the watershed cannot hold a boundary at all. The shift costs both heads the same; only one can afford it.</figcaption>
+    </figure>
+    <p class="prose">Two details confirm the reading: the old head's seam-to-background <em>ratio</em> is actually <b>higher</b> out-of-domain (8.69 vs 7.23), so ranking is fine and magnitude is the problem; and the canopy head barely degrades (AUROC 0.929 → 0.921), so the fragility is specific to the collapsed head. Caveat worth keeping attached: TestSet1's absolutes are small (2.98 → 5.46), so +83% is change on a low base.</p>
+    <div class="callout warn">
+      <h3>And it is not a scale problem</h3>
+      <p>TestSet1 is the benchmark's <em>designated</em> out-of-domain split — a city park rather than managed forest, captured with a different UAV and sensor, at a different altitude, date and time of day. I first attributed its collapse to crown scale (314 px vs 211 px diameter). Test-time rescaling settles it: the optimum lands <b>exactly</b> on the predicted scale-matching factor and the in-domain control is <b>perfectly flat</b>, so the effect is genuinely the scale axis — and it recovers only <b>7.3%</b> of the gap. About 93% is appearance and structure. Multi-scale training targets the 7%; the lever is photometric.</p>
+    </div>
+  </section>
 
   <div class="callout warn">
     <h3>The metric changed under me, and it matters</h3>
@@ -430,7 +471,7 @@ python crown_research/experiments/h6-boundary-loss/code/run_h6_eval.py \
   </section>
 
   <footer>
-    Autoresearch session · 8 hypotheses, 5 refuted · tuning <span class="mono">eval30</span>, hold-out <span class="mono">evalhold60</span>, transfer <span class="mono">TestSet1/TestSet2</span> · current best <span class="mono">best_calibrated_watershed.pth</span> · H7 training
+    Autoresearch session · 11 hypotheses, 7 refuted · tuning <span class="mono">eval30</span>, hold-out <span class="mono">evalhold60</span>, transfer <span class="mono">TestSet1/TestSet2</span> · current best <span class="mono">best_apex_watershed.pth</span> at COCO AP 29.07 · H12 evaluating
   </footer>
 
 </div>
