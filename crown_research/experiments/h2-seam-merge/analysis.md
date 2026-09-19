@@ -39,6 +39,18 @@ metric. Small, but real and free.
 Arm D is the best *any* merge rule could achieve given these basins, and it reaches
 only 69.74 — a mere +4.2 over plain tuned NMS. I predicted >= 80 and was badly wrong.
 
+> **SCOPING CORRECTION (added 2026-09-19 after the literature search).** The heading
+> below and the claim that "the over-seed-then-merge framework tops out at ~70" are
+> **scoped too widely**. The oracle in arm D bounds merging *of the watershed basins
+> this pipeline produces* — basins flooded against a boundary head whose mean response
+> on true seams is 0.105. It does not bound merge-based ITC segmentation in general.
+> TreeCoG, the published state of the art on this very benchmark (AP 53.21), uses
+> exactly this paradigm: deliberate over-segmentation followed by merging. It differs
+> in the two components H2 held fixed — its over-segmentation comes from a dedicated
+> contour network, and its merge criterion is a learned GNN rather than a threshold on
+> one scalar. Read every "framework" claim below as "this instantiation". See
+> `crown_research/literature/survey.md`.
+
 ## The convergence that reframes the project
 
 Three structurally independent routes to "perfect markers" all land in the same place:

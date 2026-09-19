@@ -33,6 +33,17 @@ on test1 it emits **3.18 seeds per crown** and collapses to COCO AP 0.86. The
 recommendation to set suppression by crown scale rather than by a fixed small constant
 is therefore supported at three splits, not one.
 
+> **CORRECTION (added 2026-09-19 after the literature search).** I attributed the
+> TestSet1 collapse to crown scale. The BAMFORESTS paper shows scale is only one
+> symptom of a **deliberate, multi-factor domain shift**: TestSet1 is the complete
+> Hain-AOI, a *city park* rather than managed forest, "of severely different structure",
+> 5-20 km away, captured with **another UAV and sensor** (DJI Phantom 4 at 85 m AGL vs
+> Trinity F90+ at 120 m), on a different date, and flown after sunrise rather than at
+> midday. TestSet2 is drawn from the *same* AOIs as training. So TestSet1 is the
+> benchmark's designated out-of-domain test and my model is failing it — which is a
+> real and expected finding, but "a 1.5x scale shift" is not a sufficient description
+> of the cause, and any remedy aimed only at scale may not help.
+
 **2. The model itself does not transfer to TestSet1, and that is the bigger story.**
 Even at its own optimum, test1 reaches **COCO AP 2.98** against 23.85 on the eval
 hold-out — an order of magnitude worse, not a few points. TestSet2 behaves like eval
@@ -106,6 +117,9 @@ to trust.
 - The practical recommendation stands and is now multi-split: **do not use 24 px; set
   suppression from the dataset's crown scale**, and one value transfers across splits
   of similar scale.
-- **A scale-generalisation experiment is now the highest-priority open question**,
-  ahead of further head work. If the model collapses under a 1.5x scale shift, then
-  H6 and H7 are optimising within a regime the model cannot leave.
+- **A domain-generalisation experiment is now the highest-priority open question**,
+  ahead of further head work. Scale is one confounded factor among several (sensor,
+  platform, altitude, site type, illumination); an experiment must separate them
+  before proposing a fix. The cheapest separation available is test-time rescaling of
+  TestSet1 imagery to match the training crown scale: if that recovers most of the gap,
+  scale dominates; if it does not, the shift is photometric/structural.
