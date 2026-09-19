@@ -132,3 +132,24 @@ small-crown failure needs.
 **H7 locked now, queued behind H6** so its predictions are on record before H6's results
 are known. The headroom decomposes cleanly from the H3 cube: boundary+canopy quality is
 worth ~+12 (65.5 -> 78.0) and seeding is worth ~+19 (78.0 -> 97.3).
+
+## 2026-09-19 — metric integrity closed out; H6 epoch-1 probe
+
+**True COCO AP implemented** (`crown_research/src/coco_ap.py`) and the key
+configurations re-scored. The ordering is unchanged — every conclusion survives — but
+the absolute numbers are far lower and the honest headline for the decode-side work is
+**COCO AP 15.81 -> 24.32**, not F1 44 -> 67. AP@[.5:.95] sits at 24.3 against AP50
+56.6, while the oracle holds 84.5 against 96.0, which independently confirms that mask
+quality at strict IoU is the larger deficit.
+
+**H6 epoch-1 probe** (early read, 1 of 12 epochs, not the result):
+- mean B on true seams 0.105 -> 0.161, still far from the 0.40 criterion
+- mean B off seams 0.013 -> 0.043 — rising *faster* in proportion, so the separation
+  ratio has fallen from 8.0x to 3.8x. Worth watching: the balanced loss may be lifting
+  the whole field rather than the seams specifically.
+- AUROC holds (0.866 -> 0.862), as predicted
+- geometry improves (mAP@75 28.5 -> 32.8, B-IoU 11.7 -> 13.9, SQ 72.1 -> 73.7) while
+  recognition drops (F1@50 65.5 -> 62.7) and the instance ratio falls 0.756 -> 0.684
+
+That trade is mechanically sensible — a stronger ridge tightens masks and over-separates
+— but it means P4 may fail even if P1 succeeds. Letting the run finish before judging.

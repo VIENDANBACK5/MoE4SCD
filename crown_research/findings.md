@@ -98,6 +98,26 @@ From the H3 cube on the hold-out: predicted seeds with both other heads correct 
 
 H6 addresses the first. The second needs the apex head.
 
+**9. Under true COCO AP the conclusions hold, but the absolute numbers are much lower.**
+The repo's `evaluate_metrics` reports F1 at a fixed IoU while calling it `ap50`.
+Re-scored with real 101-point interpolated AP (`crown_research/src/coco_ap.py`),
+detections pooled globally and confidence taken as the peak surface response inside
+each instance:
+
+| configuration (hold-out) | COCO AP | AP50 | AP75 | repo F1@50 |
+|---|---:|---:|---:|---:|
+| published (md=24, ma=0.25) | 15.81 | 40.34 | 9.48 | 44.29 |
+| H1 tuned (md=160, ma=0.50) | 23.85 | 56.19 | 15.77 | 65.54 |
+| H5 best (tuned + percentile merge) | **24.32** | **56.56** | 16.48 | 66.91 |
+| H3 oracle heads | 84.48 | 96.00 | 91.85 | 97.30 |
+
+The **ordering is unchanged**, so every conclusion in this document survives the
+stricter metric. Two things change. First, the honest headline for the work so far is
+**COCO AP 15.81 -> 24.32**, not 44 -> 67. Second, AP@[.5:.95] is far below AP50 (24.3
+vs 56.6) while the oracle keeps 84.5 vs 96.0 — mask quality at strict IoU is a much
+bigger deficit than F1@50 ever showed, which independently corroborates finding 8's
+split of the headroom.
+
 ## Lessons and constraints
 
 - `min_distance` 144-160 px, `min_apex` 0.50, `min_canopy` 0.25, `min_area` 25 is the
@@ -111,8 +131,12 @@ H6 addresses the first. The second needs the apex head.
   comparing training curves — the boundary loss values are on different scales and are
   not comparable across the two scripts.
 - `evaluate_metrics` reports **F1 at a fixed IoU**, not interpolated average precision,
-  while labelling it `ap50`. Internally consistent, but must be renamed or replaced
-  with true COCO AP before publication.
+  while labelling it `ap50`. `crown_research/src/coco_ap.py` now provides the real
+  metric; report both, and never quote the repo's `ap50` as AP in writing.
+- COCO AP needs a meaningful confidence per instance. Merged instances leave `score`
+  at 1.0, which makes the ranking degenerate; use
+  `coco_ap.instance_scores_from_surface` to set score = peak surface response inside
+  the instance before accumulating.
 - Tune on `eval30`, always re-score frozen settings on `evalhold60` (eval idx 100-159)
   before believing any delta.
 - Cached head outputs (`crown_research/src/pred_cache.py`) turn a sweep from
