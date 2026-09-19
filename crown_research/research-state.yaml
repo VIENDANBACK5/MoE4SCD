@@ -1,0 +1,68 @@
+project: "ITC Crown Segmentation — Closing the Recognition-Quality Gap"
+question: >
+  The CanopyWatershed pipeline on BAMFORESTS plateaus at mAP@50 ~33% with SQ 69%
+  but RQ only 33%. Boundary refinement (MorphSnakes / Douglas-Peucker) buys only
+  +1.7 mAP. Where is the remaining error actually located — marker/seed selection,
+  the learned boundary energy field, or contour geometry — and what is the
+  highest-leverage intervention?
+created: 2026-09-19
+status: bootstrap
+
+baseline:
+  method: "Flat-Basin Watershed (Unrefined)"
+  n_val_crops: 30
+  mAP50: 31.33
+  mAP75: 9.10
+  PQ: 21.34
+  SQ: 67.67
+  RQ: 31.33
+  BIoU: 10.31
+  dao_OS: 0.4729
+  dao_US: 0.7975
+  dao_ED: 0.6134
+
+best_so_far:
+  method: "Mode B: Organic MorphSnake Snapped"
+  mAP50: 32.99
+  PQ: 22.85
+  BIoU: 12.89
+  dao_ED: 0.5928
+
+primary_metric: "mAP@50 on 30 BAMFORESTS val crops (higher better)"
+secondary_metrics: ["PQ", "RQ", "Dao ED (lower better)", "Boundary-IoU"]
+
+hypotheses:
+  - id: H0
+    name: "Error-budget decomposition (2x2 oracle ablation)"
+    status: planned
+    priority: 1
+    statement: >
+      PQ = SQ x RQ. SQ=68% is respectable; RQ=31% is the bottleneck. RQ failure is
+      either (a) wrong number/placement of watershed markers, or (b) a boundary
+      energy field B that leaks across touching crowns. A 2x2 factorial over
+      {predicted, oracle} seeds x {predicted, oracle} boundary energy attributes the
+      error budget.
+    prediction: >
+      Oracle seeds + predicted energy will recover most of the gap (mAP50 > 55%),
+      implying marker selection dominates. If instead oracle energy + predicted seeds
+      dominates, the learned boundary head is the bottleneck.
+  - id: H1
+    name: "Seed-count calibration"
+    status: planned
+    priority: 2
+    statement: >
+      Dao OS=0.47 / US=0.80 means matched predictions cover only 47% of their GT crown
+      while being 80% inside it => systematic OVER-segmentation (crowns split ~2x).
+      The fixed min_distance=24px NMS is scale-blind; crown radius varies across biomes.
+    prediction: "Scale-adaptive seed suppression raises OS toward 0.65 and mAP50 by >5 pts."
+  - id: H2
+    name: "Learned region-adjacency merging"
+    status: planned
+    priority: 3
+    statement: >
+      Even with good seeds, residual fragments can be repaired post-hoc by merging
+      adjacent basins whose shared seam has low predicted boundary evidence.
+    prediction: "RAG merge on mean-seam-boundary threshold lifts mAP50 by >3 pts over flat-basin."
+
+decisions_pending: []
+next_action: "Run H0 2x2 oracle ablation on 30 val crops"
