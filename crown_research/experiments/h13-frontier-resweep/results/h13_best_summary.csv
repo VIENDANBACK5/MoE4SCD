@@ -1,0 +1,5 @@
+model,best_COCO_AP,best_COCO_AP_cell,best_COCO_AP_ratio,best_F1@50,best_F1@50_cell,best_F1@50_ratio
+Original Baseline,24.4947,"md=120,ma=0.45",0.826,66.3575,"md=160,ma=0.45",0.783
+H6 Calibrated B,27.3203,"md=160,ma=0.25",0.912,67.252,"md=140,ma=0.55",0.774
+H11 Matched Epochs,28.0159,"md=140,ma=0.45",0.852,67.5655,"md=160,ma=0.45",0.821
+H12 Wide Seam,21.9521,"md=160,ma=0.35",0.881,66.7532,"md=160,ma=0.55",0.78

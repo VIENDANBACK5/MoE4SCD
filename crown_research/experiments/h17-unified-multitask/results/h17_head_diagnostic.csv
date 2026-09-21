@@ -1,0 +1,4 @@
+split,B_on_seam,B_off_seam,separation,B_AUROC
+evalhold60,0.629,0.2479,2.5371,0.8658
+test2,0.6188,0.2612,2.3694,0.8506
+test1,0.5315,0.2339,2.2724,0.8173

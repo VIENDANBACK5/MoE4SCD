@@ -1,0 +1,4 @@
+split,small_crown_n,small_crown_mean_apex,small_crown_lit_rate_pct,large_crown_n,large_crown_mean_apex,large_crown_lit_rate_pct
+evalhold60,24,0.057,0.0,945,0.861,91.534
+test2,18,0.052,0.0,688,0.838,90.552
+test1,3,0.04,0.0,265,0.837,89.811

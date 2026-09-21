@@ -1,0 +1,4 @@
+split,narrow_AP,narrow_cell,wide_AP,wide_cell,dAP,dAP_rel_%
+evalhold60,27.852,"md=140,ma=0.35",21.952,"md=160,ma=0.35",-5.9,-21.2
+test2,26.028,"md=160,ma=0.35",20.287,"md=160,ma=0.35",-5.741,-22.1
+test1,5.274,"md=240,ma=0.35",4.247,"md=200,ma=0.65",-1.027,-19.5

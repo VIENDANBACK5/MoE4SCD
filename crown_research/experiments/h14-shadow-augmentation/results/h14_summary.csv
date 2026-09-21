@@ -1,0 +1,4 @@
+split,best_COCO_AP,best_AP50,best_AP75,best_F1@50,best_cell
+evalhold60,27.294,59.541,21.59,66.866,"md=140,ma=0.35"
+test2,24.661,53.223,20.271,63.321,"md=160,ma=0.35"
+test1,8.677,25.4,3.063,40.118,"md=240,ma=0.5"

@@ -6,7 +6,7 @@ question: >
   the learned boundary energy field, or contour geometry — and what is the
   highest-leverage intervention?
 created: 2026-09-19
-status: active — pivoted from decode-side to training-side after H5
+status: concluding — 12 hypotheses done, final exploratory probe running, then write-up
 
 baseline:
   method: "Flat-Basin Watershed (Unrefined)"
@@ -152,4 +152,4 @@ protocol_discipline: "Every hypothesis committed to git with numeric predictions
 known_issues:
   - "evaluate_metrics reports F1 at a fixed IoU but labels it ap50 — rename or replace with true COCO AP before publication."
   - "The historical 30-crop eval subset is unrepresentatively hard (baseline 31.33 there vs 44.29 on 60 disjoint crops); previously published cross-paradigm numbers are pessimistic by ~13 points."
-next_action: "H11 (running, matched-epoch control for H7 confound); then H12 (widen seam target — tests H10 floor mechanism); then write up"
+next_action: "Thin-probe on H12 head (exploratory, CPU); then evaluate best checkpoint on test1/test2; then WRITE UP via ml-paper-writing"
