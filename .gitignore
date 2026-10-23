@@ -123,3 +123,45 @@ crown_segmentation_research/papers/
 
 # Cached network outputs for research sweeps (regenerable)
 crown_research/data/cache/
+
+# =============================================
+# Confidential / Internal Research Documents
+# =============================================
+meeting/
+meeting_search_results.json
+crown_segmentation_research/HOAN_THANH_DU_AN/
+crown_segmentation_research/**/_KEY*/
+crown_segmentation_research/**/_KEY_*/
+
+# =============================================
+# Heavy Experiment Runs, Caches & Environments (65GB+)
+# =============================================
+crown_segmentation_research/p2b_authorized_experiments_2026/
+crown_segmentation_research/fgq_controlled_benchmark_2026/
+crown_segmentation_research/clean_benchmark/
+crown_segmentation_research/research_2026-10-09/
+crown_segmentation_research/diagnosis_2026-10-11/
+crown_segmentation_research/ha0_*/
+crown_segmentation_research/p2*/
+crown_segmentation_research/q_accepted_set_diagnosis_*/
+crown_segmentation_research/execution_plan_audit_*/
+crown_segmentation_research/relabel_kit_*/
+crown_segmentation_research/blind_visual_*/
+crown_segmentation_research/research_integrity/
+crown_segmentation_research/synthesis_*/
+crown_segmentation_research/target/
+
+# =============================================
+# Binary formats & checkpoints
+# =============================================
+*.ckpt
+*.npy
+*.safetensors
+
+# =============================================
+# Heavy Preview / Diagnostic Images & Scratch
+# =============================================
+crown_segmentation_research/images/previews_*/
+crown_segmentation_research/images/diagnostics/
+crown_segmentation_research/images/bam_eval_sample_*.png
+crown_segmentation_research/research_program_*/
