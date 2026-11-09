@@ -1,0 +1,27 @@
+{
+  "task_training_inventory": [
+    {
+      "path": "/home/chung/RS/Image Segmentation/research/method_development/R4_QUERY_INSTANCE_BASELINE/CACHE_MANIFEST.json",
+      "sha256": "50ff18cec1fbcb5ce928977568626f3efeb659f951ae8ceea42e5610ccfe9b1b",
+      "rows": 294,
+      "sources": [
+        "train"
+      ]
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/TRAIN_WINDOWS.json",
+      "sha256": "3bda3d303e6fbd597b8a3dd9aa04c6032511753e98e2ccbef1833a01e9c3a3a5",
+      "rows": 854,
+      "sources": [
+        "train"
+      ]
+    }
+  ],
+  "R5_COCO_source": "FULL_COCO_V1_91_CLASSES_THEN_REPLACE_ONLY_TASK_OUTPUTS",
+  "all_pretraining_geographic_overlap": "UNVERIFIED",
+  "legacy_project_BAM_exposure": "POSSIBLE_NOT_CLAIMED_UNTOUCHED",
+  "source_track": "legacy_reference",
+  "independent_human_reference_stability": "NOT_ESTABLISHED",
+  "original_crown_area": "NOT_AVAILABLE_IN_COCO",
+  "GSD_source": "TRAIN_TIFF_GeoTIFF_pixel_scale_and_tiepoint_EPSG25832"
+}
