@@ -1,0 +1,98 @@
+{
+  "status": "POST_HOC_EXPLORATORY_REFERENCE_CONDITIONED",
+  "definition": "Unmatched mask touches an internal view edge; no IoU50 to any reference; exactly one already recovered reference from another view crosses this view and covers>=80% of prediction but prediction covers10%-<50% of reference.",
+  "biological_identity_established": false,
+  "any_predictions_changed": false,
+  "results": [
+    {
+      "arm": "control_seed42",
+      "accepted": 5314,
+      "TP": 496,
+      "FP": 4818,
+      "TP_touch_internal_edge": 165,
+      "FP_touch_internal_edge": 3089,
+      "reference_fragment_proxy": 115,
+      "proxy_reference_ambiguous": 0
+    },
+    {
+      "arm": "control_seed43",
+      "accepted": 4287,
+      "TP": 394,
+      "FP": 3893,
+      "TP_touch_internal_edge": 158,
+      "FP_touch_internal_edge": 2366,
+      "reference_fragment_proxy": 81,
+      "proxy_reference_ambiguous": 0
+    },
+    {
+      "arm": "control_seed44",
+      "accepted": 5359,
+      "TP": 410,
+      "FP": 4949,
+      "TP_touch_internal_edge": 155,
+      "FP_touch_internal_edge": 3171,
+      "reference_fragment_proxy": 78,
+      "proxy_reference_ambiguous": 0
+    },
+    {
+      "arm": "dino_seed42",
+      "accepted": 5263,
+      "TP": 495,
+      "FP": 4768,
+      "TP_touch_internal_edge": 166,
+      "FP_touch_internal_edge": 3073,
+      "reference_fragment_proxy": 111,
+      "proxy_reference_ambiguous": 0
+    },
+    {
+      "arm": "m2f_seed42",
+      "accepted": 3726,
+      "TP": 370,
+      "FP": 3356,
+      "TP_touch_internal_edge": 162,
+      "FP_touch_internal_edge": 2050,
+      "reference_fragment_proxy": 80,
+      "proxy_reference_ambiguous": 0
+    },
+    {
+      "arm": "r5_seed42",
+      "accepted": 7478,
+      "TP": 502,
+      "FP": 6976,
+      "TP_touch_internal_edge": 40,
+      "FP_touch_internal_edge": 1447,
+      "reference_fragment_proxy": 39,
+      "proxy_reference_ambiguous": 0
+    },
+    {
+      "arm": "rr_seed42",
+      "accepted": 5375,
+      "TP": 494,
+      "FP": 4881,
+      "TP_touch_internal_edge": 167,
+      "FP_touch_internal_edge": 3136,
+      "reference_fragment_proxy": 119,
+      "proxy_reference_ambiguous": 0
+    },
+    {
+      "arm": "rr_seed43",
+      "accepted": 4376,
+      "TP": 403,
+      "FP": 3973,
+      "TP_touch_internal_edge": 163,
+      "FP_touch_internal_edge": 2405,
+      "reference_fragment_proxy": 87,
+      "proxy_reference_ambiguous": 0
+    },
+    {
+      "arm": "rr_seed44",
+      "accepted": 5418,
+      "TP": 418,
+      "FP": 5000,
+      "TP_touch_internal_edge": 163,
+      "FP_touch_internal_edge": 3203,
+      "reference_fragment_proxy": 88,
+      "proxy_reference_ambiguous": 0
+    }
+  ]
+}

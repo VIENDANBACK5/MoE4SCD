@@ -1,0 +1,27 @@
+{
+  "selection_rule": "first metadata-selected tile per geographic component; no outcome selection",
+  "tiles": [
+    {
+      "cohort_index": 0,
+      "image_id": "bamforests::train:303",
+      "spatial_group": "geo_component_00",
+      "RGB_sha256": "f2ecb9e70a1921679c566363c0e99dcc071aa09e57acf8098a54c30a6d78f9fa",
+      "reference_count": 46,
+      "reference_metadata_count": 46
+    },
+    {
+      "cohort_index": 12,
+      "image_id": "bamforests::train:804",
+      "spatial_group": "geo_component_01",
+      "RGB_sha256": "3134b84916a6c052177b5dd2266b9631ef02b76c1f3a46518f58c655a4b5265d",
+      "reference_count": 94,
+      "reference_metadata_count": 94
+    }
+  ],
+  "overlays": "individual raster mask outlines; no exclusive ownership projection",
+  "image_adjustment": "none; invalid pixels grey only for display; nearest display sampling",
+  "scale": "per-tile GeoTIFF spacing;10m horizontal bar",
+  "independent_identity_verification": false,
+  "publisher_requirements": "provisional general research figure; no journal compliance claim",
+  "alt_text": "Two fixed geographic-component examples show the same native RGB and reference/five carrier outlines; no identity validation is implied. A separate diverging bar plot displays each paired seed\u2019s new and lost matches, including losses."
+}

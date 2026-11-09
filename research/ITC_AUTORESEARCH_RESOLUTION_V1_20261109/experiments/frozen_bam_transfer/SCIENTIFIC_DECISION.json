@@ -1,0 +1,28 @@
+{
+  "status": "EXTERNAL_REFERENCE_FIDELITY_MEASURED_RR_TRANSFER_LIMITED_ORIGINAL_METHOD_ENTRY_NOT_ESTABLISHED",
+  "empirical_execution": "COMPLETE",
+  "original_method_supported": false,
+  "robust_solution_established": false,
+  "independent_reference_stability": "NOT_ESTABLISHED",
+  "original_source_small_gate": "NOT_ESTIMABLE",
+  "overall_goal_complete": false,
+  "images": 24,
+  "references": 1106,
+  "neural_forwards": 1944,
+  "new_training": false,
+  "mean_RR_delta": {
+    "delta_AP": -0.041367495574547185,
+    "delta_AP75": -0.0352097031533171,
+    "delta_Recall50_pp": 0.4520795660036138,
+    "delta_TP50": 5.0,
+    "delta_FP50": 64.66666666666667
+  },
+  "same_count_delta_recall_pp": 0.3315250150693174,
+  "new_matches": 58,
+  "lost_matches": 43,
+  "new_matches_without_control_raw": 8,
+  "common_final_omissions": 447,
+  "common_raw_missing": 320,
+  "TEST": false,
+  "protected_review": false
+}

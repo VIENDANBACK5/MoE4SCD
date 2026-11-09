@@ -1,0 +1,25 @@
+{
+  "stage": "EXECUTED_EXTERNAL_TRAIN_REFERENCE_FIDELITY",
+  "images": 24,
+  "references": 1106,
+  "arms": [
+    "rr_seed42",
+    "control_seed42",
+    "rr_seed43",
+    "control_seed43",
+    "rr_seed44",
+    "control_seed44",
+    "dino_seed42",
+    "r5_seed42",
+    "m2f_seed42"
+  ],
+  "forwards": 1944,
+  "TEST": false,
+  "protected_review": false,
+  "new_training": false,
+  "original_source_small_gate": "NOT_ESTIMABLE",
+  "independent_human_reference_stability": "NOT_ESTABLISHED",
+  "unqualified_independent_generalization": "NOT_ESTABLISHED",
+  "analysis_seconds": 125.96996196801774,
+  "freeze_sha256": "52bf4af967977989a254a2270c0be7fb201780504bce37fc18d8706c038ac81e"
+}

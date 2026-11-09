@@ -1,0 +1,16 @@
+# Targeted primary-source update
+
+This is a focused evidence search, not a new architecture survey. Existing 25-record RGB evidence review is inherited.
+
+| Primary source | Checked point | Consequence |
+|---|---|---|
+| [SelvaMask v1](https://arxiv.org/html/2602.02426v1), Section 3.5 | Its approximately 500-crown repeated-annotation experiment samples test zones. | Do not obtain/use these labels to bypass the project's locked TEST/reviewer boundary. Reading this public methodological description is not label access. Human agreement is not biological ground truth. |
+| [TreeCoG / ForestSeg paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC12894693/), Dataset section; [author dataset page](https://sigm-seee.github.io/datasets/ForestSeg.html) | Dataset page and paper disagree on T1 image/date details; no separately authored multi-annotator mask collection is established by the checked descriptions. | A candidate external RGB resource, not a cleared reliable-reference cohort or established source-independent evaluation. No data downloaded; no arbitrary reconciliation of versions. |
+| [Official CanopyRS repository](https://github.com/hugobaudchon/CanopyRS) | Official linked repository supports detector/segmenter pipelines. | Code availability does not establish data eligibility, multiple independent references or a new mechanism. No new model installed. |
+| [ISPRS ForestSemantic ITD resource](https://www2.isprs.org/commissions/comm3/wg1/open-resources/datasets/forestsemantic/forestsemantic_itd_2d/) | Multiple sites and RGB resolutions; visible dominant/co-dominant crown convention; separate benchmark splits. | Could support a future provenance-cleared transfer study, but differs from exhaustive small-crown references. No benchmark/test data or labels accessed and no independent annotator sets verified. |
+
+Additional discovery leads, not full-paper findings: [RandCrowns](https://arxiv.org/abs/2105.02186) studies evaluation under imprecise labels; [Mei et al.](https://isprs-archives.copernicus.org/articles/XLVIII-2-2024/257/2024/) combine multi-annotator crown evidence with multispectral information. Neither is used here to manufacture reliable RGB-only identity labels or a novelty claim.
+
+Retrieval limits: a guessed CanopyRS organization URL was wrong; the author's actual repository link corrected it. The HF README and one guessed docs route were inaccessible through the web tool; no conclusion about resource absence follows. MDPI returned rate limiting, so no fresh full-text verification of Steier's data-availability section is claimed.
+
+Cycle2 primary update: [BAMFORESTS publisher PDF](https://elib.dlr.de/205658/1/remotesensing-16-01935-v2_opt.pdf),Sections3.1/3.5, agrees with header spacings and describes additional-date/field-assisted labeling, not independent single-RGB rater sets. Bundled snapshot terms remain recorded; no registry was rewritten. [CropFormer accepted paper](https://openaccess.thecvf.com/content/ICCV2023/html/Qi_High_Quality_Entity_Segmentation_ICCV_2023_paper.html) confirms prior work on full-image/crop entity-query association. Only the accepted abstract/supplement discovery and author repo identification were checked in this cycle; no faithful port, full mathematical audit or ITC efficacy claim.

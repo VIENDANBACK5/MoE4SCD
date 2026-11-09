@@ -1,0 +1,11 @@
+{
+  "recorded_utc": "2026-11-09T17:02:52.810291+00:00",
+  "cohort_status": "EXPOSED_EXPLORATORY_FROZEN_TRANSFER",
+  "official_split_unchanged": "TRAIN",
+  "future_method_validation_independent": false,
+  "predictions_or_references_used_for_tuning": false,
+  "posthoc_analyses": [
+    "view-edge descriptive diagnostic"
+  ],
+  "new_training": false
+}

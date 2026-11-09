@@ -1,0 +1,33 @@
+{
+  "status": "REGISTERED_LATE_DIAGNOSTIC_NOT_DEPLOYABLE",
+  "all_raw_masks_respect_support_bound": true,
+  "groups": [
+    {
+      "group": "ALL",
+      "references": 1106,
+      "support_impossible50": 0,
+      "support_impossible75": 0,
+      "all_three_raw_missing": 320,
+      "raw_common_missing_with_U50": 0,
+      "final_common_omission": 447
+    },
+    {
+      "group": "geo_component_00",
+      "references": 643,
+      "support_impossible50": 0,
+      "support_impossible75": 0,
+      "all_three_raw_missing": 156,
+      "raw_common_missing_with_U50": 0,
+      "final_common_omission": 233
+    },
+    {
+      "group": "geo_component_01",
+      "references": 463,
+      "support_impossible50": 0,
+      "support_impossible75": 0,
+      "all_three_raw_missing": 164,
+      "raw_common_missing_with_U50": 0,
+      "final_common_omission": 214
+    }
+  ]
+}

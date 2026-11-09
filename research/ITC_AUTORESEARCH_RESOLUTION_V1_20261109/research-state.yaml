@@ -1,0 +1,95 @@
+project:
+  title: 'RGB tree crown instance segmentation: evidence-grounded resolution'
+  question: Which currently supported solution should be retained, and what genuinely
+    new evidence could justify a better single-carrier method?
+  status: active
+  started: '2026-11-09'
+  domain: RGB individual tree crown instance segmentation
+continuity:
+  mechanism: Native active goal plus persistent research state
+  goal_created: true
+  periodic_scheduler_available: false
+  note: No Claude /loop or OpenClaw cron tool exists in this environment; no shell
+    daemon or external message scheduler substituted.
+constraints:
+  protected_test_access: false
+  protected_review_access: false
+  same6_tuning: false
+  reopen_closed_recipes: false
+  human_reviews_fabricated: false
+  bound: One evidence-driven cycle at a time; no architecture sweep or automatic V2.
+current_work:
+  stage: Cycle 2 frozen external reference-fidelity study executed, analyzed and verified;
+    original-method gate remains unmet
+  new_training_runs: 0
+  new_carrier_forwards: 1947
+  independent_annotations_collected: 0
+  oracle_fit_runs: 1
+  running_inference_session: null
+  cohort_images: 24
+  header_geographic_groups: 2
+  predicted_forwards_when_complete: 1944
+  reference_stability_study: EXECUTION_NOT_READY
+hypotheses:
+- id: R1
+  statement: Existing primary public resources may supply prediction-independent annotation
+    evidence without inventing human reviews.
+  status: independent_reference_evidence_not_confirmed
+  nature: Resource/evidence question, not an instance segmentation efficacy claim
+  result: BAM imagery executable with verified GSD/footprints, but no three independent
+    single-RGB annotation sets established
+- id: R2
+  statement: A practically meaningful, reference-stable residual can justify one discriminating
+    intervention distinct from closed recipes.
+  status: unverified
+- id: R3
+  statement: Bounded sampled-logistic free readout fitting can diagnose a frozen feature
+    capacity deficit
+  status: not_a_valid_negative_capacity_test
+  result: 1 new / 19 lost target qualifications; loss mechanism was excess foreground,
+    not a capacity certificate
+- id: R4
+  statement: The existing RR component transfers net reference recovery beyond matched
+    continuation on native BAM TRAIN conditions
+  status: limited_mixed_transfer_measured
+  limits: Original-source-small recall and independent visual identity reliability
+    are not estimable from these labels
+  result: RR +0.452pp overall Recall50, -0.041AP, +64.7FP/seed; same-count +0.332pp;
+    original-small outcome not estimable
+experiments:
+  total_runs: 2
+  baseline_value: null
+  best_value: null
+  trajectory:
+  - run_id: frozen_readout_capacity
+    nature: TRAIN oracle, not deployable
+    targets: 298
+    native_raw50: 278
+    oracle_target50: 260
+    new_target50: 1
+    lost_target50: 19
+    carrier_forwards: 3
+    elapsed_s: 15.713961546076462
+  - run_id: frozen_bam_transfer
+    nature: Frozen external TRAIN reference fidelity; not independent reference stability
+    images: 24
+    references: 1106
+    systems: 9
+    carrier_forwards: 1944
+    mean_RR_delta_recall_pp: 0.4520795660036138
+    mean_RR_delta_AP: -0.041367495574547185
+    original_source_small_gate: NOT_ESTIMABLE
+outer_loop:
+  cycle: 2
+  last_direction: Hold original-method entry; resolve reliable independent-reference
+    evidence rather than launch another architecture
+  last_reflection: Common reference omissions recur, support containment is permissive,
+    RR transfer is modest/mixed; these do not identify a new representation cause.
+    Edge-contact and strict fragment proxies do not license a new selector.
+workspace:
+  findings: findings.md
+  log: research-log.md
+  literature_dir: literature/
+  experiments_dir: experiments/
+  to_human_dir: to_human/
+  paper_dir: paper/
