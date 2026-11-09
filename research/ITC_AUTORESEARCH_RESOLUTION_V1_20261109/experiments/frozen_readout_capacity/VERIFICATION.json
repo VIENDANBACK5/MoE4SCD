@@ -1,0 +1,138 @@
+{
+  "status": "EXECUTED_AND_RECOMPUTED_TRAIN_ORACLE_ONLY",
+  "protocol_commit": "96fc102",
+  "new_method_supported": false,
+  "goal_complete": false,
+  "native_logits_max_error": 0.0,
+  "RLE_metrics_recomputed": true,
+  "historical_checkpoint_unchanged": true,
+  "TEST_accessed": false,
+  "SAME6_accessed": false,
+  "protected_review_accessed": false,
+  "files": {
+    "analysis.md": {
+      "size": 5009,
+      "sha256": "8d23aedeb63d9003d6167080eb8fe6c92576577a92abd913c2337ca5ec4a599d"
+    },
+    "protocol.md": {
+      "size": 5793,
+      "sha256": "7c021541dc621033ad0cb50b8e1d258d15f4d775d49b6d0877ce99d5fbebd60a"
+    },
+    "SELECTED_TRAIN_WINDOWS.json": {
+      "size": 1294,
+      "sha256": "edd899fcb5e3ccd11cd1bb278999054b6552bbbfc749554c0a12aacd6d2a0b58"
+    },
+    "code/analyze.py": {
+      "size": 4384,
+      "sha256": "5ec15890611807cc970fa496e276c2ba7cd7bb214fd9083e4889ad0d34f645a1"
+    },
+    "code/run.py": {
+      "size": 13255,
+      "sha256": "bfff2d0a6fef7dddad27bbb11cb03fdb0b33cc0feab97f0b5a7c8ef796c1cfb6"
+    },
+    "results/train_tile_006_w27_frozen_fields.pt": {
+      "size": 67510531,
+      "sha256": "b32787e1e9657396d96dbdde4e2ed43cbbcb6382e60cdea16d4d667e6e515988"
+    },
+    "results/train_tile_000_w14_oracle_iou_matrix.npz": {
+      "size": 8338,
+      "sha256": "9b5f0fcb50c2d9fffbc868fad7c546325c56af345f5164772ceedcfd14847d83"
+    },
+    "results/train_tile_006_w27_native_iou_matrix.npz": {
+      "size": 7085,
+      "sha256": "44a292d3d2ddab51bbf3e7888b35b913bfe80e7c4fbb8674d0dcba3c7747bd98"
+    },
+    "results/events.jsonl": {
+      "size": 7977,
+      "sha256": "eddfd224a577382d01d19e7e79ca1ec95b8f9adf2a899ff91df5d84e33b2ceb2"
+    },
+    "results/train_tile_027_w03_oracle_masks.json": {
+      "size": 159463,
+      "sha256": "3f6bd7c46c73ddca01651f7cb18c8052bd97a2815a4960f14aebce7afc933780"
+    },
+    "results/console.log": {
+      "size": 9234,
+      "sha256": "2d6adecd8f6fa9f447475941935f6a4ff805715e73c7bb4b4aa1ff299b05bdcc"
+    },
+    "results/train_tile_027_w03_native_iou_matrix.npz": {
+      "size": 7691,
+      "sha256": "bed555e693fd3379be7ed824126539c0993c74d7f5b0be81d2596fb803a79acb"
+    },
+    "results/train_tile_027_w03_fit.pt": {
+      "size": 542234,
+      "sha256": "136a6d2568125db5ff1ebcc321a6acf520a73c9be024045452c53f8a8e8038aa"
+    },
+    "results/BINDINGS.json": {
+      "size": 1764,
+      "sha256": "4f3c0754c0a6c80d717bbef41d6eecf8bc7a4e116645e65d6bd6695aea97eb85"
+    },
+    "results/train_tile_000_w14_frozen_fields.pt": {
+      "size": 67582531,
+      "sha256": "b890a276d01d9e6b264a55aa5cfcbd44896ac66d5894620282cde69758a07669"
+    },
+    "results/train_tile_027_w03_oracle_iou_matrix.npz": {
+      "size": 4893,
+      "sha256": "c948e1923988ab17c57d344db9bd28f0abc36cab631970890086731d21aa85c3"
+    },
+    "results/train_tile_006_w27_fit.pt": {
+      "size": 496018,
+      "sha256": "601faf7305af55990694d709057687701c7ddeaea61d35defd442cd40c7f79b3"
+    },
+    "results/train_tile_000_w14_oracle_masks.json": {
+      "size": 279487,
+      "sha256": "8fdcb84835be6070d860a6361a8ada3c287ebc302de0c25298a8f9cf424c31b3"
+    },
+    "results/ANALYSIS_SUMMARY.json": {
+      "size": 341,
+      "sha256": "dab19fb5558de90c4ed3f73305e689cd5cfd2c89c8da62a9405201506f2000a9"
+    },
+    "results/train_tile_006_w27_oracle_iou_matrix.npz": {
+      "size": 3757,
+      "sha256": "86f4458c80eb664d7240815cbd9c2b85525b57122fb74cfe36760c47de44a9c4"
+    },
+    "results/train_tile_000_w14_native_iou_matrix.npz": {
+      "size": 9234,
+      "sha256": "6789efc3bdc1b6bf9cd1d84ca2d697e2b694d6deba4edc9632a20a9418e8dacd"
+    },
+    "results/train_tile_000_w14_fit.pt": {
+      "size": 880306,
+      "sha256": "68691de9dfbcee26af79a9abd88aabfaf7af849efc1c43284315d83cc2b0e27b"
+    },
+    "results/train_tile_006_w27_native_raw_masks.json": {
+      "size": 97677,
+      "sha256": "5bfb2cb9bbe5b70e22991ea2dd64c0c04398d9be066f07c3581295f2b0fae353"
+    },
+    "results/FULL_PIXEL_ERROR_DECOMPOSITION.csv": {
+      "size": 64707,
+      "sha256": "87e3c7bc3474addebeb998a8b1310ce9e38dbb28f48667d218655cd1a3bb4965"
+    },
+    "results/train_tile_027_w03_frozen_fields.pt": {
+      "size": 67518915,
+      "sha256": "16091e89fdefd3bd9285ca0bbda28b5c73b72735b685537cd37e4cfd1b367803"
+    },
+    "results/COMPLETE.json": {
+      "size": 1191,
+      "sha256": "0cd8f5f57b5225b5448f0b695ec95e30855abd4e0f6b5eeae2de6545d19bd44c"
+    },
+    "results/PER_REFERENCE.csv": {
+      "size": 89047,
+      "sha256": "644271caf9a58112df6922c3d7c209b468bbc5dff12d35fac127f32b684be448"
+    },
+    "results/train_tile_027_w03_native_raw_masks.json": {
+      "size": 91990,
+      "sha256": "9dd2d81f35f832d613a1267f5387df75cead4ee1c54c06c9fb2d5f763a754d22"
+    },
+    "results/train_tile_006_w27_oracle_masks.json": {
+      "size": 148840,
+      "sha256": "16fda7fa904e5d37b495a1f310882b4361b9d427ac6970332dfc8c9607687239"
+    },
+    "results/train_tile_000_w14_native_raw_masks.json": {
+      "size": 92748,
+      "sha256": "55bfc8b91e3acbe6f2d19707f2c8beef560f1ad93d0bb82187bc27ddd3dde159"
+    },
+    "results/ORACLE_POOL_DIAGNOSTICS.json": {
+      "size": 1274,
+      "sha256": "e713b090269707e1496c8cd876b5febe69e08a2b07add3473029604affcef517"
+    }
+  }
+}

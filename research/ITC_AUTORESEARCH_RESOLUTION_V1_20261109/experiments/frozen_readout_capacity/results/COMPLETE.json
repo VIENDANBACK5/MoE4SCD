@@ -1,0 +1,46 @@
+{
+  "status": "EXECUTED_TRAIN_ORACLE_NOT_DEPLOYABLE",
+  "windows": [
+    {
+      "window": "train_tile_000_w14",
+      "targets": 137,
+      "baseline_raw50": 120,
+      "baseline_raw75": 98,
+      "oracle_target50": 111,
+      "oracle_target75": 61,
+      "new_target50": 1,
+      "lost_target50": 10,
+      "native_dot_product_max_error": 0.0
+    },
+    {
+      "window": "train_tile_006_w27",
+      "targets": 77,
+      "baseline_raw50": 77,
+      "baseline_raw75": 74,
+      "oracle_target50": 74,
+      "oracle_target75": 44,
+      "new_target50": 0,
+      "lost_target50": 3,
+      "native_dot_product_max_error": 0.0
+    },
+    {
+      "window": "train_tile_027_w03",
+      "targets": 84,
+      "baseline_raw50": 81,
+      "baseline_raw75": 75,
+      "oracle_target50": 75,
+      "oracle_target75": 34,
+      "new_target50": 0,
+      "lost_target50": 6,
+      "native_dot_product_max_error": 0.0
+    }
+  ],
+  "carrier_forwards": 3,
+  "carrier_parameters_updated": false,
+  "SAME6_accessed": false,
+  "TEST_accessed": false,
+  "protected_review_accessed": false,
+  "elapsed_s": 15.713961546076462,
+  "peak_allocated_MiB": 1654.4599609375,
+  "original_checkpoint_still_matches": true
+}

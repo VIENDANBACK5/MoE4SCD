@@ -1,0 +1,41 @@
+[
+  {
+    "window": "train_tile_000_w14",
+    "references": 137,
+    "oracle_pool_GT_conditioned": true,
+    "native_reference_availability_0.5": 120,
+    "native_one_to_one_0.5": 120,
+    "native_reference_availability_0.75": 98,
+    "native_one_to_one_0.75": 98,
+    "oracle_reference_availability_0.5": 111,
+    "oracle_one_to_one_0.5": 111,
+    "oracle_reference_availability_0.75": 61,
+    "oracle_one_to_one_0.75": 61
+  },
+  {
+    "window": "train_tile_006_w27",
+    "references": 77,
+    "oracle_pool_GT_conditioned": true,
+    "native_reference_availability_0.5": 77,
+    "native_one_to_one_0.5": 77,
+    "native_reference_availability_0.75": 74,
+    "native_one_to_one_0.75": 74,
+    "oracle_reference_availability_0.5": 74,
+    "oracle_one_to_one_0.5": 74,
+    "oracle_reference_availability_0.75": 44,
+    "oracle_one_to_one_0.75": 44
+  },
+  {
+    "window": "train_tile_027_w03",
+    "references": 84,
+    "oracle_pool_GT_conditioned": true,
+    "native_reference_availability_0.5": 81,
+    "native_one_to_one_0.5": 81,
+    "native_reference_availability_0.75": 75,
+    "native_one_to_one_0.75": 75,
+    "oracle_reference_availability_0.5": 75,
+    "oracle_one_to_one_0.5": 75,
+    "oracle_reference_availability_0.75": 34,
+    "oracle_one_to_one_0.75": 34
+  }
+]

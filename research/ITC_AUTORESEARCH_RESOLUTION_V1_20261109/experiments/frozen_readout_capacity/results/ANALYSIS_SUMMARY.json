@@ -1,0 +1,14 @@
+{
+  "targets": 298,
+  "native_raw50": 278,
+  "oracle_target50": 260,
+  "new50": 1,
+  "lost50": 19,
+  "lost_with_FP_increase": 19,
+  "lost_with_FN_increase": 0,
+  "lost_with_both_increasing": 0,
+  "native_missing": 20,
+  "native_missing_with_oracle50": 1,
+  "RLE_IoU_recomputation_verified": true,
+  "empirical_result_is_deployment": false
+}
