@@ -66,6 +66,7 @@ def main():
         v=mu.encode(np.asfortranarray(s['valid_mask'].astype(np.uint8)))
         ts=[];meta=[]
         for aid,r0,record in zip(s['original_instance_ids'],s['instance_masks'].rles,s['annotation_records']):
+            assert record['original_record'].get('iscrowd',0)==0 and record['original_record']['category_id']==1
             original=unpack(r0);rr=mu.merge([original,v],intersect=True);area=int(mu.area(rr))
             if not area:empty.append(dict(tile=i,reference_id=aid));continue
             bx,by,bw,bh=mu.toBbox(rr)
@@ -77,6 +78,8 @@ def main():
         images.append(dict(tile=f'b{i:03d}',height=s['height'],width=s['width'],spatial_group=row['spatial_group']))
         refs.append(ts);refmeta.append(meta)
     write(results/'REFERENCE_METADATA.json',dict(original_source_area_available=False,references=refmeta,empty=empty,independent_annotation_stability='UNVERIFIED'))
+    with gzip.open(results/'TRAIN_REFERENCE_MASKS.json.gz','wt') as f:
+        json.dump(dict(images=images,references=refs,origin='ORIGINAL_BAM_TRAIN_ALPHA_CLIPPED',GT_inference=False,freeze_sha256=sha(EXP/'PREDICTIONS_FROZEN.json')),f)
     arms=[f'{a}_seed{s}' for a,s in freeze['arms']]
     metrics=[];source=[];tile_metrics=[];perref=[];sizes=[];cost=[];preds={};matsets={};ambsets={};rawsets={}
     for arm in arms:
@@ -107,13 +110,15 @@ def main():
     paired=[];recovery=[];samecount=[]
     by={r['arm']:r for r in metrics}
     for seed in [42,43,44]:
-        rr=f'rr_seed{seed}';ctrl=f'control_seed{seed}';new=lost=rawnew=rawlost=uncertain=0
+        rr=f'rr_seed{seed}';ctrl=f'control_seed{seed}';new=lost=rawnew=rawlost=uncertain=definite_new=definite_lost=0
         for i,row in enumerate(cohort):
             for j,t in enumerate(refmeta[i]):
                 old=j in matsets[ctrl][i];now=j in matsets[rr][i];amb=j in (ambsets[ctrl][i]|ambsets[rr][i]);rn=j in rawsets[rr][i];ro=j in rawsets[ctrl][i]
                 new+=now and not old;lost+=old and not now;rawnew+=rn and not ro;rawlost+=ro and not rn;uncertain+=amb
+                definite_new+=(now and not old and not amb);definite_lost+=(old and not now and not amb)
                 recovery.append(dict(seed=seed,tile=i,spatial_group=row['spatial_group'],**t,control_matched50=old,RR_matched50=now,new=now and not old,lost=old and not now,matching_ambiguous=amb,control_raw50=ro,RR_raw50=rn))
-        paired.append(dict(seed=seed,delta_AP=by[rr]['AP']-by[ctrl]['AP'],delta_AP75=by[rr]['AP75']-by[ctrl]['AP75'],delta_Recall50_pp=by[rr]['Recall50']-by[ctrl]['Recall50'],delta_TP50=by[rr]['TP50']-by[ctrl]['TP50'],delta_FP50=by[rr]['FP50']-by[ctrl]['FP50'],new=new,lost=lost,new_raw50=rawnew,lost_raw50=rawlost,matching_ambiguous_references=uncertain,original_source_small_gate='NOT_ESTIMABLE'))
+        assert new-lost==by[rr]['TP50']-by[ctrl]['TP50']
+        paired.append(dict(seed=seed,delta_AP=by[rr]['AP']-by[ctrl]['AP'],delta_AP75=by[rr]['AP75']-by[ctrl]['AP75'],delta_Recall50_pp=by[rr]['Recall50']-by[ctrl]['Recall50'],delta_TP50=by[rr]['TP50']-by[ctrl]['TP50'],delta_FP50=by[rr]['FP50']-by[ctrl]['FP50'],new=new,lost=lost,definite_new=definite_new,definite_lost=definite_lost,new_raw50=rawnew,lost_raw50=rawlost,matching_ambiguous_references=uncertain,original_source_small_gate='NOT_ESTIMABLE'))
         rps=[];cps=[]
         for rp,cp in zip(preds[rr],preds[ctrl]):
             n=min(len(rp),len(cp));rps.append(rp[:n]);cps.append(cp[:n])
