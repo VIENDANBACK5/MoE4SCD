@@ -23,3 +23,16 @@ Previous turn: PROGRESS (real TRAIN oracle execution, saved masks, changed next 
 Current unknowns are scientific eligibility, not GPU readiness. No architecture search is queued.
 
 Cycle 2 complete. The actual bounded experiment passed output verification; original-method/robust-solution completion remains UNPROVEN. No model process is live.
+
+## Cycle 3 — make the missing independent-reference step concrete
+
+Previous turn: PROGRESS (1944 actual forwards, frozen masks, matched external results, output verification). No live model job remains to wait on.
+
+- [x] Check the closest published multi-annotator resources for an accessible, permitted independent label set; no TEST/protected packet access or author contact.
+- [x] Prepare a minimal prediction-blind RGB handoff from the already selected BAM TRAIN cohort, without initiating human participation or labeling.
+- [x] Specify identity/boundary uncertainty and an import contract preserving independent overlapping polygons and empty/insufficient-evidence cases.
+- [x] Validate the handoff for geometry and model/reference leakage, then make the exact remaining dependency explicit.
+
+This is a preparation step toward the required evidence, not an executed independent review or a novel-method result. No architecture or additional model inference is scheduled.
+
+Cycle 3 preparation complete. Six actual RGB exports and importer/storage checks VERIFIED; no annotator participation or independent-reference result. Specific availability question pending. This turn made concrete progress, so no goal-blocked declaration is inferred from earlier evidence limitations. Overall goal remains ACTIVE / NOT ACHIEVED.

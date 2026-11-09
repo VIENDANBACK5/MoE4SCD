@@ -1,0 +1,45 @@
+{
+  "status": "VERIFIED_PREPARED_NOT_COLLECTED",
+  "images": 6,
+  "native_hw": [
+    2048,
+    2048
+  ],
+  "per_geographic_component": {
+    "geo_component_00": 3,
+    "geo_component_01": 3
+  },
+  "decoded_RGB_and_validity_match_frozen_inputs": true,
+  "PNG_metadata_empty": true,
+  "rater_facing_source_and_model_metadata_absent": true,
+  "blank_templates_not_counted_as_zero": true,
+  "engineering_checks": {
+    "temporary_synthetic_fixtures": true,
+    "overlap_preserved": true,
+    "same_instance_components_united": true,
+    "invalid_pixels_clipped": true,
+    "conflicting_instance_flags_rejected": true,
+    "unstarted_rejected": true,
+    "unblinded_rejected": true,
+    "ambiguous_only_preserved": true,
+    "explicit_no_crowns_preserved": true,
+    "self_crossing_rejected": true,
+    "changed_RGB_rejected": true,
+    "human_evidence": false
+  },
+  "actual_annotators": 0,
+  "actual_responses": 0,
+  "independent_reference_stability": "NOT_ESTABLISHED",
+  "new_model_forwards": 0,
+  "TEST_access": false,
+  "protected_review_access": false,
+  "packet_files": 22,
+  "archive_bytes": 52550929,
+  "archive_sha256": "14f0685053f67a11cff4ecaeeb9a44deb8989e8762ef728fbefd15acfe8f34d1",
+  "dependencies": {
+    "numpy": "1.26.4",
+    "Pillow": "12.2.0",
+    "pycocotools": "2.0.11",
+    "shapely": "2.1.2"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "itc_blind_status_v1",
+  "annotator_id": "",
+  "declarations": {
+    "independently_completed": null,
+    "used_only_supplied_RGB_and_validity": null,
+    "saw_predictions_or_published_polygons": null,
+    "prior_exposure_to_cases": null,
+    "prior_exposure_details": ""
+  },
+  "cases": [
+    {
+      "case_id": "rgb_18f6054632",
+      "state": "NOT_STARTED",
+      "exhaustive_visible_crowns": null,
+      "count_lower": null,
+      "count_upper": null,
+      "notes": ""
+    },
+    {
+      "case_id": "rgb_2050043ef7",
+      "state": "NOT_STARTED",
+      "exhaustive_visible_crowns": null,
+      "count_lower": null,
+      "count_upper": null,
+      "notes": ""
+    },
+    {
+      "case_id": "rgb_80d472c2dc",
+      "state": "NOT_STARTED",
+      "exhaustive_visible_crowns": null,
+      "count_lower": null,
+      "count_upper": null,
+      "notes": ""
+    },
+    {
+      "case_id": "rgb_b2f9f02c6a",
+      "state": "NOT_STARTED",
+      "exhaustive_visible_crowns": null,
+      "count_lower": null,
+      "count_upper": null,
+      "notes": ""
+    },
+    {
+      "case_id": "rgb_caae37ae2d",
+      "state": "NOT_STARTED",
+      "exhaustive_visible_crowns": null,
+      "count_lower": null,
+      "count_upper": null,
+      "notes": ""
+    },
+    {
+      "case_id": "rgb_d29d420b3d",
+      "state": "NOT_STARTED",
+      "exhaustive_visible_crowns": null,
+      "count_lower": null,
+      "count_upper": null,
+      "notes": ""
+    }
+  ]
+}

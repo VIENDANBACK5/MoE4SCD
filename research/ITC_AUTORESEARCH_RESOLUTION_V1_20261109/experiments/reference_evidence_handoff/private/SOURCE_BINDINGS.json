@@ -1,0 +1,69 @@
+{
+  "status": "PREPARED_NOT_COLLECTED",
+  "cohort_sha256": "f96480ad9b1fc0cab0b17e37df1ae362d161f231798f2f94427f8b32344bb51e",
+  "protocol_sha256": "48b2e500c640c1013b55861d19f17a0904249ad83ebeb3e948d2a8d7d82dfd43",
+  "annotations_read": false,
+  "new_model_forwards": 0,
+  "selected": [
+    {
+      "case_id": "rgb_b2f9f02c6a",
+      "cohort_position": 0,
+      "image_id": "bamforests::train:303",
+      "source_image_id": "Stadtwald_233_302.tif",
+      "spatial_group": "geo_component_00",
+      "original_member": "coco2048/train2023/Stadtwald_233_302.tif",
+      "RGB_pixels_sha256": "f2ecb9e70a1921679c566363c0e99dcc071aa09e57acf8098a54c30a6d78f9fa",
+      "valid_bool_sha256": "5d2bafc266e711ed1e303de871e5b281fea2083d96e579dd504798bba5a34b42"
+    },
+    {
+      "case_id": "rgb_2050043ef7",
+      "cohort_position": 4,
+      "image_id": "bamforests::train:536",
+      "source_image_id": "Stadtwald_373_535.tif",
+      "spatial_group": "geo_component_00",
+      "original_member": "coco2048/train2023/Stadtwald_373_535.tif",
+      "RGB_pixels_sha256": "be4621e3ca093f4480307c842804d923c8323c58d2273cd79e491e802b513ad1",
+      "valid_bool_sha256": "2f8674642481960100b2409c099bcf8f9a2c788285d0e87b74d1819ef05725e6"
+    },
+    {
+      "case_id": "rgb_caae37ae2d",
+      "cohort_position": 8,
+      "image_id": "bamforests::train:722",
+      "source_image_id": "Stadtwald_64_721.tif",
+      "spatial_group": "geo_component_00",
+      "original_member": "coco2048/train2023/Stadtwald_64_721.tif",
+      "RGB_pixels_sha256": "0b766fa23cf2d573327eb2d039634ae091b253c4db92eb7ed8e71a8c8f9bf487",
+      "valid_bool_sha256": "5d2bafc266e711ed1e303de871e5b281fea2083d96e579dd504798bba5a34b42"
+    },
+    {
+      "case_id": "rgb_d29d420b3d",
+      "cohort_position": 12,
+      "image_id": "bamforests::train:804",
+      "source_image_id": "Tretzendorf_146_803.tif",
+      "spatial_group": "geo_component_01",
+      "original_member": "coco2048/train2023/Tretzendorf_146_803.tif",
+      "RGB_pixels_sha256": "3134b84916a6c052177b5dd2266b9631ef02b76c1f3a46518f58c655a4b5265d",
+      "valid_bool_sha256": "5d2bafc266e711ed1e303de871e5b281fea2083d96e579dd504798bba5a34b42"
+    },
+    {
+      "case_id": "rgb_18f6054632",
+      "cohort_position": 16,
+      "image_id": "bamforests::train:1015",
+      "source_image_id": "Tretzendorf_246_1015.tif",
+      "spatial_group": "geo_component_01",
+      "original_member": "coco2048/train2023/Tretzendorf_246_1015.tif",
+      "RGB_pixels_sha256": "48cf430ae8bad543c1bfcd780081ba27b5624bfebfadd2e4ec37ed4875b42d00",
+      "valid_bool_sha256": "08e0989bbfd56fb865d17493deb43a3dcf2aff524982dadb9a3d00270c074c17"
+    },
+    {
+      "case_id": "rgb_80d472c2dc",
+      "cohort_position": 20,
+      "image_id": "bamforests::train:936",
+      "source_image_id": "Tretzendorf_216_935.tif",
+      "spatial_group": "geo_component_01",
+      "original_member": "coco2048/train2023/Tretzendorf_216_935.tif",
+      "RGB_pixels_sha256": "2ba4deff685a0d8e68da5fd171f8b3d2c808591ac918dbdb6e9fa1d4eb2c4f46",
+      "valid_bool_sha256": "5d2bafc266e711ed1e303de871e5b281fea2083d96e579dd504798bba5a34b42"
+    }
+  ]
+}

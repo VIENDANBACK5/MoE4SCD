@@ -1,0 +1,9 @@
+BAMFORESTS: Bamberg Benchmark Forest Dataset of Individual Tree Crowns in Very-High-Resolution UAV Images
+
+[ref] Troles, J., Schmid, U., Fan, W., & Tian, J. (2024). BAMFORESTS: Bamberg Benchmark Forest Dataset of Individual Tree 
+Crowns in Very-High-Resolution UAV Images. Remote Sensing, 16(11), 1935.
+If you use this data for research, please cite our MDPI Journal paper.
+If you would like to use this data for commercial purposes, please contact us (jonas.troles@uni-bamberg.de; jiaojiao.tian@dlr.de)
+
+
+This work is licensed under a CC BY-NC-SA 4.0 Deed license.

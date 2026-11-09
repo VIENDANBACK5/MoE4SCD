@@ -1,0 +1,72 @@
+{
+  "schema": "itc_rgb_packet_v1",
+  "coordinate_system": "image pixels: x right, y down",
+  "cases": [
+    {
+      "case_id": "rgb_18f6054632",
+      "image": "images/rgb_18f6054632.png",
+      "validity": "valid/rgb_18f6054632.png",
+      "width": 2048,
+      "height": 2048,
+      "gsd_x_cm": 1.611970000000306,
+      "gsd_y_cm": 1.6119699999979924,
+      "RGB_pixels_sha256": "48cf430ae8bad543c1bfcd780081ba27b5624bfebfadd2e4ec37ed4875b42d00",
+      "valid_bool_sha256": "08e0989bbfd56fb865d17493deb43a3dcf2aff524982dadb9a3d00270c074c17"
+    },
+    {
+      "case_id": "rgb_2050043ef7",
+      "image": "images/rgb_2050043ef7.png",
+      "validity": "valid/rgb_2050043ef7.png",
+      "width": 2048,
+      "height": 2048,
+      "gsd_x_cm": 1.6997999999994031,
+      "gsd_y_cm": 1.6997999999960802,
+      "RGB_pixels_sha256": "be4621e3ca093f4480307c842804d923c8323c58d2273cd79e491e802b513ad1",
+      "valid_bool_sha256": "2f8674642481960100b2409c099bcf8f9a2c788285d0e87b74d1819ef05725e6"
+    },
+    {
+      "case_id": "rgb_80d472c2dc",
+      "image": "images/rgb_80d472c2dc.png",
+      "validity": "valid/rgb_80d472c2dc.png",
+      "width": 2048,
+      "height": 2048,
+      "gsd_x_cm": 1.6119700000006523,
+      "gsd_y_cm": 1.6119699999943293,
+      "RGB_pixels_sha256": "2ba4deff685a0d8e68da5fd171f8b3d2c808591ac918dbdb6e9fa1d4eb2c4f46",
+      "valid_bool_sha256": "5d2bafc266e711ed1e303de871e5b281fea2083d96e579dd504798bba5a34b42"
+    },
+    {
+      "case_id": "rgb_b2f9f02c6a",
+      "image": "images/rgb_b2f9f02c6a.png",
+      "validity": "valid/rgb_b2f9f02c6a.png",
+      "width": 2048,
+      "height": 2048,
+      "gsd_x_cm": 1.6998000000002293,
+      "gsd_y_cm": 1.6997999999901072,
+      "RGB_pixels_sha256": "f2ecb9e70a1921679c566363c0e99dcc071aa09e57acf8098a54c30a6d78f9fa",
+      "valid_bool_sha256": "5d2bafc266e711ed1e303de871e5b281fea2083d96e579dd504798bba5a34b42"
+    },
+    {
+      "case_id": "rgb_caae37ae2d",
+      "image": "images/rgb_caae37ae2d.png",
+      "validity": "valid/rgb_caae37ae2d.png",
+      "width": 2048,
+      "height": 2048,
+      "gsd_x_cm": 1.6998000000002882,
+      "gsd_y_cm": 1.6998000000066338,
+      "RGB_pixels_sha256": "0b766fa23cf2d573327eb2d039634ae091b253c4db92eb7ed8e71a8c8f9bf487",
+      "valid_bool_sha256": "5d2bafc266e711ed1e303de871e5b281fea2083d96e579dd504798bba5a34b42"
+    },
+    {
+      "case_id": "rgb_d29d420b3d",
+      "image": "images/rgb_d29d420b3d.png",
+      "validity": "valid/rgb_d29d420b3d.png",
+      "width": 2048,
+      "height": 2048,
+      "gsd_x_cm": 1.793110000000528,
+      "gsd_y_cm": 1.793110000004124,
+      "RGB_pixels_sha256": "3134b84916a6c052177b5dd2266b9631ef02b76c1f3a46518f58c655a4b5265d",
+      "valid_bool_sha256": "5d2bafc266e711ed1e303de871e5b281fea2083d96e579dd504798bba5a34b42"
+    }
+  ]
+}

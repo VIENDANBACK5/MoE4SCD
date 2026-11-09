@@ -33,3 +33,9 @@ R5/M2F/DINOseed42 have447common final omissions and320common raw absences in the
 Post-hoc fixed-figure analysis finds many query outputs touch internal view edges, including many matched predictions; a strict fragment proxy certifies a small subset of unmatched outputs while others remain unclassified. Do not equate spatial edge contact with instance redundancy or the causal share of all errors. Generic cross-crop query association has CropFormer prior art; no new architecture is justified from these observations.
 
 Actual-output verification checked360653raw masks and46596final masks: alpha validity, view support, equal input pixels, count conservation and unchanged checkpoint hashes. Full source/seed results, masks, source/geometry bindings, figures and reports exist. All study model processes are terminal. Overall goal remains active; a robust new solution/original method is unproved.
+
+## Cycle 3: missing evidence is now a concrete handoff
+
+Six metadata-spaced native RGB cases from the already exposed BAM TRAIN cohort were exported and verified pixel-exact. Blank standard LabelMe templates, uncertainty/abstention semantics and an independent-mask importer are ready. The52.55MB archive excludes reference/prediction/source-case metadata and retains dataset attribution. No participation, response or reference stability result exists. This preparation does not turn two geographic components into independent-site confirmation or solve source-small-area provenance.
+
+The closest Steier2024 multi-annotator resource requires an author request; no labels have been acquired or author contacted. Public SelvaMask repeated annotations remain outside the allowed TEST/reviewer boundary. A concrete availability question for three qualified independent annotators is pending. Additional published-polygon evaluation cannot replace their judgments; no new method branch is justified from the missing information alone.

@@ -41,3 +41,7 @@ The remaining goal requires new discriminating evidence, not another arbitrary m
 - [Independent-study design revision2](../ITC_INDEPENDENT_FAILURE_STUDY_DESIGN_V1_20261109/INDEPENDENT_EVALUATION_DESIGN.md).
 
 No study model process remains live after cycle2. Native goal continuity and durable state remain active; no separate background scheduler is claimed.
+
+## Cycle 3: concrete independent-reference dependency
+
+A verified six-image RGB-only handoff now exists, with blank LabelMe files, validity and independent-mask/uncertainty importer. [Coordinator instructions](experiments/reference_evidence_handoff/README.md) and [Vietnamese decision](to_human/CYCLE_03_DECISION.md) distinguish preparation from actual annotation. Zero annotators confirmed, zero responses collected; a specific availability question is pending. No new model experiment or architectural branch was opened. The overall goal is still ACTIVE / NOT ACHIEVED. This six-image pilot could establish feasibility, not systematic-error prevalence, biological identity or independent generalization.

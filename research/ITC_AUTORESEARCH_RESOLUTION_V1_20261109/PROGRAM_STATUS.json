@@ -1,6 +1,6 @@
 {
-  "recorded_local": "2026-11-10T00:04:50.660929+07:00",
-  "status": "TWO_EXECUTED_CYCLES_OVERALL_GOAL_ACTIVE",
+  "recorded_local": "2026-11-10T00:16:12.518172+07:00",
+  "status": "TWO_EMPIRICAL_CYCLES_AND_VERIFIED_HANDOFF_OVERALL_GOAL_ACTIVE",
   "carrier_forwards": 1947,
   "new_carrier_training": false,
   "original_method_supported": false,
@@ -18,5 +18,13 @@
   },
   "historical_hypothesis_ledger_byte_identical": true,
   "local_report_links_checked": 9,
-  "cycle2_verification_sha256": "1a827285a67ded7f301a8a51d1d5e570248f5058a25149d625eec0eee63db45a"
+  "cycle2_verification_sha256": "1a827285a67ded7f301a8a51d1d5e570248f5058a25149d625eec0eee63db45a",
+  "blind_handoff_images": 6,
+  "independent_annotators_confirmed": 0,
+  "independent_responses_collected": 0,
+  "human_availability_question": "PENDING_USER_INFORMATION",
+  "new_cycle3_model_forwards": 0,
+  "new_architecture_queued": false,
+  "goal_achieved": false,
+  "handoff_verification_sha256": "242f21bb12497f3863293951fb86c9556de00ca55c77b54a5bd2065555d0168e"
 }
