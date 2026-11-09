@@ -5,7 +5,9 @@
       "sha256": "50ff18cec1fbcb5ce928977568626f3efeb659f951ae8ceea42e5610ccfe9b1b",
       "rows": 294,
       "sources": [
-        "train"
+        "20240131_zf2block4_ms_m3m_rgb",
+        "20240613_tbsnewsite2_m3e_rgb",
+        "20241122_bcifairchildn_m3m_rgb"
       ]
     },
     {
@@ -13,7 +15,19 @@
       "sha256": "3bda3d303e6fbd597b8a3dd9aa04c6032511753e98e2ccbef1833a01e9c3a3a5",
       "rows": 854,
       "sources": [
-        "train"
+        "20240131_zf2block4_ms_m3m_rgb",
+        "20240613_tbsnewsite2_m3e_rgb",
+        "20241122_bcifairchildn_m3m_rgb"
+      ]
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/research/ITC_CARRIER_FORMATION_V1_20261103/TRAIN_WINDOWS.json",
+      "sha256": "3bda3d303e6fbd597b8a3dd9aa04c6032511753e98e2ccbef1833a01e9c3a3a5",
+      "rows": 854,
+      "sources": [
+        "20240131_zf2block4_ms_m3m_rgb",
+        "20240613_tbsnewsite2_m3e_rgb",
+        "20241122_bcifairchildn_m3m_rgb"
       ]
     }
   ],
@@ -23,5 +37,6 @@
   "source_track": "legacy_reference",
   "independent_human_reference_stability": "NOT_ESTABLISHED",
   "original_crown_area": "NOT_AVAILABLE_IN_COCO",
-  "GSD_source": "TRAIN_TIFF_GeoTIFF_pixel_scale_and_tiepoint_EPSG25832"
+  "GSD_source": "TRAIN_TIFF_GeoTIFF_pixel_scale_and_tiepoint_EPSG25832",
+  "metadata_correction": "Source-ID parser corrected before inference; included M2F manifest explicitly. No cohort, prediction or scientific setting changed."
 }
