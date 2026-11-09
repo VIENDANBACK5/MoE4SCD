@@ -1,0 +1,19 @@
+{
+  "status": "EXECUTED_RESULTS_DRAFT_NOT_ORIGINAL_METHOD_OR_SUBMISSION_READY",
+  "manuscript_sha256": "b4da65732e638fabfa1916af57f40426bff10ab53c9c4454a4bfb682c5c86b22",
+  "html_sha256": "f3e899f16d5cc29fdcc7ecab5c9a25726c47a72429227e1c6fa9493d62c9383a",
+  "tables_generated_from_actual_CSV": true,
+  "arithmetic_and_same_count_checks": true,
+  "local_links_checked": 11,
+  "broken_local_links": [],
+  "source_hashes": {
+    "METRICS.csv": "76088c270d7b310777a5ac5a8eb379e32329a68d815358027868ec2d9c16535e",
+    "RR_PAIRED_RESULTS.csv": "37e7c91797f80ef481c041877e51adca9cc602243808cac5babe5ad65cd65e76",
+    "SAME_COUNT_RESULTS.csv": "786d63c9da79e1c0208a4799d915f999bb1019312c32696d4387014e3b2dc035",
+    "RECOVERY_AND_LOSS.csv": "8ca89ef281d0de160988c158e3c231bdddd0144a517b4973584c44525c667818",
+    "CROSS_CARRIER_PATTERNS.csv": "17de71ceacd1c9cc30a80970904a5f5370449561df4896c8098ac071c7ae5e96"
+  },
+  "actual_independent_reviewer_responses": 0,
+  "new_model_forwards": 0,
+  "goal_complete": false
+}

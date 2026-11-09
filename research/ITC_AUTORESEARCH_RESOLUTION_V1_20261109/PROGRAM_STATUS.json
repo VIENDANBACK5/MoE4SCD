@@ -1,6 +1,6 @@
 {
-  "recorded_local": "2026-11-10T00:16:12.518172+07:00",
-  "status": "TWO_EMPIRICAL_CYCLES_AND_VERIFIED_HANDOFF_OVERALL_GOAL_ACTIVE",
+  "recorded_local": "2026-11-10T00:26:53.903234+07:00",
+  "status": "BLOCKED_AT_INDEPENDENT_REFERENCE_EVIDENCE_GATE",
   "carrier_forwards": 1947,
   "new_carrier_training": false,
   "original_method_supported": false,
@@ -26,5 +26,14 @@
   "new_cycle3_model_forwards": 0,
   "new_architecture_queued": false,
   "goal_achieved": false,
-  "handoff_verification_sha256": "242f21bb12497f3863293951fb86c9556de00ca55c77b54a5bd2065555d0168e"
+  "handoff_verification_sha256": "242f21bb12497f3863293951fb86c9556de00ca55c77b54a5bd2065555d0168e",
+  "native_status_change_requested": "blocked",
+  "empirical_manuscript": "paper/PAPER_DRAFT.md",
+  "cycle4_model_forwards": 0,
+  "blocked_condition_cycles": [
+    2,
+    3,
+    4
+  ],
+  "paper_verification_sha256": "048bc4628f9a7d27cf47f32f3ecdf4614b221f47133dc137a17def0a850835c0"
 }

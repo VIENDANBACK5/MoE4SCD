@@ -36,3 +36,14 @@ Previous turn: PROGRESS (1944 actual forwards, frozen masks, matched external re
 This is a preparation step toward the required evidence, not an executed independent review or a novel-method result. No architecture or additional model inference is scheduled.
 
 Cycle 3 preparation complete. Six actual RGB exports and importer/storage checks VERIFIED; no annotator participation or independent-reference result. Specific availability question pending. This turn made concrete progress, so no goal-blocked declaration is inferred from earlier evidence limitations. Overall goal remains ACTIVE / NOT ACHIEVED.
+
+## Cycle 4 — close the evidence/reporting work before an external dependency decision
+
+Previous turn: PROGRESS (actual six-image pixel-exact handoff, tested independent-mask importer). No live model process or human response is confirmed.
+
+- [x] Finish bounded primary-resource checks for Mei2024 and RandCrowns; do not substitute multimodal/box references for independent same-RGB instance polygons.
+- [x] Write an evidence-linked empirical/mechanistic draft from actual executed results, without redefining the overall objective as a writing task.
+- [x] Check manuscript numbers/citations against artifacts and preserve historical decisions.
+- [x] Audit the original objective and the repeated external-reference dependency; no new model branch or fabricated participant.
+
+Cycle4 completed: primary resource checks, actual-results draft and current-artifact recheck. Original goal NOT ACHIEVED. Same independent-reference input missing through cycles2/3/4; now no further aligned self-contained empirical action. Native BLOCKED update pending, not completion/voluntary pause.

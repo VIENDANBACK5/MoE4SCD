@@ -2,7 +2,7 @@ project:
   title: 'RGB tree crown instance segmentation: evidence-grounded resolution'
   question: Which currently supported solution should be retained, and what genuinely
     new evidence could justify a better single-carrier method?
-  status: active
+  status: blocked
   started: '2026-11-09'
   domain: RGB individual tree crown instance segmentation
 continuity:
@@ -19,8 +19,8 @@ constraints:
   human_reviews_fabricated: false
   bound: One evidence-driven cycle at a time; no architecture sweep or automatic V2.
 current_work:
-  stage: Cycle 3 blind RGB reference handoff prepared and verified; actual independent
-    responses not collected
+  stage: Cycle4 primary-resource check and evidence-linked empirical draft complete;
+    blocked audit passed at independent-reference input gate
   new_training_runs: 0
   new_carrier_forwards: 1947
   independent_annotations_collected: 0
@@ -84,13 +84,19 @@ experiments:
     mean_RR_delta_AP: -0.041367495574547185
     original_source_small_gate: NOT_ESTIMABLE
 outer_loop:
-  cycle: 3
-  last_direction: Use prepared six-image blind handoff if actual qualified independent
-    participation becomes available; do not substitute another model branch
+  cycle: 4
+  last_direction: Await actual qualified independent responses or authorized qualifying
+    multi-annotator asset; no new model queued
   last_reflection: Two executed empirical cycles plus concrete handoff preparation;
     no reference-stable failure cohort or original method established
-  latest_turn_audit: 'PROGRESS: actual pixel-exact handoff and checked import semantics,
-    no new model experiment'
+  latest_turn_audit: 'PROGRESS: primary full-paper resource check, grounded draft,
+    artifact recheck and completion/blocker audit'
+  blocked_condition: Qualifying independent same-RGB annotation evidence unavailable;
+    no actual participant/response; user availability question pending
+  condition_recorded_in_consecutive_cycles:
+  - 2
+  - 3
+  - 4
 workspace:
   findings: findings.md
   log: research-log.md

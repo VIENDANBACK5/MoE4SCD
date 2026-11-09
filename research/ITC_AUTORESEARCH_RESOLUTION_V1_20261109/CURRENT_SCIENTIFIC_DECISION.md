@@ -45,3 +45,7 @@ No study model process remains live after cycle2. Native goal continuity and dur
 ## Cycle 3: concrete independent-reference dependency
 
 A verified six-image RGB-only handoff now exists, with blank LabelMe files, validity and independent-mask/uncertainty importer. [Coordinator instructions](experiments/reference_evidence_handoff/README.md) and [Vietnamese decision](to_human/CYCLE_03_DECISION.md) distinguish preparation from actual annotation. Zero annotators confirmed, zero responses collected; a specific availability question is pending. No new model experiment or architectural branch was opened. The overall goal is still ACTIVE / NOT ACHIEVED. This six-image pilot could establish feasibility, not systematic-error prevalence, biological identity or independent generalization.
+
+## Cycle 4 and external-input gate
+
+[The empirical/mechanistic draft](paper/PAPER_DRAFT.md) is complete as a first draft with source-generated tables, not an original-method claim or submission-ready positive paper. All278+31 recorded experiment artifacts and eight historical decisions still match their hashes. Full primary source checks refine the Mei/RandCrowns eligibility record without obtaining labels. No actual independent response exists. The goal remains NOT ACHIEVED; [completion/blocked audit](GOAL_COMPLETION_AND_BLOCKED_AUDIT.md) passes the repeated external-input threshold (cycles2/3/4), so native BLOCKED status is requested. This supersedes earlier ACTIVE status statements as continuity history, without changing scientific findings.

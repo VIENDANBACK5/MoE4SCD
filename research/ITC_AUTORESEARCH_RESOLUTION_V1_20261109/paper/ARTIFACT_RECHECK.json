@@ -1,0 +1,11 @@
+{
+  "frozen_bam_transfer": {
+    "recorded_artifacts_still_match": 278,
+    "verification_sha256": "1a827285a67ded7f301a8a51d1d5e570248f5058a25149d625eec0eee63db45a"
+  },
+  "frozen_readout_capacity": {
+    "recorded_artifacts_still_match": 31,
+    "verification_sha256": "1d7e4736af3566a254cc5beba7e39ab57b5291a6729009b06b2f602dd8ddf4e8"
+  },
+  "historical_decisions_still_match": 8
+}

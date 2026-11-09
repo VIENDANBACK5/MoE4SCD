@@ -1,0 +1,60 @@
+[
+  {
+    "key": "He_2017_ICCV",
+    "url": "https://openaccess.thecvf.com/content_iccv_2017/html/He_Mask_R-CNN_ICCV_2017_paper.html",
+    "status": "PUBLISHER_BIBTEX_FETCHED",
+    "sha256": "3a650e930f0d410a894e13cade4a2f8ffd83e19fa70d89145388da3f81cb60d1"
+  },
+  {
+    "key": "Cheng_2022_CVPR",
+    "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Cheng_Masked-Attention_Mask_Transformer_for_Universal_Image_Segmentation_CVPR_2022_paper.html",
+    "status": "PUBLISHER_BIBTEX_FETCHED",
+    "sha256": "f91a8f1f9f651da1b70f30b255d5b5a49f74ad625b5d56cd8d63ee93e5bb446f"
+  },
+  {
+    "key": "Li_2023_CVPR",
+    "url": "https://openaccess.thecvf.com/content/CVPR2023/html/Li_Mask_DINO_Towards_a_Unified_Transformer-Based_Framework_for_Object_Detection_CVPR_2023_paper.html",
+    "status": "PUBLISHER_BIBTEX_FETCHED",
+    "sha256": "490d6664040a2a4edf5c47ec3b1f599c1c0afbc743f536e4bfe41cd3596531e6"
+  },
+  {
+    "key": "Hou_2024_CVPR",
+    "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Hou_Salience_DETR_Enhancing_Detection_Transformer_with_Hierarchical_Salience_Filtering_Refinement_CVPR_2024_paper.html",
+    "status": "PUBLISHER_BIBTEX_FETCHED",
+    "sha256": "0f66b43a464402f81a11d6cc972d8d926bf845fd7c8dc0c084cc04325ca96e36"
+  },
+  {
+    "key": "BAMFORESTS2024",
+    "doi": "10.3390/rs16111935",
+    "url": "https://api.crossref.org/works/10.3390/rs16111935/transform/application/x-bibtex",
+    "status": "UNVERIFIED_BIBTEX",
+    "error": "429 Client Error: Too Many Requests for url: https://api.crossref.org/works/10.3390/rs16111935/transform/application/x-bibtex"
+  },
+  {
+    "key": "Steier2024",
+    "doi": "10.3390/rs16152786",
+    "url": "https://api.crossref.org/works/10.3390/rs16152786/transform/application/x-bibtex",
+    "status": "CROSSREF_BIBTEX_FETCHED",
+    "sha256": "aa0a4fced17aedce59b7972ada3a772c8014a3c89d4543b37ce365acfb84bda3"
+  },
+  {
+    "key": "Mei2024",
+    "doi": "10.5194/isprs-archives-XLVIII-2-2024-257-2024",
+    "url": "https://api.crossref.org/works/10.5194/isprs-archives-XLVIII-2-2024-257-2024/transform/application/x-bibtex",
+    "status": "UNVERIFIED_BIBTEX",
+    "error": "429 Client Error: Too Many Requests for url: https://api.crossref.org/works/10.5194/isprs-archives-XLVIII-2-2024-257-2024/transform/application/x-bibtex"
+  },
+  {
+    "key": "RandCrowns2021",
+    "doi": "10.1109/JSTARS.2021.3122345",
+    "url": "https://api.crossref.org/works/10.1109/JSTARS.2021.3122345/transform/application/x-bibtex",
+    "status": "CROSSREF_BIBTEX_FETCHED",
+    "sha256": "8e802f0d34b038e630d89e3ea11de84b596eff35b06011069de70f8315795290"
+  },
+  {
+    "key": "Mei2024",
+    "url": "https://isprs-archives.copernicus.org/articles/XLVIII-2-2024/257/2024/isprs-archives-XLVIII-2-2024-257-2024.bib",
+    "status": "PUBLISHER_BIBTEX_FETCHED",
+    "sha256": "7e012d36278fcf6cf228251b65fb8c58080baa6a39d43a8173fb4967159260b4"
+  }
+]

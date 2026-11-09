@@ -12,3 +12,5 @@ This is a bounded check of closest already identified sources, not proof that ev
 The earlier SOURCE_NOTES.md retrieval note about MDPI rate limiting is superseded for this check: the Steier publisher HTML was successfully read on 2026-11-10. No earlier experimental finding is changed.
 
 Decision: actual independent reference evidence remains NOT_ESTABLISHED. No new labels, access rights, expert judgments, annotation certainty or model gains are inferred from these papers. No external message, download of dataset labels, protected access or fresh model execution occurred in this check.
+
+Cycle4 superseding update: Mei primary fullPDF is now read; original experts independently used true-color images, separately from NDVI fusion. Thus the original annotation modality is not disqualified. No original labelasset was obtained. See ../../literature/MULTI_ANNOTATOR_ACCESS_UPDATE.md and its exact PDF hash/provenance. No packet content or reviewer status changed.
