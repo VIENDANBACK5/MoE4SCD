@@ -1,0 +1,27 @@
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/pixel_decoder/maskdino_encoder.py:362: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @autocast(enabled=False)
+/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/transformer_decoder/dino_decoder.py:220: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @autocast(enabled=False)
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/matcher.py:160: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast(enabled=False):
+/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/matcher.py:160: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast(enabled=False):
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+Traceback (most recent call last):
+  File "/home/chung/RS/Image Segmentation/research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/scale_exposure_control_v1/code/probe.py", line 44, in <module>
+    try:main()
+        ^^^^^^
+  File "/home/chung/RS/Image Segmentation/research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/scale_exposure_control_v1/code/probe.py", line 23, in main
+    assert torch.allclose(a,b,atol=1e-6,rtol=1e-3),n
+AssertionError: backbone.stem.conv1.weight

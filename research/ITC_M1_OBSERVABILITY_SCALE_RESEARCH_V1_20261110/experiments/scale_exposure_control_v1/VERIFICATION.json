@@ -1,0 +1,44 @@
+{
+  "stage": "VERIFIED_TWO_FULL_SCOPE_MATCHED_CONTROLS",
+  "scientific_updates_per_arm": 398,
+  "scientific_microbatches_per_arm": 796,
+  "training_dataset_windows": 796,
+  "paired_data_augmentation_and_lr_exact": true,
+  "original_trainable_scope": true,
+  "probe_weights_not_used": true,
+  "checkpoints": {
+    "S0": {
+      "sha256": "6885223193082cb862f80e068770a6d8ae051c55640d7823a6ebf74dbcd96e07",
+      "updates": 398,
+      "optimizer_states": 393,
+      "trainable_parameters": 43775909,
+      "changed_tensors": {
+        "backbone": 53,
+        "pixel_decoder": 117,
+        "predictor": 333
+      },
+      "bytes": 526286354
+    },
+    "S1": {
+      "sha256": "69c0fb75f88423481a4dfdfba7947bf0d79ef852842201487c10d95aca0b3a97",
+      "updates": 398,
+      "optimizer_states": 393,
+      "trainable_parameters": 43775909,
+      "changed_tensors": {
+        "backbone": 53,
+        "pixel_decoder": 117,
+        "predictor": 333
+      },
+      "bytes": 526286354
+    }
+  },
+  "evaluation_forwards": 24,
+  "raw_masks_checked": 7200,
+  "final_masks_checked": 3463,
+  "geometry_validity_NMS_and_matching_recomputed": true,
+  "original_checkpoint_unchanged": true,
+  "engineering_initial_failure_preserved": true,
+  "novel_method": false,
+  "independent_generalization": false,
+  "goal_complete": false
+}

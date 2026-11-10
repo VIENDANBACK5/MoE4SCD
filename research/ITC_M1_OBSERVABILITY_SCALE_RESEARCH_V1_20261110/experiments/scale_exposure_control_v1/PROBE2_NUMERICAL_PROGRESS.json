@@ -1,0 +1,28 @@
+{
+  "fp32": {
+    "loss_plain": 27.044252395629883,
+    "loss_checkpointed": 27.044252395629883,
+    "gradient_tensors": 393,
+    "relative_L2": 3.90151522001477e-07,
+    "minimum_nontrivial_tensor_cosine": 0.9999999999958337,
+    "max_absolute_delta": 1.5497207641601562e-06,
+    "pointwise_tolerance_failure_count": 0,
+    "first_pointwise_failures": []
+  },
+  "bf16": {
+    "loss_plain": 26.898191452026367,
+    "loss_checkpointed": 26.898191452026367,
+    "gradient_tensors": 393,
+    "relative_L2": 0.002081165758368399,
+    "minimum_nontrivial_tensor_cosine": 0.9999788538076524,
+    "max_absolute_delta": 0.0087890625,
+    "pointwise_tolerance_failure_count": 53,
+    "first_pointwise_failures": [
+      "backbone.stem.conv1.weight",
+      "backbone.res2.0.shortcut.weight",
+      "backbone.res2.0.conv1.weight",
+      "backbone.res2.0.conv2.weight",
+      "backbone.res2.0.conv3.weight"
+    ]
+  }
+}

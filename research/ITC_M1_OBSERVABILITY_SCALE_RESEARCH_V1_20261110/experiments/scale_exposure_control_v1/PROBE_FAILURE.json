@@ -1,0 +1,4 @@
+{
+  "stage": "ENGINEERING_GATE_FAILED_NO_AUTOMATIC_SCOPE_CHANGE",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/chung/RS/Image Segmentation/research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/scale_exposure_control_v1/code/probe.py\", line 44, in <module>\n    try:main()\n        ^^^^^^\n  File \"/home/chung/RS/Image Segmentation/research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/scale_exposure_control_v1/code/probe.py\", line 23, in main\n    assert torch.allclose(a,b,atol=1e-6,rtol=1e-3),n\nAssertionError: backbone.stem.conv1.weight\n"
+}

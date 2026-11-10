@@ -57,3 +57,9 @@ User restored the goal to ACTIVE and prioritized original-method discovery over 
 ## Cycle6: actual M1 pilot
 
 [Executed M1 decision](../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/04_EXECUTED_PILOT_DECISION.md) supersedes NOT_RUN only as current state; original research-gate files remain historical. Twelve actual frozen forwards, large same-information encoding effects, raw/final/size/source/same-count outputs saved and verified. Artificial operating-size shift is explicit. This is a measured phenomenon, not a novel method or training-level causal explanation. No next model automatically queued; original-method goal remains ACTIVE and NOT ACHIEVED.
+
+## Cycle7: conventional training control completed
+
+[Actual two-arm learning control](../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/05_MATCHED_SCALE_CONTROL_DECISION.md): both full-scope398-update runs and24evaluationforwards executed; original mask-only DINOparent and all300queries preserved. The A/Braw50gap falls147→36 under ordinary lossless-scale exposure/additional computation, passing the registered narrow screen. NativeTPstays276 but AP−0.960/AP75−2.673/FP+59/smallTP−2; equalnativecount loses1TP. A successful conventional treatment on the artificial encoding pair does not support an original observability architecture or better deployable ITC method. C/Dscale discrepancy is not removed.
+
+This closes the tested one-pass recipe. Both optimizer states, logs, independent raw/final RLE masks and checksums retained. No extra epoch, threshold rescue, scale loss, new module or model job queued. The original goal remains ACTIVE/NOT ACHIEVED; independent geographic/reference evidence is still NOT_ESTABLISHED.

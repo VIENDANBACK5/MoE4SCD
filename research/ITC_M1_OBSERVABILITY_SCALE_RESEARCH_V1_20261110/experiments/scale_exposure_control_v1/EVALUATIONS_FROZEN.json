@@ -1,0 +1,15 @@
+{
+  "stage": "BOTH_CONTROL_PREDICTIONS_FROZEN_BEFORE_NEW_METRICS",
+  "forwards": 24,
+  "arms": {
+    "S0": {
+      "checkpoint_sha256": "6885223193082cb862f80e068770a6d8ae051c55640d7823a6ebf74dbcd96e07",
+      "predictions_freeze_sha256": "b6f56ba35253919e547fea4296b2ff92a83098a38abaf758e552038aba65e426"
+    },
+    "S1": {
+      "checkpoint_sha256": "69c0fb75f88423481a4dfdfba7947bf0d79ef852842201487c10d95aca0b3a97",
+      "predictions_freeze_sha256": "c1df5f81bed7d51aef83ff51f663c7e8ce8ca84e21e4e78462036b28502158ba"
+    }
+  },
+  "GT_inference": false
+}

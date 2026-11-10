@@ -1,0 +1,38 @@
+{
+  "recorded_local": "2026-11-10T13:10:26.007312+07:00",
+  "stage": "COMPLETED_TRAINING_EVALUATION_AND_ANALYSIS",
+  "running_training_session": null,
+  "running_inference_session": null,
+  "arms": {
+    "S0": {
+      "stage": "COMPLETED_FIXED_SCHEDULE",
+      "arm": "S0",
+      "updates": 398,
+      "microbatches": 796,
+      "elapsed_seconds": 295.4837248600088,
+      "checkpoint_sha256": "6885223193082cb862f80e068770a6d8ae051c55640d7823a6ebf74dbcd96e07",
+      "checkpoint_bytes": 526286354,
+      "optimizer_state_saved": true,
+      "peak_GPU_MiB": 4173.25,
+      "TEST": false,
+      "VAL_selection": false,
+      "probe_weights_used": false
+    },
+    "S1": {
+      "stage": "COMPLETED_FIXED_SCHEDULE",
+      "arm": "S1",
+      "updates": 398,
+      "microbatches": 796,
+      "elapsed_seconds": 571.2919368359726,
+      "checkpoint_sha256": "69c0fb75f88423481a4dfdfba7947bf0d79ef852842201487c10d95aca0b3a97",
+      "checkpoint_bytes": 526286354,
+      "optimizer_state_saved": true,
+      "peak_GPU_MiB": 12832.8876953125,
+      "TEST": false,
+      "VAL_selection": false,
+      "probe_weights_used": false
+    }
+  },
+  "remaining_model_jobs": 0,
+  "next_model_job_queued": false
+}

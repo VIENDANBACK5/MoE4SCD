@@ -1,0 +1,22 @@
+{
+  "status": "EXECUTED_FROZEN_TRAIN_ENCODING_DIAGNOSTIC",
+  "forwards": 12,
+  "windows": 3,
+  "references": 298,
+  "source_annotation_small": 133,
+  "empty_common_support": 0,
+  "lossless_relevance_screen": {
+    "A_to_B": true,
+    "C_to_D": true
+  },
+  "information_deletion_explanation_for_lossless_contrasts": "EXCLUDED_BY_EXACT_LEFT_INVERSE",
+  "architecture_cause_isolated": false,
+  "new_method_supported": false,
+  "biological_identity_verified": false,
+  "independent_generalization": false,
+  "new_training": false,
+  "TEST": false,
+  "overall_goal_complete": false,
+  "frozen_predictions_sha256": "b6f56ba35253919e547fea4296b2ff92a83098a38abaf758e552038aba65e426",
+  "analysis_seconds": 10.443724249955267
+}

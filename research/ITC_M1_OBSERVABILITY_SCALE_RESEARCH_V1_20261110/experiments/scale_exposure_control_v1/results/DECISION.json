@@ -1,0 +1,11 @@
+{
+  "stage": "EXECUTED_ORDINARY_SCALE_EXPOSURE_CONTROL",
+  "gap_S0": 147,
+  "gap_S1": 36,
+  "native_TP50_delta_S1_minus_S0": 0,
+  "registered_sufficiency_screen": true,
+  "screen_applicable": true,
+  "novel_method": false,
+  "independent_generalization": false,
+  "overall_goal_complete": false
+}

@@ -1,0 +1,7 @@
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/pixel_decoder/maskdino_encoder.py:362: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @autocast(enabled=False)
+/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/transformer_decoder/dino_decoder.py:220: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @autocast(enabled=False)
+{"report": true, "screen": true, "novel_method": false}

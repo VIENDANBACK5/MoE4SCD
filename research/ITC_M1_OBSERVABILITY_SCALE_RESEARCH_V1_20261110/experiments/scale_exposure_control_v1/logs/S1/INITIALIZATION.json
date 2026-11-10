@@ -1,0 +1,31 @@
+{
+  "arm": "S1",
+  "parent_sha256": "5611e2c850fdceea01b05840a8bce9010e534f918b06f250189eb584cb154077",
+  "trainable_parameters": 43775909,
+  "checkpointed_modules": [
+    "backbone.res2",
+    "backbone.res3",
+    "backbone.res4",
+    "backbone.res5",
+    "sem_seg_head.pixel_decoder.transformer.encoder.layers.0",
+    "sem_seg_head.pixel_decoder.transformer.encoder.layers.1",
+    "sem_seg_head.pixel_decoder.transformer.encoder.layers.2",
+    "sem_seg_head.pixel_decoder.transformer.encoder.layers.3",
+    "sem_seg_head.pixel_decoder.transformer.encoder.layers.4",
+    "sem_seg_head.pixel_decoder.transformer.encoder.layers.5",
+    "sem_seg_head.predictor.decoder.layers.0",
+    "sem_seg_head.predictor.decoder.layers.1",
+    "sem_seg_head.predictor.decoder.layers.2",
+    "sem_seg_head.predictor.decoder.layers.3",
+    "sem_seg_head.predictor.decoder.layers.4",
+    "sem_seg_head.predictor.decoder.layers.5",
+    "sem_seg_head.predictor.decoder.layers.6",
+    "sem_seg_head.predictor.decoder.layers.7",
+    "sem_seg_head.predictor.decoder.layers.8"
+  ],
+  "protocol_sha256": "452ee7a7ce800aef34831421974119d29553bc5f2756f788f4692e700bcb8364",
+  "schedule_sha256": "2b20d12ea51ca5893169e81fd6c8698bc40d570bb126f96120f712a1254eb147",
+  "code_sha256": "c3bf926d718ad158e94255a3faf1f3225fa8e18488e5e2ad6ec2ac9b44906a47",
+  "shared_sha256": "2eb3469234bdc9407a2323349f018dafbaa478c8220cbdff6f9c1cf5df3c7c96",
+  "probe_weights_used": false
+}

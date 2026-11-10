@@ -1,0 +1,32 @@
+{
+  "forwards": 12,
+  "sha256": {
+    "predictions/train_tile_000_w14_A.json.gz": "4e849d72d750bbf489b7fbcbe16bb99e4fe32226117a3acd22f21036c6be971c",
+    "predictions/train_tile_000_w14_B.json.gz": "ff86d8f66b32bf575c300dbc70821cfa132bc86a55edcd4df0b92d79239a907b",
+    "predictions/train_tile_000_w14_C.json.gz": "9231ab1c3a530571bdca9dc6dfb2a1aca0015c1c3860f08c6d6ef79f5a241bad",
+    "predictions/train_tile_000_w14_D.json.gz": "ab7b70cd1b2d4d01a0515f00c73ad08809068bb22775d83d1399cd18c3a9a09b",
+    "predictions/train_tile_006_w27_A.json.gz": "edbbd00f6bc8e74c0d4c23db100fbe761e7ea150eb330b81af6aae13bfdfa6af",
+    "predictions/train_tile_006_w27_B.json.gz": "a1ea03336dbca612315f0b4c84b09e318af46c84742ba238f3c0c01525356846",
+    "predictions/train_tile_006_w27_C.json.gz": "69d0d26b63c494d44588e70fdfb0c39ca0ef03956d0eb24a6e7cddebc4f1febe",
+    "predictions/train_tile_006_w27_D.json.gz": "3b6796926c91655f60d7b2216fd42352594758696c9cbeb87d0e636576869eaf",
+    "predictions/train_tile_027_w03_A.json.gz": "677b974afc0cafc6c4070080d251572c52d234b33a7c2250a04d11d330303d3f",
+    "predictions/train_tile_027_w03_B.json.gz": "a0c73c8340d4be5f8da18b982cfb239a198583b52540940079e4df9bedd60ab7",
+    "predictions/train_tile_027_w03_C.json.gz": "aed742196f7d18f5d433f19a9739c4b2c8f0c87bca4047e415d0ac4accf938df",
+    "predictions/train_tile_027_w03_D.json.gz": "b0598b067995f9e1f91f7f0fafdc590b410512f4674f63dfb2594f851f9f548b"
+  },
+  "exact_left_inverse_proofs": [
+    {
+      "window_id": "train_tile_000_w14",
+      "actual_backbone_tensor_left_inverse_exact": true
+    },
+    {
+      "window_id": "train_tile_006_w27",
+      "actual_backbone_tensor_left_inverse_exact": true
+    },
+    {
+      "window_id": "train_tile_027_w03",
+      "actual_backbone_tensor_left_inverse_exact": true
+    }
+  ],
+  "checkpoint_sha256": "6885223193082cb862f80e068770a6d8ae051c55640d7823a6ebf74dbcd96e07"
+}

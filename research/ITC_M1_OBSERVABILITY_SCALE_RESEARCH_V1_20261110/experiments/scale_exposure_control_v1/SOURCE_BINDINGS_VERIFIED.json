@@ -1,0 +1,6 @@
+{
+  "stage": "POST_EXECUTION_SOURCE_HASHES_VERIFIED",
+  "files": 124,
+  "bindings_captured_during_training": true,
+  "not_claimed_pre_run_hashing": true
+}

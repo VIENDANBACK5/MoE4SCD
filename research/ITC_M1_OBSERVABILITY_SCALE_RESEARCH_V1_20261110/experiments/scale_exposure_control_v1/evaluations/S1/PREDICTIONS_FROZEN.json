@@ -1,0 +1,32 @@
+{
+  "forwards": 12,
+  "sha256": {
+    "predictions/train_tile_000_w14_A.json.gz": "f681869e8686044e74a1a768cfafe3fa31117672fa9f137172b2700306d15433",
+    "predictions/train_tile_000_w14_B.json.gz": "a9f621cbd76f34229afdfec090929ec08272e35b2e58f57da3d5e71aa369850a",
+    "predictions/train_tile_000_w14_C.json.gz": "075486bfc209b96198a33d203f3632ce980a54ea74d58b5eb22d581559bb47f1",
+    "predictions/train_tile_000_w14_D.json.gz": "ac047ad2a68cbdf1fa94ef88b6861d8928bebe2e4f97168c8c24f0a391111cc7",
+    "predictions/train_tile_006_w27_A.json.gz": "86bda56014547f9d5da259185686c03131564d71018ccf2fdf16cf7d4c9021cf",
+    "predictions/train_tile_006_w27_B.json.gz": "3fe2dfe78b85db68f3686fb3d80bb7c2464465b6afdcb80d64f45f8006ecc5b5",
+    "predictions/train_tile_006_w27_C.json.gz": "6a0d1e272ce484b6be28cdfd2fb0d6470e986c456020aa3fd59e813f7eda443a",
+    "predictions/train_tile_006_w27_D.json.gz": "a1b05c237bbbd8ad90b62d6dadf3a60ea532e4eba9d350e5ba0c62028a3aacbc",
+    "predictions/train_tile_027_w03_A.json.gz": "51d98442351a0b6aa2a4992ec304dcf5bcccf68b3033507515e508e1fc9e560e",
+    "predictions/train_tile_027_w03_B.json.gz": "8a487b65d427803c6bc3a125567fe2ad0b04d98813720541ba909ac1908d95f5",
+    "predictions/train_tile_027_w03_C.json.gz": "f999229c312d9013eb4f217a1ade46679650977646006ead297b9e9cfd2e3120",
+    "predictions/train_tile_027_w03_D.json.gz": "e3b2b786c6989ef214e72f2521777b90deb9b983ac2005a188ca5c67328a84fe"
+  },
+  "exact_left_inverse_proofs": [
+    {
+      "window_id": "train_tile_000_w14",
+      "actual_backbone_tensor_left_inverse_exact": true
+    },
+    {
+      "window_id": "train_tile_006_w27",
+      "actual_backbone_tensor_left_inverse_exact": true
+    },
+    {
+      "window_id": "train_tile_027_w03",
+      "actual_backbone_tensor_left_inverse_exact": true
+    }
+  ],
+  "checkpoint_sha256": "69c0fb75f88423481a4dfdfba7947bf0d79ef852842201487c10d95aca0b3a97"
+}

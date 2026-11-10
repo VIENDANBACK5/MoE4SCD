@@ -1,0 +1,626 @@
+{
+  "stage": "Captured during fixed training, not claimed pre-run payload hashing",
+  "train_tiles": 40,
+  "files": {
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_001/rgb.npy": {
+      "sha256": "568eb43d593c4fa9f3d0efc219969511ae927321edc60e10ef605534ef5e8422",
+      "bytes": 37914203,
+      "mtime_ns": 1793681489840992257
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_001/valid.npy": {
+      "sha256": "ec061e60d0850f72004d7de9b43a7fc65eb37388dbc3f7012201e1c007194acf",
+      "bytes": 12638153,
+      "mtime_ns": 1793681489851992905
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_001/references.json": {
+      "sha256": "8fbdf81d1a85fa80cdc5805066ea0a9c60532b71b37c4aed17fd96b4d5125ab5",
+      "bytes": 669141,
+      "mtime_ns": 1793681490064005400
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_002/rgb.npy": {
+      "sha256": "39a11e854c95f836a16a5ad4eee97b382f945b49c4e21ad690df74dcd4e459b9",
+      "bytes": 37914203,
+      "mtime_ns": 1793681492038121746
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_002/valid.npy": {
+      "sha256": "f834f7a1be92568e4f9c62eabe5a3b133aa8b116ea2df99d653888221422a9b0",
+      "bytes": 12638153,
+      "mtime_ns": 1793681492050122454
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_002/references.json": {
+      "sha256": "c7997d8e77ba4a799687ba4ebb82115552efa9d67fb2361b1db583954686ee2e",
+      "bytes": 1152092,
+      "mtime_ns": 1793681492217132297
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_003/rgb.npy": {
+      "sha256": "dfaf18289f4a25564dd30b3fe2284aa8ed87f9bf6d8ed1f637e6f20d250bfd0f",
+      "bytes": 37914203,
+      "mtime_ns": 1793681498341493249
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_003/valid.npy": {
+      "sha256": "6ae01d3287497ee3b85886e341d3d92cb844209139eb6ab4d3ae78c15675e485",
+      "bytes": 12638153,
+      "mtime_ns": 1793681498349493720
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_003/references.json": {
+      "sha256": "1a38159188ade3f821507e0372590766bc48ae4abcc6dbd5f66c74cf85390dc7",
+      "bytes": 820665,
+      "mtime_ns": 1793681498457500086
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_004/rgb.npy": {
+      "sha256": "555a665474905198951e1f74aad6ea59f865fba62ab59670817a98c42bd228dd",
+      "bytes": 37914203,
+      "mtime_ns": 1793681502981766740
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_004/valid.npy": {
+      "sha256": "74c12e64c3856a346136741f035a08165734438e57ec8ccf98963c433bd67265",
+      "bytes": 12638153,
+      "mtime_ns": 1793681502988767152
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_004/references.json": {
+      "sha256": "8a8c0339b394537fb66897df4f312a9b412d9035e9607c4b827e68fe877a158f",
+      "bytes": 766063,
+      "mtime_ns": 1793681503076772339
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_005/rgb.npy": {
+      "sha256": "e7344fd0b6885d7035aec4295ac83d0100a1e6e82455346f903558dfa9c7332c",
+      "bytes": 37914203,
+      "mtime_ns": 1793681508136070535
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_005/valid.npy": {
+      "sha256": "f0e830de03b4e8bc6fc742874a8f1c7742ba8ad5dd4ec1d2e662fc2a3d7c482f",
+      "bytes": 12638153,
+      "mtime_ns": 1793681508143070947
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_005/references.json": {
+      "sha256": "a6b6a51f47ca115bb42082fa553fecc3c6cc407634ef8c0ad78d06280d90adea",
+      "bytes": 529105,
+      "mtime_ns": 1793681508196074071
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_007/rgb.npy": {
+      "sha256": "27f5f384f11db76206a5ff235a54224e96c49667ef25c7438e2e39c21dd17a0b",
+      "bytes": 37914203,
+      "mtime_ns": 1793681514496445426
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_007/valid.npy": {
+      "sha256": "147c5f25b3178bcbd1dab565e11b94652fd616d039279cb5bd0953b603837a30",
+      "bytes": 12638153,
+      "mtime_ns": 1793681514504445898
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_007/references.json": {
+      "sha256": "9fdf4cde6aba50a59abda5d2d22b35302a2ed2a9aeb62553ac54c76765fab117",
+      "bytes": 812932,
+      "mtime_ns": 1793681514619452677
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_008/rgb.npy": {
+      "sha256": "194739ff60641bcc3ae270b5943298b43cf409566c45847a4c020ec6a2dff1b9",
+      "bytes": 37914203,
+      "mtime_ns": 1793681516744577938
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_008/valid.npy": {
+      "sha256": "4bae996f36b0cd8f755e3da44359a6061891f7b9053fc4ee6e8fb4d071db813d",
+      "bytes": 12638153,
+      "mtime_ns": 1793681516762578999
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_008/references.json": {
+      "sha256": "664ef5876ed114cbf3a94d3dbd35643846c690be6e236e4c96c1adddb0aa6909",
+      "bytes": 420818,
+      "mtime_ns": 1793681516904587369
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_009/rgb.npy": {
+      "sha256": "62b9fc52475b099617dc2f421c4346bc8a26536978932acdd6e4af927ce48839",
+      "bytes": 37914203,
+      "mtime_ns": 1793681519247725483
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_009/valid.npy": {
+      "sha256": "fcfa292e4142b112b7ae0a8b570ade4922338a46229cb627ff77d6c8727ae88f",
+      "bytes": 12638153,
+      "mtime_ns": 1793681519255725955
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_009/references.json": {
+      "sha256": "68012bac713efddf575ae015d065e9378925a4fb00b62d28010a47f32c86fdc9",
+      "bytes": 238699,
+      "mtime_ns": 1793681519338730848
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_010/rgb.npy": {
+      "sha256": "d399b9aca5e6aa22fdee23761d05b25265db31de3ad8803537bc457cfbb5ea7d",
+      "bytes": 37914203,
+      "mtime_ns": 1793681520909823455
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_010/valid.npy": {
+      "sha256": "3f1fbd4813616b887dffcc35a4bb96fc446e68f69c0ab891f6c507e8fbed917b",
+      "bytes": 12638153,
+      "mtime_ns": 1793681520921824161
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_010/references.json": {
+      "sha256": "0a2abaf88b62b48e72cca091a75b66085a45be40748825472b3c5b0383419c15",
+      "bytes": 363839,
+      "mtime_ns": 1793681521061832414
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_011/rgb.npy": {
+      "sha256": "9407418b0e28eb425ca4f9a468171ed38046db1f0f02aa317ac2211cd2e31168",
+      "bytes": 37914203,
+      "mtime_ns": 1793681523790993285
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_011/valid.npy": {
+      "sha256": "35fc3cb3e685fe6b9f8eb705658f7652b769c147988791bd2f60a0279ba94173",
+      "bytes": 12638153,
+      "mtime_ns": 1793681523839996174
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_011/references.json": {
+      "sha256": "3d126865c1dcdff91298b46ce796d168af22eeff2e64a23e9ee4038be9a4646b",
+      "bytes": 273462,
+      "mtime_ns": 1793681524154014684
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_012/rgb.npy": {
+      "sha256": "134e5da09b7cecb56bdc32698df55c802afd072184470ba09061d87839587187",
+      "bytes": 37914203,
+      "mtime_ns": 1793681528133249244
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_012/valid.npy": {
+      "sha256": "10ad5d817d0f5dc13f7d606afd3e59546d014447cd33ba463786b0064aff0a7c",
+      "bytes": 12638153,
+      "mtime_ns": 1793681528151250305
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_012/references.json": {
+      "sha256": "af3bd0e51892db8d95a4b659d54c93f957c7c67378195f863f8f23c3491ae0d0",
+      "bytes": 525721,
+      "mtime_ns": 1793681528264256966
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_013/rgb.npy": {
+      "sha256": "04f1e7a1a768c98057018217ea9bb2258f1c36158d8cf47bfad4934f7e223f63",
+      "bytes": 37914203,
+      "mtime_ns": 1793681531539450030
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_013/valid.npy": {
+      "sha256": "44afe2179567c6b8a0f673b9e42411f78216224ca3d038cce9b74fede31c707f",
+      "bytes": 12638153,
+      "mtime_ns": 1793681531547450501
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_013/references.json": {
+      "sha256": "d506bbbdd8d2cc567f061805770aec6ff79159d0004810dc9b40eccdca8450b1",
+      "bytes": 252437,
+      "mtime_ns": 1793681531577452270
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_014/rgb.npy": {
+      "sha256": "d7fb98dd95efb2ec3e184fc5ae76ef3cf0fbd3269b064d0c1b2f3787b450edd9",
+      "bytes": 37914203,
+      "mtime_ns": 1793681532600512578
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_014/valid.npy": {
+      "sha256": "00346dd7c61384cfd44ca2ce7b5ff6a3f8eef217312b845d4ea52f3449928d1d",
+      "bytes": 12638153,
+      "mtime_ns": 1793681532610513167
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_014/references.json": {
+      "sha256": "1f6da5af6dab1a5354dd76d2dabb2e6b291e89bbde9a87479fecfa5b3f90866c",
+      "bytes": 504593,
+      "mtime_ns": 1793681532674516940
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_015/rgb.npy": {
+      "sha256": "556cd774b0b86b28fe7ba14524fdd6b698857a7aefd717304d41cd94379115c7",
+      "bytes": 37914203,
+      "mtime_ns": 1793681534253610025
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_015/valid.npy": {
+      "sha256": "a02aa0fb81700f8e115ca5689fa6880fd0e4c49ce1cde198c89f914c6d9c647f",
+      "bytes": 12638153,
+      "mtime_ns": 1793681534263610614
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_015/references.json": {
+      "sha256": "c20e2bf3c0bf3eeae260e49c40ed6b8c326872a25b213b9f2bd1535707e4cbef",
+      "bytes": 841539,
+      "mtime_ns": 1793681534418619752
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_016/rgb.npy": {
+      "sha256": "a0d12d0c11ec9c32bc42199ad40f03ff61d3b620da7e7f8a2cfd4dd2274b5507",
+      "bytes": 37914203,
+      "mtime_ns": 1793681540016949772
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_016/valid.npy": {
+      "sha256": "a430d94f4f251387209fd9561f9ef41d74ee999e01faab6ddf38e76674b8c1f0",
+      "bytes": 12638153,
+      "mtime_ns": 1793681540030950597
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_016/references.json": {
+      "sha256": "5b5926d370e98234f56c449132d3f0eec54461dc0b82f03ba1d84eb17b3eacc8",
+      "bytes": 354697,
+      "mtime_ns": 1793681540131956551
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_017/rgb.npy": {
+      "sha256": "3e6c4c916b71520f4854a77091b98b6d2a73d4fa5fa425d249d91d391412bcd7",
+      "bytes": 37914203,
+      "mtime_ns": 1793681542255081710
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_017/valid.npy": {
+      "sha256": "cb1b130f72c62b3667030f8631cadb1a303396b7b2151c6a272debb17659cec7",
+      "bytes": 12638153,
+      "mtime_ns": 1793681542265082300
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_017/references.json": {
+      "sha256": "84d5b444760f770dec91b704e8581770871ef2094013e6996effc584b0a6b0d0",
+      "bytes": 212077,
+      "mtime_ns": 1793681542308084835
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_018/rgb.npy": {
+      "sha256": "a88abe0819e88d31a4cbdcfb65c6f085f32ab0ad2d31c49cad026b82a1f0b80b",
+      "bytes": 37914203,
+      "mtime_ns": 1793681543643163539
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_018/valid.npy": {
+      "sha256": "e6aee477f2c97817a7b5356322f4f8831069dc88c13251ed3b0809e1728c88c0",
+      "bytes": 12638153,
+      "mtime_ns": 1793681543650163951
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_018/references.json": {
+      "sha256": "e90604590ac70df787dbb20bfbf2007892135fbd8d3ba12e4c853b6c064cfd14",
+      "bytes": 688315,
+      "mtime_ns": 1793681543713167666
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_019/rgb.npy": {
+      "sha256": "c682129b2b60a61df03eb4c7dbcc64d31629e8964d13e2a32cbe06dd7aa5ec14",
+      "bytes": 37914203,
+      "mtime_ns": 1793681546508332444
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_019/valid.npy": {
+      "sha256": "8e0191f8e340c689fff2b151736d42987058b6610eb122ab2eb6fc8da05ad0d0",
+      "bytes": 12638153,
+      "mtime_ns": 1793681546525333446
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_019/references.json": {
+      "sha256": "009b4e4be4867dd57475bd7a10ad2d40d8f06919272ab25fddbd85d4802210c0",
+      "bytes": 830207,
+      "mtime_ns": 1793681546726345296
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_020/rgb.npy": {
+      "sha256": "3965a965e9a4b51f9e5978441866daed85c5637162c07c8e8dc4a65af3620eb9",
+      "bytes": 37914203,
+      "mtime_ns": 1793681550960594915
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_020/valid.npy": {
+      "sha256": "3a075398f0e7893e73391dde4af934783bee97b8232ad440dddaf7ae7daa146b",
+      "bytes": 12638153,
+      "mtime_ns": 1793681550968595387
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_020/references.json": {
+      "sha256": "9ac15bb4a1b50649afe284d0ccb80057d468d5d60b1fd9d00d6373cbf4079280",
+      "bytes": 353743,
+      "mtime_ns": 1793681551035599337
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_021/rgb.npy": {
+      "sha256": "8b62e342192f54cb4b51e7c1203d8eb286de62a334b11ef55f2f344be7480a78",
+      "bytes": 37914203,
+      "mtime_ns": 1793681553985773260
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_021/valid.npy": {
+      "sha256": "d2512cb1eb115ac0be26667037c87d1a252b2807f3cb4ba2d27fbdb232084835",
+      "bytes": 12638153,
+      "mtime_ns": 1793681553996773909
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_021/references.json": {
+      "sha256": "ddf9e2459ea359b703471db7c4040ce5a73523ae5ebcf50709683149d1ce3d9b",
+      "bytes": 239643,
+      "mtime_ns": 1793681554129781750
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_022/rgb.npy": {
+      "sha256": "89fa87540f7f521ee14ad748d9268717a1f3e69a297b7257870a0a4ae5c61d97",
+      "bytes": 37914203,
+      "mtime_ns": 1793681556103898133
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_022/valid.npy": {
+      "sha256": "1feaa83722f15d63dfb18a8d93b043a3c325c9fec868ad70128838f7513d615e",
+      "bytes": 12638153,
+      "mtime_ns": 1793681556110898545
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_022/references.json": {
+      "sha256": "a05889269e6b964fba15df121341687b9f088bcfb709cf749ce073c65e4ce349",
+      "bytes": 545717,
+      "mtime_ns": 1793681556157901317
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_023/rgb.npy": {
+      "sha256": "774b01eeba7cdb357fd2f9c50e83f4eb4d784e0178acd69437f7125a26636aca",
+      "bytes": 37914203,
+      "mtime_ns": 1793681559577102895
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_023/valid.npy": {
+      "sha256": "d96c1f85c3d482e4b81157932d48e442c1e87909e8f1875b81d887fa7dc72d3c",
+      "bytes": 12638153,
+      "mtime_ns": 1793681559588103543
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_023/references.json": {
+      "sha256": "6b86d22f00b1a47814443707a1eb74da0655f0a3b75f429c06e683560f0b2988",
+      "bytes": 450223,
+      "mtime_ns": 1793681559724111562
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_024/rgb.npy": {
+      "sha256": "f39a61f88d7bf13d469b12938abceb0b82e5178f60b573af94117e3def7a81c0",
+      "bytes": 37914203,
+      "mtime_ns": 1793681563715346867
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_024/valid.npy": {
+      "sha256": "ff4c6c9bb57e0a5216611e9cfc8c6b5c3032711c2fe23f449e7884379c8fa7fc",
+      "bytes": 12638153,
+      "mtime_ns": 1793681563729347693
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_024/references.json": {
+      "sha256": "fffbf3a125ef0756cd0a35f8afc994f0e038b59a4085a9cc419495743128911a",
+      "bytes": 202255,
+      "mtime_ns": 1793681563808352351
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_025/rgb.npy": {
+      "sha256": "f9b78e75b45261eec152b33865c98010be74efe4be9413c2c4d0aaed829ad7ab",
+      "bytes": 37914203,
+      "mtime_ns": 1793681567759585304
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_025/valid.npy": {
+      "sha256": "09170505dda0c1b278f226829fb3c227a04c20632eace8d217c85294ec438687",
+      "bytes": 12638153,
+      "mtime_ns": 1793681567771586011
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_025/references.json": {
+      "sha256": "9d69eec5ed18d8e80d7ceeaf20f6cb129fbbf9bd8111e9289986e4c2a5a5ff34",
+      "bytes": 456677,
+      "mtime_ns": 1793681567926595150
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_026/rgb.npy": {
+      "sha256": "52ecc82d440a1495c3d60a16965642a23ea4b98bd5364a46a7f02546f169f418",
+      "bytes": 37914203,
+      "mtime_ns": 1793681570434743027
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_026/valid.npy": {
+      "sha256": "1a3396ebba62b8500c01c9728d406a4e6e404accf52b516871c080cb1495e137",
+      "bytes": 12638153,
+      "mtime_ns": 1793681570440743380
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_026/references.json": {
+      "sha256": "fcafeb26e210e5b2a9efac289aefdcedd9fda5d5684b39f49a4fa739d256cddb",
+      "bytes": 256207,
+      "mtime_ns": 1793681570514747743
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_028/rgb.npy": {
+      "sha256": "e739b74c05ed9c07be1f724dead1cffd1f5ec0a2e334539d590ea215de24dce2",
+      "bytes": 37914203,
+      "mtime_ns": 1793681574094958829
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_028/valid.npy": {
+      "sha256": "c8548dd4a0996dd109b3c2723ead140d226786392b4e0818b1568793485ba900",
+      "bytes": 12638153,
+      "mtime_ns": 1793681574105959477
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_028/references.json": {
+      "sha256": "92d6b97957de23d97a178eda4952bcf50158e05e6051efd6252eab3f0a111da7",
+      "bytes": 228646,
+      "mtime_ns": 1793681574196964843
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_029/rgb.npy": {
+      "sha256": "cc67681989f1009b46a663ef5fa3bfb7aab95723aad6268e12c2222a591540ac",
+      "bytes": 37914203,
+      "mtime_ns": 1793681578878240850
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_029/valid.npy": {
+      "sha256": "67c83690c55896e2dd9e2c214dd0b19b294e21b296765c5c4f93601b9955f2b3",
+      "bytes": 12638153,
+      "mtime_ns": 1793681578973246452
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_029/references.json": {
+      "sha256": "97c3403e629c20298ed3f01090919e8b9ec03c364fee272a6958e2b1820f84c4",
+      "bytes": 723835,
+      "mtime_ns": 1793681579732291206
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_030/rgb.npy": {
+      "sha256": "b6edc77cf83d86fac0371967f596cdfa4e8e3192d5a2e835454fc4e704677fd0",
+      "bytes": 37914203,
+      "mtime_ns": 1793681584317561559
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_030/valid.npy": {
+      "sha256": "b8ad5cd857932db033dac120bbc1566cd751d1d2b40160069c8edfd7b8e3f8df",
+      "bytes": 12638153,
+      "mtime_ns": 1793681584338562797
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_030/references.json": {
+      "sha256": "52efcbd83ced14bf9a0d13465cb6f964ea6833edce7aa511487c0b69bd90c36e",
+      "bytes": 785487,
+      "mtime_ns": 1793681584521573588
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_031/rgb.npy": {
+      "sha256": "b00fe5690a95bfb1d20401bdd0dc29bdb98da4da064b1b8e7e5839bc982360d5",
+      "bytes": 37914203,
+      "mtime_ns": 1793681591935010704
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_031/valid.npy": {
+      "sha256": "177258232da70edf37291bddba36387e60a90359e49c39ee5d5d691243ff5f84",
+      "bytes": 12638153,
+      "mtime_ns": 1793681591944011235
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_031/references.json": {
+      "sha256": "a9c1a9a62b832da87dcfdae07ea48a61b84541bf181420a643daeab137f80695",
+      "bytes": 226047,
+      "mtime_ns": 1793681592030016306
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_032/rgb.npy": {
+      "sha256": "e8ec8619a8858338889692e658acbb4aa7b729cc3f73d0be3c43843933f811cb",
+      "bytes": 37914203,
+      "mtime_ns": 1793681593426098624
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_032/valid.npy": {
+      "sha256": "4eaec033e818427cee9262f1e645583e3c3576fec37ec7dc855381f21bae211c",
+      "bytes": 12638153,
+      "mtime_ns": 1793681593444099685
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_032/references.json": {
+      "sha256": "20e02dda30eadf88a4734c0a76d6efcb4e0c1681e641cc03ad62ceccac8058c9",
+      "bytes": 229286,
+      "mtime_ns": 1793681593573107292
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_033/rgb.npy": {
+      "sha256": "f466715a157e675106a68a4ee384a76267ad68e2acce215f220741bd44bc83f8",
+      "bytes": 37914203,
+      "mtime_ns": 1793681595654230005
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_033/valid.npy": {
+      "sha256": "d1fc187178b58782f817c7a1f1bf695f7705b6bd3ea32cf345f2328212a722bf",
+      "bytes": 12638153,
+      "mtime_ns": 1793681595668230830
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_033/references.json": {
+      "sha256": "0431861038c19da893d5b0ab477f1c2a647986780e26ff02cbf5be637f9095e2",
+      "bytes": 598025,
+      "mtime_ns": 1793681595817239616
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_034/rgb.npy": {
+      "sha256": "190e169ce6c854ed6915476f009133da4719032f53122591941185989ae55eb7",
+      "bytes": 37914203,
+      "mtime_ns": 1793681600092491707
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_034/valid.npy": {
+      "sha256": "561e5fa63c9fed7da57b30690a7596fc72583f9e1d7f76e86dbe4076484ed30d",
+      "bytes": 12638153,
+      "mtime_ns": 1793681600099492120
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_034/references.json": {
+      "sha256": "5c1da61cecb780556eac7327697a5e0dce2d3a968cb883d67af0de1bf5f98db2",
+      "bytes": 587009,
+      "mtime_ns": 1793681600177496720
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_035/rgb.npy": {
+      "sha256": "cb89ea3a0e49182a8587a6a4118778c5ce2e557f79a9e2f5020942d186845804",
+      "bytes": 37914203,
+      "mtime_ns": 1793681602721646739
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_035/valid.npy": {
+      "sha256": "1578e0643f9ec40b7aee37a68c4c483b97ae5bc6eec8e5f4488fa3de56c5618c",
+      "bytes": 12638153,
+      "mtime_ns": 1793681602726647034
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_035/references.json": {
+      "sha256": "8a0682c74ea560041f62ae53941e6e2036e05c43877daf701a804aa74e08f76a",
+      "bytes": 265711,
+      "mtime_ns": 1793681602771649688
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_036/rgb.npy": {
+      "sha256": "7e1ad4db10f9236c5d0e02467b044782bfded422660e1e4cd585f401b0f22dac",
+      "bytes": 37914203,
+      "mtime_ns": 1793681603712705179
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_036/valid.npy": {
+      "sha256": "799a220868592dcf1b83f705d8c134a11a47cff79b8f6b0b70da9c7f10d902b4",
+      "bytes": 12638153,
+      "mtime_ns": 1793681603719705591
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_036/references.json": {
+      "sha256": "1c99ba345a0291649105e122d70e9f6a83ccbdb03dedb953fddfd16db0d18959",
+      "bytes": 181695,
+      "mtime_ns": 1793681603783709366
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_037/rgb.npy": {
+      "sha256": "f13d55f0d7748b5d971990c13126b62bb02588e6509aaee4443a5007e19a5254",
+      "bytes": 37914203,
+      "mtime_ns": 1793681604849772228
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_037/valid.npy": {
+      "sha256": "b38385b98276ebfa5315ebd4955dbc554456354f9b0a996abbc7ecda5c5d5649",
+      "bytes": 12638153,
+      "mtime_ns": 1793681604859772817
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_037/references.json": {
+      "sha256": "a71688432c5bc576eb7a45156d7ac006154df4fd03f949c2d7bb58fc3b0cfdbc",
+      "bytes": 351435,
+      "mtime_ns": 1793681604917776238
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_038/rgb.npy": {
+      "sha256": "fc6b8e5d4055b83472c2dc6cd9dbb655e21f7512a94bb6d27a2e248d5e91643e",
+      "bytes": 37914203,
+      "mtime_ns": 1793681606507870000
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_038/valid.npy": {
+      "sha256": "6a22d0b90d7dfa7857fe03b3811a8a599afb55f185df49d5b050fe4948bc9515",
+      "bytes": 12638153,
+      "mtime_ns": 1793681606552872654
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_038/references.json": {
+      "sha256": "22ed43720d424f4f1e949b3a9b70551f31c4bfc2d9a0aaa9b604ec20bf9b7ef9",
+      "bytes": 397809,
+      "mtime_ns": 1793681606763885096
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_039/rgb.npy": {
+      "sha256": "bb4896bc4d0d6fcc1cc2235df10c1eb6a3796b752743d9479a290d4525973560",
+      "bytes": 37914203,
+      "mtime_ns": 1793681608228971490
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_039/valid.npy": {
+      "sha256": "2fc7e2150b79301ed8ebecd3ee6603021b9a5e5fc25fef78f71c1acbc8b0c9c7",
+      "bytes": 12638153,
+      "mtime_ns": 1793681608233971784
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_039/references.json": {
+      "sha256": "9abba30b6611912577b94dd86ffacad631bb2d3769b8c4e144a2af44ebbfe868",
+      "bytes": 288713,
+      "mtime_ns": 1793681608284974792
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_040/rgb.npy": {
+      "sha256": "3079e3616eaa3262d8e0f7cb1b1ac81c265a8bbab4f8c9e5031f195c723c334d",
+      "bytes": 37914203,
+      "mtime_ns": 1793681609203028927
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_040/valid.npy": {
+      "sha256": "b661bd8ada01939ba2dc7c073a69f993668ac54c9ea268e8182d0ede5ea57ae2",
+      "bytes": 12638153,
+      "mtime_ns": 1793681609228030402
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_040/references.json": {
+      "sha256": "dcae412d2ab63e95d1482323f9f965d29a2e8d89350c0422b3e0d1fec6931933",
+      "bytes": 247591,
+      "mtime_ns": 1793681609343037183
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_041/rgb.npy": {
+      "sha256": "84f5b026b6c6f1b69845ea73ffba12bf612f223699ef86c80650902886f07dba",
+      "bytes": 37914203,
+      "mtime_ns": 1793681610177086365
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_041/valid.npy": {
+      "sha256": "774b256bf4c79ac2b59351b59af3332ba53bece317a8434e44f95c3fb347141a",
+      "bytes": 12638153,
+      "mtime_ns": 1793681610187086955
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_041/references.json": {
+      "sha256": "81fa752eb3d696805480a150932663cb9f21e471e9636bcaeac3370ef8cc8de9",
+      "bytes": 723845,
+      "mtime_ns": 1793681610324095034
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_042/rgb.npy": {
+      "sha256": "45c23967974566b4e802e03a73fc57f49c0733f90bc9d6df79f63dcda00e94ff",
+      "bytes": 37914203,
+      "mtime_ns": 1793681614606347552
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_042/valid.npy": {
+      "sha256": "b9158a37554ffb55ffc7c4638b66c93681168e68ba078167be5ba9c66b2277db",
+      "bytes": 12638153,
+      "mtime_ns": 1793681614614348024
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_cache/train_tile_042/references.json": {
+      "sha256": "a7d94d1250c8f3fb43f3f2d35fbaed83b5dce30f18874f224fb3700d32096669",
+      "bytes": 764585,
+      "mtime_ns": 1793681614666351091
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/carrier.py": {
+      "sha256": "d3ed85d57bf77ce92a1eb77b649eeddd1dd21ce2179e67280065ad5f1549670b",
+      "bytes": 3288,
+      "mtime_ns": 1793803608271807323
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/train_data.py": {
+      "sha256": "ac1b3c60e5d6493b5bd8f961cd78c65b0b1537f11abb88300aed6b64108c2673",
+      "bytes": 1693,
+      "mtime_ns": 1793681760893976358
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/validity.py": {
+      "sha256": "b513520a8a319b556e88fa7ba2f87725ca5357a28bbe447ba8458ebe4ab6f1fa",
+      "bytes": 1926,
+      "mtime_ns": 1793803510941479485
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/TRAIN_WINDOWS.json": {
+      "sha256": "3bda3d303e6fbd597b8a3dd9aa04c6032511753e98e2ccbef1833a01e9c3a3a5",
+      "bytes": 361605,
+      "mtime_ns": 1793681615996429525
+    }
+  }
+}

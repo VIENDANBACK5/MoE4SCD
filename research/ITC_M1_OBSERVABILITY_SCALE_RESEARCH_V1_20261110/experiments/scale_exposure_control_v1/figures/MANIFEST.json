@@ -1,0 +1,36 @@
+{
+  "cases": [
+    {
+      "reference_id": "selvamask::train:20240131_zf2block4_ms_m3m_rgb_tile_train_gr0p045_0_0_3555_3555_13.tif:ann:430",
+      "crop": [
+        499,
+        789,
+        716,
+        1024
+      ],
+      "selection": "Same fixed case as parent pilot, not selected on control outcome"
+    },
+    {
+      "reference_id": "selvamask::train:20240613_tbsnewsite2_m3e_rgb_tile_train_gr0p045_10662_23101_3555_3555_225.tif:ann:163",
+      "crop": [
+        955,
+        74,
+        1024,
+        223
+      ],
+      "selection": "Same fixed case as parent pilot, not selected on control outcome"
+    },
+    {
+      "reference_id": "selvamask::train:20241122_bcifairchildn_m3m_rgb_tile_train_gr0p045_10662_10662_3555_3555_112.tif:ann:125",
+      "crop": [
+        522,
+        540,
+        725,
+        780
+      ],
+      "selection": "Same fixed case as parent pilot, not selected on control outcome"
+    }
+  ],
+  "GT_conditioned_diagnostic": true,
+  "biological_identity_verified": false
+}

@@ -1,0 +1,22 @@
+{
+  "decision": "ORDINARY_SCALE_EXPOSURE_REDUCES_ENCODING_GAP_WITH_NATIVE_TRADEOFF_ORIGINAL_METHOD_NOT_ESTABLISHED",
+  "registered_narrow_screen_passed": true,
+  "gap_S0": 147,
+  "gap_S1": 36,
+  "gap_reduction_percent": 75.51020408163265,
+  "native_new_final": 2,
+  "native_lost_final": 2,
+  "native_small_TP50_delta": -2,
+  "native_FP50_delta": 59,
+  "replicated_new_final": 123,
+  "replicated_lost_final": 1,
+  "replicated_new_final_without_control_raw": 107,
+  "trained_models": 2,
+  "scientific_updates_per_arm": 398,
+  "new_architecture": false,
+  "novel_method_supported": false,
+  "independent_generalization": "NOT_ESTABLISHED",
+  "BAM_cause": "NOT_IDENTIFIED",
+  "original_goal_complete": false,
+  "followup_model_jobs_queued": 0
+}

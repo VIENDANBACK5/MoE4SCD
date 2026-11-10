@@ -1,0 +1,14 @@
+{
+  "stage": "COMPLETED_FIXED_SCHEDULE",
+  "arm": "S0",
+  "updates": 398,
+  "microbatches": 796,
+  "elapsed_seconds": 295.4837248600088,
+  "checkpoint_sha256": "6885223193082cb862f80e068770a6d8ae051c55640d7823a6ebf74dbcd96e07",
+  "checkpoint_bytes": 526286354,
+  "optimizer_state_saved": true,
+  "peak_GPU_MiB": 4173.25,
+  "TEST": false,
+  "VAL_selection": false,
+  "probe_weights_used": false
+}

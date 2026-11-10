@@ -67,3 +67,13 @@ Cycle5 research gate complete. No new raw RGB was loaded, no new model forward/t
 - [x] Inspect fixed-rule real qualitative figure; preserve masks/logs/hashes and scientific scope.
 
 PROGRESS: actual experiment complete, original method/learning cause not established. No training/V2queued. Goal ACTIVE.
+
+## Cycle7 — full-scope ordinary scale-exposure control
+
+- [x] Lock796TRAIN windows (exclude3diagnostic tiles), matched398updates, nativevs50%lossless2xinputs, original trainable scope/objective.
+- [x] Execute bounded engineering gate; retain strictbf16pointwise failure, diagnose with fp32gradient parity and documentedbf16rounding, original2048optimizer step passes.
+- [x] Start sequentialS0/S1training, session33505; no newarchitecture/loss or TESTaccess.
+- [x] Complete both fixed runs and freeze24newdiagnostic forwards before metrics.
+- [x] Analyze raw/final/size/source/grossloss/same-count outcomes; decide whether conventional treatment explains M1before any novelmethodentry.
+
+Cycle7 complete: raw A/Bgap147→36; registered narrow screen passes, nativeTPunchanged but AP−0.960/AP75−2.673, FP+59 and smallTP−2. Known augmentation/computation treatment, not a practical replacement or original mechanism. Both optimizer states retained, all24outputs/7200raw/3463final masks verified. No model job remains live or queued; original goal ACTIVE/NOT ACHIEVED.

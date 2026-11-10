@@ -1,0 +1,32 @@
+{
+  "checkpoint": "/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/checkpoints/mask_only_seed42/final.pt",
+  "sha256": "5611e2c850fdceea01b05840a8bce9010e534f918b06f250189eb584cb154077",
+  "code_sha256": "bfff2d0a6fef7dddad27bbb11cb03fdb0b33cc0feab97f0b5a7c8ef796c1cfb6",
+  "protocol_sha256": "7c021541dc621033ad0cb50b8e1d258d15f4d775d49b6d0877ce99d5fbebd60a",
+  "manifest_sha256": "3bda3d303e6fbd597b8a3dd9aa04c6032511753e98e2ccbef1833a01e9c3a3a5",
+  "train_loader_sha256": "ac1b3c60e5d6493b5bd8f961cd78c65b0b1537f11abb88300aed6b64108c2673",
+  "carrier_sha256": "d3ed85d57bf77ce92a1eb77b649eeddd1dd21ce2179e67280065ad5f1549670b",
+  "RGB_only_native_forward": true,
+  "oracle_fit_uses_GT": true,
+  "deployment_prediction": false,
+  "window_bindings": [
+    {
+      "window_id": "train_tile_000_w14",
+      "rgb_sha256": "ea1ae0f834f9d332ffd8e1104550366866f69156ae1beb41b27bad5aa5076bfe",
+      "valid_sha256": "b65cc6a8b49b97c9b00192b78e83db218d57a422ec0e6eb52537bd54ce153fe9",
+      "reference_sha256": "4a5e2028c4047f9257e9a688cee43166a1522912c823564ec2a13de770648828"
+    },
+    {
+      "window_id": "train_tile_006_w27",
+      "rgb_sha256": "d8b3bfc22aa13058aabad49498e112bd3c1d7ee11e6be10c3f528a3ec7b45b2f",
+      "valid_sha256": "b8ee9fa1187462cd58ec4b7e5bc7bc8f80fe7bb18a9a195463ae2b6b3eccdc0a",
+      "reference_sha256": "ccd4185065398d419009af6d03267e8b4f5e871fcec7a7e23e7d248b4f5746b8"
+    },
+    {
+      "window_id": "train_tile_027_w03",
+      "rgb_sha256": "8540e3c03dea67a7b3e36aaa1a50b9929a2005ea645dc7f816ea357847716a2f",
+      "valid_sha256": "2b2a8211f87b38bf156c50fb484f981334077bd0ca7638d9fb727a1787d813c5",
+      "reference_sha256": "457ba02151b877cd6ecab29d9ce03d7a5defee8af131105afbcd5202942c6052"
+    }
+  ]
+}

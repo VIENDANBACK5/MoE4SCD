@@ -1,0 +1,8 @@
+{
+  "python": "3.11.5 (main, Sep 11 2023, 13:54:46) [GCC 11.2.0]",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "torch": "2.4.0+cu121",
+  "cuda_build": "12.1",
+  "cudnn": 90100,
+  "gpu": "NVIDIA RTX 5880 Ada Generation"
+}

@@ -77,6 +77,8 @@ def main():
             r=table[arm,obs]
             for a,b in [('raw50','raw50'),('raw75','raw75'),('tp50','TP50'),('n','predictions'),('smalltp','source_small_TP50')]:assert s[a]==int(r[b]),(arm,obs,a)
             assert int(r['GT'])==298 and s['n']-s['tp50']==int(r['FP50'])
+            assert np.isclose(100*s['tp75']/298,float(r['Recall75']))
+            assert int(r['source_small_N'])==133
     assert count==7200 and sha(OLD/'checkpoints/mask_only_seed42/final.pt')==plan['checkpoint_sha256']
     write(EXP/'VERIFICATION.json',dict(stage='VERIFIED_TWO_FULL_SCOPE_MATCHED_CONTROLS',scientific_updates_per_arm=398,
          scientific_microbatches_per_arm=796,training_dataset_windows=796,paired_data_augmentation_and_lr_exact=True,

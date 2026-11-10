@@ -19,10 +19,10 @@ constraints:
   human_reviews_fabricated: false
   bound: One evidence-driven cycle at a time; no architecture sweep or automatic V2.
 current_work:
-  stage: M1 frozen encoding pilot EXECUTED/VERIFIED; large lossless raster sensitivity,
-    learning/architectural cause not isolated
-  new_training_runs: 0
-  new_carrier_forwards: 1959
+  stage: Matched ordinary scale-exposure control EXECUTED and VERIFIED; narrow gap
+    screen passes, native AP/FP/small tradeoff; no original-method entry
+  new_training_runs: 2
+  new_carrier_forwards: 3582
   independent_annotations_collected: 0
   oracle_fit_runs: 1
   running_inference_session: null
@@ -36,6 +36,18 @@ current_work:
     or work assigned
   M1_research_directory: research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110
   new_M1_model_forwards: 12
+  running_training_session: null
+  new_matched_control_updates_planned_per_arm: 398
+  new_training_runs_started: 2
+  matched_controls_status:
+    S0: COMPLETED_FIXED_SCHEDULE
+    S1: COMPLETED_FIXED_SCHEDULE
+  scientific_inference_forwards: 1983
+  scientific_training_forwards: 1592
+  engineering_forwards: 7
+  new_scale_control_evaluation_forwards: 24
+  scientific_optimizer_updates: 796
+  next_model_jobs_queued: 0
 hypotheses:
 - id: R1
   statement: Existing primary public resources may supply prediction-independent annotation
@@ -63,7 +75,7 @@ hypotheses:
   result: RR +0.452pp overall Recall50, -0.041AP, +64.7FP/seed; same-count +0.332pp;
     original-small outcome not estimable
 experiments:
-  total_runs: 3
+  total_runs: 4
   baseline_value: null
   best_value: null
   trajectory:
@@ -96,15 +108,33 @@ experiments:
     replicated_TP50: 98
     coarse_TP50: 163
     replicated_coarse_TP50: 206
+  - run_id: scale_exposure_control_v1
+    nature: Established augmentation/computation control, not original method
+    training_arms: 2
+    training_windows: 796
+    updates_per_arm: 398
+    training_forwards: 1592
+    engineering_forwards: 7
+    evaluation_forwards: 24
+    reference_occurrences: 298
+    paired_seeds: 1
+    S0_raw50_gap: 147
+    S1_raw50_gap: 36
+    narrow_screen_passed: true
+    native_TP50_delta: 0
+    native_small_TP50_delta: -2
+    native_FP50_delta: 59
+    native_AP_delta: -0.95981614272018
+    original_method: false
 outer_loop:
-  cycle: 6
-  last_direction: No novel observability module; discriminate native training-scale
-    exposure/conventional canonicalization before claiming an architectural constraint
-  last_reflection: Input information preservation does not guarantee frozen-mask recovery;
-    large artificial operating-size shift remains a confound and standard scale treatment
-    is a necessary prior control
-  latest_turn_audit: 'PROGRESS: registered12real forwards, exact-input proofs, saved
-    masks and independently recomputed IoU/matching/NMS'
+  cycle: 7
+  last_direction: Close fixed conventional augmentation control, no extra epochs/scale
+    loss/V2. Original-method entry not established.
+  last_reflection: Known scale exposure/additional raster computation reduces lossless
+    encoding sensitivity, but causes native AP/FP/small losses; phenomenon does not
+    establish necessity of an original observability mechanism.
+  latest_turn_audit: 'PROGRESS: two full-scope 398-update controls, 24 frozen inference
+    outputs and independent RLE/schedule/checkpoint verification completed'
   blocked_condition: Qualifying independent same-RGB annotation evidence unavailable;
     no actual participant/response; user availability question pending
   condition_recorded_in_consecutive_cycles:

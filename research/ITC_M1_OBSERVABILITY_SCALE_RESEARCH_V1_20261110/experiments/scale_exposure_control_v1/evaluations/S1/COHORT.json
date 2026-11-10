@@ -1,0 +1,53 @@
+[
+  {
+    "id": "train_tile_000_w14",
+    "tile": "train_tile_000",
+    "image_id": "selvamask::train:20240131_zf2block4_ms_m3m_rgb_tile_train_gr0p045_0_0_3555_3555_13.tif",
+    "source": "20240131_zf2block4_ms_m3m_rgb",
+    "window_yxhw": [
+      1024,
+      1024,
+      1024,
+      1024
+    ],
+    "valid_fraction": 0.9948921203613281,
+    "eligible": true,
+    "reasons": [],
+    "shared_cells": 0,
+    "instances": 137
+  },
+  {
+    "id": "train_tile_006_w27",
+    "tile": "train_tile_006",
+    "image_id": "selvamask::train:20240613_tbsnewsite2_m3e_rgb_tile_train_gr0p045_10662_23101_3555_3555_225.tif",
+    "source": "20240613_tbsnewsite2_m3e_rgb",
+    "window_yxhw": [
+      2048,
+      1536,
+      1024,
+      1024
+    ],
+    "valid_fraction": 0.9830560684204102,
+    "eligible": true,
+    "reasons": [],
+    "shared_cells": 0,
+    "instances": 77
+  },
+  {
+    "id": "train_tile_027_w03",
+    "tile": "train_tile_027",
+    "image_id": "selvamask::train:20241122_bcifairchildn_m3m_rgb_tile_train_gr0p045_10662_10662_3555_3555_112.tif",
+    "source": "20241122_bcifairchildn_m3m_rgb",
+    "window_yxhw": [
+      0,
+      1536,
+      1024,
+      1024
+    ],
+    "valid_fraction": 0.9636945724487305,
+    "eligible": true,
+    "reasons": [],
+    "shared_cells": 0,
+    "instances": 84
+  }
+]

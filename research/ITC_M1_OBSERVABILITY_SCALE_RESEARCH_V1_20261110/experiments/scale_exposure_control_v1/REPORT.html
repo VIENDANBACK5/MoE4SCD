@@ -1,0 +1,170 @@
+<!doctype html><html><meta charset="utf-8"><title>Conventional scale exposure control</title><style>body{max-width:1100px;margin:32px auto;padding:20px;font:17px/1.6 Georgia}table{font:14px system-ui;border-collapse:collapse;width:100%}td,th{border:1px solid #ccd3da;padding:7px}</style><h1>Conventional lossless-scale exposure: executed matched control</h1>
+<p>This is an established augmentation control on the completed Mask DINO, not an original method. The parent M1pilot showed lossless encoding sensitivity, but did not identify training versus architecture. These new runs keep original trainable scope, mask-only matching, losses,300queries and source supervision. No backbone/head freezing, new module or new loss.</p>
+<h2>Executed contract</h2>
+<p>Same seed42parent,796eligible TRAIN windows after excluding three entire diagnostic tiles from ADDITIONAL updates, one full pass,796microbatches/398AdamW updates per arm, D4draws/targets/order/LR matched. The parent had already trained on those diagnostic tiles; this is not independent carrier validation or source holdout. S0 always sees native1024; S1 sees native1024on even draws and exact2×RGB/mask/validity replication on odd draws. Tiny/overlapping targets do not disappear, and no GT is used at inference.</p>
+<p>Optimizer states reset identically; fixed LR1e-5nonbackbone/1e-6backbone after20-update warmup, weight decay.05 and clipnorm.01. Common standard activation checkpointing makes full-scope2048training feasible. One strictbf16pointwise gradient assertion failed initially; the record is retained. A preregistered engineering correction then verified fp32gradient parity(relativeL2≈3.9e-7) and measured bf16recompute rounding(relativeL2≈.00208). Scientific weights reload the original parent, never engineering-probe weights. No model-quality outcome informed that numerical correction.</p>
+<p>Only optimizer updates and source-data exposure are matched. S1 processes2.5×as many raster pixels because half its inputs have4×area; FLOPs and wall time are not matched. Thus any benefit belongs to this conventional augmentation/computation treatment, not scale supervision isolated from compute or a novel mechanism.</p>
+<h2>Actual final-mask outcomes</h2>
+<p>All24newRGB-only predictions were frozen before new metrics. A=native1024,B=lossless2048replication,C=512mean-degraded,D=replicatedC1024, with identical canonical mask coordinates, common validity and final selection.</p>
+<table>
+<thead>
+<tr>
+<th>Training</th>
+<th>Input</th>
+<th style="text-align: right;">Raw50</th>
+<th style="text-align: right;">Raw75</th>
+<th style="text-align: right;">Final TP50</th>
+<th style="text-align: right;">FP50</th>
+<th style="text-align: right;">AP</th>
+<th style="text-align: right;">Small TP50/133</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0</td>
+<td>A</td>
+<td style="text-align: right;">279</td>
+<td style="text-align: right;">248</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">163</td>
+<td style="text-align: right;">62.601</td>
+<td style="text-align: right;">118</td>
+</tr>
+<tr>
+<td>S0</td>
+<td>B</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">329</td>
+<td style="text-align: right;">6.396</td>
+<td style="text-align: right;">41</td>
+</tr>
+<tr>
+<td>S0</td>
+<td>C</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">159</td>
+<td style="text-align: right;">153</td>
+<td style="text-align: right;">19.268</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr>
+<td>S0</td>
+<td>D</td>
+<td style="text-align: right;">212</td>
+<td style="text-align: right;">137</td>
+<td style="text-align: right;">205</td>
+<td style="text-align: right;">206</td>
+<td style="text-align: right;">31.430</td>
+<td style="text-align: right;">78</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>A</td>
+<td style="text-align: right;">277</td>
+<td style="text-align: right;">240</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">222</td>
+<td style="text-align: right;">61.641</td>
+<td style="text-align: right;">116</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>B</td>
+<td style="text-align: right;">241</td>
+<td style="text-align: right;">163</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">325</td>
+<td style="text-align: right;">38.573</td>
+<td style="text-align: right;">88</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>C</td>
+<td style="text-align: right;">172</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">169</td>
+<td style="text-align: right;">20.688</td>
+<td style="text-align: right;">43</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>D</td>
+<td style="text-align: right;">245</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">239</td>
+<td style="text-align: right;">231</td>
+<td style="text-align: right;">41.392</td>
+<td style="text-align: right;">96</td>
+</tr>
+</tbody>
+</table>
+<p>S1minusS0gross changes on identical reference IDs:</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th style="text-align: right;">New final</th>
+<th style="text-align: right;">Lost final</th>
+<th style="text-align: right;">Net TP50</th>
+<th style="text-align: right;">New/lost small</th>
+<th style="text-align: right;">New/lost raw50</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">+0</td>
+<td style="text-align: right;">0/2</td>
+<td style="text-align: right;">1/3</td>
+</tr>
+<tr>
+<td>B</td>
+<td style="text-align: right;">123</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">+122</td>
+<td style="text-align: right;">47/0</td>
+<td style="text-align: right;">111/2</td>
+</tr>
+<tr>
+<td>C</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">+1</td>
+<td style="text-align: right;">6/5</td>
+<td style="text-align: right;">9/14</td>
+</tr>
+<tr>
+<td>D</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">+34</td>
+<td style="text-align: right;">20/2</td>
+<td style="text-align: right;">39/6</td>
+</tr>
+</tbody>
+</table>
+<p>Registered relevance screen: S0A/Braw50gap=147; S1gap=36; S1nativeAfinalTP50delta=0; screen_pass=True. This narrow screen is not statistical significance, universal sufficiency, deployment improvement or original-method entry. If S0gap&lt;=0, it is inapplicable rather than a failed scale hypothesis.</p>
+<h2>Scientific decision from these actual results</h2>
+<p>The registered narrow screen passes: A/Braw50gap shrinks by75.51%. On replicated inputB, finalTP50 rises114→236(123new/1lost); 107of the123new final matches had no qualifying final raw mask in S0B. At equal443outputs,TP50 rises114→233. Thus the effect is not only accepting more predictions. BfinalTP50 improves on each diagnostic source(ZF2+56,TBS+40,BCI+26), with only one crop per source.</p>
+<p>NativeAis not a practical improvement: TP50remains276(2new/2lost), but smallTP50falls118→116, APchanges-0.960, AP75changes-2.673, and FP50rises163→222(+36.20%). Both lost references are source-small; both new references are outside that stratum. NativeAPdeclines on all three diagnostic sources. At equal439nativeoutputs, S1has275TPversus276in S0. The narrow gate intentionally does not certify acceptableAP/FP; its pass cannot override these regressions.</p>
+<p>The treatment is pair-specific, not demonstrated general scale invariance. On the untrained C/Dpair, raw50discrepancy increases35→73 and finalTP50discrepancy46→79. S1Bstill trails its own nativeAby36raw qualifications and40final matches. These are counterexamples to a claim that the augmentation completely solves raster dependence.</p>
+<p>Decision: <strong>ORDINARY_SCALE_EXPOSURE_REDUCES_ENCODING_GAP_WITH_NATIVE_TRADEOFF_ORIGINAL_METHOD_NOT_ESTABLISHED</strong>. Training-scale exposure with additional raster computation can substantially change the frozen pilot phenomenon. Therefore that pilot cannot establish the necessity of an original observability-conditioned mechanism. This does not isolate exposure from extra compute, certify an architectural cause, explain BAM, or refute every possible M1mechanism. The tested one-pass recipe is closed; S1is a diagnostic checkpoint, not a replacement release for RR_MASK_INIT/nativeDINO. No extra epochs, threshold rescue, V2or new loss is queued.</p>
+<p>All values refer to298TRAIN reference occurrences/133source-small annotation occurrences, not biological trees or independent sites. AP is0–100 on these fixed crops, never directly compared with full-tile SAME6/BAM. Source-small uses the inherited original published-tile raw annotation area; crop fragments and source truncation remain explicit.</p>
+<p>See SOURCE_RESULTS.csv and SAME_COUNT.csv for source dependence and GT-free equal-output-count controls. These controls do not turn gains into pure geometry causality or remove loss of previously correct instances. No favorable threshold, seed, epoch or branch is selected after scoring.</p>
+<h2>Interpretation boundary</h2>
+<p>The experiment tests whether an ordinary scale-exposure treatment changes the phenomenon. A successful known treatment argues against using this engineered fixed-size failure as evidence that an original observability architecture is required. A failed finite one-pass treatment does not prove ordinary scale learning, all ScaleMatch/DINO-MS variants or the architecture incapable.</p>
+<p>Training input dimensions and apparent object pixel size change jointly under replication. Matching updates/data does not isolate every optimization pathway. The tiny exposed diagnostic cohort and single paired seed cannot establish independent geographic efficacy or reliable biological identities. A native-loss/FP trade-off must not be hidden by the reduction in A/Bgap.</p>
+<p>The original method-development goal remains unachieved. No new module, loss, threshold sweep or automatic longer schedule is justified solely by these results.</p>
+<h2>Engineering / runtime / artifacts</h2>
+<ul>
+<li>S0:398committed updates,796microbatches,295.5s,peak allocatedGPU4173.2MiB; full model/optimizer/RNG state saved. First/last20update mean losses 27.060/26.051; these are optimization traces, not segmentation proof.</li>
+<li>S1:398committed updates,796microbatches,571.3s,peak allocatedGPU12832.9MiB; full model/optimizer/RNG state saved. First/last20update mean losses 65.789/38.632; these are optimization traces, not segmentation proof.</li>
+</ul>
+<p>Verified 7200raw/3463final RLE masks, source/RNG schedule, full trainable-state changes and unchanged original checkpoint. Both optimizer states are retained; final.pt hard-links the completed last state to avoid duplicate storage. GPU shared, not reserved. No TEST/protected review/SAME6evaluation.</p>
+<p><a href="protocol.md">Protocol</a>, <a href="ENGINEERING_PARITY_ADDENDUM.md">numerical correction</a>, <a href="results/METRICS.csv">full-mask results</a>, <a href="results/RECOVERY_AND_LOSS.csv">new/lost references</a>, <a href="results/SAME_COUNT.csv">same-count</a>, <a href="results/SOURCE_RESULTS.csv">source effects</a>, <a href="VERIFICATION.json">verification</a>, <a href="figures/FIXED_CONTROL_COMPARISON.png">fixed qualitative figure</a>.</p></html>
