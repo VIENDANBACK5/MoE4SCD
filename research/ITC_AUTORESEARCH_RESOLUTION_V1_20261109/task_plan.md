@@ -47,3 +47,14 @@ Previous turn: PROGRESS (actual six-image pixel-exact handoff, tested independen
 - [x] Audit the original objective and the repeated external-reference dependency; no new model branch or fabricated participant.
 
 Cycle4 completed: primary resource checks, actual-results draft and current-artifact recheck. Original goal NOT ACHIEVED. Same independent-reference input missing through cycles2/3/4; now no further aligned self-contained empirical action. Native BLOCKED update pending, not completion/voluntary pause.
+
+## Resumed cycle 5 — M1 research gate, not architecture implementation
+
+User explicitly restored native goal ACTIVE. Previous interruption produced source discovery/read results only; no inference handle needs resuming. Fresh blocked audit count0.
+
+- [x] Read closest primary scale-consistency/cross-view mechanisms, not just paper names.
+- [x] Formalize sampling/support/selection distinctions, metric-scale identifiability and partial-matching degeneracies.
+- [x] Specify one small discriminating frozen test with exact lossless-versus-degraded controls; no new training/experiment executed in this research gate.
+- [x] Record what is established, unverified and required before method development. Original-method goal remains intact.
+
+Cycle5 research gate complete. No new raw RGB was loaded, no new model forward/training/scale test ran. M1 remains a conditional question; no original mechanism or observability estimator established. Native goal ACTIVE after user resume, not completed/blocked.

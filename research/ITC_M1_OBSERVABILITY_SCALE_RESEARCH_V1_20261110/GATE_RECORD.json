@@ -1,0 +1,93 @@
+{
+  "status": "RESEARCH_LEVEL_GATE_COMPLETE_EMPIRICAL_TEST_NOT_RUN",
+  "native_goal": "ACTIVE_USER_RESUMED",
+  "original_method_goal_achieved": false,
+  "new_model_forwards": 0,
+  "new_training_runs": 0,
+  "new_human_annotations": 0,
+  "TEST_access": false,
+  "protected_review_access": false,
+  "same6_tuning": false,
+  "novel_mechanism_established": false,
+  "scale_experiment_status": "PLANNED_NOT_RUN",
+  "prior_retrievals": [
+    {
+      "name": "DINO_MS",
+      "url": "https://www.mdpi.com/2072-4292/18/10/1602",
+      "status": "RETRIEVAL_FAILED",
+      "error": "403 Client Error: Forbidden for url: https://www.mdpi.com/2072-4292/18/10/1602"
+    },
+    {
+      "name": "PixelScale",
+      "url": "https://www.mdpi.com/2072-4292/18/19/3310",
+      "status": "RETRIEVAL_FAILED",
+      "error": "403 Client Error: Forbidden for url: https://www.mdpi.com/2072-4292/18/19/3310"
+    },
+    {
+      "name": "vCLR",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/papers/Zhang_v-CLR_View-Consistent_Learning_for_Open-World_Instance_Segmentation_CVPR_2025_paper.pdf",
+      "status": "FETCHED_PRIMARY_SOURCE",
+      "file": "vCLR.pdf",
+      "bytes": 1534715,
+      "sha256": "8b0751f441b91c2183ea0df04fb617f4361d5bd11b8ba30cc4e5ede0d81f8e28"
+    },
+    {
+      "name": "ScaleMatch_README",
+      "url": "https://raw.githubusercontent.com/lvliang6879/ScaleMatch/main/README.md",
+      "status": "FETCHED_PRIMARY_SOURCE",
+      "file": "ScaleMatch_README.md",
+      "bytes": 3544,
+      "sha256": "bb96612e86674711b87850891069ab8eb7eb3d43571ed892eef731377e79d3bd"
+    },
+    {
+      "name": "DeepScaleSpaces",
+      "url": "https://papers.neurips.cc/paper/8956-deep-scale-spaces-equivariance-over-scale.pdf",
+      "status": "FETCHED_PRIMARY_SOURCE",
+      "file": "DeepScaleSpaces.pdf",
+      "bytes": 4799150,
+      "sha256": "6c9c544a911884cd4a4950e7d60d88e648eba42fb0a3d4aac4875f5035d3d892"
+    },
+    {
+      "name": "ScaleMatch_code",
+      "url": "https://raw.githubusercontent.com/lvliang6879/ScaleMatch/main/ScaleMatch.py",
+      "status": "FETCHED_PRIMARY_SOURCE",
+      "file": "ScaleMatch_code.py",
+      "bytes": 14073,
+      "sha256": "bcd3451d8e5c0a2aa124cc5d19bafcf7c259f4160ec39be7ae112685e6406f05"
+    },
+    {
+      "name": "ScaleMatch_fullpaper",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/download/32631/34786",
+      "status": "RETRIEVAL_FAILED",
+      "error": "520 Server Error: <none> for url: https://ojs.aaai.org/index.php/AAAI/article/download/32631/34786"
+    }
+  ],
+  "model_source_bindings": {
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/carrier.py": "d3ed85d57bf77ce92a1eb77b649eeddd1dd21ce2179e67280065ad5f1549670b",
+    "research/method_development/R5_INSTANCE_METHOD/model.py": "71a925d942d66c53c7c455ed576aad330c082b4d93e8ca92471ae27e762275a0"
+  },
+  "historical_decision_hashes_unchanged": 8,
+  "mathematical_propositions": "DERIVED_ELEMENTARY_NOT_NOVEL; not an empirical model result",
+  "official_code_reproduced": false,
+  "metric_GSD_without_inference_metadata": "NO_UNCONDITIONAL_IDENTIFIABILITY_GUARANTEE",
+  "independent_annotation_gate": "Still unmet for identity reliability; not needed to prove input information equivalence",
+  "fresh_resume_blocked_audit_count": 0,
+  "resources_observed_not_reserved": {
+    "shared_GPU": "RTX5880Ada49GB; approximately24435MiB free at check",
+    "disk_free_bytes": 6498521088,
+    "readiness": "No inference/resource budget committed or executed in research-level gate"
+  },
+  "file_hashes": {
+    "00_RESEARCH_DECISION.md": "96537aa50f8912f64fdc301e8c19b376e6517778da7e4a9890d88adabf9371bb",
+    "01_MATHEMATICAL_CHECK.md": "44ed4e97d58a2138c549314a73495d389a0fa73d6a4c07f92949cf936d56a232",
+    "02_NEAREST_PRIOR_ART.md": "099b51cd0d76bb5a52139a8641cf65258ba80f22e4a32161fb1c95c777446604",
+    "03_DISCRIMINATING_TEST_NOT_RUN.md": "ec4b1c4ec6aefee729b0bdf7a91cf983ed6354ba970e41d7b2430b5d24885984"
+  },
+  "retained_primary_payload_hashes": {
+    "DeepScaleSpaces.pdf": "6c9c544a911884cd4a4950e7d60d88e648eba42fb0a3d4aac4875f5035d3d892",
+    "RETRIEVAL_NOTES.md": "5468374a049ba6cbca04b1c34f2b457af38841b1329570c288e22aabaf70c751",
+    "ScaleMatch_README.md": "bb96612e86674711b87850891069ab8eb7eb3d43571ed892eef731377e79d3bd",
+    "ScaleMatch_code.py": "bcd3451d8e5c0a2aa124cc5d19bafcf7c259f4160ec39be7ae112685e6406f05",
+    "vCLR.pdf": "8b0751f441b91c2183ea0df04fb617f4361d5bd11b8ba30cc4e5ede0d81f8e28"
+  }
+}

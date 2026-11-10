@@ -1,0 +1,1 @@
+Initial extraction command stopped before network requests because bs4 was unavailable. Replaced only the HTML text extractor with the Python standard library; no package installation or scientific setting change. Original source payloads/hashes preserved.

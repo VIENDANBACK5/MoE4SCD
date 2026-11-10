@@ -1,0 +1,52 @@
+[
+  {
+    "name": "DINO_MS",
+    "url": "https://www.mdpi.com/2072-4292/18/10/1602",
+    "status": "RETRIEVAL_FAILED",
+    "error": "403 Client Error: Forbidden for url: https://www.mdpi.com/2072-4292/18/10/1602"
+  },
+  {
+    "name": "PixelScale",
+    "url": "https://www.mdpi.com/2072-4292/18/19/3310",
+    "status": "RETRIEVAL_FAILED",
+    "error": "403 Client Error: Forbidden for url: https://www.mdpi.com/2072-4292/18/19/3310"
+  },
+  {
+    "name": "vCLR",
+    "url": "https://openaccess.thecvf.com/content/CVPR2025/papers/Zhang_v-CLR_View-Consistent_Learning_for_Open-World_Instance_Segmentation_CVPR_2025_paper.pdf",
+    "status": "FETCHED_PRIMARY_SOURCE",
+    "file": "vCLR.pdf",
+    "bytes": 1534715,
+    "sha256": "8b0751f441b91c2183ea0df04fb617f4361d5bd11b8ba30cc4e5ede0d81f8e28"
+  },
+  {
+    "name": "ScaleMatch_README",
+    "url": "https://raw.githubusercontent.com/lvliang6879/ScaleMatch/main/README.md",
+    "status": "FETCHED_PRIMARY_SOURCE",
+    "file": "ScaleMatch_README.md",
+    "bytes": 3544,
+    "sha256": "bb96612e86674711b87850891069ab8eb7eb3d43571ed892eef731377e79d3bd"
+  },
+  {
+    "name": "DeepScaleSpaces",
+    "url": "https://papers.neurips.cc/paper/8956-deep-scale-spaces-equivariance-over-scale.pdf",
+    "status": "FETCHED_PRIMARY_SOURCE",
+    "file": "DeepScaleSpaces.pdf",
+    "bytes": 4799150,
+    "sha256": "6c9c544a911884cd4a4950e7d60d88e648eba42fb0a3d4aac4875f5035d3d892"
+  },
+  {
+    "name": "ScaleMatch_code",
+    "url": "https://raw.githubusercontent.com/lvliang6879/ScaleMatch/main/ScaleMatch.py",
+    "status": "FETCHED_PRIMARY_SOURCE",
+    "file": "ScaleMatch_code.py",
+    "bytes": 14073,
+    "sha256": "bcd3451d8e5c0a2aa124cc5d19bafcf7c259f4160ec39be7ae112685e6406f05"
+  },
+  {
+    "name": "ScaleMatch_fullpaper",
+    "url": "https://ojs.aaai.org/index.php/AAAI/article/download/32631/34786",
+    "status": "RETRIEVAL_FAILED",
+    "error": "520 Server Error: <none> for url: https://ojs.aaai.org/index.php/AAAI/article/download/32631/34786"
+  }
+]

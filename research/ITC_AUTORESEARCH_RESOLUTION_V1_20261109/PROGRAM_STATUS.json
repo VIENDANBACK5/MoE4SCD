@@ -1,6 +1,6 @@
 {
-  "recorded_local": "2026-11-10T00:26:53.903234+07:00",
-  "status": "BLOCKED_AT_INDEPENDENT_REFERENCE_EVIDENCE_GATE",
+  "recorded_local": "2026-11-10T12:09:03.776884+07:00",
+  "status": "ACTIVE_M1_RESEARCH_GATE_COMPLETED_DIAGNOSTIC_NOT_RUN",
   "carrier_forwards": 1947,
   "new_carrier_training": false,
   "original_method_supported": false,
@@ -27,7 +27,6 @@
   "new_architecture_queued": false,
   "goal_achieved": false,
   "handoff_verification_sha256": "242f21bb12497f3863293951fb86c9556de00ca55c77b54a5bd2065555d0168e",
-  "native_status_change_requested": "blocked",
   "empirical_manuscript": "paper/PAPER_DRAFT.md",
   "cycle4_model_forwards": 0,
   "blocked_condition_cycles": [
@@ -35,5 +34,10 @@
     3,
     4
   ],
-  "paper_verification_sha256": "048bc4628f9a7d27cf47f32f3ecdf4614b221f47133dc137a17def0a850835c0"
+  "paper_verification_sha256": "048bc4628f9a7d27cf47f32f3ecdf4614b221f47133dc137a17def0a850835c0",
+  "fresh_resume_blocked_audit_count": 0,
+  "new_scale_experiment_forwards": 0,
+  "new_M1_training_runs": 0,
+  "M1_research_directory": "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110",
+  "M1_gate_record_sha256": "2c02c33a45b0c54dba63c23a06e60d45fb3be5e5137e3ce6c7a0ae195d77afce"
 }

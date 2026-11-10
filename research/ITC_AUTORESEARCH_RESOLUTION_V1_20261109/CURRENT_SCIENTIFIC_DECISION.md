@@ -49,3 +49,7 @@ A verified six-image RGB-only handoff now exists, with blank LabelMe files, vali
 ## Cycle 4 and external-input gate
 
 [The empirical/mechanistic draft](paper/PAPER_DRAFT.md) is complete as a first draft with source-generated tables, not an original-method claim or submission-ready positive paper. All278+31 recorded experiment artifacts and eight historical decisions still match their hashes. Full primary source checks refine the Mei/RandCrowns eligibility record without obtaining labels. No actual independent response exists. The goal remains NOT ACHIEVED; [completion/blocked audit](GOAL_COMPLETION_AND_BLOCKED_AUDIT.md) passes the repeated external-input threshold (cycles2/3/4), so native BLOCKED status is requested. This supersedes earlier ACTIVE status statements as continuity history, without changing scientific findings.
+
+## Explicit resumption: M1 research gate
+
+User restored the goal to ACTIVE and prioritized original-method discovery over the empirical manuscript. The earlier blocked audit is historical, not the current native status. [M1 research decision](../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/00_RESEARCH_DECISION.md) refines the question to information-equivalent raster encodings versus destructive sampling. Mathematical limitations and closest-prior overlap are recorded; no observability estimator, novel objective or carrier experiment is established. The four-arm diagnostic is PLANNED_NOT_RUN. No closed recipe or protected-data branch reopened.

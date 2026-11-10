@@ -1,0 +1,18 @@
+{
+  "SAME6_inherited_gsd": {
+    "gsd_m_per_pixel": 0.045,
+    "view_side_m": 46.08,
+    "area_floor_m2": 0.06074999999999999
+  },
+  "BAM_selected_min": {
+    "gsd_m_per_pixel": 0.016119699999987788,
+    "view_side_m": 16.506572799987495,
+    "area_floor_m2": 0.007795341842688188
+  },
+  "BAM_selected_max": {
+    "gsd_m_per_pixel": 0.01793110000000528,
+    "view_side_m": 18.361446400005406,
+    "area_floor_m2": 0.009645730416305679
+  },
+  "nature": "DERIVED_DIMENSIONS_NOT_MEASURED_CAUSAL_EFFECT"
+}
