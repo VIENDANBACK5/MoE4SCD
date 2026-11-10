@@ -1,0 +1,4 @@
+window_id,legacy_native_pixel_differences,queries_different,max_class_probability_delta
+train_tile_000_w14,0,0,0.0
+train_tile_006_w27,0,0,0.0
+train_tile_027_w03,0,0,0.0

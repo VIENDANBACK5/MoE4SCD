@@ -58,3 +58,12 @@ User explicitly restored native goal ACTIVE. Previous interruption produced sour
 - [x] Record what is established, unverified and required before method development. Original-method goal remains intact.
 
 Cycle5 research gate complete. No new raw RGB was loaded, no new model forward/training/scale test ran. M1 remains a conditional question; no original mechanism or observability estimator established. Native goal ACTIVE after user resume, not completed/blocked.
+
+## Cycle6 — actual finite M1 test
+
+- [x] Lock3TRAIN windows, four exact inputs, common validity/materialization and12forwards before inference.
+- [x] Execute frozenDINO42; freeze all12outputs before new reference measurements.
+- [x] Recompute raw/final matches, source-small changes, same-count and mask validity/NMS; preserve console serialization failure without rerunning science.
+- [x] Inspect fixed-rule real qualitative figure; preserve masks/logs/hashes and scientific scope.
+
+PROGRESS: actual experiment complete, original method/learning cause not established. No training/V2queued. Goal ACTIVE.

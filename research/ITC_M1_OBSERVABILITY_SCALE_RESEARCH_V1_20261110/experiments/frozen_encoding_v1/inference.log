@@ -1,0 +1,21 @@
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/pixel_decoder/maskdino_encoder.py:362: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @autocast(enabled=False)
+/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/transformer_decoder/dino_decoder.py:220: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @autocast(enabled=False)
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+{"window": "train_tile_000_w14", "arm": "A", "input_hw": [1024, 1024], "raw": 300, "final": 189, "seconds": 1.176441214978695, "peakMiB": 1287.947265625}
+{"window": "train_tile_000_w14", "arm": "B", "input_hw": [2048, 2048], "raw": 300, "final": 167, "seconds": 0.8720427320804447, "peakMiB": 4606.42578125}
+{"window": "train_tile_000_w14", "arm": "C", "input_hw": [512, 512], "raw": 300, "final": 132, "seconds": 0.47407537000253797, "peakMiB": 462.3330078125}
+{"window": "train_tile_000_w14", "arm": "D", "input_hw": [1024, 1024], "raw": 300, "final": 153, "seconds": 0.5234115680214018, "peakMiB": 1287.451171875}
+{"window": "train_tile_006_w27", "arm": "A", "input_hw": [1024, 1024], "raw": 300, "final": 120, "seconds": 0.49857158004306257, "peakMiB": 1287.451171875}
+{"window": "train_tile_006_w27", "arm": "B", "input_hw": [2048, 2048], "raw": 300, "final": 119, "seconds": 0.8148465999402106, "peakMiB": 4606.42578125}
+{"window": "train_tile_006_w27", "arm": "C", "input_hw": [512, 512], "raw": 300, "final": 97, "seconds": 0.4547087779501453, "peakMiB": 462.3330078125}
+{"window": "train_tile_006_w27", "arm": "D", "input_hw": [1024, 1024], "raw": 300, "final": 127, "seconds": 0.5012730000307783, "peakMiB": 1287.451171875}
+{"window": "train_tile_027_w03", "arm": "A", "input_hw": [1024, 1024], "raw": 300, "final": 125, "seconds": 0.5034292689524591, "peakMiB": 1287.451171875}
+{"window": "train_tile_027_w03", "arm": "B", "input_hw": [2048, 2048], "raw": 300, "final": 133, "seconds": 0.8871568699833006, "peakMiB": 4606.42578125}
+{"window": "train_tile_027_w03", "arm": "C", "input_hw": [512, 512], "raw": 300, "final": 79, "seconds": 0.45102137699723244, "peakMiB": 462.3330078125}
+{"window": "train_tile_027_w03", "arm": "D", "input_hw": [1024, 1024], "raw": 300, "final": 132, "seconds": 0.5040292310295627, "peakMiB": 1287.451171875}
+COMPLETE: frozen12forwards

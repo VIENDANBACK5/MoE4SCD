@@ -1,0 +1,14 @@
+{
+  "status": "LOSSLESS_ENCODING_SENSITIVITY_OBSERVED_CAUSE_AND_ORIGINAL_METHOD_NOT_ESTABLISHED",
+  "experiment_complete": true,
+  "forwards": 12,
+  "new_training": false,
+  "original_method": false,
+  "goal_achieved": false,
+  "lossless_input_equivalence": true,
+  "raw_formation_difference_observed": true,
+  "artificial_operating_size_shift": true,
+  "training_vs_architecture_isolated": false,
+  "ordinary_canonicalization_is_prior_control": true,
+  "independent_generalization": false
+}

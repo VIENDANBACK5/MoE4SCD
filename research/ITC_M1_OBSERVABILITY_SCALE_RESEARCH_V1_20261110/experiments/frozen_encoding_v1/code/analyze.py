@@ -121,6 +121,6 @@ def main():
                  architecture_cause_isolated=False,new_method_supported=False,biological_identity_verified=False,
                  independent_generalization=False,new_training=False,TEST=False,overall_goal_complete=False,
                  frozen_predictions_sha256=sha(EXP/'PREDICTIONS_FROZEN.json'),analysis_seconds=time.monotonic()-start)
-    write(out/'COMPLETE.json',summary);print(json.dumps(dict(summary=summary,metrics=metrics,paired=paired)))
+    write(out/'COMPLETE.json',summary);print(json.dumps(dict(summary=summary,metrics=metrics,paired=paired),default=lambda x:x.item() if isinstance(x,np.generic) else str(x)))
 
 if __name__=='__main__':main()

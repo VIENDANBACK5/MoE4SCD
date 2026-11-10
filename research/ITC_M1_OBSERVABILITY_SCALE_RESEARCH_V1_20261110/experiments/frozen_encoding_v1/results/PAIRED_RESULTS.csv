@@ -1,0 +1,4 @@
+contrast,new_raw,lost_raw,new_final,lost_final,new_small_final,lost_small_final,sources_with_raw_losses,ambiguous_change_membership
+A_to_B,2,167,2,180,1,81,3,0
+C_to_D,65,26,70,27,41,9,3,0
+A_to_D,2,67,2,72,1,39,3,0

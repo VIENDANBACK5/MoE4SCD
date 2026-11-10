@@ -1,0 +1,4 @@
+window_id,original_valid_pixels,common_valid_pixels,removed_original_valid_pixels,references,empty_common_support_references
+train_tile_000_w14,1043220,1043004,216,137,0
+train_tile_006_w27,1030809,1030656,153,77,0
+train_tile_027_w03,1010507,1009956,551,84,0

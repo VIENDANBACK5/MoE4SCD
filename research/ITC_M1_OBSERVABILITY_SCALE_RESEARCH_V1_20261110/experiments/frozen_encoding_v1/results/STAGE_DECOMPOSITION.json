@@ -1,0 +1,40 @@
+{
+  "A_to_B": {
+    "final_losses_by_after_stage": {
+      "RAW_ABSENT": 165,
+      "FILTERED": 12,
+      "SUPPRESSED": 3
+    },
+    "final_gains_by_before_stage": {
+      "RAW_ABSENT": 2
+    },
+    "raw_small_new": 1,
+    "raw_small_lost": 79
+  },
+  "C_to_D": {
+    "final_losses_by_after_stage": {
+      "RAW_ABSENT": 24,
+      "FILTERED": 2,
+      "SUPPRESSED": 1
+    },
+    "final_gains_by_before_stage": {
+      "RAW_ABSENT": 63,
+      "FILTERED": 5,
+      "SUPPRESSED": 2
+    },
+    "raw_small_new": 39,
+    "raw_small_lost": 10
+  },
+  "A_to_D": {
+    "final_losses_by_after_stage": {
+      "RAW_ABSENT": 65,
+      "FILTERED": 3,
+      "SUPPRESSED": 4
+    },
+    "final_gains_by_before_stage": {
+      "RAW_ABSENT": 2
+    },
+    "raw_small_new": 1,
+    "raw_small_lost": 37
+  }
+}

@@ -53,3 +53,7 @@ A verified six-image RGB-only handoff now exists, with blank LabelMe files, vali
 ## Explicit resumption: M1 research gate
 
 User restored the goal to ACTIVE and prioritized original-method discovery over the empirical manuscript. The earlier blocked audit is historical, not the current native status. [M1 research decision](../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/00_RESEARCH_DECISION.md) refines the question to information-equivalent raster encodings versus destructive sampling. Mathematical limitations and closest-prior overlap are recorded; no observability estimator, novel objective or carrier experiment is established. The four-arm diagnostic is PLANNED_NOT_RUN. No closed recipe or protected-data branch reopened.
+
+## Cycle6: actual M1 pilot
+
+[Executed M1 decision](../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/04_EXECUTED_PILOT_DECISION.md) supersedes NOT_RUN only as current state; original research-gate files remain historical. Twelve actual frozen forwards, large same-information encoding effects, raw/final/size/source/same-count outputs saved and verified. Artificial operating-size shift is explicit. This is a measured phenomenon, not a novel method or training-level causal explanation. No next model automatically queued; original-method goal remains ACTIVE and NOT ACHIEVED.

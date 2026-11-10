@@ -1,0 +1,119 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>M1 frozen encoding diagnostic</title><style>body{max-width:1050px;margin:32px auto;padding:0 20px;font:17px/1.6 Georgia;color:#17212b}h1,h2{font-family:system-ui}table{border-collapse:collapse;font:14px system-ui;width:100%}td,th{padding:8px;border:1px solid #ccd3da}a{color:#175a90}</style><h1>Frozen M1 encoding pilot: actual results</h1>
+<p><strong>Decision: LOSSLESS_ENCODING_SENSITIVITY_OBSERVED_CAUSE_AND_ORIGINAL_METHOD_NOT_ESTABLISHED.</strong></p>
+<p>This is a registered frozen TRAIN diagnostic, not a new model, a deployment improvement, independent generalization, or verified biological identity. No closed query/decoder/selection recipe is reopened.</p>
+<h2>What executed</h2>
+<p>Original mask-only Mask DINO seed42, exactly300queries, three previously exposed TRAIN windows (one/source),298reference occurrences. Twelve actual forwards, no parameter update. Protocol/cohort/inference code committed in b5dc597 before predictions. Post-freeze scoring code committed in d0a6846 before reference measurements. No SAME6/TEST/protected review access. Original source annotation area is distinguished from cropped target fragment area.</p>
+<p>A is native1024²RGB. B repeats each pixel into2×2, giving2048²without deleting information. C applies valid-normalized2×2block averaging, giving512². D exactly repeats C back to1024². All retain the same physical scene footprint. The RGB left inverses and normalized tensors actually entering the backbone are exact for A/B and C/D; no forced resize. Computation, encoder-site density and physical receptive field differ with grid size. Thus information is held equal within each pair, not every internal model condition.</p>
+<p>All masks are materialized directly on the same1024²canonical grid before threshold, score/area acceptance and NMS. Common validity removes216/153/551original-valid pixels from the three windows; no reference becomes empty and all298IDs remain. Native A reproduces all900legacy query masks exactly after common clipping, with zero class-probability difference. The saved RLEs, input checks and NMS have been recomputed independently.</p>
+<h2>Primary observed results</h2>
+<table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>Input</th>
+<th style="text-align: right;">Raw50</th>
+<th style="text-align: right;">Raw75</th>
+<th style="text-align: right;">Final TP50</th>
+<th style="text-align: right;">FP50</th>
+<th style="text-align: right;">AP</th>
+<th style="text-align: right;">Small TP50/133</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>I,1024²</td>
+<td style="text-align: right;">278</td>
+<td style="text-align: right;">247</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">62.582</td>
+<td style="text-align: right;">116</td>
+</tr>
+<tr>
+<td>B</td>
+<td>U2 I,2048²</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">321</td>
+<td style="text-align: right;">6.078</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr>
+<td>C</td>
+<td>D2 I,512²</td>
+<td style="text-align: right;">174</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">163</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">19.761</td>
+<td style="text-align: right;">46</td>
+</tr>
+<tr>
+<td>D</td>
+<td>U2 D2 I,1024²</td>
+<td style="text-align: right;">213</td>
+<td style="text-align: right;">137</td>
+<td style="text-align: right;">206</td>
+<td style="text-align: right;">206</td>
+<td style="text-align: right;">31.305</td>
+<td style="text-align: right;">78</td>
+</tr>
+</tbody>
+</table>
+<p>AP is0–100 on these three TRAIN windows only, with maxDets[1,10,100,400]; final matching uses all accepted outputs. The133source-small occurrences follow the inherited original published-tile raw-area definition, not uncropped biological crown size or the current1024crop area. None of these values is directly compared with full-tile SAME6/BAM AP.</p>
+<table>
+<thead>
+<tr>
+<th>Contrast</th>
+<th style="text-align: right;">New/lost raw50</th>
+<th style="text-align: right;">New/lost final</th>
+<th style="text-align: right;">Net final TP50</th>
+<th style="text-align: right;">New/lost small final</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A_to_B</td>
+<td style="text-align: right;">2/167</td>
+<td style="text-align: right;">2/180</td>
+<td style="text-align: right;">-178</td>
+<td style="text-align: right;">1/81</td>
+</tr>
+<tr>
+<td>C_to_D</td>
+<td style="text-align: right;">65/26</td>
+<td style="text-align: right;">70/27</td>
+<td style="text-align: right;">+43</td>
+<td style="text-align: right;">41/9</td>
+</tr>
+<tr>
+<td>A_to_D</td>
+<td style="text-align: right;">2/67</td>
+<td style="text-align: right;">2/72</td>
+<td style="text-align: right;">-70</td>
+<td style="text-align: right;">1/39</td>
+</tr>
+</tbody>
+</table>
+<p>Both lossless pairs pass the preregistered finite relevance screen (at least5raw qualification losses in at least2sources); losses occur in all3sources. This is not statistical significance or method efficacy.</p>
+<p>For A→B,165of180final losses lack a qualifying B raw mask,12fail acceptance and3fail suppression. Raw IoU75 availability also falls247→53, so the observation is not merely a tiny fluctuation around IoU0.5. B retains2new final matches, and180old matches disappear. There is no net recovery improvement.</p>
+<p>For C→D,70final matches are new and27are lost; the net gain is43, including net32small matches(41new/9lost). Of the70gains,63lack a C qualifying raw mask,5previously fail acceptance and2suppression. Raw availability gains65andloses26. This is a known nearest-neighbor input re-encoding, not a learned original method; it has collateral losses.</p>
+<p>At equal final counts, A/B each retain411outputs with276versus98TP50. C/D each retain308outputs with163versus194TP50. Thus those contrasts do not vanish at equal counts, although equal count does not isolate score versus geometry causality.</p>
+<h2>What the intervention identifies</h2>
+<p>OBSERVED: the same RGB information can produce substantially different raw and final reference recovery in this frozen carrier when its raster encoding changes. Exact input checks exclude deleted RGB information as the explanation for the A/B and C/D differences. Most A/B losses already occur in the observed final raw pool.</p>
+<p>OBSERVED: native1024encoding is much better than2048replication in this setup;1024replication of the coarse512observation is better overall than feeding512directly. This is a dependence on operating scale/encoding, not a theorem that greater resolution is worse.</p>
+<p>DERIVED: under this exact synthetic replication, B can be mapped back to A by a known left inverse. A has already been executed. A novel observability module is therefore not necessary to recover the native operating point in this engineered case. A universal resizer for arbitrary genuinely high-resolution images is a different, untested deployment claim.</p>
+<p>UNVERIFIED: the cause inside the network. Encoder sampling/access, learned object-size priors, physical receptive fields, decoder processing and optimization/training exposure remain alternatives. Holding RGB information equal does not hold all feature distributions equal.</p>
+<p>Crucially, the completed carrier was fine-tuned on fixed1024native windows. B and C are out-of-operating-size interventions; an artificial distribution shift can degrade performance without proving an architectural defect. D has native dimensions but degraded image statistics. This pilot does not isolate a fundamental constraint, explain BAM's shift, establish visual identifiability or prove a deficiency requiring a new mechanism.</p>
+<h2>Consequence for original-method research</h2>
+<p>M1 now has a concrete, large measured functional phenomenon on a strong carrier. The hypothesis that all changes require deleted input information fails for these exact lossless comparisons. The stronger hypothesis that observability-conditioned learning is the missing original mechanism is NOT_ESTABLISHED.</p>
+<p>The necessary next discrimination is against ordinary input canonicalization and training-scale exposure. A known scale-treatment control could explain the phenomenon; novelty cannot come from adding consistency or restoring native dimensions. No new training is automatically opened here. First specify the one learning/architectural constraint that survives those alternatives and its closest prior control. Do not repeat the closed representation, query selection or decoder recipes under a scale label.</p>
+<p>The current12-forward diagnostic is complete. The original goal is still active/unachieved. No new loss, module, threshold, seed search or V2 is queued by this report.</p>
+<h2>Artifacts, engineering and cost</h2>
+<p>Actual RGB-only predictions and input arrays are saved. Full dense mask logits are NOT_STORED under the preregistered disk adaptation; all300canonical RLEs/class logits/scores, boxes, selected sites and grid dimensions are retained. Probability-field reanalysis would require an explicitly counted rerun.</p>
+<p>The first analysis process wrote all results and COMPLETE.json, then failed only at printing a numpy.int64console value. Traceback remains in analysis.log; the serializer was corrected without rescoring or rerunning the model. Independent verification establishes output integrity, rather than relying on that marker.</p>
+<p>Measured sum of forward/tracing/materialization/NMS sections: 7.661s; inference script total including setup/I/O: 10.545s. Neither is total research wall time. Peak allocated GPU 4606.4MiB on a shared RTX5880Ada. All12forwards/3600raw and1573final masks checked. Resource contracts were met.</p>
+<p><a href="figures/FIXED_ENCODING_COMPARISON.png">Fixed-rule qualitative comparison</a>. Blue dashed is the published reference; orange is a GT-conditioned raw-best mask selected only after prediction freeze. The displayed crops are for diagnosis, not model inputs; reference fragments at window boundaries remain fragments. No independent human identity judgment is implied.</p>
+<p><a href="protocol.md">Protocol</a>, <a href="PREDICTIONS_FROZEN.json">freeze</a>, <a href="VERIFICATION.json">verification</a>, <a href="results/METRICS.csv">metrics</a>, <a href="results/SOURCE_RESULTS.csv">source effects</a>, <a href="results/RECOVERY_AND_LOSS.csv">per-reference changes</a>, <a href="REPRODUCIBILITY.md">reproduction</a>.</p></html>

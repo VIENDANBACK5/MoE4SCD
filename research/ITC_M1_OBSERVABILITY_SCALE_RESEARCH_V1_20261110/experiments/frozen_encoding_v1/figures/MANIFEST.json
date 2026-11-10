@@ -1,0 +1,44 @@
+{
+  "selection": [
+    {
+      "window": 0,
+      "reference_index": 114,
+      "reference_id": "selvamask::train:20240131_zf2block4_ms_m3m_rgb_tile_train_gr0p045_0_0_3555_3555_13.tif:ann:430",
+      "selection_rule": "A_raw50_B_not_raw50",
+      "display_crop_xyxy": [
+        499,
+        789,
+        716,
+        1024
+      ]
+    },
+    {
+      "window": 1,
+      "reference_index": 50,
+      "reference_id": "selvamask::train:20240613_tbsnewsite2_m3e_rgb_tile_train_gr0p045_10662_23101_3555_3555_225.tif:ann:163",
+      "selection_rule": "A_raw50_B_not_raw50",
+      "display_crop_xyxy": [
+        955,
+        74,
+        1024,
+        223
+      ]
+    },
+    {
+      "window": 2,
+      "reference_index": 46,
+      "reference_id": "selvamask::train:20241122_bcifairchildn_m3m_rgb_tile_train_gr0p045_10662_10662_3555_3555_112.tif:ann:125",
+      "selection_rule": "A_raw50_B_not_raw50",
+      "display_crop_xyxy": [
+        522,
+        540,
+        725,
+        780
+      ]
+    }
+  ],
+  "GT_conditioned_diagnostic": true,
+  "RGB_adjustments": "NONE",
+  "display_crops_only_not_inference": true,
+  "independent_human_review": false
+}

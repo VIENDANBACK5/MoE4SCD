@@ -1,7 +1,7 @@
 {
-  "recorded_local": "2026-11-10T12:09:03.776884+07:00",
-  "status": "ACTIVE_M1_RESEARCH_GATE_COMPLETED_DIAGNOSTIC_NOT_RUN",
-  "carrier_forwards": 1947,
+  "recorded_local": "2026-11-10T12:28:55.484602+07:00",
+  "status": "ACTIVE_M1_FROZEN_ENCODING_PILOT_EXECUTED_VERIFIED",
+  "carrier_forwards": 1959,
   "new_carrier_training": false,
   "original_method_supported": false,
   "robust_new_solution_established": false,
@@ -36,8 +36,10 @@
   ],
   "paper_verification_sha256": "048bc4628f9a7d27cf47f32f3ecdf4614b221f47133dc137a17def0a850835c0",
   "fresh_resume_blocked_audit_count": 0,
-  "new_scale_experiment_forwards": 0,
+  "new_scale_experiment_forwards": 12,
   "new_M1_training_runs": 0,
   "M1_research_directory": "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110",
-  "M1_gate_record_sha256": "2c02c33a45b0c54dba63c23a06e60d45fb3be5e5137e3ce6c7a0ae195d77afce"
+  "M1_gate_record_sha256": "2c02c33a45b0c54dba63c23a06e60d45fb3be5e5137e3ce6c7a0ae195d77afce",
+  "M1_experiment_verification_sha256": "0be3fa7ed2ee61a08cc03eb3d63eda7af2d438cb63dbd06bc6ebd1b941e9f0f0",
+  "analysis_console_exit_error": "metrics complete before numpy JSON console failure; traceback retained, no model/scoring rerun"
 }
