@@ -1,0 +1,12 @@
+{
+  "checkpoints": {
+    "S0": "6885223193082cb862f80e068770a6d8ae051c55640d7823a6ebf74dbcd96e07",
+    "S1": "69c0fb75f88423481a4dfdfba7947bf0d79ef852842201487c10d95aca0b3a97"
+  },
+  "control_root": "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/scale_exposure_control_v1",
+  "pilot_root": "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/frozen_encoding_v1",
+  "reference_access": "only after all predictions frozen",
+  "new_forwards_locked": 12,
+  "pools_locked": 24,
+  "queries_per_pool": 300
+}
