@@ -1,0 +1,35 @@
+{
+  "seed": 42,
+  "excluded_from_additional_updates_tiles": [
+    "train_tile_000",
+    "train_tile_006",
+    "train_tile_027"
+  ],
+  "original_checkpoint_already_saw_diagnostic_tiles": true,
+  "window_count": 796,
+  "sources": {
+    "20240613_tbsnewsite2_m3e_rgb": 385,
+    "20241122_bcifairchildn_m3m_rgb": 297,
+    "20240131_zf2block4_ms_m3m_rgb": 114
+  },
+  "epochs": 1,
+  "gradient_accumulation": 2,
+  "scheduled_microbatches": 796,
+  "optimizer_updates": 398,
+  "probe_window": "train_tile_017_w23",
+  "scale_schedule": "S0: native each microbatch; S1: native even micro-index,exact2xreplication odd micro-index",
+  "learning_rate_nonbackbone": 1e-05,
+  "learning_rate_backbone": 1e-06,
+  "optimizer": "AdamW fresh identical state;weight_decay.05;clipnorm.01",
+  "schedule": "linear warmup.1to1 over20updates then constant; fixed-final model selection",
+  "trainable_scope": "original carrier trainable parameters; no additional freezing",
+  "precision": "inheritedbf16autocast;FP32weights",
+  "per_arm_wall_limit_seconds": 2700,
+  "GPU_allocated_limit_GiB": 20,
+  "host_RSS_limit_GiB": 16,
+  "disk_free_floor_GiB": 4,
+  "artifact_ceiling_GiB": 2,
+  "training_started": false,
+  "pretraining_weights": "completedmaskonlyseed42",
+  "checkpoint_sha256": "5611e2c850fdceea01b05840a8bce9010e534f918b06f250189eb584cb154077"
+}
