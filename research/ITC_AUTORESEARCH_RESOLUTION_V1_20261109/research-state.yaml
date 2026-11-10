@@ -135,14 +135,15 @@ experiments:
     native_AP_delta: -0.95981614272018
     original_method: false
 outer_loop:
-  cycle: 9
+  cycle: 10
   last_direction: Wait for actual eligible reference evidence/participation; do not
     substitute new masks, synthetic reviewers, closed recipes or tuning
   last_reflection: S1 A→B raw losses38/gains2, not36losses.20losses start atIoU75;16near-whole
     proxy. Residual is not solely threshold/fragment effects, but no internal cause
     or novel intervention is identified.
-  latest_turn_audit: 'NO_PROGRESS: independent reference input revalidated unchanged;
-    no model job live, no qualifying response found'
+  latest_turn_audit: 'NO_PROGRESS: same required independent-reference input absent
+    for second consecutive post-M1 goal turn; actual six case states unchanged; no
+    live model process'
   blocked_condition: Actual qualifying independent same-RGB reference annotations/participants
     are unavailable for the registered independent-reference gate
   condition_recorded_in_consecutive_cycles:
@@ -151,7 +152,7 @@ outer_loop:
   - 4
   blocked_condition_history: Independent annotation evidence remains unavailable,
     but does not prevent theoretical/nearest-art work on controlled re-encoding
-  fresh_resume_blocked_audit_count: 1
+  fresh_resume_blocked_audit_count: 2
 workspace:
   findings: findings.md
   log: research-log.md
