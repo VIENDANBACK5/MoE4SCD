@@ -1,6 +1,6 @@
 {
-  "recorded_local": "2026-11-10T13:29:07.156361+07:00",
-  "status": "ACTIVE_REQUIRED_INDEPENDENT_REFERENCE_INPUT_NOT_AVAILABLE",
+  "recorded_local": "2026-11-10T13:30:51.959809+07:00",
+  "status": "BLOCKED_AUDIT_PASSED_NATIVE_UPDATE_REQUESTED",
   "carrier_forwards": 3582,
   "new_carrier_training": true,
   "original_method_supported": false,
@@ -35,7 +35,7 @@
     4
   ],
   "paper_verification_sha256": "048bc4628f9a7d27cf47f32f3ecdf4614b221f47133dc137a17def0a850835c0",
-  "fresh_resume_blocked_audit_count": 2,
+  "fresh_resume_blocked_audit_count": 3,
   "new_scale_experiment_forwards": 12,
   "new_M1_training_runs": 2,
   "M1_research_directory": "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110",
@@ -130,5 +130,8 @@
     "no_protected_access": true
   },
   "new_cycle10_model_forwards": 0,
-  "new_cycle10_training_updates": 0
+  "new_cycle10_training_updates": 0,
+  "new_cycle11_model_forwards": 0,
+  "new_cycle11_training_updates": 0,
+  "native_goal_update_requested": "blocked"
 }

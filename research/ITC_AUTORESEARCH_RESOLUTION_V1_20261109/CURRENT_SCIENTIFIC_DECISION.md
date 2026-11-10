@@ -69,3 +69,7 @@ This closes the tested one-pass recipe. Both optimizer states, logs, independent
 [Saved-mask residual report](../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/analyses/encoding_residuals_v1/REPORT.md) resolves two remaining alternatives without another model run. The S1ABnetgap36consists of38rawlosses/2gains;20losses begin atIoU>=.75and16ofthose are near-whole source-reference proxies. Some residuals are strong and occur in all3sourcewindows, not only threshold/crop artifacts. Both native smalllosses arefinal-rawabsence, one ending at.499884andone at.366873. This does not distinguish encoder access from decoder mask formation because trained-state intermediate masks were not measured.
 
 No specific architectural cause, observability estimator, independent-reference claim or original method follows. The finite saved-mask analysis is complete; no training, threshold rescue or new module queued. Native goal remains ACTIVE/NOT ACHIEVED.
+
+## Current external-input gate
+
+The original goal is NOT ACHIEVED. Three consecutive current checks(cycles9/10/11) find no actual independent annotation responses or eligible acquired multi-annotator resource. [Current blocking/completion audit](CURRENT_GOAL_BLOCK.md) requests native BLOCKED, rather than repeatedly restating progress or inventing a replacement architecture. Finite M1outputs remain complete and preserved; this is not a claim that the RGBITCproblem is exhausted.
