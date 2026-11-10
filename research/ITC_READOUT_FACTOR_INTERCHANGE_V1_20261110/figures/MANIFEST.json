@@ -1,0 +1,90 @@
+{
+  "selection": [
+    {
+      "reference_id": "selvamask::train:20240131_zf2block4_ms_m3m_rgb_tile_train_gr0p045_0_0_3555_3555_13.tif:ann:150",
+      "selection": "First lexical pre-existing strong S1 residual per source; not selected on interchange outcome",
+      "crop_xyxy": [
+        793,
+        43,
+        999,
+        279
+      ],
+      "raw_best_witnesses": {
+        "AA": {
+          "query": 26,
+          "IoU": 0.83526327288617
+        },
+        "AB": {
+          "query": 287,
+          "IoU": 0.03967564436721691
+        },
+        "BA": {
+          "query": 29,
+          "IoU": 0.5965451964032181
+        },
+        "BB": {
+          "query": 29,
+          "IoU": 0.4917228694052728
+        }
+      }
+    },
+    {
+      "reference_id": "selvamask::train:20240613_tbsnewsite2_m3e_rgb_tile_train_gr0p045_10662_23101_3555_3555_225.tif:ann:208",
+      "selection": "First lexical pre-existing strong S1 residual per source; not selected on interchange outcome",
+      "crop_xyxy": [
+        438,
+        530,
+        669,
+        737
+      ],
+      "raw_best_witnesses": {
+        "AA": {
+          "query": 68,
+          "IoU": 0.8413147583804963
+        },
+        "AB": {
+          "query": 269,
+          "IoU": 0.13165995737627278
+        },
+        "BA": {
+          "query": 13,
+          "IoU": 0.5822844929945381
+        },
+        "BB": {
+          "query": 24,
+          "IoU": 0.22287597081666274
+        }
+      }
+    },
+    {
+      "reference_id": "selvamask::train:20241122_bcifairchildn_m3m_rgb_tile_train_gr0p045_10662_10662_3555_3555_112.tif:ann:114",
+      "selection": "First lexical pre-existing strong S1 residual per source; not selected on interchange outcome",
+      "crop_xyxy": [
+        709,
+        207,
+        916,
+        408
+      ],
+      "raw_best_witnesses": {
+        "AA": {
+          "query": 3,
+          "IoU": 0.879544619904517
+        },
+        "AB": {
+          "query": 65,
+          "IoU": 0.057729850330017665
+        },
+        "BA": {
+          "query": 174,
+          "IoU": 0.005496564647095565
+        },
+        "BB": {
+          "query": 9,
+          "IoU": 0.19843290891283055
+        }
+      }
+    }
+  ],
+  "GT_conditioned_diagnostic": true,
+  "GT_inference": false
+}

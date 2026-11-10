@@ -29,3 +29,7 @@ There is no live study model process or queued job. This is not a GPU/job wait. 
 [Current M1 decision](../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/05_MATCHED_SCALE_CONTROL_DECISION.md), [residual report](../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/analyses/encoding_residuals_v1/REPORT.md), [three-turn audit](RESUMED_BLOCKED_AUDIT.jsonl).
 
 Native goal tool returned status **blocked** after the audit. No scientific completion is claimed.
+
+## Scope correction after the user's autoresearch request
+
+The independent-reference prerequisite remains missing. It is not a universal prerequisite to every published-reference inference diagnostic. Direct user-requested work subsequently completed the readout-factor interchange experiment; see ../ITC_READOUT_FACTOR_INTERCHANGE_V1_20261110/REPORT.md. Thus this record must not be used to claim no autonomous scientific action is possible merely because those human responses are absent. Native backend status remainsblocked due the exposed API's missing resume operation, separately from executable current-turn work. No original method has been established.

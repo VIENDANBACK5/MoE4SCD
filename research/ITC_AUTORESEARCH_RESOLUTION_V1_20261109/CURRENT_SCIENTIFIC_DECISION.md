@@ -73,3 +73,9 @@ No specific architectural cause, observability estimator, independent-reference 
 ## Current external-input gate
 
 The original goal is NOT ACHIEVED. Three consecutive current checks(cycles9/10/11) find no actual independent annotation responses or eligible acquired multi-annotator resource. [Current blocking/completion audit](CURRENT_GOAL_BLOCK.md) requests native BLOCKED, rather than repeatedly restating progress or inventing a replacement architecture. Finite M1outputs remain complete and preserved; this is not a claim that the RGBITCproblem is exhausted.
+
+## Superseding scope correction and actual user-requested research
+
+The unavailable annotators block the independent-reference study, not all published-reference inference diagnostics. Under the user's renewed autoresearch request, [readout-factor interchange](../ITC_READOUT_FACTOR_INTERCHANGE_V1_20261110/REPORT.md) executed12frozenforwards and verified7200raw/2996finalmasks. Factualpairs reproduce exactly; mixedpairs fail useful recovery and registered factor screens. A few rescues cannot offset collateral losses or identify intrinsic pixel/query capacity.
+
+No new method/architecturecause is established; the original research objective remains unachieved. The nativegoal backend is stillblocked because its exposed API has no resume action; that status is not falsely rewritten. Current-turn research proceeded directly; no backgroundscheduler or model job remains live.

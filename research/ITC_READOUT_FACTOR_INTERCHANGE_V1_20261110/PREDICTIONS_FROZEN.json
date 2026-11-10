@@ -1,0 +1,307 @@
+{
+  "stage": "ALL_INTERCHANGE_PREDICTIONS_FROZEN_BEFORE_NEW_REFERENCE_JOIN",
+  "forwards": 12,
+  "pools": 24,
+  "queries_per_pool": 300,
+  "sha256": {
+    "predictions/S0/train_tile_000_w14_AA.json.gz": "1f7af53225178aee86e8b922028d93837762b86cc96a6eb93c515f2400670dac",
+    "predictions/S0/train_tile_000_w14_BB.json.gz": "eacbe9762edb2147b429454d0d576841c1a2681d01a834c1ab1e29560421a89d",
+    "predictions/S0/train_tile_000_w14_AB.json.gz": "9195e1098fc91f9b7667de88041c57c4906192c777283d4f7725e49404747320",
+    "predictions/S0/train_tile_000_w14_BA.json.gz": "b25267a5ba60bf4135b41599b84df4c7387c0445992523f95ac059828ee3768a",
+    "predictions/S0/train_tile_006_w27_AA.json.gz": "42d4ecc9e048b83c4427425305cafb1fede15f30dd6245e52ddfb12eaed89686",
+    "predictions/S0/train_tile_006_w27_BB.json.gz": "bc617c765a57a08b20bcf02c1ddde4205ea21131df527e2b61b60d3fd62a07a6",
+    "predictions/S0/train_tile_006_w27_AB.json.gz": "f0d5f28fbd733e587d79c4bd22554922272a9df66eb0491f5cd88e62314d486b",
+    "predictions/S0/train_tile_006_w27_BA.json.gz": "ad2dcd9a8eee99185019c31f9ec2f30cd6b225d428e8ab700cdca5736b7eae63",
+    "predictions/S0/train_tile_027_w03_AA.json.gz": "089e646c7f27f7c78d9c534951ce37e97ebedda934f2721d694677008f408f29",
+    "predictions/S0/train_tile_027_w03_BB.json.gz": "1e7559f80c4a4518374f99225f73d72230dc39c986f2c356e892495a1ed81014",
+    "predictions/S0/train_tile_027_w03_AB.json.gz": "1f2c26505ee4ee3d962bc251c39131689d8c408d1b4d887b623ec7d2331e7888",
+    "predictions/S0/train_tile_027_w03_BA.json.gz": "40a8ecc64ad74c98792a124cca37b7c09a4bc47aa8fc6ce6198e688ddb7a78b2",
+    "predictions/S1/train_tile_000_w14_AA.json.gz": "f1926f1418ce1851de9a9b768a838ad10f81a9859380ed3322cef024b7ee38c1",
+    "predictions/S1/train_tile_000_w14_BB.json.gz": "abbf67864d85b65a81b8bd168555ce99c98062b0f132f1c36d293461ca63fa36",
+    "predictions/S1/train_tile_000_w14_AB.json.gz": "07078f2df713a65c58ff9a355cdfd29c651442fcb5cf12578406c3a189caaa99",
+    "predictions/S1/train_tile_000_w14_BA.json.gz": "03ed2d0a8a99ffb1e9245aa7d9224d1c97e0b716ee05685d0660124d94b787c7",
+    "predictions/S1/train_tile_006_w27_AA.json.gz": "354690c090dfb669863f0eb19001c1ffb638d147e386bf1e0231f2626bbc6577",
+    "predictions/S1/train_tile_006_w27_BB.json.gz": "b72af3539c19d729fa4121cc8d83e21e5651c271998fcf9d0219e147b0aaf7fd",
+    "predictions/S1/train_tile_006_w27_AB.json.gz": "2e255b00694618bd3ab9c627109bbe43f13ba97f103ab764cffe4cf9991350a4",
+    "predictions/S1/train_tile_006_w27_BA.json.gz": "fc42b171302296b2df40474182572fc2835918936f67c360beefe3bdc09267e7",
+    "predictions/S1/train_tile_027_w03_AA.json.gz": "8d85b0639748b50fec4ac2ed302980b664564856effd18e426176a7ed18136a7",
+    "predictions/S1/train_tile_027_w03_BB.json.gz": "5a5312fe6a21e23eedd3bad3edf21fa03fec08b893ef4b78168410313ad423e9",
+    "predictions/S1/train_tile_027_w03_AB.json.gz": "58544f9634d5a28266f3aed4d99ed1a9bb0126939920fe4070178989bda545f6",
+    "predictions/S1/train_tile_027_w03_BA.json.gz": "b02a526c12cb281aaf7203e3eb401439aa18a5115cea4e765eadc15f58093384"
+  },
+  "native_checks": [
+    {
+      "arm": "S0",
+      "window_id": "train_tile_000_w14",
+      "observation": "A",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "51ab7955e258d1adef0bbf3afb76c05d62fc274f71c9228ef2cef03fa62deb83",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        256,
+        256
+      ],
+      "embedding_sha256": "ad5020f1ea171242c77835c42972f117cd2942651e4fdf118897faa28b7ab6fb",
+      "field_sha256": "565e1f409eb2d2f669d1a26d9f5dbf6ea4c1b90378e2140183d7582f8172699a"
+    },
+    {
+      "arm": "S0",
+      "window_id": "train_tile_000_w14",
+      "observation": "B",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "6f25219a9da03ed28391d5d93c85919dfc42bae6cc9f2c8161ed2d4996a9b408",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        512,
+        512
+      ],
+      "embedding_sha256": "7472a9e993be52c2804e6a9062fb2374befba1985da8de0bc9a17dfc41b314f8",
+      "field_sha256": "e11700c379b00e718899fccac6070e3de1d75c34dc1178a0f9d9f140b11a05b7"
+    },
+    {
+      "arm": "S0",
+      "window_id": "train_tile_006_w27",
+      "observation": "A",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "373a8e3149868b03271d07dca81afd9d9ea70d574335ce629f0fecaaf03829f2",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        256,
+        256
+      ],
+      "embedding_sha256": "7d36d25b1ec55810ed9105c01537f71fabe55853e7231336cf18c92cec506066",
+      "field_sha256": "9d23e2cad1ede36530cc52dcda7877d3add5ce29c9bfb88b106e8df70f9f8f66"
+    },
+    {
+      "arm": "S0",
+      "window_id": "train_tile_006_w27",
+      "observation": "B",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "0b192ba9706ab228d4012c71ce2917fffff5a392e5bdcbda906268f6c4f3e42c",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        512,
+        512
+      ],
+      "embedding_sha256": "d70124cde05d49d8785c44dbb78f9dc594256c2a599544c4dff12c71a9edb25e",
+      "field_sha256": "9d5d5fc257d609c22ce5e99a4ca9f96fb1542f569c101622726fcc04c0036861"
+    },
+    {
+      "arm": "S0",
+      "window_id": "train_tile_027_w03",
+      "observation": "A",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "dde8c8bd160af71c21ff32f5594d77b1b14377589322f02574124cb040b1c770",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        256,
+        256
+      ],
+      "embedding_sha256": "fc42bf2944fb31aed5f160f0f29396246088165b571d87715149abeb17cb316a",
+      "field_sha256": "25412a0d92c112c17fe3321bd29cbdac8e2bf2967b0f319ed16b8d6402316447"
+    },
+    {
+      "arm": "S0",
+      "window_id": "train_tile_027_w03",
+      "observation": "B",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "6da803e7e972581359635fbf70cb2c9b4ff33e3adc3bff208f1c76a2d59bb63e",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        512,
+        512
+      ],
+      "embedding_sha256": "bdd169e1de4e88e450980e553768b9e9b1b5d71a7efb9a322502f17bea20fa6a",
+      "field_sha256": "cce106e670ee0edccf8083cb7e0145ab132235abb3e2cc2b4ebf3beaabfe1db0"
+    },
+    {
+      "arm": "S1",
+      "window_id": "train_tile_000_w14",
+      "observation": "A",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "51ab7955e258d1adef0bbf3afb76c05d62fc274f71c9228ef2cef03fa62deb83",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        256,
+        256
+      ],
+      "embedding_sha256": "3928fdde95d4337b6abaa6a960ebe6d755ce32d7c1ad361ee0085486b7fb7db4",
+      "field_sha256": "193688f5176cc105914fbb944bcc9e123cfbb8bc3bc1ea882139143ed69cdc0b"
+    },
+    {
+      "arm": "S1",
+      "window_id": "train_tile_000_w14",
+      "observation": "B",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "6f25219a9da03ed28391d5d93c85919dfc42bae6cc9f2c8161ed2d4996a9b408",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        512,
+        512
+      ],
+      "embedding_sha256": "032f882166a1fb7c9c7e1ea03b3ed3065f7a684df3300c3fc3d7db0534ee1e29",
+      "field_sha256": "bf6fb94d278b8becee9b80c5bef423be0e3a590fbade9356383b52f07e768f34"
+    },
+    {
+      "arm": "S1",
+      "window_id": "train_tile_006_w27",
+      "observation": "A",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "373a8e3149868b03271d07dca81afd9d9ea70d574335ce629f0fecaaf03829f2",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        256,
+        256
+      ],
+      "embedding_sha256": "781c0dce079b511c0e0287f963bdd7a5a7678a652f3a4924b4c621d060c527cb",
+      "field_sha256": "edf326f923b6b3bf6d57d491bb1435100a1cffdbd965229a6b275f8835e0d615"
+    },
+    {
+      "arm": "S1",
+      "window_id": "train_tile_006_w27",
+      "observation": "B",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "0b192ba9706ab228d4012c71ce2917fffff5a392e5bdcbda906268f6c4f3e42c",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        512,
+        512
+      ],
+      "embedding_sha256": "97ad85bf6070425c315e937b1b280fc6d45daa6bf5bfafbc571c99f6f887c499",
+      "field_sha256": "6e0c133d92af60c4ce7a7919cbcd64d744ac799cf497f5f59a03867491d8c8f4"
+    },
+    {
+      "arm": "S1",
+      "window_id": "train_tile_027_w03",
+      "observation": "A",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "dde8c8bd160af71c21ff32f5594d77b1b14377589322f02574124cb040b1c770",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        256,
+        256
+      ],
+      "embedding_sha256": "05b953716a3e6a28c13552232b19cc69bc5b2964342e754c3858da5c026746c4",
+      "field_sha256": "0abc90065c59596a12ac9e608e549dcdd8f000354ecc4b8a00f256325c9a56b8"
+    },
+    {
+      "arm": "S1",
+      "window_id": "train_tile_027_w03",
+      "observation": "B",
+      "native_logits_exact": true,
+      "native_raw_and_final_reproduced": true,
+      "paired_sign_gauge_native_logits_exact": true,
+      "RGB_input_sha256": "6da803e7e972581359635fbf70cb2c9b4ff33e3adc3bff208f1c76a2d59bb63e",
+      "embedding_shape": [
+        1,
+        300,
+        256
+      ],
+      "field_shape": [
+        1,
+        256,
+        512,
+        512
+      ],
+      "embedding_sha256": "1236a3ff95b13b48b1f969f1ed63dec9a0b5b9c77e13cba5650d8c5c09120949",
+      "field_sha256": "a36e227e4eaae5bb06377f5d32920159ff63139bf42d740b72613776ff587eb2"
+    }
+  ],
+  "parameters_updated": false,
+  "reference_masks_read": false,
+  "GT_inference": false,
+  "seconds": 17.761428287951276,
+  "peak_GPU_MiB": 4669.71630859375,
+  "peak_RSS_GiB": 2.2314071655273438,
+  "code_sha256": "03421566ae9fe3deade0a8a49a781197f5c70f8a96c0c1b9e37a119a6052daab",
+  "common_code_sha256": "f24358c31325a006551f39a698dc99db5c62d3a9c767df338b92ddebd4f91196",
+  "protocol_sha256": "c1e776353f1735b31af0469a26f89364acf5eb07f5d41eeaa02ba4b9d648f742"
+}

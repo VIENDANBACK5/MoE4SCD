@@ -1,0 +1,23 @@
+{
+  "stage": "EXECUTED_VERIFIED_FROZEN_READOUT_DIAGNOSTIC",
+  "protocol_commit": "6c1d8a9",
+  "forwards": 12,
+  "readout_pools": 24,
+  "raw_masks": 7200,
+  "final_masks": 2996,
+  "native_output_reproduction_exact": true,
+  "original_checkpoints_unchanged": true,
+  "historical_decisions_unchanged": 8,
+  "registered_resource_bounds_met": true,
+  "actual_total_bytes_before_manifest": 9643126,
+  "TEST_access": false,
+  "new_training": false,
+  "GT_inference": false,
+  "independent_annotations_obtained": false,
+  "original_method_established": false,
+  "overall_goal_complete": false,
+  "wall_clock_scheduler_created": false,
+  "native_goal_backend_status": "blocked; exposed API has no resume operation",
+  "user_requested_turn_executed": true,
+  "next_model_jobs_queued": 0
+}

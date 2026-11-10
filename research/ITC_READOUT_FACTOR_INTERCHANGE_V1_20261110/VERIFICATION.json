@@ -1,0 +1,18 @@
+{
+  "stage": "VERIFIED_FACTUAL_REPRODUCTION_AND_INTERCHANGE_MASKS",
+  "forwards": 12,
+  "pools": 24,
+  "raw_masks": 7200,
+  "final_masks": 2996,
+  "native_logit_reconstruction_exact": true,
+  "paired_sign_gauge_native_control_exact": true,
+  "native_raw_final_scores_exact": true,
+  "independent_RLE_validity_NMS_matching_checked": true,
+  "embedding_and_score_provenance_checked": true,
+  "strong_subset_exactly_previous20": true,
+  "checkpoints_unchanged": true,
+  "new_training": false,
+  "GT_inference": false,
+  "original_method": false,
+  "goal_complete": false
+}

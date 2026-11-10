@@ -1,0 +1,49 @@
+{
+  "timing": "Captured post-execution, not claimed as pre-run payload hashing",
+  "files": {
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/carrier.py": {
+      "sha256": "d3ed85d57bf77ce92a1eb77b649eeddd1dd21ce2179e67280065ad5f1549670b",
+      "bytes": 3288
+    },
+    "research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/transformer_decoder/maskdino_decoder.py": {
+      "sha256": "b6a15b63a57ed4613a4b49660b51d6de8414debd5a3609ec03024397405bab77",
+      "bytes": 25600
+    },
+    "research/ITC_RR_BASELINE_RELEASE_V1_20261109/code/rr_component.py": {
+      "sha256": "653844f4f29e08230aa31a5565fcbe9cdd3d069a31be8f5a6c8c5e6b3fc9e447",
+      "bytes": 2764
+    },
+    "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/frozen_encoding_v1/code/predict.py": {
+      "sha256": "9b91d0bc1ccd0144e52a23381b5c3e9f4ddc98084f4649c09333230ec8b0780f",
+      "bytes": 9140
+    },
+    "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/frozen_encoding_v1/COHORT.json": {
+      "sha256": "edd899fcb5e3ccd11cd1bb278999054b6552bbbfc749554c0a12aacd6d2a0b58",
+      "bytes": 1294
+    },
+    "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/scale_exposure_control_v1/evaluations/S0/results/REFERENCE_MASKS.json.gz": {
+      "sha256": "0013927e4e14f42fa4dff12ca3e8d8557401ea558434229b9c0cc69025762e9a",
+      "bytes": 60826
+    },
+    "research/ITC_AUTORESEARCH_RESOLUTION_V1_20261109/experiments/frozen_bam_transfer/code/analyze.py": {
+      "sha256": "ea0356ec8b46afe20e6e305f1dfe3892e569198d3db976c8a2155023ffd8abae",
+      "bytes": 11481
+    },
+    "research/D0_SELVA_M0_GPU_CACHE_V2_20261031/scripts/fast_evaluator.py": {
+      "sha256": "6d700d1d108cc56f51b72e53254a0c209beab06206b355d2779179d9b97f9c2d",
+      "bytes": 9269
+    },
+    "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/frozen_encoding_v1/train_tile_000_w14_inputs.npz": {
+      "sha256": "ff9622a2502da4c47c6d7012580e1b6594ff2efc1b7eabec8e8507e632a13359",
+      "bytes": 4208445
+    },
+    "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/frozen_encoding_v1/train_tile_006_w27_inputs.npz": {
+      "sha256": "57a9623d75097cfa44dfb28ef8ce6b7cbb98e84d7046d6ad958589a8bbe23b20",
+      "bytes": 4290001
+    },
+    "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/frozen_encoding_v1/train_tile_027_w03_inputs.npz": {
+      "sha256": "ed7432daecec4cea91dc455748a8d2f50fb1385a399da457a63a2e31b0782c0a",
+      "bytes": 4190196
+    }
+  }
+}

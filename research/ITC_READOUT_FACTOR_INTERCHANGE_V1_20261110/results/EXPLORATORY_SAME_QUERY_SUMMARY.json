@@ -1,0 +1,21 @@
+{
+  "exploratory": true,
+  "summary": [
+    {
+      "readout": "AB",
+      "qualifying_witnesses": 2,
+      "same_query_box_iou50": 1,
+      "same_query_factual_mask_iou50": 1,
+      "retained": 2
+    },
+    {
+      "readout": "BA",
+      "qualifying_witnesses": 7,
+      "same_query_box_iou50": 1,
+      "same_query_factual_mask_iou50": 0,
+      "retained": 6
+    }
+  ],
+  "thresholds_changed": false,
+  "forwards_added": 0
+}

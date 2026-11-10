@@ -1,0 +1,10 @@
+{
+  "forwards": 12,
+  "readout_pools": 24,
+  "raw_masks": 7200,
+  "reference_occurrences": 298,
+  "per_reference_rows": 2384,
+  "new_training": false,
+  "seconds": 15.855858203954995,
+  "freeze_sha256": "667b04405e4a24b024c3f3cec7666ab3f9eaf8d4785f7ee3cb2c37c74a697e03"
+}

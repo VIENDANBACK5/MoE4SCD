@@ -1,0 +1,11 @@
+training_arm,contrast,new_raw,lost_raw,new_final,lost_final,new_small,lost_small
+S0,BB_to_AB,8,108,6,97,1,37
+S0,BB_to_BA,21,83,18,81,4,39
+S0,AA_to_AB,0,247,0,253,0,113
+S0,AA_to_BA,1,210,0,225,0,112
+S0,AA_to_BB,0,147,0,162,0,77
+S1,BB_to_AB,3,153,4,152,2,73
+S1,BB_to_BA,9,121,11,122,6,60
+S1,AA_to_AB,2,188,2,190,1,100
+S1,AA_to_BA,2,150,2,153,0,82
+S1,AA_to_BB,2,38,2,42,1,29

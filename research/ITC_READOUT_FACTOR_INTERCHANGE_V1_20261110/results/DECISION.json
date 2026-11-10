@@ -1,0 +1,13 @@
+{
+  "status": "EXECUTED_FIXED_CHECKPOINT_READOUT_INTERCHANGE",
+  "S1_strong_residual_N": 20,
+  "AB_recovered": 2,
+  "BA_recovered": 7,
+  "operational_pattern": "NO_DOMINANT_INTERCHANGE_PATTERN",
+  "architecture_cause_identified": false,
+  "feature_capacity_certificate": false,
+  "novel_method": false,
+  "independent_generalization": false,
+  "biological_identity_verified": false,
+  "original_goal_complete": false
+}

@@ -1,0 +1,32 @@
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/pixel_decoder/maskdino_encoder.py:362: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @autocast(enabled=False)
+/home/chung/RS/Image Segmentation/research/ITC_MASK_DINO_FORMATION_V1_20261104/vendor/MaskDINO/maskdino/modeling/transformer_decoder/dino_decoder.py:220: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @autocast(enabled=False)
+/home/chung/RS/Image Segmentation/cs2_venv/lib/python3.11/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+S0 train_tile_000_w14 AA 185
+S0 train_tile_000_w14 BB 175
+S0 train_tile_000_w14 AB 69
+S0 train_tile_000_w14 BA 80
+S0 train_tile_006_w27 AA 122
+S0 train_tile_006_w27 BB 122
+S0 train_tile_006_w27 AB 42
+S0 train_tile_006_w27 BA 51
+S0 train_tile_027_w03 AA 132
+S0 train_tile_027_w03 BB 146
+S0 train_tile_027_w03 AB 47
+S0 train_tile_027_w03 BA 60
+S1 train_tile_000_w14 AA 209
+S1 train_tile_000_w14 BB 209
+S1 train_tile_000_w14 AB 112
+S1 train_tile_000_w14 BA 156
+S1 train_tile_006_w27 AA 139
+S1 train_tile_006_w27 BB 179
+S1 train_tile_006_w27 AB 84
+S1 train_tile_006_w27 BA 151
+S1 train_tile_027_w03 AA 150
+S1 train_tile_027_w03 BB 173
+S1 train_tile_027_w03 AB 73
+S1 train_tile_027_w03 BA 130

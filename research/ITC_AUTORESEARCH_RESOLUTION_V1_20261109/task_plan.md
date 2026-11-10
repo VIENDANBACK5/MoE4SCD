@@ -98,3 +98,14 @@ Current turn classification: NO_PROGRESS_EXTERNAL_INPUT_UNCHANGED. First consecu
 ## Cycle11 — blocked audit satisfied
 
 Third consecutive current missing-input check: no independent annotator/response asset; no live study process. Same condition in cycles9/10/11, not historical2/3/4. No new science performed. Completion audit remains negative. See CURRENT_GOAL_BLOCK.md; native BLOCKED update requested. No further automatic architecture/threshold/training or protected-data work is queued.
+
+## User-requested autoresearch continuation — cycle12
+
+Prior nativeblock was specific to the independent-reference gate and was incorrectly generalized as a stop for all research. The current user request enables direct scientific work; the nativegoal API itself still reportsblocked and exposes no resume operation. No scheduler/status fabrication.
+
+- [x] Bind actual final bilinear readout and methodological limits; protocol6c1d8a9 precedes12newforwards.
+- [x] Capture fixed E/F, produce24pools/7200raw masks withoutGTinference/training, exactnative/parity checks.
+- [x] Score/verifyactual masks, originalscore/samecount/source/size/fullnewlosscontrols.
+- [x] Record separately exploratorysame-querycheck(daa9c3e), fixedqualitativefigure and currentdecision.
+
+PROGRESS: S1strongresidual2/20ABrescue,7/20BA; no dominant pattern. BA11new/122lostfinalmatches; swaps not useful, no capacity/architecturecause claim. Originalgoal remains unachieved. No model job remains live or automatically queued.
