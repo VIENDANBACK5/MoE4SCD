@@ -19,8 +19,8 @@ constraints:
   human_reviews_fabricated: false
   bound: One evidence-driven cycle at a time; no architecture sweep or automatic V2.
 current_work:
-  stage: Finite saved-mask encoding residuals EXECUTED/VERIFIED; robust functional
-    discrepancy persists, internal cause not identified
+  stage: 'Independent-reference prerequisite not executable: 0 confirmed annotators
+    / 0 responses; bounded M1 studies complete'
   new_training_runs: 2
   new_carrier_forwards: 3582
   independent_annotations_collected: 0
@@ -135,24 +135,23 @@ experiments:
     native_AP_delta: -0.95981614272018
     original_method: false
 outer_loop:
-  cycle: 8
-  last_direction: Close finite residual analysis. No new training/threshold/scale-loss/query/decoder
-    branch justified by final-pool artifacts alone.
+  cycle: 9
+  last_direction: Wait for actual eligible reference evidence/participation; do not
+    substitute new masks, synthetic reviewers, closed recipes or tuning
   last_reflection: S1 A→B raw losses38/gains2, not36losses.20losses start atIoU75;16near-whole
     proxy. Residual is not solely threshold/fragment effects, but no internal cause
     or novel intervention is identified.
-  latest_turn_audit: 'PROGRESS: 1192 paired records/2384 exact RLE witnesses characterize
-    residual margins, crop/source effects and all native collateral changes; no new
-    model execution'
-  blocked_condition: Qualifying independent same-RGB annotation evidence unavailable;
-    no actual participant/response; user availability question pending
+  latest_turn_audit: 'NO_PROGRESS: independent reference input revalidated unchanged;
+    no model job live, no qualifying response found'
+  blocked_condition: Actual qualifying independent same-RGB reference annotations/participants
+    are unavailable for the registered independent-reference gate
   condition_recorded_in_consecutive_cycles:
   - 2
   - 3
   - 4
   blocked_condition_history: Independent annotation evidence remains unavailable,
     but does not prevent theoretical/nearest-art work on controlled re-encoding
-  fresh_resume_blocked_audit_count: 0
+  fresh_resume_blocked_audit_count: 1
 workspace:
   findings: findings.md
   log: research-log.md

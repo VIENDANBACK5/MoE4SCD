@@ -1,6 +1,6 @@
 {
-  "recorded_local": "2026-11-10T13:22:40.242295+07:00",
-  "status": "ACTIVE_SAVED_ENCODING_RESIDUALS_CHARACTERIZED_ORIGINAL_METHOD_NOT_ESTABLISHED",
+  "recorded_local": "2026-11-10T13:27:48.503432+07:00",
+  "status": "ACTIVE_REQUIRED_INDEPENDENT_REFERENCE_INPUT_NOT_AVAILABLE",
   "carrier_forwards": 3582,
   "new_carrier_training": true,
   "original_method_supported": false,
@@ -35,7 +35,7 @@
     4
   ],
   "paper_verification_sha256": "048bc4628f9a7d27cf47f32f3ecdf4614b221f47133dc137a17def0a850835c0",
-  "fresh_resume_blocked_audit_count": 0,
+  "fresh_resume_blocked_audit_count": 1,
   "new_scale_experiment_forwards": 12,
   "new_M1_training_runs": 2,
   "M1_research_directory": "research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110",
@@ -109,5 +109,24 @@
   "new_cycle8_model_forwards": 0,
   "new_cycle8_training_updates": 0,
   "saved_encoding_residuals_verified": true,
-  "encoding_residuals_verification_sha256": "eaf82422718f04899e59a1b5d3e2a57b3af8fb3811604cde2dea55bc3357dc27"
+  "encoding_residuals_verification_sha256": "eaf82422718f04899e59a1b5d3e2a57b3af8fb3811604cde2dea55bc3357dc27",
+  "new_cycle9_model_forwards": 0,
+  "new_cycle9_training_updates": 0,
+  "current_turn_classification": "NO_PROGRESS_EXTERNAL_INPUT_UNCHANGED",
+  "independent_reference_input_check": {
+    "case_states": [
+      "NOT_STARTED",
+      "NOT_STARTED",
+      "NOT_STARTED",
+      "NOT_STARTED",
+      "NOT_STARTED",
+      "NOT_STARTED"
+    ],
+    "blank_annotation_files": 6,
+    "actual_response_files_observed": 0,
+    "annotators_confirmed": 0,
+    "question_remains_pending": true,
+    "no_external_contact": true,
+    "no_protected_access": true
+  }
 }

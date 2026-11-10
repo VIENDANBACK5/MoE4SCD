@@ -88,3 +88,9 @@ Previous goal turn: PROGRESS — both matched398-update controls and24forwards c
 - [x] Report residual phenomenon without claiming same-query trajectories, internal architecture cause or original-method entry.
 
 PROGRESS: S1ABhas38losses/2gains;20losses start atIoU75,16ofthose near-whole source proxies. Neither threshold effects nor crop fragments alone explain the residual. Native201endsat.499884;655at.366873. This does not isolate selection versus decoder causes or justify another module. No model job or threshold change; goal remains ACTIVE/NOT ACHIEVED.
+
+## Cycle9 — external prerequisite recheck, no scientific progress
+
+Previous turn was PROGRESS (actual paired residual analysis). Current input check finds all6annotation files blank, all6case states NOT_STARTED, no actual response artifact and no live model job. The registered independent-reference gate requires actual qualified independent participation or eligible pre-existing annotation files; the pending availability question has not supplied either. No new study is scientifically justified by repeating final-pool statistics.
+
+Current turn classification: NO_PROGRESS_EXTERNAL_INPUT_UNCHANGED. First consecutive blocked turn after the completed M1work, count1/3; historical cycles2/3/4 are not reused to skip the resumed audit. Native goal stays ACTIVE/NOT ACHIEVED. No new architecture, training, threshold change, human contact or protected access.
