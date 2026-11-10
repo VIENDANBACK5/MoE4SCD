@@ -1,11 +1,11 @@
 # Kết quả kiểm tra M1 bằng đối chứng huấn luyện thực
 
-Đã chạy xong hai Mask DINO cùng checkpoint gốc, cùng796TRAIN windows/398updates/300queries. S0huấn luyện tiếp ở1024; S1thêm phép nhân đôi pixel không mất thông tin cho một nửa mẫu. Đánh giá24lượt trên baTRAIN windows đãexposed,298references/133nhỏ; không phải SAME6hay kiểm định địa lý độc lập.
+Đã chạy xong hai Mask DINO từ cùng checkpoint gốc, cùng 796 TRAIN windows, 398 updates và 300 queries. S0 huấn luyện tiếp ở 1024 pixels; S1 thêm phép nhân đôi pixel không mất thông tin cho một nửa mẫu. Đánh giá 24 lượt trên ba TRAIN windows đã được sử dụng trước đó, gồm 298 reference occurrences và 133 trường hợp nhỏ. Đây không phải SAME6 hay kiểm định địa lý độc lập.
 
-Chênh lệch rawcoverage50 giữa ảnh gốc và ảnh nhân đôi giảm147→36(75,5%). Trên ảnh nhân đôi, finalTPtăng114→236;107trong123matches mới chưa có qualifyingrawmask ởS0. Giữ cùng443predictions vẫn tăng114→233TP. Đây là thay đổiformation thực, nhưng từ một augmentation đã có.
+Chênh lệch raw coverage50 giữa ảnh gốc và ảnh nhân đôi giảm 147→36 (75,5%). Trên ảnh nhân đôi, final TP tăng 114→236; 107 trong 123 matches mới chưa có qualifying raw mask ở S0. Giữ cùng 443 predictions vẫn tăng 114→233 TP. Hiệu ứng có thay đổi actual mask formation, nhưng đến từ một augmentation thông thường.
 
-Trên ảnh gốc: TP276→276, nhưng2matches mất đều là tán nhỏ; smallTP118→116, AP62,601→61,641, AP7577,169→74,496 vàFP163→222. Như vậy không có practicalsmall-recall improvement. Tính nhất quán scale tổng quát cũng chưa được thiết lập: cặpC/Dvẫn chênh lớn.
+Trên ảnh gốc: TP 276→276, nhưng hai matches bị mất đều là tán nhỏ; small TP 118→116, AP 62,601→61,641, AP75 77,169→74,496 và FP 163→222. Như vậy chưa có lợi ích thực dụng về small recall. Tính nhất quán scale tổng quát cũng chưa được thiết lập: cặp C/D vẫn chênh lệch lớn.
 
-Kết luận: phép thử đã cho thấy ảnh hưởng rõ của điều kiện huấn luyện/compute; chưa cung cấp căn cứ cho nguyên lýobservabilitymới, nguyên nhânBAMhay một hệ thống tốt hơn. Đóng recipe mộtpass; giữ cácbaselineđã xác minh. Không thêmepoch, đổi threshold, mởV2hoặc tuyên bốnovelty. Mục tiêu tìmoriginalmethod vẫn chưa đạt.
+Kết luận: phép thử cho thấy ảnh hưởng rõ của điều kiện huấn luyện và tính toán; chưa cung cấp căn cứ cho nguyên lý observability mới, nguyên nhân lỗi trên BAM hay một hệ thống tốt hơn. S1 xử lý tổng số pixels gấp 2,5 lần S0, nên không tách riêng tác động của scale exposure khỏi compute. Đóng recipe một pass; giữ các baselines đã xác minh. Không thêm epoch, đổi threshold, mở V2 hoặc tuyên bố novelty. Mục tiêu tìm original method vẫn chưa đạt.
 
 [Báo cáo đầy đủ](../../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/experiments/scale_exposure_control_v1/REPORT.md).
