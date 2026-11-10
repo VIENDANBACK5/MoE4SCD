@@ -27,3 +27,5 @@ There is no live study model process or queued job. This is not a GPU/job wait. 
 | Overall original-method objective | Above missing evidence cannot be replaced by an experiment completion flag | NOT_ACHIEVED |
 
 [Current M1 decision](../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/05_MATCHED_SCALE_CONTROL_DECISION.md), [residual report](../ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/analyses/encoding_residuals_v1/REPORT.md), [three-turn audit](RESUMED_BLOCKED_AUDIT.jsonl).
+
+Native goal tool returned status **blocked** after the audit. No scientific completion is claimed.

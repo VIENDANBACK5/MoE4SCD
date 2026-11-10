@@ -2,7 +2,7 @@ project:
   title: 'RGB tree crown instance segmentation: evidence-grounded resolution'
   question: Which currently supported solution should be retained, and what genuinely
     new evidence could justify a better single-carrier method?
-  status: blocked_update_requested
+  status: blocked
   started: '2026-11-09'
   domain: RGB individual tree crown instance segmentation
 continuity:
@@ -19,8 +19,8 @@ constraints:
   human_reviews_fabricated: false
   bound: One evidence-driven cycle at a time; no architecture sweep or automatic V2.
 current_work:
-  stage: Independent reference input unavailable; three consecutive current checks
-    pass blocked audit; native BLOCKED update requested
+  stage: 'BLOCKED: required independent-reference input missing; native goal status
+    confirmed blocked'
   new_training_runs: 2
   new_carrier_forwards: 3582
   independent_annotations_collected: 0
