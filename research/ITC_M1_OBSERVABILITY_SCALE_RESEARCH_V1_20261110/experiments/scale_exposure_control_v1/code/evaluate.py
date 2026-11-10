@@ -51,6 +51,9 @@ def main():
                      accepted_indices=pre,final_indices=keep,suppressed_indices=supp,
                      RGB_only=True,GT_inference=False,reference_masks_read=False,queries=300,
                      input_hw=list(a.shape[:2]),canonical_hw=[1024,1024],checkpoint_sha256=status['checkpoint_sha256'],
+                     mask_logit_grid_hw=list(out['pred_masks'].shape[-2:]),encoder_trace=model.sem_seg_head.predictor.site_trace,
+                     RGB_input_sha256=core.ah(a),common_valid_sha256=core.ah(v),
+                     backbone_normalized_input_sha256=core.ah(norms[obs].numpy()),
                      protocol_sha256=sha(EXP/'protocol.md'),seconds=time.monotonic()-t0)
                 with gzip.open(dest,'wt') as f:json.dump(data,f,allow_nan=False)
                 hashes[str(dest.relative_to(outdir))]=sha(dest);print(arm,row['id'],obs,len(keep),flush=True)

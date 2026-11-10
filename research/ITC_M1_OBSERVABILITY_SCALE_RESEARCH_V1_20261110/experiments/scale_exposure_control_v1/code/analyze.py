@@ -25,6 +25,28 @@ def main():
                new_final=new and not old,lost_final=old and not new,new_raw=b['raw50']=='True' and a['raw50']=='False',
                lost_raw=a['raw50']=='True' and b['raw50']=='False',S0_failure=a['failure'],S1_failure=b['failure']))
     pa.csvwrite(out/'RECOVERY_AND_LOSS.csv',changes)
+    # Equal-count operating controls, using prediction counts and original scores only.
+    gt=pa.gz(EXP/'evaluations/S0/results/REFERENCE_MASKS.json.gz')
+    cohort=read(PILOT/'COHORT.json');same=[];sources=[]
+    for arm in ['S0','S1']:
+        sources += [dict(training_arm=arm,**r) for r in rows(EXP/'evaluations'/arm/'results/SOURCE_RESULTS.csv')]
+    pa.csvwrite(out/'SOURCE_RESULTS.csv',sources)
+    for obs in 'ABCD':
+        pools={a:[] for a in ['S0','S1']}
+        for row in cohort:
+            d={a:pa.gz(EXP/'evaluations'/a/'predictions'/f"{row['id']}_{obs}.json.gz") for a in pools}
+            n=min(len(x['final_indices']) for x in d.values())
+            for a,x in d.items():pools[a].append([x['raw_predictions'][q] for q in x['final_indices'][:n]])
+        for a,p in pools.items():same.append(dict(observation=obs,training_arm=a,**pa.base.measure(gt['images'],gt['references'],p)))
+    pa.csvwrite(out/'SAME_COUNT.csv',same)
+    change_summary=[]
+    for obs in 'ABCD':
+        rr=[r for r in changes if r['observation']==obs]
+        change_summary.append(dict(observation=obs,new_final=sum(r['new_final'] for r in rr),lost_final=sum(r['lost_final'] for r in rr),
+               new_small=sum(r['new_final'] and r['source_small']=='True' for r in rr),
+               lost_small=sum(r['lost_final'] and r['source_small']=='True' for r in rr),
+               new_raw=sum(r['new_raw'] for r in rr),lost_raw=sum(r['lost_raw'] for r in rr)))
+    pa.csvwrite(out/'CHANGE_SUMMARY.csv',change_summary)
     by={(r['training_arm'],r['arm']):r for r in metrics}
     gap0=int(by['S0','A']['raw50'])-int(by['S0','B']['raw50'])
     gap1=int(by['S1','A']['raw50'])-int(by['S1','B']['raw50'])
