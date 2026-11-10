@@ -1,0 +1,19 @@
+{
+  "status": "VERIFIED_POST_HOC_PAIRED_RESIDUALS",
+  "recorded_local": "2026-11-10T13:21:25.356852+07:00",
+  "analysis_protocol_commit": "9ec6f2c",
+  "paired_rows": 1192,
+  "raw_best_witness_RLEs_checked": 2384,
+  "margins_partition_raw_losses_exactly": true,
+  "paired_counts_reconcile_with_sealed_metrics": true,
+  "native_final_changes": 4,
+  "input_hashes_checked": 32,
+  "sealed_control_artifacts_unchanged": 110,
+  "historical_decisions_unchanged": 8,
+  "new_model_forwards": 0,
+  "new_training_updates": 0,
+  "new_annotations": 0,
+  "new_thresholds": false,
+  "architectural_cause_identified": false,
+  "original_goal_complete": false
+}

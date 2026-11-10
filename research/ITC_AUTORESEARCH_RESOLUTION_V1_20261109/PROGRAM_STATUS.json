@@ -1,6 +1,6 @@
 {
-  "recorded_local": "2026-11-10T13:11:39.582900+07:00",
-  "status": "ACTIVE_SCALE_CONTROL_CLOSED_ORIGINAL_METHOD_NOT_ESTABLISHED",
+  "recorded_local": "2026-11-10T13:22:40.242295+07:00",
+  "status": "ACTIVE_SAVED_ENCODING_RESIDUALS_CHARACTERIZED_ORIGINAL_METHOD_NOT_ESTABLISHED",
   "carrier_forwards": 3582,
   "new_carrier_training": true,
   "original_method_supported": false,
@@ -105,5 +105,9 @@
     "followup_model_jobs_queued": 0
   },
   "scale_exposure_control_final_verification_sha256": "d2a7f6912f0c2faa348094f6a1b9b2f43e8d47c0969083b3da521b9cbb0d8247",
-  "scale_exposure_control_artifact_manifest_sha256": "ef59f4b566d50b1ccb75b12528702edc90acb8a2e2664102b2bc30a41c7c2c85"
+  "scale_exposure_control_artifact_manifest_sha256": "ef59f4b566d50b1ccb75b12528702edc90acb8a2e2664102b2bc30a41c7c2c85",
+  "new_cycle8_model_forwards": 0,
+  "new_cycle8_training_updates": 0,
+  "saved_encoding_residuals_verified": true,
+  "encoding_residuals_verification_sha256": "eaf82422718f04899e59a1b5d3e2a57b3af8fb3811604cde2dea55bc3357dc27"
 }

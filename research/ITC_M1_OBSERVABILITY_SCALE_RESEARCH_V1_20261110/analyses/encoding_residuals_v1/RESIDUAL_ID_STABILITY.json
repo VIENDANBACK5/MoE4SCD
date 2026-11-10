@@ -1,0 +1,12 @@
+{
+  "AB": {
+    "shared_raw_losses": 36,
+    "S0_only_raw_losses": 111,
+    "S1_only_raw_losses": 2
+  },
+  "CD": {
+    "shared_raw_losses": 8,
+    "S0_only_raw_losses": 20,
+    "S1_only_raw_losses": 2
+  }
+}

@@ -1,0 +1,13 @@
+training_arm,pair,subgroup,reference_N,raw_new,raw_lost,lost_left_50_55,lost_left_55_75,robust_lost,severe_lost,lost_right_45_50,new_final,lost_final,coverage_count_delta
+S0,AB,all,298,0,147,0,25,122,70,14,0,162,-147
+S0,AB,source_small,133,0,74,0,21,53,35,2,0,77,-74
+S0,AB,nearwhole_source_proxy,225,0,122,0,20,102,59,11,0,138,-122
+S0,CD,all,298,63,28,6,11,11,7,6,74,28,35
+S0,CD,source_small,133,41,9,3,3,3,2,3,44,8,32
+S0,CD,nearwhole_source_proxy,225,53,25,5,10,10,6,6,61,26,28
+S1,AB,all,298,2,38,0,18,20,12,6,2,42,-36
+S1,AB,source_small,133,1,28,0,13,15,9,5,1,29,-27
+S1,AB,nearwhole_source_proxy,225,1,28,0,12,16,9,5,1,33,-27
+S1,CD,all,298,83,10,2,4,4,3,2,89,10,73
+S1,CD,source_small,133,52,3,1,2,0,0,2,55,2,49
+S1,CD,nearwhole_source_proxy,225,66,9,2,3,4,3,1,71,8,57

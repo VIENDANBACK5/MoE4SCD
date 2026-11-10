@@ -1,0 +1,57 @@
+{
+  "scope": "Residual analysis files; self-excluded manifest",
+  "files": {
+    "BEST_WITNESS_ERROR_PROFILES.csv": {
+      "sha256": "8280392c565beb1a61551fcba75c3b8a4a8d4e20d72fcaaa3a22e5ecf3a13d72",
+      "bytes": 501
+    },
+    "COMPLETE.json": {
+      "sha256": "9209d442ed9e3d4d0fbb0cb6ae4b2c96c4fe7fd505a467f548749077e398905d",
+      "bytes": 470
+    },
+    "INPUT_BINDINGS.json": {
+      "sha256": "66f8295c4f071ddc37100e3391073dadacad1199ce29839a7e5ac1dc05207b8d",
+      "bytes": 6814
+    },
+    "NATIVE_FINAL_CHANGES.csv": {
+      "sha256": "084cd77614c67509a57786a1cecec8a1a43f779de3b6cd3274182de470451f81",
+      "bytes": 1079
+    },
+    "PAIRED_REFERENCES.csv": {
+      "sha256": "428bfa421ee085d09e26da920636dbbf1d9ce3d6360b2e522d15b836e58d0263",
+      "bytes": 398715
+    },
+    "PROTOCOL.md": {
+      "sha256": "525cb77f753ab14612199806a50d093e3bde891475845b00f17b766943177b69",
+      "bytes": 3086
+    },
+    "REPORT.md": {
+      "sha256": "e31d84d281481437a8e3164d6321cdf06e8145c92ef8a849df9825470d125e0d",
+      "bytes": 7344
+    },
+    "RESIDUAL_ID_STABILITY.json": {
+      "sha256": "925ce7342da52caf15b474a56d9c5bd399032c7b9ad4dfdee4aeb32719e7fb77",
+      "bytes": 207
+    },
+    "SOURCE_PROFILE.csv": {
+      "sha256": "4f99f45d5c8ba82fe5b084d43d09fef430bf79884c53aef6243f916ef2202b3b",
+      "bytes": 673
+    },
+    "SUMMARY.csv": {
+      "sha256": "68de8fcb621aa13b9e3caf78adcf02d48f395959d68523b3662a322aeb016ac1",
+      "bytes": 782
+    },
+    "VERIFICATION.json": {
+      "sha256": "eaf82422718f04899e59a1b5d3e2a57b3af8fb3811604cde2dea55bc3357dc27",
+      "bytes": 645
+    },
+    "analysis.log": {
+      "sha256": "0653a98c5fda90fd2220180b4c338b8b3588626429c14c7f36cf330c605f620f",
+      "bytes": 6868
+    },
+    "analyze.py": {
+      "sha256": "e30acb8d8f54d44866e4b6cff5870a222ddcf10116cb1ab9de6cce58fcd24c31",
+      "bytes": 8426
+    }
+  }
+}

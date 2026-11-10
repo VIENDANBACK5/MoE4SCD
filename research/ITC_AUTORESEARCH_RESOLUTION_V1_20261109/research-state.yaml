@@ -19,8 +19,8 @@ constraints:
   human_reviews_fabricated: false
   bound: One evidence-driven cycle at a time; no architecture sweep or automatic V2.
 current_work:
-  stage: Matched ordinary scale-exposure control EXECUTED and VERIFIED; narrow gap
-    screen passes, native AP/FP/small tradeoff; no original-method entry
+  stage: Finite saved-mask encoding residuals EXECUTED/VERIFIED; robust functional
+    discrepancy persists, internal cause not identified
   new_training_runs: 2
   new_carrier_forwards: 3582
   independent_annotations_collected: 0
@@ -48,6 +48,7 @@ current_work:
   new_scale_control_evaluation_forwards: 24
   scientific_optimizer_updates: 796
   next_model_jobs_queued: 0
+  last_analysis: research/ITC_M1_OBSERVABILITY_SCALE_RESEARCH_V1_20261110/analyses/encoding_residuals_v1
 hypotheses:
 - id: R1
   statement: Existing primary public resources may supply prediction-independent annotation
@@ -74,6 +75,13 @@ hypotheses:
     are not estimable from these labels
   result: RR +0.452pp overall Recall50, -0.041AP, +64.7FP/seed; same-count +0.332pp;
     original-small outcome not estimable
+- id: R5
+  statement: Large lossless-raster mask differences require a new observability mechanism
+  status: necessity_not_established
+  result: Ordinary augmentation/computation shrinks rawgap147→36;38gross losses remain,20fromIoU75.
+    NativeAP/FP/small tradeoff persists.
+  nature: Known treatment and persistent functional residual; not an architectural
+    cause or original-method efficacy claim
 experiments:
   total_runs: 4
   baseline_value: null
@@ -127,14 +135,15 @@ experiments:
     native_AP_delta: -0.95981614272018
     original_method: false
 outer_loop:
-  cycle: 7
-  last_direction: Close fixed conventional augmentation control, no extra epochs/scale
-    loss/V2. Original-method entry not established.
-  last_reflection: Known scale exposure/additional raster computation reduces lossless
-    encoding sensitivity, but causes native AP/FP/small losses; phenomenon does not
-    establish necessity of an original observability mechanism.
-  latest_turn_audit: 'PROGRESS: two full-scope 398-update controls, 24 frozen inference
-    outputs and independent RLE/schedule/checkpoint verification completed'
+  cycle: 8
+  last_direction: Close finite residual analysis. No new training/threshold/scale-loss/query/decoder
+    branch justified by final-pool artifacts alone.
+  last_reflection: S1 A→B raw losses38/gains2, not36losses.20losses start atIoU75;16near-whole
+    proxy. Residual is not solely threshold/fragment effects, but no internal cause
+    or novel intervention is identified.
+  latest_turn_audit: 'PROGRESS: 1192 paired records/2384 exact RLE witnesses characterize
+    residual margins, crop/source effects and all native collateral changes; no new
+    model execution'
   blocked_condition: Qualifying independent same-RGB annotation evidence unavailable;
     no actual participant/response; user availability question pending
   condition_recorded_in_consecutive_cycles:

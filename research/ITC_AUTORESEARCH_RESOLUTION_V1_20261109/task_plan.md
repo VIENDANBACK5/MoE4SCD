@@ -77,3 +77,14 @@ PROGRESS: actual experiment complete, original method/learning cause not establi
 - [x] Analyze raw/final/size/source/grossloss/same-count outcomes; decide whether conventional treatment explains M1before any novelmethodentry.
 
 Cycle7 complete: raw A/Bgap147→36; registered narrow screen passes, nativeTPunchanged but AP−0.960/AP75−2.673, FP+59 and smallTP−2. Known augmentation/computation treatment, not a practical replacement or original mechanism. Both optimizer states retained, all24outputs/7200raw/3463final masks verified. No model job remains live or queued; original goal ACTIVE/NOT ACHIEVED.
+
+## Cycle8 — finite saved-mask residual characterization
+
+Previous goal turn: PROGRESS — both matched398-update controls and24forwards completed, actual masks/optimizer states retained. No live model handle to wait on.
+
+- [x] Lock post-hoc joint residual definitions before computing new tables; preserve all298references and bothAB/CDpairs.
+- [x] Verify1192paired rows and2384raw-best RLE witnesses, margins, crop/source/size profiles and all4nativefinal changes.
+- [x] Reconcile grossnew/lost with sealedmetrics; verify110control artifacts and8historical decisions unchanged.
+- [x] Report residual phenomenon without claiming same-query trajectories, internal architecture cause or original-method entry.
+
+PROGRESS: S1ABhas38losses/2gains;20losses start atIoU75,16ofthose near-whole source proxies. Neither threshold effects nor crop fragments alone explain the residual. Native201endsat.499884;655at.366873. This does not isolate selection versus decoder causes or justify another module. No model job or threshold change; goal remains ACTIVE/NOT ACHIEVED.

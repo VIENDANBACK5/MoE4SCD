@@ -1,0 +1,15 @@
+{
+  "status": "EXECUTED_POST_HOC_SAVED_MASK_ANALYSIS",
+  "paired_records": 1192,
+  "raw_witnesses_RLE_checked": 2384,
+  "native_final_changes": 4,
+  "new_carrier_forwards": 0,
+  "new_training_updates": 0,
+  "new_reference_annotations": 0,
+  "thresholds_changed": false,
+  "query_trajectory_measured": false,
+  "architectural_cause_identified": false,
+  "independent_reference_stability": false,
+  "original_method_established": false,
+  "overall_goal_complete": false
+}
