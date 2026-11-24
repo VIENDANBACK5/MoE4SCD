@@ -1,0 +1,38 @@
+{
+  "checkpoint": "DeadTrees/experiments/tree_flow_unified_v1/epoch_checkpoints/epoch_0039.pth",
+  "split": "eval",
+  "n_images": 382,
+  "n_gt_anns": 15177,
+  "n_predictions": 324,
+  "decode_cfg": {
+    "canopy_thresh": 0.4,
+    "sdt_thresh": -0.5,
+    "nms_iou": 0.3,
+    "min_area": 30,
+    "n_steps": 30,
+    "eta": 1.0,
+    "device": "cuda"
+  },
+  "coco_ap": {
+    "AP": 0.0165016501650165,
+    "AP50": 0.165016501650165,
+    "AP75": 0.0,
+    "APs": 0.0,
+    "APm": 0.00275027502750275,
+    "APl": 0.024752475247524754,
+    "AR1": 0.0006588917440864466,
+    "AR10": 0.0013177834881728933,
+    "AR100": 0.0013177834881728933,
+    "ARs": 0.0,
+    "ARm": 0.007262164124909223,
+    "ARl": 0.0007453230975627936
+  },
+  "f1_metrics": {
+    "F1@0.5": 0.0002580069443594652,
+    "Precision": 0.006172839487120866,
+    "Recall": 0.00013177834880860655,
+    "TP": 2,
+    "FP": 322,
+    "FN": 15175
+  }
+}

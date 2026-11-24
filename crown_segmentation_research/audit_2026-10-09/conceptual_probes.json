@@ -1,0 +1,26 @@
+{
+  "normalized_SDT_size_information": [
+    {
+      "square_side_px": 21,
+      "area_px": 441,
+      "sdt_max": 1.0,
+      "sdt_slope_per_px": 0.09090909361839294,
+      "recoverable_max_EDT_from_slope": 10.999999672174463,
+      "actual_max_EDT_px": 11
+    },
+    {
+      "square_side_px": 41,
+      "area_px": 1681,
+      "sdt_max": 1.0,
+      "sdt_slope_per_px": 0.0476190447807312,
+      "recoverable_max_EDT_from_slope": 21.000001251697615,
+      "actual_max_EDT_px": 21
+    }
+  ],
+  "planned_M3_stop_gradient_changes_constraint_gradient": {
+    "theta": 0.75,
+    "constraint_value": 0.5,
+    "true_Lagrangian_constraint_gradient": 2.0,
+    "stop_gradient_variant": 1.5
+  }
+}

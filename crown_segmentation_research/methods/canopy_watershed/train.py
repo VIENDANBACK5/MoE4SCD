@@ -287,4 +287,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    from crown_segmentation_research.research_integrity.a06_hardening_v2.runtime import reject_legacy_entrypoint
+    reject_legacy_entrypoint(__file__)
     main()

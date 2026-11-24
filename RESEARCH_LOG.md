@@ -4,6 +4,55 @@ Nhật ký nghiên cứu theo session. Mỗi session ghi: việc đã làm, phá
 
 ---
 
+## 2026-09-28 — Session 6: Rò rỉ test, lỗi đa giác, và benchmark sạch trên CanopyRS/QuebecTrees
+
+### Việc đã làm
+- **Phát hiện rò rỉ test:** V1 train trên Quebec 600 patch = Z1+Z2+Z3, và mọi checkpoint sau đều warm-start từ V1 (`tree_flow_exhaustive_v1/train_resume.log`). Mọi số Z2/Z3 của TreeFlowNet đều không phải held-out.
+- **Sửa lỗi lọc đa giác** trong `large_scale_v2` (bỏ nhầm tán có đường viền thắt eo). Dùng `make_valid`, có test, chạy lại mọi cấu hình (hậu tố `_pf`). Tài liệu trả lời Thầy đã cập nhật số `_pf`; hình 24/25 vẽ lại.
+- **Thí nghiệm decoder không cần train lại** trên Z2: tường từ độ phân kỳ flow (`decode_flowseam.decode_flowwall`), gán theo điểm hút (`decode_flowassign`).
+- **Benchmark sạch** `crown_segmentation_research/clean_benchmark/`: chuẩn bị CanopyRS/QuebecTrees (train 148 tile/53.289 tán, val 139/15.155, test 168/22.018); target nhanh v1 (khớp chính xác target gốc, có test) và v2; trainer TreeFlowNet + Mask R-CNN; `evaluate.py` (COCO AP maxDets 400, F1 theo ngưỡng điểm, số đếm theo tile cho bootstrap); `select_on_val.py` (chọn trên val, test chạy một lần); `render_preview.py`.
+- Kế hoạch có giả thuyết đăng ký trước (H1–H5): `meeting/week1/KE_HOACH_NGHIEN_CUU_TIEP_THEO.md`.
+- Sửa code train cũ (29/09): chỉ dùng Z1, cửa sổ ngẫu nhiên mỗi lần với nhãn trên lưới nới lề, chặn khởi tạo từ checkpoint rò rỉ (`crown_segmentation_research/lineage.py`), ImageNet thay cho khởi tạo ngẫu nhiên, snapshot để chọn trên validation, seed, SimMIM chỉ dùng Z1. Test: `tests/test_legacy_training_fixes.py`.
+- Kết quả test sạch (seed 42): Mask R-CNN 34,29; C2 26,47; C1 25,86; C0 24,92 AP.
+- 3 seed (29/09): C0 24,81±0,58; C1 25,78±0,16; C2 25,81±0,58; Mask R-CNN 34,82±0,67. Target v2 có tác dụng (+0,96, dương ở cả 3 seed); lề target thì không (+0,04). Ablation đầu centroid (seed 42): C3 26,61; C4 26,18 (H8 bị bác bỏ); **C5 không có đầu centroid, tâm lấy từ SDT: 28,81 (+2,3)**. D (decoder dùng thứ hạng) làm validation giảm, H6 bị bác bỏ.
+- Checkpoint đầy đủ + `--resume` cho hai trainer (`clean_benchmark/checkpointing.py`: optimizer, scheduler, RNG, generator của DataLoader, lịch sử); có test train liền mạch = train–lưu–resume. Ba run seed 42 đang chạy vẫn dùng định dạng cũ (chỉ trọng số): nếu phải dừng, resume sẽ là *gần đúng* và được ghi vào `resume.log`.
+
+### Phát hiện quan trọng
+- Sau khi sửa lỗi đa giác, Z3 R6: F1@50 **0,577** (trước 0,530), F1@75 0,255; đúng 1 tán 49%, gộp **27%**, sót **15%** (trước 29%). Guided filter **trung tính** (0,590 so với 0,589), không có hại như ghi ở Session 5.
+- Oracle trên Z2 (sau khi sửa): bề mặt ngập là thành phần có tác động lớn nhất (F1@50 0,606 → 0,755; F1@75 0,239 → 0,581). Gộp chỉ hết khi cả seed và bề mặt ngập đều là oracle.
+- Tường từ flow / gán theo điểm hút: F1@50 0,615 / 0,599 so với 0,607, tỉ lệ gộp vẫn 14–17%, tức flow hiện tại không mang tín hiệu ranh giới.
+- Hai lỗi trong code đánh giá bắt được nhờ chạy thử trên checkpoint epoch 1: pycocotools `stats[0]` dùng maxDets = 100 cố định (trả về −1 khi maxDets = [1, 10, 400]); `loadRes` chèn kiểu numpy vào dict kết quả. Đã sửa và có test.
+
+### Trạng thái cuối session
+- C0 (`runs/c0_v1_s42`) train xong 30 epoch; đang chọn cấu hình trên val rồi chạy test một lần (`run_clean_eval.sh`).
+- C1 (dừng ở epoch 8) và Mask R-CNN (dừng ở epoch 14) **bị kill theo yêu cầu** để train lại sau với checkpoint đầy đủ. Hai run dở dang lưu ở `runs/_killed_20260928/` (không dùng cho đánh giá).
+- Train lại: `crown_segmentation_research/clean_benchmark/run_clean_training.sh` (bỏ qua run đã xong, tự resume run bị ngắt), sau đó `run_clean_eval.sh`.
+
+---
+
+## 2026-09-27 — Session 5: Trả lời phản biện của Thầy (Tuần 1) + sửa pipeline large-scale TreeFlowNet
+
+### Việc đã làm
+- Đọc và kiểm chứng tài liệu cho từng câu hỏi của Thầy: Cellpose, Omnipose, HoVer-Net, Freudenberg 2022, FG-TreeSeg 2026, TreeCoG 2026, Detectree2, SelvaBox, Teng et al. 2025, Allen et al. 2025, Huang et al. 2018, nnU-Net, U-Net, Hao et al. 2023 và các paper khác (danh sách trong tài liệu trả lời).
+- Rà code và slide. Phát hiện: lỗi sigmoid hai lần trong script large-scale; decoder của ảnh 17 không phải decoder đã benchmark; số baseline Mask2Former/RSPrompter/YOLO chỉ là hằng số gõ tay; "Sobolev loss" trong slide không có trong code; "1 km²" thực ra là 0,042 km² và nằm trên vùng train.
+- Viết pipeline `crown_segmentation_research/experiments/large_scale_v2/`: mỗi nguyên nhân là một flag, chấm GT ở mức raster, ghép tile theo luật sở hữu, cache đầu ra mạng. Kèm test `tests/test_large_scale_v2.py`.
+- Chọn cấu hình trên Z2 (val), sau đó chạy test một lần trên Z3. *(Đính chính Session 6: Z2/Z3 nằm trong dữ liệu train của V1.)*
+- Tài liệu trả lời Thầy: `meeting/week1/TRA_LOI_CAU_HOI_THAY_SAU_HOP_TUAN1.md`.
+
+### Phát hiện quan trọng
+- Ảnh 17 so với GT: F1@50 = 0,17; chỉ 20,7% số cây được khoanh đúng 1 tán; 82% dự đoán sai nằm trong tán đã có nhãn.
+- Z3 test: F1@50 tăng từ 0,188 lên 0,530, F1@75 từ 0,052 lên 0,236; tỉ lệ cây bị xé giảm từ 32% còn 1%. Lỗi còn lại chủ yếu là gộp (22%) và sót (29%). *(Đính chính Session 6: số trước bản sửa lỗi đa giác; sau khi sửa là 0,577, gộp 27%, sót 15%.)*
+- Với 30 bước Euler, 58% số tán chưa hội tụ. Ở 250 bước thì tán nào cũng hội tụ, nhưng 43% số tán bị flow chia thành ≥ 2 điểm hút, tức gốc rễ nằm ở head chứ không chỉ ở decoder.
+- Khoảng cách seed 2,0 m (chọn trên Z2) cho kết quả *kém hơn* 0,83 m trên Z3, vì tán Z3 nhỏ hơn. Hằng số decoder không chuyển được giữa các lâm phần khác nhau.
+- Độ nhạy theo tỉ lệ ảnh (Z3): F1 = 0,585 ở 1,0×; 0,335 ở 0,5×; 0,216 ở 1,5×. Model không bất biến theo tỉ lệ.
+- Guided filter làm F1 giảm từ 0,538 xuống 0,457 trên Z2, nên đã bỏ. *(Đính chính Session 6: do lỗi đa giác; sau khi sửa thì trung tính.)*
+
+### Bước tiếp theo
+- Train lại với target theo đơn vị vật lý (SDT không chặn ở 15 px, σ centroid theo kích thước tán), patch ≥ 1024 px, augmentation đổi tỉ lệ; bán kính seed thích ứng. (Đính chính 28/09: DSM không giúp trên SBL theo Teng et al. 2025, nên không ưu tiên.)
+- Train baseline Mask R-CNN trên cùng split (dùng AOI của Ramesh/Teng) để so sánh công bằng.
+
+---
+
 ## 2026-09-17 — Session 4: Neuro-Algorithmic Reasoning & Track 2 Tree Crown Segmentation Focus
 
 ### Việc đã làm & Đột phá Lý thuyết
@@ -128,3 +177,12 @@ TP=41,552  FP=58,765  FN=11,452  TN=199,221
 | `generate_sam2_masks_test.py` | Phase -1: gen masks for SECOND-OC |
 | `SECOND-OC/` | Object-centric benchmark pipeline |
 | `plan/` | Research plans (v2 + agent-executable) |
+
+
+## 2026-11-02 — ITC independent identity–boundary review decision
+
+[OBSERVED/INHERITED] Researcher keeps EVIDENCE_INSUFFICIENT_FOR_METHOD_SELECTION and pauses new model training. Established tested failure: hardownershipprojection discards useful overlapping hypotheses; no RGB-only solutionmechanism established. Small positive reference-conditionedRGBmembershipsignal is not biologicalidentity or downstreamsegmentationproof.
+
+[OBSERVED] Specificreviewreadinesscheck: original12randompackets contain2allNoDatacases(case00/case03), bothA/Binvalid;10remaininghavevalidRGBandA/Bsupport. Prior wording thatall12were readyforreview was too broad. Originalsealedartifacts retained. Newversionedreviewpackage: research/RGB_ITC_REVIEW_PILOT_V1_20261102/START_HERE.md. Eligibility is not a humanassessmentofhardness or boundaryclarity.
+
+[BLOCKED/UNVERIFIED] Nextdependency is twoindependent RGBreviews thenseparate expertadjudication, withuncertainty/abstention andStage1submissionslockedbeforemodel/referenceunblinding.0reviewers/0adjudications; no newtraining, no contacttoothers, noLiDARexperiment. No CCBR/backbone/jointmodel or privilegedtargetselected. Narrowedquestion: Which ambiguous crown identity/boundary decisions are resolvable from RGB, and how can competing hypotheses be retained until sufficient evidence exists?

@@ -1,0 +1,23 @@
+{
+  "train": {
+    "checked_tiles": 148,
+    "checked_annotations": 53289,
+    "missing_tiles": [],
+    "duplicate_source_tiles": 0,
+    "errors": []
+  },
+  "validation": {
+    "checked_tiles": 139,
+    "checked_annotations": 15155,
+    "missing_tiles": [],
+    "duplicate_source_tiles": 0,
+    "errors": []
+  },
+  "test": {
+    "checked_tiles": 168,
+    "checked_annotations": 22018,
+    "missing_tiles": [],
+    "duplicate_source_tiles": 0,
+    "errors": []
+  }
+}

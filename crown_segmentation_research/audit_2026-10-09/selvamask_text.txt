@@ -1,0 +1,1412 @@
+                                                    S ELVA M ASK : Segmenting Trees in Tropical Forests and Beyond
+
+
+
+                                                    Simon-Olivier Duguay * 1 2 Hugo Baudchon 1 2 Etienne Laliberté 1 2 Helene Muller-Landau 3
+                                                                           Gonzalo Rivas-Torres 4 Arthur Ouaknine 5 2
+arXiv:2602.02426v1 [cs.CV] 2 Feb 2026
+
+
+
+
+                                                       BCI50ha                        Detectree2                      SelvaMask (ours)            Predictions (ours)
+                                        Figure 1. Qualitative comparison. Existing tropical forest datasets (BCI50ha, Detectree2) and our proposed S ELVA M ASK dataset,
+                                        including the predictions of our modular pipeline for individual tree crown segmentation (see Sec. 4.2) on the S ELVA M ASK ’s test set.
+
+
+
+                                                                  Abstract                                            detection-prompter. Our approach reaches state-
+                                                                                                                      of-the-art performance, outperforming both zero-
+                                             Tropical forests harbor most of the planet’s tree
+                                                                                                                      shot generalist models and fully supervised end-
+                                             biodiversity and are critical to global ecological
+                                                                                                                      to-end methods in dense tropical forests. We vali-
+                                             balance. Canopy trees in particular play a dis-
+                                                                                                                      date these gains on external tropical and temperate
+                                             proportionate role in carbon storage and func-
+                                                                                                                      datasets, demonstrating that S ELVA M ASK serves
+                                             tioning of these ecosystems. Studying canopy
+                                                                                                                      as both a challenging benchmark and a key en-
+                                             trees at scale requires accurate delineation of in-
+                                                                                                                      abler for generalized forest monitoring. Our code1
+                                             dividual tree crowns, typically performed using
+                                                                                                                      and dataset2 will be released publicly.
+                                             high-resolution aerial imagery. Despite advances
+                                             in transformer-based models for individual tree
+                                             crown segmentation, performance remains low
+                                             in most forests, especially tropical ones. To this                1. Introduction
+                                             end, we introduce S ELVA M ASK, a new tropical
+                                             dataset containing over 8 800 manually delineated                 Tropical forests sustain most of Earth’s tree biodiversity
+                                             tree crowns across three Neotropical forest sites                 (Gatti et al., 2022) and carbon (Pan et al., 2011), with large
+                                             in Panama, Brazil, and Ecuador. S ELVA M ASK                      canopy trees exerting disproportionate influence on carbon
+                                             features comprehensive annotations, including an                  storage and ecosystem function (Lutz et al., 2018). Accurate
+                                             inter-annotator agreement evaluation, capturing                   crown segmentation from high-resolution remote sensing
+                                             the dense structure of tropical forests and high-                 imagery enables biologists to study tree survival, growth,
+                                             lighting the difficulty of the task. Leveraging                   phenology or health (Araujo et al., 2020), facilitates tree
+                                             this benchmark, we propose a modular detection-                   species identification (Ball et al., 2024), and serves as a
+                                             segmentation pipeline that adapts vision foun-                    proxy for aboveground biomass estimation (Jucker et al.,
+                                             dation models (VFMs), using domain-specific                       2022). However, individual tree crown segmentation in
+                                                                                                               complex tropical canopies remains challenging due to dense
+                                             1
+                                               Université de Montréal 2 Mila, Quebec AI Institute
+                                        3                                                                         1
+                                         Smithsonian Tropical Research Institute 4 Universidad San Fran-             Benchmark, inference and training pipelines are integrated
+                                        cisco de Quito 5 McGill University. Correspondence to: Simon-          into CanopyRS : https://github.com/hugobaudchon/
+                                        Olivier Duguay <simon-olivier.duguay@umontreal.ca>.                    CanopyRS
+                                                                                                                   2
+                                                                                                                     S ELVA M ASK dataset: https://huggingface.co/d
+                                        Preprint. February 3, 2026.                                            atasets/CanopyRS/SelvaMask
+
+                                                                                                           1
+                                                              SelvaMask
+
+        Dataset                                             Biome           Type       #Crowns GSD (cm/px)            Scope
+        Firoze et al. (Firoze et al., 2023)            temperate   natural                6.5k          2–5        All Crowns
+        BAMFORESTS (Troles et al., 2024)               temperate   natural                27k         1.6–1.8      All Crowns
+        QuebecTrees (Cloutier et al., 2024)            temperate   natural                23k           1.9          Subset
+        Quebec Plantation (Lefebvre & Laliberté, 2024) temperate  plantation             19.6k          0.5        All Crowns
+        Takeshige et al. (Takeshige et al., 2025)      temperate   natural                4.3k        2.2–2.5        Subset
+        SiDroForest (van Geffen et al., 2022)          temperate   natural                872            3           Subset
+        Allen et al. (Allen et al., 2024)              temperate   natural               2163            3         All Crowns
+        OAM-TCD (Veitch-Michaelis et al., 2024)        worldwide mostly urban            280k            10        All Crowns
+        BCI50ha (Vasquez et al., 2023)                  tropical   natural               4.7k∗          4.5          Subset
+        Detectree2 (Ball et al., 2023)                  tropical   natural                3.8k           10          Subset
+        S ELVA M ASK (ours)                             tropical   natural               8.9k         1.3–3.5      All Crowns
+Table 1. Comparison of publicly available tree crown segmentation datasets. ‘Scope’ indicates whether annotations aim to delineate
+all visible crowns in the imagery or a subset of trees (when stated by the dataset).∗ BCI50ha reports crown maps across two dates; counts
+include repeated crowns for the same trees across time.
+
+
+foliage and overlapping crowns, high tree species diversity             domain-specific metrics, has yet to be conducted to assess
+(Ball et al., 2023), and high liana cover (Waite et al., 2019).         current method limitations and guide future improvements.
+Tree crowns vary substantially in shape, color and texture              Our contributions aim to overcome these challenges with:
+(e.g. , palms vs. broadleaf trees) and size distributions
+across biomes (Baudchon et al., 2026), while aerial im-                    • S ELVA M ASK : The largest open tropical crown de-
+agery across sites can differ in weather, lighting, resolution,              lineation dataset to date, spanning three Neotropical
+and reconstruction quality. These distribution shifts and                    sites (Panama, Brazil, Ecuador) with higher-resolution
+domain gaps in forest monitoring offer significant opportu-                  imagery and denser manual annotations (Sec. 5) than
+nities for application-driven machine learning innovation                    existing datasets (Tab. 1, Fig. 1).
+(Rolnick et al., 2024). However, generalized individual tree
+crown segmentation remains underexplored, with most work                   • A comprehensive benchmark: Evaluation of end-to-
+focusing on specific regions (Ouaknine et al., 2025).                        end and modular pipeline generalization capacities,
+                                                                             including a new mRF1 metric, performance stratified
+While tree crown segmentation has been primarily explored
+                                                                             by ecologically interpretable crown-size classes, and
+using airborne LiDAR (Xiang et al., 2025; Holvoet et al.,
+                                                                             cross-site evaluation via spatial cross-validation.
+2025), high-resolution RGB imagery offers a considerably
+cheaper and more accessible alternative for tropical re-                   • State-of-the-art performance: Fine-tuning VFMs
+searchers, motivating our RGB focus to facilitate broader                    with a detection-prompter achieves superior results
+adoption (Tagle Casapia et al., 2025). This focus enables                    as a modular approach, challenging the conventional
+leveraging recent VFMs based on RGB imagery, such as                         end-to-end paradigm in both in-distribution and OOD
+SAM (Kirillov et al., 2023), demonstrating strong perfor-                    settings, with potential for ecologically meaningful
+mance on instance segmentation tasks in low-data regimes.                    impact and broader adoption in tropical forests.
+Off-the-shelf VFMs generate instance masks from prompts
+(e.g. , bounding boxes), eliminating expensive manual anno-                • Task ambiguity quantification: Multi-annotator con-
+tations, a critical advantage for tree segmentation. This is                 sistency analysis comparing model performance with
+particularly valuable given tropical forest dataset scarcity,                human agreement (Sec. 3.5), distinguishing genuine
+though in-domain adaptation strategies may still be needed.                  model failures from inherently ambiguous regions in
+                                                                             dense tropical canopies.
+Advancing tropical tree crown segmentation from RGB im-
+agery requires diverse, high-quality datasets, which remain
+scarce (Tab. 1) despite the global importance of these forests.
+                                                                        2. Related work
+There is a clear need for new tropical datasets with dense an-          Datasets. We summarize open-access datasets for individ-
+notations, high-resolution imagery, and diverse geographic              ual tree crown segmentation in Table 1.
+coverage. Given the limited availability of annotations,
+adapting VFMs for generalized tree crown segmentation                   Corresponding datasets in natural tropical forests remain
+and comparing them to end-to-end approaches is essential.               scarce, often limited to a single site or focused exclu-
+However, comprehensive benchmarking, including spatial                  sively on larger trees, such as Detectree2 (Ball et al., 2023)
+cross-validation, out-of-distribution (OOD) evaluation, and             and BCI50ha (Vasquez et al., 2023). In contrast, S ELVA -
+                                                                        M ASK addresses these limitations by including multi-site
+
+                                                                    2
+                                                           SelvaMask
+
+rasters annotated under a complete-crown protocol (Fig. 1,
+Sec. A.2) capturing the dense, interlocking structure of the
+full canopy.
+By preserving small, crowded instances in diverse locations
+and carefully delineating boundaries, S ELVA M ASK offers
+twice the annotations of existing tropical datasets, establish-
+ing a substantially more challenging segmentation bench-
+mark.
+
+Evaluation protocols Tree detection benchmarks typi-
+cally employ tile-wise classification metrics (precision, re-
+call, F1) (Weinstein et al., 2021; Santos et al., 2019) or de-        Figure 2. Crown area distribution in S ELVA M ASK . Vertical
+tection metrics such as intersection over union (IoU) (Hao            lines indicate the five ecological size classes (Tiny, Small, Medium,
+                                                                      Large, Giant). Y-axis is in logarithmic scale.
+et al., 2021) and mean average precision (mAP) (Firoze
+et al., 2023; Braga et al., 2020).                                    chon et al., 2026), equivalent generalization for instance
+However, tile-level evaluation introduces boundary artifacts          segmentation remains underexplored. To our knowledge,
+and fails to accurately reflect performance on continuous             Detectree2 (Ball et al., 2023), a Mask R-CNN with ResNet-
+forest rasters, the operational context for forest monitor-           101 (He et al., 2016) backbone pre-trained on diverse forest
+ing. To address this in municipal tree inventories, Veitch-           datasets including tropical sites, stands as the current state-
+Michaelis et al. (2024) introduced a raster-level recall metric       of-the-art for generalized tropical tree crown segmentation.
+for keypoints. Since keypoint recall ignores false positives
+and detection quality, Baudchon et al. (2026) proposed a              Leveraging vision foundation models. VFMs for in-
+standardized IoU-based F1 score at the raster level (RF1),            stance segmentation, such as SAM-based approaches (Kir-
+using Non-Maximum Suppression (NMS) to aggregate tile-                illov et al., 2023; Ravi et al., 2024; Carion et al., 2025) show
+level bounding box predictions. However, this metric is               strong zero-shot performance across domains, though they
+limited by an individual IoU thresholds (focusing on 0.75,            fail to generalize effectively for tree crown segmentation
+i.e. RF175 ). To address these limitations and align with             (Teng et al., 2025). Recent work combines domain-specific
+mainstream COCO standards (Lin et al., 2014), we adapt                detectors like DeepForest (Zhou & Feng, 2020) to prompt
+RF1 for instance segmentation and extend it to mRF1, aver-            SAM-based approaches (Chen et al., 2025; Mengyuan et al.,
+aging the F1 score over IoU thresholds 0.50–0.95 (Sec. 4.3).          2025; Que et al., 2026; Lungo Vaschetti et al., 2025) avoid-
+                                                                      ing the need for costly mask annotations but constrain-
+Architectures for tree crown segmentation. Previous                   ing generalization by relying on fixed, pretrained compo-
+works have demonstrated the efficiency of U-Net (Ron-                 nents. Other methods enhance SAM backbones via learned
+neberger et al., 2015) and Mask R-CNN (He et al., 2017)               prompts with RSPrompter (Chen et al., 2024), leveraging
+architectures for binary (Chadwick et al., 2020; Hao et al.,          digital surface models with BalSAM (Teng et al., 2025) or
+2021; Freudenberg et al., 2022; Yang et al., 2022; Gong               use LiDAR point clouds as point-prompts (Zhu et al., 2025).
+et al., 2023) or multiclass (Chadwick et al., 2024; Weishaupt         To our knowledge, fine-tuning of both detection prompter
+et al., 2025) tree crown segmentation. Despite strong detec-          from RGB imagery and VFM components for generalist
+tion capabilities, these models face challenges with precise          tree crown segmentation remains unexplored.
+boundary delineation, particularly in separating overlapping
+crowns within dense forest canopies.
+                                                                      3. S ELVA M ASK dataset
+Recently, transformer-based architectures such as
+Mask2Former (Cheng et al., 2022) and Mask DINO (Li                    S ELVA M ASK is the largest tropical dataset for tree crown
+et al., 2023) have been adopted for their global attention            segmentation with 8 861 manual annotations (Tab. 1), dis-
+mechanisms, enabling stronger contextual reasoning                    tributed in three Neotropical forest sites in Barro Colorado
+(Voulgaris; Yang et al., 2025). Yet their application to dense        Island (Panama), ZF2 Reserve (Brazil) and Tiputini Biodi-
+tropical canopies with ambiguous boundaries remains                   versity Station (Ecuador) as detailed in Table 2.
+unexplored.
+                                                                      3.1. Image acquisition
+Generalized tree crown segmentation. While general-                   We acquired high-resolution orthomosaics across all sites us-
+ized tree detection has been addressed by models such as              ing the DJI Mavic 3 Enterprise UAV, equipped with a 20MP
+DeepForest (Zhou & Feng, 2020) and SelvaBox (Baud-                    4/3 CMOS sensor. The imagery resolution spans between
+
+                                                                  3
+                                                           SelvaMask
+
+1.3-3.5 cm per pixel, covering a total of 229.8 hectares. The                         Train             Val              Test
+                                                                      Site      Area (ha) Crowns Area (ha) Crowns Area (ha) Crowns
+imagery was captured under overcast conditions to mini-
+                                                                      Panama      5.15    1499     1.53      570      2.93     783
+mize shadows and reduce contrast. Details on the recording            Brazil      3.31    1590     0.92      568      1.16     716
+process and orthomosaics are provided in Appendix A.1.                Ecuador     7.20    1836     1.89      629      2.91     896
+                                                                      Total       15.7    4925      4.3     1767      7.0      2395
+3.2. Annotation protocol                                              Table 2. Dataset distribution. Annotated area (in hectares) and
+                                                                      individual crown counts across geographic sites and splits.
+S ELVA M ASK is designed for complete crown mapping:
+within each annotated tile, we delineate all visible tree             ment (Tab. 2).
+crowns rather than only upper canopy or emergent indi-
+viduals (see Fig. 1). We define a crown instance as the
+canopy region visually attributable to a single tree in the           Tile extraction. Image tiles are extracted from each zone
+orthomosaic, with boundaries following the visible outer              using a sliding window, with dimensions calibrated to cap-
+contour. Non-tree objects and corrupted regions (e.g. , poor          ture the largest crowns without truncation. To prevent spa-
+photogrammetric reconstruction) were excluded.                        tial autocorrelation, we mask pixels outside zone bound-
+                                                                      aries as transparent, ensuring strict spatial isolation between
+An expert annotator manually traced crowns using ArcGIS               splits following the SelvaBox protocol (Baudchon et al.,
+Pro’s Freehand Autocomplete tool to enforce strict topo-              2026). Training tiles are extracted at 3555 × 3555 pixel-
+logical consistency and prevent overlapping polygons. The             swith 50% overlap to support augmentation and maximize
+detailed procedure is provided in Appendix A.2. Following             context, while validation and test use 1777 × 1777 pixels
+initial tracing, the same annotator performed a secondary re-         with 75% overlap for standardized evaluation.
+view to ensure consistent segmentation quality across sites,
+followed by an independent review by a different annotator.
+                                                                      3.5. Inter-annotator agreement
+3.3. Dataset statistics                                               To quantify the ambiguity of tropical crown delineation, we
+                                                                      conducted an inter-annotator agreement study on S ELVA -
+We computed crown area in m2 from polygons and ortho-                 M ASK . We select subsets from the test zones across all
+mosaic ground sampling distance (1.3–3.5 cm/pixel). For               three sites, totaling approximately 500 crowns. Two addi-
+ecologically interpretable analysis, we group crowns into             tional annotators independently traced all visible crowns
+five size classes: Tiny (0–9m2 ), Small (9–25m2 ), Medium             in these regions following the protocol in Section 3.2. We
+(25–49m2 ), Large (49–100m2 ), and Giant (> 100m2 ).                  computed pairwise agreement scores with each annotator
+S ELVA M ASK captures the typical structure of tropical               serving alternately as reference, establishing a human-level
+canopies, where many densely packed small crowns sur-                 performance baseline.
+round fewer emergent trees (Fig. 1), a segmentation chal-             As shown in Table 6 and Section 5, inter-annotator agree-
+lenge not represented in prior tropical datasets. S ELVA -            ment decreases with crown size, revealing an expert-level
+M ASK is naturally dominated by small crowns: 52.3% Tiny,             performance ceiling for distinguishing small, overlapping
+24.1% Small, 12.1% Medium, 7.3% Large, and 4.2% Gi-                   crowns, an open challenge in this domain. The results also
+ant (Fig. 2). By contrast, current tropical datasets (Tab. 1)         expose annotator-specific size biases, with some systemati-
+are biased toward large trees, with smaller trees ignored or          cally favoring smaller crowns and others larger crowns.
+overlooked during labelling (Appendix A.3, Fig. 4). A bias
+toward large trees is justifiable since they contribute dispro-
+portionately to carbon storage and forest functioning (Lutz           4. Methods and evaluation protocol
+et al., 2018). Nonetheless, the complete canopy coverage              We address the instance segmentation task: given an RGB
+of S ELVA M ASK (Fig. 1) allows us to stratify performance            orthomosaic tile, models must detect all tree crowns and
+analysis by crown scale, from tiny to giant trees.                    produce binary segmentation masks for each instance.
+
+3.4. Splits and tiling strategy                                       4.1. End-to-end competing methods
+To minimize spatial autocorrelation between data splits, we           We evaluate standard Mask R-CNN (He et al., 2017) and
+apply two-stage preprocessing: a zone-level partitioning of           Mask2Former (Cheng et al., 2022) architectures. We use a
+the forest area followed by a tile-level extraction.                  ResNet-50 (He et al., 2016) backbone for both architectures,
+                                                                      and Swin-L (Liu et al., 2021) for Mask2Former. These
+Geospatial split. We divide each orthomosaic into three               serve as our primary end-to-end baselines, pretrained on
+disjoint zones (training, validation, test) with no overlapping       COCO and fine-tuned on S ELVA M ASK , to establish the
+trees (App. A.4), enabling rigorous generalization assess-            upper bound of traditional supervision.
+
+                                                                  4
+                                                           SelvaMask
+
+We include RSPrompter (Chen et al., 2024), a prompt-                  ground-truth annotations. Our loss function combines Dice
+learning framework for remote sensing. We train it end-               and IoU prediction terms: L = Ldice + Liou . We omit the
+to-end on S ELVA M ASK to assess state-of-the-art domain-             standard Focal loss (λfocal = 0) as validation experiments
+specific methods (Teng et al., 2025). RSPrompter’s 1024 ×             showed it degraded performance on our dataset (Sec. 5.2).
+1024 input constraint necessitates resizing larger tiles while
+                                                                      Full training details are provided in Appendix B.3.1.
+maintaining the same data augmentation pipeline for bench-
+mark consistency. This downsampling reduces spatial reso-
+lution and likely degrades segmentation performance, repre-           4.3. Evaluation
+senting a limitation of RSPrompter on our benchmark.                  COCO-style tile-level evaluation. Predictions are com-
+Finally, we evaluate two pretrained checkpoints of Detec-             pared to ground-truth crown masks using IoU-based one-
+tree2 (Ball et al., 2023): the resize and flexi models, trained       to-one matching: each prediction can match at most one
+on standard and urban-augmented Detectree2 data, respec-              ground-truth crown and vice versa. Unmatched predictions
+tively. We select Detectree2 as the primary competing                 are counted as false positives, while unmatched ground-
+method as it represents the leading approach for general-             truth crowns are false negatives. We report COCO-style
+ized tree crown segmentation. We evaluate it zero-shot to             instance segmentation metrics, namely mean average pre-
+benchmark the OOD generalization capability of existing               cision (mAP), mean average recall (mAR) (averaged over
+generalist models on our benchmark.                                   IoU 0.50 : 0.95), mAP50 , and mAP75 , which robustly eval-
+                                                                      uate segmentation across the many crown instances per tile.
+                                                                      Metrics are aggregated over all test tiles and stratified by
+4.2. Detection-segmentation modular pipelines
+                                                                      crown size (Tiny to Giant; Sec. 3.3).
+Modular approach. We propose to approach the tree
+crown segmentation task by prompting SAM-based VFMs
+with a detection model. We will denote this pipeline
+as ‘detection-prompter → SAM’ in this work, where                     Raster-level evaluation. To evaluate instance segmenta-
+SAM can be version 2 or 3. We evaluate three detection-               tion on full orthomosaics, we propose the mean Raster-level
+prompter variants: DeepForest (Zhou & Feng, 2020), a tree             F1 (mRF1), defined as
+detection model; DINO (Caron et al., 2021), a DINO-Swin-                                           1 X
+                                                                                        mRF1 =            RF1τ ,
+L backbone pre-trained on COCO; and SelvaBox (Baudchon                                            |T |
+                                                                                                      τ ∈T
+et al., 2026), a DINO-Swin-L detection model trained on               where T = {0.50, 0.55, . . . , 0.95} represents the set of IoU
+tropical forest data. Both DeepForest and SelvaBox are gen-           thresholds. This aggregation captures both global counting
+eralist tree detection models, considered as domain-specific          accuracy and local segmentation fidelity. We further extend
+detection-prompter in our pipeline, making them well-suited           the original RF1 methodology (Baudchon et al., 2026) by
+to our evaluation framework.                                          stratifying scores into the same five size classes used for
+For all ‘detection-prompter → SAM’ pipelines, each pre-               our COCO-style metrics (Tiny to Giant; Sec. 3.3). This en-
+dicted box is passed as a box prompt to SAM ensuring one              ables a novel analysis of model performance across different
+mask per box. The resulting mask is treated as one crown in-          crown scales by filtering predictions and ground truth based
+stance, with combined detection-segmentation confidence as            on area, mirroring the standard COCO evaluation protocol
+its score. Each pipeline outputs up to 300 predicted crown            (Lin et al., 2014). Calculating the mRF1 metric requires
+instances per tile, evaluated using COCO-style instance               optimizing NMS and confidence thresholds on a validation
+segmentation metrics with IoU-based matching between                  set prior to benchmarking on the test set; we detail this
+predictions and ground truth.                                         optimization protocol in Appendix B.2.
+
+
+Pipeline fine-tuning. Since promptable VFMs are
+bounded by the quality of their prompts (Teng et al., 2025),
+                                                                      OOD evaluations. We perform a spatial cross-validation
+we first fine-tune detection models using S ELVA M ASK ’s
+                                                                      on S ELVA M ASK to assess generalization capacities that sites
+segmentation masks converted to bounding boxes. This
+                                                                      could provide to an unseen region while motivating their
+yields the strongest possible proposal mechanism. We then
+                                                                      complementarity. We train Mask2Former (Swin-L) on two
+select this best-performing detection-prompter for all SAM
+                                                                      sites and evaluate it zero-shot on the third considered as
+experiments to isolate the impact of adaptation.
+                                                                      OOD (Sec. 5.3, Tab. 5). To assess the generalization ca-
+We perform end-to-end fine-tuning of SAM2 and SAM3,                   pacities of all methods, we evaluated frozen and fine-tuned
+updating the image encoder, prompt encoder, and mask                  competing and proposed models with S ELVA M ASK on ex-
+decoder jointly. To simulate realistic inference, we use              ternal datasets, either in-distribution or OOD, from different
+predicted boxes from the detection-prompter rather than               biomes worldwide (Sec. 5.3, Tab. 4).
+
+                                                                  5
+                                                                           SelvaMask
+
+                    Method                    OOD   mAP       AP50       AP75       mAR        AR50       AR75       mRF1       RF150      RF175
+                    Detectree2 (flexi)         ✓      7.8      18.9        5.2       12.3       26.5       10.2       15.7       33.8       12.7
+                    Detectree2 (resize)        ✓      5.0      11.7        3.5        9.8       21.7        7.7        5.6       10.2        5.6
+                    Mask R-CNN (ResNet-50)     ✗ 11.1(±1.7) 28.7(±3.5) 6.6(±1.5) 21.6(±1.9) 48.9(±3.8) 16.3(±1.7) 17.8(±1.9) 38.0(±3.4) 14.8(±2.1)
+       End-to-end
+
+
+                    Mask2Former (ResNet-50)    ✗ 10.5(±0.3) 24.8(±0.5) 7.5(±0.5) 16.0(±0.1) 33.3(±0.0) 13.9(±0.3) 23.1(±0.6) 49.0(±0.7) 19.8(±1.0)
+                    Mask2Former (Swin-L)       ✗ 19.7(±0.9) 42.4(±1.1) 16.2(±1.0) 26.5(±0.9) 52.8(±0.9) 23.9(±1.2) 30.8(±1.3) 57.3(±2.5) 29.7(±1.2)
+                    RSPrompter (SAM-base)      ✗  6.6(±0.8) 15.5(±1.5) 4.9(±0.7) 10.2(±0.7) 21.8(±1.3) 8.6(±0.6) 13.4(±0.9) 28.6(±1.7) 11.2(±0.7)
+                    RSPrompter (SAM-huge)      ✗ 16.3(±0.3) 35.1(±0.5) 13.9(±0.3) 21.3(±0.4) 41.6(±0.6) 20.0(±0.5) 26.5(±0.0) 50.0(±0.5) 26.1(±0.4)
+                    SelvaBox →SAM2             ✓     16.5      33.2       14.6       30.6       60.0       28.2       29.6       56.2       28.3
+       SAM2
+
+
+
+
+                    SelvaBox →SAM2             ✗     20.9      44.3       17.3       35.0       71.7       30.5       32.1       61.7       30.9
+                    SelvaBox →SAM2             ✗ 23.6(±0.2) 48.3(±0.6) 21.1(±0.2) 37.1(±0.3) 72.0(±0.2) 33.8(±0.3) 35.3(±0.3) 63.5(±0.6) 35.3(±0.5)
+                    DeepForest →SAM3           ✓      5.3      12.6        3.7        7.3       16.3        5.9       12.6       28.5        9.7
+                    DINO →SAM3                 ✗     20.5      42.9       17.1       35.1       70.8       30.7       32.4       61.8       30.1
+       SAM3
+
+
+
+
+                    SelvaBox →SAM3             ✓     17.2      34.4       15.4       31.7       61.1       29.5       30.2       57.3       29.6
+                    SelvaBox →SAM3             ✗     22.0      45.9       18.5       36.5       73.1       32.1       32.8       62.0       31.7
+                    SelvaBox →SAM3             ✗ 24.4(±0.1) 46.9(±0.3) 22.5(±0.1) 38.7(±0.0) 73.1(±0.1) 36.4(±0.1) 36.3(±0.1) 63.9(±0.4) 36.9(±0.4)
+Table 3. Quantitative comparison on S ELVA M ASK . We compare end-to-end and modular SAM-based instance segmentation methods
+(see Sec. 4). Best and second-best scores overall are marked in bold and underlined. Gray rows denote the best performance within each
+section. ‘OOD’ indicates whether the model is evaluated out-of-distribution (zero-shot) (✓) or was trained on the target domain (✗). We
+note ‘ ’ models that are fine-tuned on S ELVA M ASK and ‘ ’ models whose weights are kept frozen.
+
+
+5. Experiments and results                                                           in dense tropical canopies benefits from decoupling detec-
+                                                                                     tion and segmentation, where our modular approach enables
+5.1. Experimental setup                                                              substantial gains over end-to-end models.
+For all trained or fine-tuned methods, we include data aug-
+mentations such as random resized crops, flips, and rota-                             Better segmentation for larger crowns. Segmentation
+tions, including the full list in Appendix B.1. Training and                          performance improves with crown dimensions (Appendix C,
+inference hyperparameters used for each model are detailed                            Fig 6), reflecting clearer boundaries for large trees and
+in Appendix B.3.1. Fine-tuning, training and evaluation                               greater ambiguity for small, overlapping canopies. Our
+experiments used NVIDIA H100 GPUs. Depending on the                                   fine-tuned modular pipeline excels across all size classes,
+model, training sessions ran from 6 hours to 3 days.                                  particularly on ‘Giant’ crowns (65.4 mAP vs. 40.4 mAP
+                                                                                      for Detectree2), while also showing substantial gains on
+                                                                                     ‘Tiny’ and ‘Small’ crowns, enabling more complete canopy
+External datasets. Beyond our S ELVA M ASK benchmark,                                 census.
+we conduct an ablation study on five additional datasets
+(Tab. 4): two tropical (Detectree2, BCI50ha), two temper-
+                                                                                     Frozen modular pipelines compete with fine-tuned end-
+ate (BAMForest, QuebecTrees), and one mixed-biome ur-
+                                                                                     to-end models. Leveraging SelvaBox as a detection-
+ban (OAM-TCD). Since SelvaBox was trained on Quebec-
+                                                                                     prompter of SAM2 or SAM3 shows great generalization
+Trees and OAM-TCD, our SelvaBox-based methods are
+                                                                                     capacities without fine-tuning, as they outperform both ver-
+in-distribution on these two benchmarks, unlike DeepFor-
+                                                                                     sions of Detectree2 in an OOD setting. The best frozen mod-
+est and Detectree2 which were not trained on them. All
+                                                                                     ular pipeline, SelvaBox → SAM3 , achieves comparable
+methods remain OOD on BCI50ha, BAMForest, and the
+                                                                                     performance to the best fine-tuned Mask2Former (Swin-L),
+Detectree2 dataset.
+                                                                                     demonstrating the effectiveness of modular pipelines with
+                                                                                     generalist in-domain detector-prompters.
+5.2. Results on S ELVA M ASK
+Modular pipelines lead the S ELVA M ASK benchmark.                                   Transformers lead among end-to-end methods
+We summarize our experiments on S ELVA M ASK in Ta-                                  Mask2Former with a Swin-L backbone achieves the
+ble 3 distinguishing end-to-end methods and modular ap-                              highest performance among end-to-end models (19.7 mAP),
+proaches, either with SAM2 or SAM3. The proposed mod-                                significantly outperforming the CNN-based Mask R-CNN
+ular pipeline SelvaBox → SAM3 , including both mod-                                  (11.1 mAP). This establishes Mask2Former as a promising
+ules fine-tuned on S ELVA M ASK reaches the best perfor-                             end-to-end architecture for forest monitoring applications.
+mance overall outperforming the best end-to-end model
+(Mask2Former–Swin-L), also fine-tuned on S ELVA M ASK ,                              Prompt quality drives performance. A dominant fac-
+by a large margin. Off-the-shelf tropical models generalize                          tor for promptable segmentation models is the quality of
+poorly to dense, complete-crown mapping: Detectree2 and                              box prompts. When using frozen SAM, switching from
+DeepForest→SAM3 achieve single-digit mAP (7.9 and 6.2,                               DeepForest to a more performant detection-prompter yields
+respectively). Overall, accurate tree crown segmentation                             a near three-fold improvement, increasing mAP from 6.2
+
+                                                                                 6
+                                                                                             SelvaMask
+
+                                                                                      mAP                                                               mRF1
+                   Dataset     Method                OOD    All       Tiny      Small     Medium      Large      Giant        All       Tiny      Small     Medium      Large      Giant
+                               Detectree2 (flexi)     ✗     17.3       0.7        2.9        6.0       16.6       28.0       21.9        0.0        0.9        4.6       15.9       31.6
+                               Detectree2 (resize)    ✗      9.8       0.0        1.6        4.1       12.2       16.0       14.9        0.0        0.0        0.3        8.1       23.2
+                   Detectree2  DeepForest →SAM3       ✓     11.4       0.8        5.6        7.5       13.0       17.0       18.1        3.5        9.4       11.3       15.6       21.4
+                               SelvaBox → SAM3        ✓     17.7       1.3        5.7        9.9       16.3       27.7       23.6        1.3        9.6       15.2       22.0       37.8
+       Tropical
+
+
+
+
+                               SelvaBox → SAM3        ✓ 21.6(±0.3) 1.9(±0.1) 9.7(±0.4) 12.0(±0.5) 20.2(±0.1) 33.0(±0.5) 26.0(±0.4) 2.4(±0.2) 11.2(±0.4) 17.6(±0.2) 24.9(±0.2) 39.8(±0.2)
+                               Detectree2 (flexi)     ✓     29.3       0.3        2.9       19.9       36.2       40.8       36.6        0.0        6.8       23.7       35.5       41.5
+                               Detectree2 (resize)    ✓     26.5       0.0        1.6       14.3       29.8       35.9       35.4        0.0        0.0       12.5       28.8       41.7
+                   BCI50ha     DeepForest →SAM3       ✓     20.3       0.4        1.7       14.7       26.7       30.0       27.0        2.5        3.4       18.2       31.0       36.5
+                               SelvaBox → SAM3        ✓     34.0       0.4        3.2       18.8       37.1       51.3       25.2        0.3        3.7       21.2       44.7       60.5
+                               SelvaBox → SAM3        ✓ 37.5(±0.7) 0.2(±0.1) 4.8(±0.3) 24.0(±0.6) 41.3(±0.6) 52.3(±0.7) 31.7(±0.4) 0.4(±0.0) 5.1(±0.1) 23.1(±0.2) 45.6(±0.9) 61.1(±0.5)
+                               Detectree2 (flexi)     ✓     17.9       7.3       22.1       27.4       25.9       23.5         –          –          –          –          –          –
+                               Detectree2 (resize)    ✓     16.0       6.1       19.5       25.6       24.2       24.6         –          –          –          –          –          –
+                   BAMForest DeepForest →SAM3         ✓     12.0       6.5       17.3       18.3        9.6        4.0         –          –          –          –          –          –
+                               SelvaBox → SAM3        ✓     23.0       9.0       29.6       35.9       33.0       29.6         –          –          –          –          –          –
+       Temperate
+
+
+
+
+                               SelvaBox → SAM3        ✓ 22.8(±0.4) 10.6(±0.2) 30.6(±0.4) 34.5(±0.2) 29.5(±0.7) 25.5(±1.4)      –          –          –          –          –          –
+                               Detectree2 (flexi)     ✓     10.8       0.5       24.1       28.2       40.6       52.6       20.5       12.1       26.2       25.5       25.5        2.4
+                               Detectree2 (resize)    ✓      3.9       1.6       13.0       18.3       32.3       45.3       10.4        2.8       16.4       17.0       12.3        3.7
+                   QuebecTrees DeepForest →SAM3       ✓      8.3       5.0       17.3       16.7       25.9       42.3       17.1       11.4       18.7       11.6       18.4        0.0
+                               SelvaBox → SAM3        ✗     25.8      20.7       36.8       42.1       53.3       62.8       38.1       32.5       38.8       36.4       41.1       12.6
+                               SelvaBox → SAM3        ✗ 27.6(±0.3) 21.9(±0.3) 40.8(±0.4) 46.3(±0.5) 51.6(±1.5) 54.5(±4.8) 39.8(±0.2) 33.5(±0.1) 45.0(±0.4) 45.7(±0.4) 49.9(±0.7) 40.3(±0.0)
+                               Detectree2 (flexi)     ✓     12.3       0.7        7.4       27.2       36.5       37.8         –          –          –          –          –          –
+                               Detectree2 (resize)    ✓      2.3       0.2        1.3        5.2       14.0       20.2         –          –          –          –          –          –
+        Urban
+
+
+
+
+                   OAM-TCD DeepForest →SAM3           ✓      6.5       0.2        6.8       16.3       16.5       12.4         –          –          –          –          –          –
+                               SelvaBox → SAM3        ✗     12.2       6.9       14.4       19.5       18.5       15.3         –          –          –          –          –          –
+                               SelvaBox → SAM3        ✗ 18.5(±1.0) 8.9(±0.9) 21.9(±1.3) 29.4(±1.7) 29.8(±1.4) 24.9(±1.6)       –          –          –          –          –          –
+
+Table 4. Performance on external datasets. Metrics are stratified by crown size class. ‘OOD’ indicates whether the model is evaluated
+out-of-distribution (zero-shot) (✓) or was trained on the target domain (✗). ‘–’ denotes not available mRF1 for temperate datasets lacking
+full raster annotations. We note ‘ ’ models that are fine-tuned on S ELVA M ASK and ‘ ’ models whose weights are kept frozen.
+
+
+to 17.3 (Tab. 3). This highlights that tropical crown de-                                               Consequently, surpassing this performance bound would
+lineation is primarily limited by localization under heavy                                              likely require a refinement in annotation methodology, such
+canopy crowding, and that robust proposal mechanisms are                                                as multi-expert consensus voting for low-agreement score
+essential for leveraging VFMs in this domain.                                                           trees, to resolve ground-truth ambiguity.
+
+SAM fine-tuning is key. Fine-tuning consistently im-                                                    5.3. Results on external datasets and OOD sites
+proves segmentation performance on SelvaMask, even when                                                 S ELVA M ASK enables OOD generalization. Table 4
+starting from strong pretrained backbones. In particular,                                               demonstrates strong cross-biome generalization of our mod-
+adapting SAM to tropical crown boundaries yields clear                                                  ular pipeline. On the tropical Detectree2 dataset, our fine-
+gains over its frozen counterpart under the same prompting                                              tuned approach (SelvaBox → SAM3 ) establishes a new
+protocol (Tab. 3). We conducted an ablation study on the                                                state-of-the-art, improving mAP from 17.3 to 21.6 and
+specific components of SAM2 to fine-tune (Appendix B.3.2,                                               mRF1 from 21.9 to 26.0.
+Tab. 10) and found that full end-to-end adaptation was nec-
+essary to obtain optimal performances. These improvements                                               On temperate biomes (BAMForest and QuebecTrees), both
+are reflected in both COCO-style tile metrics (mAP/mAR)                                                 frozen and fine-tuned pipelines outperform Detectree2. The
+and raster-level fidelity (mRF1), indicating that fine-tuning                                           frozen pipeline (SelvaBox → SAM3 ) achieves the high-
+helps to better capture fine-scale crown boundaries and re-                                             est performance on BAMForest, as expected: fine-tuning on
+duce common failure modes in dense tropical canopies.                                                   S ELVA M ASK specializes the model to dense, interlocking
+                                                                                                        canopies, slightly reducing its transferability to temperate
+                                                                                                        forests. Interestingly, fine-tuning improves QuebecTrees
+Models reach human performance on a difficult task.                                                     performance, achieving state-of-the-art global mAP by bet-
+We further quantify task ambiguity by comparing model                                                   ter detecting small trees and improving mRF1 by stabilizing
+performance against inter-annotator agreement (Tab. 6). We                                              confidence across all sizes.
+first observe that pairwise expert agreement scores decline
+as crown size decreases (Sec. 3.5), ranging from relatively                                             For urban OAM-TCD, Detectree2 (flexi) reaches 12.3 mAP.
+high agreement (mRF1 58.1–72.8) for giant trees, down to                                                While the frozen pipeline struggles, fine-tuning on S ELVA -
+marginal agreement (12.7–20.1) for tiny ones. The lower                                                 M ASK achieves 18.5 mAP, establishing a new benchmark
+agreement scores of small trees underscore the inherent diffi-                                          and highlighting our dataset’s cross-domain value.
+culty of delineating crowns in dense tropical canopies. Cru-
+cially, our best model achieves scores comparable to, and of-                                           The importance of stratified RF1 on BCI50ha.
+ten exceeding, pairwise human agreement. This implies that                                              BCI50ha’s incomplete ground truth creates misleading
+our pipeline has effectively reached the ‘human-consensus                                               global metrics. The dataset primarily annotates large and
+ceiling’ for this dataset; remaining ‘errors’ largely reflect                                           giant trees, leaving smaller trees unlabeled (Fig. 4). As a
+valid interpretational differences rather than model failure.                                           result, our model’s valid predictions of tiny and small trees
+
+                                                                                                    7
+                                                                                      SelvaMask
+
+                                           Brazil                            Ecuador                            Panama                  All
+ Method
+                              mAP       mAR        mRF1 OOD      mAP       mAR        mRF1 OOD      mAP       mAR        mRF1 OOD mRF1
+ Mask2Former (Swin-L)      14.3(±0.4) 19.5(±0.5) 24.1(±0.5) ✓ 21.6(±0.2) 30.2(±0.3) 31.9(±0.2) ✗ 18.5(±0.1) 25.1(±0.1) 29.1(±0.2) ✗ 28.7(±0.2)
+ Mask2Former (Swin-L)      15.3(±0.2) 20.7(±0.2) 26.6(±0.4) ✗ 16.8(±0.2) 26.0(±0.3) 25.9(±0.3) ✓ 17.6(±0.1) 24.3(±0.1) 28.0(±0.5) ✗ 26.8(±0.2)
+ Mask2Former (Swin-L)      16.7(±0.3) 22.3(±0.2) 29.0(±0.6) ✗ 22.3(±0.6) 31.0(±0.6) 32.6(±1.0) ✗ 17.4(±0.3) 24.7(±0.3) 27.9(±0.8) ✓ 30.0(±0.8)
+ Mask2Former (Swin-L)      16.7(±0.7) 21.9(±0.8) 28.6(±1.6) ✗ 22.8(±1.1) 31.0(±1.1) 33.5(±1.3) ✗ 18.6(±0.9) 25.4(±0.9) 29.7(±1.2) ✗ 30.8(±1.3)
+Table 5. Spatial cross-validation results. Performance of Mask2Former (SwinL) on each S ELVA M ASK location, fine-tuned with an
+out-of-distribution location (‘OOD’), compared to all locations (last row). We mark the best and second-best scores in bold and underline.
+
+
+                                               mRF1
+     Preds.   GTs
+                      Tiny        Small       Medium        Large         Giant
+      B       A       20.1         38.2         49.1         52.1          72.8
+      C       A       12.7         27.6         35.5         48.9          69.8
+     Model    A     19.1(±2.8)   39.5(±3.4)   55.2(±5.8)   58.1(±4.7)   72.0(±16.1)
+      A       B       20.0         36.3         49.2         51.8          69.9
+      C       B       16.5         27.3         40.1         42.9          59.0
+     Model    B     18.9(±1.8)   33.5(±7.1)   43.6(±3.6)   43.9(±4.3)   70.1(±13.0)
+      A       C       13.0         27.5         36.8         50.4          71.5
+      B       C       16.5         27.4         39.7         42.6          58.1
+     Model    C     13.0(±1.4)   25.7(±3.0)   31.6(±6.0)   43.4(±7.6)   63.1(±12.3)
+Table 6. Inter-annotator agreement on S ELVA M ASK ’s test
+subset. The mRF1, stratified by crown size classes, is computed                                         Ground Truth                    Detectree2
+with pairs of predictions and ground truths. Expert annotators are
+named A, B and C, and Model is SelvaBox → SAM3 .
+
+
+are wrongly counted as false positives, severely penalizing
+the global mRF1. However, size-stratified RF1 reveals that
+our method significantly outperforms all competitors on
+large and giant trees (Tab. 4), the BCI50ha’s actual focus.
+To support our claim, we provide qualitative results in Fig-
+ure 8. This strong stratified performance, combined with
+state-of-the-art tile-level mAP (37.5 vs. 29.3), confirms our
+                                                                                                    SelvaBox → SAM3                SelvaBox → SAM3
+model’s capability despite the low global raster score.
+                                                                                             Figure 3. Qualitative Results on S ELVA M ASK . Comparison of
+Site diversity drives robustness. We evaluate the ro-                                        models predictions: Detectree2 vs. our proposed modular pipeline
+                                                                                             SelvaBox→ SAM3, with frozen ( ) or fine-tuned ( ) modules.
+bustness of our annotations across sites using a spatial
+cross-validation protocol (Sec. 4.3). The model general-
+izes remarkably well to Panama, retaining 94% of the fully                                   ular pipeline, adapting VFMs via domain-specific detection-
+supervised performance in the zero-shot setting (17.4 vs.                                    prompters, establishes a new state-of-the-art for generalized
+18.6 mAP) (Tab. 5). In contrast, Ecuador proves more dis-                                    individual tree crown segmentation. This approach not only
+tinct, suffering a larger drop when excluded from training                                   outperforms end-to-end architectures on S ELVA M ASK but
+(16.8 vs. 22.8 mAP). These results suggest that while S EL -                                 also exhibits superior zero-shot generalization on external
+VA M ASK captures robust, transferable features across the                                   tropical and temperate datasets, highlighting the value of
+Neotropics, including site-specific data remains beneficial                                  S ELVA M ASK for training models with strong cross-domain
+for maximizing accuracy in distinct forest structures.                                       performance.
+
+
+6. Conclusions                                                                               Limitations. Despite these advances, key challenges re-
+                                                                                             main. First, the sequential nature of our modular pipeline
+In this work, we introduce S ELVA M ASK , the largest and                                    introduces a dependency bottleneck: segmentation quality
+most diverse tropical tree crown segmentation dataset to                                     is strictly upper-bounded by detection recall, meaning errors
+date, comprising 8 861 manually delineated crowns across                                     from the detector (e.g. , missed small trees) propagate irre-
+three Neotropical sites. By adhering to a rigorous complete-                                 versibly to the final map. Second, our inter-annotator agree-
+crown annotation protocol, S ELVA M ASK captures the ex-                                     ment study reveals that the task itself faces a ‘human ceiling’.
+treme density of the tropical understory. Through a unified                                  The visual ambiguity of interlocking tropical crowns leads
+evaluation protocol combining COCO-style metrics and                                         to substantial disagreement even among experts, suggest-
+raster-level mRF1, we demonstrate that standard zero-shot                                    ing that future performance gains may be difficult to quan-
+baselines struggle in this domain, while our proposed mod-                                   tify without multi-expert consensus ground truth. Finally,
+
+                                                                                         8
+                                                          SelvaMask
+
+despite S ELVA M ASK representing three Neotropical sites,             vironmental Data Science, 3:e18, January 2024. ISSN
+further work is needed to expand coverage of Afrotropical,             2634-4602. doi: 10.1017/eds.2024.16. URL https:
+Indomalayan, and Australasian regions.                                 //www.cambridge.org/core/journals/en
+                                                                       vironmental-data-science/article/low
+                                                                       cost-tree-crown-dieback-estimation-u
+Future Directions. Future work should aim to bridge the
+                                                                       sing-deep-learningbased-segmentation/
+gap between modular flexibility and end-to-end optimiza-
+                                                                       1AF1AB37C7823381E2131061A437E4F9.
+tion. A promising direction is the development of fully
+differentiable interfaces that propagate gradients from the          Araujo, R. F., Chambers, J. Q., Celes, C. H. S., Muller-
+VFM back to the detection-prompter, allowing the modules               Landau, H. C., Santos, A. P. F. d., Emmert, F., Ribeiro,
+to co-adapt rather than training in isolation. Furthermore,            G. H. P. M., Gimenez, B. O., Lima, A. J. N., Campos, M.
+given the strong cross-site generalization observed in our ex-         A. A., and Higuchi, N. Integrating high resolution drone
+periments, we envision leveraging S ELVA M ASK alongside               imagery and forest inventory to distinguish canopy and
+other emerging forest datasets to train large-scale, multi-            understory trees and quantify their contributions to forest
+biome foundation models capable of robust, global forest               structure and dynamics. PLOS ONE, 15(12):e0243079,
+monitoring.                                                            2020. ISSN 1932-6203. doi: 10.1371/journal.pone.024
+                                                                       3079. URL https://journals.plos.org/pl
+Acknowledgement                                                        osone/article?id=10.1371/journal.pone.
+                                                                       0243079.
+We thank Marie-Jeanne Gascon-DeCelles, Sabrina Demers-
+Thibeault, and Lazare Magué for their work on data an-               Ball, J. G. C., Hickman, S. H. M., Jackson, T. D., Koay, X. J.,
+notation. We are also grateful to Vincent Le Falher and                Hirst, J., Jay, W., Archer, M., Aubry-Kientz, M., Vincent,
+Antoine Caron-Guay for their support with the laboratory               G., and Coomes, D. A. Accurate delineation of individual
+infrastructure. This research was enabled in part by com-              tree crowns in tropical forests from aerial RGB imagery
+puting resources provided by Mila (Quebec AI Institute)                using Mask R-CNN. Remote Sensing in Ecology and
+and the Digital Research Alliance of Canada. This project              Conservation, 9(5):641–655, 2023. ISSN 2056-3485. doi:
+was undertaken thanks to funding from IVADO, including                 10.1002/rse2.332. URL https://onlinelibrary.
+the PRF3 project ’AI, biodiversity, and Climate Change’, a             wiley.com/doi/abs/10.1002/rse2.332.
+Canada Research Chair and a Discovery Grant from NSERC
+to E.L., the Ceiba Fund from the Population Biology Foun-            Ball, J. G. C., Jaffer, S., Laybros, A., Prieur, C., Jackson, T.,
+dation, and the Angèle St-Pierre & Hugo Larochelle Re-                 Madhavapeddy, A., Barbier, N., Vincent, G., and Coomes,
+search Chair in AI for the Environment.                                D. A. Towards comprehensive individual tree species
+                                                                       mapping in diverse tropical forests by harnessing tem-
+Impact Statement                                                       poral and spectral dimensions, December 2024. URL
+                                                                       https://www.biorxiv.org/content/10.1
+Our research bridges the gap between state-of-the-art com-             101/2024.06.24.600405v2.
+puter vision and ecological monitoring in complex tropical
+environments. By successfully adapting Vision Foundation             Baudchon, H., Ouaknine, A., Weiss, M., Teng, M., Walla,
+Models for dense canopy segmentation, we demonstrate that              T. R., Caron-Guay, A., Pal, C., and Laliberte, E. Selv-
+generalist AI can be effectively specialized for high-impact           aBox: A high-resolution dataset for tropical tree crown
+scientific domains. This work offers a practical, low-cost             detection. In The Fourteenth International Conference
+solution for automated forest census, enabling the precise es-         on Learning Representations, 2026. URL https:
+timation of carbon stocks and biodiversity needed to support           //openreview.net/forum?id=GH7z1RURL6.
+conservation efforts and climate change mitigation. How-
+ever, we acknowledge that high-precision canopy mapping              Braga, J. R. G., Peripato, V., Dalagnol, R., Ferreira, M. P.,
+carries a potential risk of misuse, such as the targeting of           Tarabalka, Y., Aragão, L. E. O. C., Velho, H. F. d. C.,
+high-value timber for illegal extraction. We emphasize that            Shiguemori, E. H., and Wagner, F. H. Tree Crown De-
+this work is intended strictly to empower conservationists             lineation Algorithm Based on a Convolutional Neural
+and local stakeholders in preserving threatened ecosystems.            Network. Remote Sensing, 12(8), April 2020. ISSN
+                                                                       2072-4292. doi: 10.3390/rs12081288. URL https:
+                                                                       //www.mdpi.com/2072- 4292/12/8/1288.
+References                                                             Company: Multidisciplinary Digital Publishing Institute
+Allen, M. J., Moreno-Fernández, D., Ruiz-Benito, P., Grieve,           Distributor: Multidisciplinary Digital Publishing Institute
+  S. W. D., and Lines, E. R. Low-cost tree crown dieback               Institution: Multidisciplinary Digital Publishing Institute
+  estimation using deep learning-based segmentation. En-               Label: Multidisciplinary Digital Publishing Institute.
+
+                                                                 9
+                                                         SelvaMask
+
+Carion, N., Gustafson, L., Hu, Y.-T., Debnath, S., Hu, R.,             Image Segmentation. In 2022 IEEE/CVF Conference on
+  Suris, D., Ryali, C., Alwala, K. V., Khedr, H., Huang, A.,           Computer Vision and Pattern Recognition (CVPR), pp.
+  Lei, J., Ma, T., Kalla, A., Marks, M., Greer, J., Wang, M.,          1280–1289, June 2022. doi: 10.1109/CVPR52688.2022
+  Sun, P., Rädle, R., Mavroudi, E., Xu, K., Wu, T.-H., Zhou,           .00135. URL https://ieeexplore.ieee.org/
+  Y., Momeni, L., Hazra, R., Ding, S., Vaze, S., Porcher,              document/9878483. ISSN: 2575-7075.
+  F., Li, F., Li, S., Kamath, A., Kei, H., Dollár, P., Ravi,
+  N., Saenko, K., Zhang, P., and Feichtenhofer, C. SAM 3:            Cloutier, M., Germain, M., and Laliberté, E. Influence of
+  Segment Anything with Concepts. 2025.                                temperate forest autumn leaf phenology on segmentation
+                                                                       of tree species from UAV imagery using deep learning.
+Caron, M., Touvron, H., Misra, I., Jégou, H., Mairal, J.,              Remote Sensing of Environment, 311:114283, September
+  Bojanowski, P., and Joulin, A. Emerging Properties in                2024. ISSN 0034-4257. doi: 10.1016/j.rse.2024.114283.
+  Self-Supervised Vision Transformers. pp. 9650–9660,                  URL https://www.sciencedirect.com/sc
+  2021. URL https://openaccess.thecvf.co                               ience/article/pii/S0034425724003018.
+  m/content/ICCV2021/html/Caron_Emergi
+  ng_Properties_in_Self-Supervised_Visi                              Firoze, A., Wingren, C., Yeh, R. A., Benes, B., and Aliaga,
+  on_Transformers_ICCV_2021_paper.                                     D. Tree Instance Segmentation with Temporal Contour
+                                                                       Graph. In 2023 IEEE/CVF Conference on Computer
+Chadwick, A. J., Goodbody, T. R. H., Coops, N. C.,                     Vision and Pattern Recognition (CVPR), pp. 2193–2202,
+  Hervieux, A., Bater, C. W., Martens, L. A., White,                   June 2023. doi: 10.1109/CVPR52729.2023.00218. URL
+  B., Röeser, D., Chadwick, A. J., Goodbody, T. R. H.,                 https://ieeexplore.ieee.org/document
+  Coops, N. C., Hervieux, A., Bater, C. W., Martens, L. A.,            /10204310.
+  White, B., and Röeser, D. Automatic Delineation and
+  Height Measurement of Regenerating Conifer Crowns                  Freudenberg, M., Magdon, P., and Nölke, N. Individual
+  under Leaf-Off Conditions Using UAV Imagery. Re-                     tree crown delineation in high-resolution remote sensing
+  mote Sensing, 12(24), December 2020. ISSN 2072-                      images based on U-Net. Neural Computing and Applica-
+  4292. doi: 10.3390/rs12244104. URL https:                            tions, 34(24):22197–22207, December 2022. ISSN 1433-
+  //www.mdpi.com/2072-4292/12/24/4104.                                 3058. doi: 10.1007/s00521-022-07640-4. URL https:
+  Company: Multidisciplinary Digital Publishing Institute              //doi.org/10.1007/s00521-022-07640-4.
+  Distributor: Multidisciplinary Digital Publishing Institute        Gatti, R. C., Reich, P. B., Gamarra, J. G. P., Crowther, T.,
+  Institution: Multidisciplinary Digital Publishing Institute          Hui, C., Morera, A., Bastin, J.-F., de Miguel, S., Nabu-
+  Label: Multidisciplinary Digital Publishing Institute.               urs, G.-J., Svenning, J.-C., Serra-Diaz, J. M., Merow, C.,
+Chadwick, A. J., Coops, N. C., Bater, C. W., Martens, L. A.,           Enquist, B., Kamenetsky, M., Lee, J., Zhu, J., Fang, J.,
+  and White, B. Transferability of a Mask R–CNN model                  Jacobs, D. F., Pijanowski, B., Banerjee, A., Giaquinto,
+  for the delineation and classification of two species of             R. A., Alberti, G., Zambrano, A. M. A., Alvarez-Davila,
+  regenerating tree crowns to untrained sites. Science of              E., Araujo-Murakami, A., Avitabile, V., Aymard, G. A.,
+  Remote Sensing, 9:100109, June 2024. ISSN 2666-0172.                 Balazy, R., Baraloto, C., Barroso, J. G., Bastian, M. L.,
+  doi: 10.1016/j.srs.2023.100109. URL https://www.                     Birnbaum, P., Bitariho, R., Bogaert, J., Bongers, F., Bouri-
+  sciencedirect.com/science/article/pi                                 aud, O., Brancalion, P. H. S., Brearley, F. Q., Broadbent,
+  i/S2666017223000342.                                                 E. N., Bussotti, F., Silva, W. C. d., César, R. G., Češljar,
+                                                                       G., Moscoso, V. C., Chen, H. Y. H., Cienciala, E., Clark,
+Chen, K., Liu, C., Chen, H., Zhang, H., Li, W., Zou, Z.,               C. J., Coomes, D. A., Dayanandan, S., Decuyper, M.,
+  and Shi, Z. RSPrompter: Learning to Prompt for Remote                Dee, L. E., Pasquel, J. D. A., Derroire, G., Djuikouo, M.
+  Sensing Instance Segmentation Based on Visual Foun-                  N. K., Do, T. V., Dolezal, J., Ðord̄ević, I. D., Engel, J.,
+  dation Model. IEEE Transactions on Geoscience and                    Fayle, T. M., Feldpausch, T. R., Fridman, J. K., Harris,
+  Remote Sensing, 62:1–17, 2024. ISSN 1558-0644. doi:                  D. J., Hemp, A., Hengeveld, G., Herault, B., Herold, M.,
+ 10.1109/TGRS.2024.3356074. URL https://ieee                           Ibanez, T., Jagodzinski, A. M., Jaroszewicz, B., Jeffery,
+  xplore.ieee.org/document/10409216.                                   K. J., Johannsen, V. K., Jucker, T., Kangur, A., Karminov,
+                                                                       V. N., Kartawinata, K., Kennard, D. K., Kepfer-Rojas,
+Chen, M., Russell, D., Pallavoor, A., Young, D., and Wu, J.
+                                                                       S., Keppel, G., Khan, M. L., Khare, P. K., Kileen, T. J.,
+  Zero-Shot Tree Detection and Segmentation from Aerial
+                                                                       Kim, H. S., Korjus, H., Kumar, A., Kumar, A., Laar-
+  Forest Imagery, June 2025. URL http://arxiv.or
+                                                                       mann, D., Labrière, N., Lang, M., Lewis, S. L., Lukina,
+  g/abs/2506.03114. arXiv:2506.03114 [cs] version:
+                                                                       N., Maitner, B. S., Malhi, Y., Marshall, A. R., Marty-
+  1.
+                                                                       nenko, O. V., Mendoza, A. L. M., Ontikov, P. V., Ortiz-
+Cheng, B., Misra, I., Schwing, A. G., Kirillov, A., and Gird-          Malavasi, E., Camacho, N. C. P., Paquette, A., Park, M.,
+  har, R. Masked-attention Mask Transformer for Universal              Parthasarathy, N., Peri, P. L., Petronelli, P., Pfautsch, S.,
+
+                                                                10
+                                                            SelvaMask
+
+  Phillips, O. L., Picard, N., Piotto, D., Poorter, L., Poulsen,          URL https://linkinghub.elsevier.com/
+  J. R., Pretzsch, H., Ramírez-Angulo, H., Correa, Z. R.,                 retrieve/pii/S0034425725003517.
+  Rodeghiero, M., Gonzáles, R. D. P. R., Rolim, S. G.,
+  Rovero, F., Rutishauser, E., Saikia, P., Salas-Eljatib, C.,           Jucker, T., Fischer, F. J., Chave, J., Coomes, D. A.,
+  Schepaschenko, D., Scherer-Lorenzen, M., Šebeň, V., Sil-               Caspersen, J., Ali, A., Loubota Panzou, G. J., Feldpausch,
+  veira, M., Slik, F., Sonké, B., Souza, A. F., Stereńczak,              T. R., Falster, D., Usoltsev, V. A., Adu-Bredu, S., Alves,
+  K. J., Svoboda, M., Taedoumg, H., Tchebakova, N., Ter-                  L. F., Aminpour, M., Angoboy, I. B., Anten, N. P. R.,
+  borgh, J., Tikhonova, E., Torres-Lezama, A., Plas, F. v. d.,            Antin, C., Askari, Y., Muñoz, R., Ayyappan, N., Balvan-
+  Vásquez, R., Viana, H., Vibrans, A. C., Vilanova, E.,                   era, P., Banin, L., Barbier, N., Battles, J. J., Beeckman, H.,
+  Vos, V. A., Wang, H.-F., Westerlund, B., White, L. J. T.,               Bocko, Y. E., Bond-Lamberty, B., Bongers, F., Bowers,
+  Wiser, S. K., Zawiła-Niedźwiecki, T., Zemagho, L., Zhu,                S., Brade, T., Van Breugel, M., Chantrain, A., Chaud-
+  Z.-X., Zo-Bi, I. C., and Liang, J. The number of tree                   hary, R., Dai, J., Dalponte, M., Dimobe, K., Domec, J.,
+  species on Earth. Proceedings of the National Academy                   Doucet, J., Duursma, R. A., Enríquez, M., Van Ewijk,
+  of Sciences, 119(6):e2115329119, February 2022. ISSN                    K. Y., Farfán-Rios, W., Fayolle, A., Forni, E., Forrester,
+  0027-8424, 1091-6490. doi: 10.1073/pnas.2115329119.                     D. I., Gilani, H., Godlee, J. L., Gourlet-Fleury, S., Haeni,
+  URL https://www.pnas.org/content/119                                    M., Hall, J. S., He, J., Hemp, A., Hernández-Stefanoni,
+  /6/e2115329119.                                                         J. L., Higgins, S. I., Holdaway, R. J., Hussain, K., Hutley,
+                                                                          L. B., Ichie, T., Iida, Y., Jiang, H., Joshi, P. R., Kaboli, H.,
+Gong, M., Kou, W., Lu, N., Chen, Y., Sun, Y., Lai, H., Chen,              Larsary, M. K., Kenzo, T., Kloeppel, B. D., Kohyama, T.,
+  B., Wang, J., and Li, C. Individual Tree AGB Estimation                 Kunwar, S., Kuyah, S., Kvasnica, J., Lin, S., Lines, E. R.,
+  of Malania oleifera Based on UAV-RGB Imagery and                        Liu, H., Lorimer, C., Loumeto, J., Malhi, Y., Marshall,
+  Mask R-CNN. Forests, 14:1493, July 2023. doi: 10.339                    P. L., Mattsson, E., Matula, R., Meave, J. A., Mensah,
+  0/f14071493.                                                            S., Mi, X., Momo, S., Moncrieff, G. R., Mora, F., Nis-
+                                                                          sanka, S. P., O’Hara, K. L., Pearce, S., Pelissier, R., Peri,
+Hao, Z., Lin, L., Post, C. J., Mikhailova, E. A., Li, M.,                 P. L., Ploton, P., Poorter, L., Pour, M. J., Pourbabaei, H.,
+  Chen, Y., Yu, K., and Liu, J. Automated tree-crown                      Dupuy-Rada, J. M., Ribeiro, S. C., Ryan, C., Sanaei,
+  and height detection in a young forest plantation using                 A., Sanger, J., Schlund, M., Sellan, G., Shenkin, A.,
+  mask region-based convolutional neural network (Mask                    Sonké, B., Sterck, F. J., Svátek, M., Takagi, K., Trug-
+  R-CNN). ISPRS Journal of Photogrammetry and Remote                      man, A. T., Ullah, F., Vadeboncoeur, M. A., Valipour,
+  Sensing, 178:112–123, August 2021. ISSN 0924-2716.                      A., Vanderwel, M. C., Vovides, A. G., Wang, W., Wang,
+  doi: 10.1016/j.isprsjprs.2021.06.003. URL https:                        L., Wirth, C., Woods, M., Xiang, W., Ximenes, F. D. A.,
+ //www.sciencedirect.com/science/arti                                     Xu, Y., Yamada, T., and Zavala, M. A. Tallo: A global
+  cle/pii/S0924271621001611.                                              tree allometry and crown architecture database. Global
+                                                                          Change Biology, 28(17):5254–5268, September 2022.
+He, K., Zhang, X., Ren, S., and Sun, J. Deep Residual Learn-              ISSN 1354-1013, 1365-2486. doi: 10.1111/gcb.16302.
+  ing for Image Recognition. In 2016 IEEE Conference                      URL https://onlinelibrary.wiley.com/
+  on Computer Vision and Pattern Recognition (CVPR), pp.                  doi/10.1111/gcb.16302.
+  770–778, June 2016. doi: 10.1109/CVPR.2016.90. URL
+  https://ieeexplore.ieee.org/document                                  Kirillov, A., Mintun, E., Ravi, N., Mao, H., Rolland, C.,
+  /7780459/. ISSN: 1063-6919.                                             Gustafson, L., Xiao, T., Whitehead, S., Berg, A. C., Lo,
+                                                                          W.-Y., Dollár, P., and Girshick, R. Segment Anything. In
+He, K., Gkioxari, G., Dollár, P., and Girshick, R. Mask                   2023 IEEE/CVF International Conference on Computer
+  R-CNN. In 2017 IEEE International Conference on Com-                    Vision (ICCV), pp. 3992–4003, Paris, France, October
+  puter Vision (ICCV), pp. 2980–2988, October 2017. doi:                  2023. IEEE. ISBN 979-8-3503-0718-4. doi: 10.1109/IC
+ 10.1109/ICCV.2017.322. URL https://ieeexp                                CV51070.2023.00371. URL https://ieeexplore
+  lore.ieee.org/document/8237584. ISSN:                                   .ieee.org/document/10378323/.
+  2380-7504.
+                                                                        Lefebvre, I. and Laliberté, E. UAV LiDAR, UAV imagery,
+Holvoet, J., Eichhorn, M. P., Giannetti, F., Kükenbrink, D.,              tree segmentations and ground mesurements for estimat-
+  Liang, X., Mokroš, M., Novotný, J., Pitkänen, T. P., Puliti,            ing tree biomass in canadian (quebec) plantations, 2024.
+  S., Skudnik, M., Stereńczak, K., Terryn, L., Vega, C., and             URL https://doi.org/10.20383/103.0979.
+ Torresan, C. Terrestrial and mobile laser scanning for na-
+  tional forest inventories: From theory to implementation.             Li, F., Zhang, H., Xu, H., Liu, S., Zhang, L., Ni, L. M.,
+ Remote Sensing of Environment, 329:114947, November                      and Shum, H.-Y. Mask DINO: Towards A Unified
+  2025. ISSN 00344257. doi: 10.1016/j.rse.2025.114947.                    Transformer-based Framework for Object Detection and
+
+                                                                   11
+                                                        SelvaMask
+
+  Segmentation. In 2023 IEEE/CVF Conference on Com-                   Sun, I.-F., Suresh, H. S., Swanson, M. E., Tan, S.,
+  puter Vision and Pattern Recognition (CVPR), pp. 3041–              Thomas, D. W., Thompson, J., Uriarte, M., Valencia,
+  3050, June 2023. doi: 10.1109/CVPR52729.2023.00297.                 R., Vicentini, A., Vrška, T., Wang, X., Weiblen, G. D.,
+  URL https://ieeexplore.ieee.org/docu                                Wolf, A., Wu, S.-H., Xu, H., Yamakura, T., Yap, S., and
+  ment/10204168/. ISSN: 2575-7075.                                    Zimmerman, J. K. Global importance of large-diameter
+                                                                      trees. Global Ecology and Biogeography, 27(7):849–864,
+Lin, T.-Y., Maire, M., Belongie, S., Hays, J., Perona, P.,            2018. ISSN 1466-8238. doi: 10.1111/geb.12747.
+  Ramanan, D., Dollár, P., and Zitnick, C. L. Microsoft               URL h t t p s : / / o n l i n e l i b r a r y . w i l e y .
+  COCO: Common Objects in Context. In Fleet, D., Pa-                  com/doi/abs/10.1111/geb.12747. _eprint:
+  jdla, T., Schiele, B., and Tuytelaars, T. (eds.), Computer          https://onlinelibrary.wiley.com/doi/pdf/10.1111/geb.12747.
+  Vision – ECCV 2014, pp. 740–755, Cham, 2014. Springer
+  International Publishing. ISBN 978-3-319-10602-1. doi:            Mengyuan, C., Wenwen, K., Yongqi, S., Jie, J., Zhao, Y.,
+  10.1007/978-3-319-10602-1_48.                                      and Liu, F. A Two-Stage Segment-Then-Classify Strat-
+Liu, Z., Lin, Y., Cao, Y., Hu, H., Wei, Y., Zhang, Z., Lin,          egy for Accurate Ginkgo Tree Identification from UAV
+  S., and Guo, B. Swin Transformer: Hierarchical Vision              Imagery. 9(11):773–795, 2025. doi: 10.3390/drones9110
+  Transformer using Shifted Windows. In 2021 IEEE/CVF                773. URL https://www.proquest.com/docvi
+  International Conference on Computer Vision (ICCV),                ew/3275510600/abstract/5142780E52EC4
+  pp. 9992–10002, Montreal, QC, Canada, October 2021.                157PQ/1. Num Pages: 23 Place: Basel, Switzerland.
+  IEEE. ISBN 978-1-6654-2812-5. doi: 10.1109/ICCV48
+                                                                    Ouaknine, A., Kattenborn, T., Laliberté, E., and Rolnick, D.
+  922.2021.00986. URL https://ieeexplore.iee
+                                                                      OpenForest: a data catalog for machine learning in forest
+  e.org/document/9710580/.
+                                                                      monitoring. Environmental Data Science, 4:e15, January
+Lungo Vaschetti, J., Arnaudo, E., and Rossi, C. TreePseCo:            2025. ISSN 2634-4602. doi: 10.1017/eds.2024.53. URL
+  Scaling Individual Tree Crown Segmentation using Large              https://www.cambridge.org/core/journ
+  Vision Models. The International Archives of the Pho-               als/environmental-data-science/artic
+  togrammetry, Remote Sensing and Spatial Information                 le/openforest-a-data-catalog-for-mac
+  Sciences, XLVIII-M-7-2025:275–282, May 2025. ISSN                   hine-learning-in-forest-monitoring/F6
+  1682-1750. doi: 10.5194/isprs-archives-XLVIII-M-7-2                 2FBEADFF8E3A10C6EDA789D7D180C6.
+  025-275-2025. URL https://isprs-archives.
+  copernicus.org/articles/XLVIII-M-7-2                              Pan, Y., Birdsey, R. A., Fang, J., Houghton, R., Kauppi,
+  025/275/2025/isprs-archives-XLVIII-M                                P. E., Kurz, W. A., Phillips, O. L., Shvidenko, A., Lewis,
+ -7-2025-275-2025.html. Conference Name: 44th                         S. L., Canadell, J. G., Ciais, P., Jackson, R. B., Pacala,
+  EARSeL Symposium - 26–29 May 2025, Prague, Czech                    S. W., McGuire, A. D., Piao, S., Rautiainen, A., Sitch,
+  Republic.                                                           S., and Hayes, D. A large and persistent carbon sink in
+                                                                      the world’s forests. Science, 333(6045):988–993, August
+Lutz, J. A., Furniss, T. J., Johnson, D. J., Davies, S. J.,           2011. doi: 10.1126/science.1201609. URL https:
+  Allen, D., Alonso, A., Anderson-Teixeira, K. J., Andrade,           //doi.org/10.1126/science.1201609.
+  A., Baltzer, J., Becker, K. M. L., Blomdahl, E. M.,
+  Bourg, N. A., Bunyavejchewin, S., Burslem, D. F.                  Que, H., Gao, H., Shan, W., Liu, M., An, J., Deng, F.,
+  R. P., Cansler, C. A., Cao, K., Cao, M., Cárdenas,                  Feng, S., Yang, X., and Mu, L. FM-SAM: individual tree
+  D., Chang, L.-W., Chao, K.-J., Chao, W.-C., Chiang,                 crown delineation and classification based on Segmen-
+  J.-M., Chu, C., Chuyong, G. B., Clay, K., Condit,                   tation Anything Model (SAM) and YOLOv10 in UAV
+  R., Cordell, S., Dattaraja, H. S., Duque, A., Ewango,               imagery for forest monitoring. Computers and Electron-
+  C. E. N., Fischer, G. A., Fletcher, C., Freund, J. A.,              ics in Agriculture, 240:111162, January 2026. ISSN
+  Giardina, C., Germain, S. J., Gilbert, G. S., Hao, Z.,              0168-1699. doi: 10.1016/j.compag.2025.111162. URL
+  Hart, T., Hau, B. C. H., He, F., Hector, A., Howe, R. W.,           https://www.sciencedirect.com/scienc
+  Hsieh, C.-F., Hu, Y.-H., Hubbell, S. P., Inman-Narahari,            e/article/pii/S0168169925012682.
+  F. M., Itoh, A., Janík, D., Kassim, A. R., Kenfack,
+  D., Korte, L., Král, K., Larson, A. J., Li, Y., Lin, Y.,          Ravi, N., Gabeur, V., Hu, Y.-T., Hu, R., Ryali, C., Ma,
+  Liu, S., Lum, S., Ma, K., Makana, J.-R., Malhi, Y.,                 T., Khedr, H., Rädle, R., Rolland, C., Gustafson, L.,
+  McMahon, S. M., McShea, W. J., Memiaghe, H. R., Mi,                 Mintun, E., Pan, J., Alwala, K. V., Carion, N., Wu, C.-Y.,
+  X., Morecroft, M., Musili, P. M., Myers, J. A., Novotny,            Girshick, R., Dollár, P., and Feichtenhofer, C. SAM 2:
+  V., de Oliveira, A., Ong, P., Orwig, D. A., Ostertag, R.,           Segment Anything in Images and Videos, October 2024.
+  Parker, G. G., Patankar, R., Phillips, R. P., Reynolds,             URL http://arxiv.org/abs/2408.00714.
+  G., Sack, L., Song, G.-Z. M., Su, S.-H., Sukumar, R.,               arXiv:2408.00714 [cs].
+
+                                                               12
+                                                          SelvaMask
+
+Rolnick, D., Aspuru-Guzik, A., Beery, S., Dilkina, B., Donti,           journals.onlinelibrary.wiley.com/doi/pdf/10.1111/1440-
+  P. L., Ghassemi, M., Kerner, H., Monteleoni, C., Rolf, E.,            1703.12555.
+  Tambe, M., and White, A. Position: Application-Driven
+  Innovation in Machine Learning. In Salakhutdinov, R.,               Teng, M., Ouaknine, A., Laliberté, E., Bengio, Y., Rolnick,
+  Kolter, Z., Heller, K., Weller, A., Oliver, N., Scarlett,             D., and Larochelle, H. Bringing SAM to new heights:
+  J., and Berkenkamp, F. (eds.), Proceedings of the 41st                Leveraging elevation data for tree crown segmentation
+  International Conference on Machine Learning, volume                  from drone imagery, June 2025. URL http://arxiv.
+  235 of Proceedings of Machine Learning Research, pp.                  org/abs/2506.04970. arXiv:2506.04970 [cs].
+  42707–42718. PMLR, July 2024. URL https://pr                        Troles, J., Schmid, U., Fan, W., and Tian, J. BAMFORESTS:
+  oceedings.mlr.press/v235/rolnick24a.                                  Bamberg Benchmark Forest Dataset of Individual Tree
+  html.                                                                 Crowns in Very-High-Resolution UAV Images. Remote
+                                                                        Sensing, 16(11):1935, January 2024. ISSN 2072-4292.
+Ronneberger, O., Fischer, P., and Brox, T. U-Net: Convolu-              doi: 10.3390/rs16111935. URL https://www.mdpi
+  tional Networks for Biomedical Image Segmentation. In                 .com/2072-4292/16/11/1935.
+  Navab, N., Hornegger, J., Wells, W. M., and Frangi, A. F.
+  (eds.), Medical Image Computing and Computer-Assisted               van Geffen, F., Heim, B., Brieger, F., Geng, R., Shevtsova,
+  Intervention – MICCAI 2015, pp. 234–241, Cham, 2015.                  I., Schulte, L., Stuenzi, S., Bernhardt, N., Troeva, E.,
+  Springer International Publishing. ISBN 978-3-319-                    Pestryakova, L., Zakharov, E., Pflug, B., Herzschuh, U.,
+  24574-4. doi: 10.1007/978-3-319-24574-4_28.                           and Kruse, S. SiDroForest: a comprehensive forest in-
+                                                                        ventory of Siberian boreal forest investigations including
+Santos, A., Junior, J., Araújo, M., Martini, D., Tetila, E.,            drone-based point clouds, individually labeled trees, syn-
+  Siqueira, H., Aoki, C., Eltner, A., Matsubara, E., Pistori,           thetically generated tree crowns, and Sentinel-2 labeled
+  H., Feitosa, R., Liesenberg, V., and Gonçalves, W. As-                image patches. Earth System Science Data, 14:4967–
+  sessment of CNN-Based Methods for Individual Tree                     4994, November 2022. doi: 10.5194/essd-14-4967-2022.
+  Detection on Images Captured by RGB Cameras At-
+  tached to UAVs. Sensors, 19:3595, August 2019. doi:                 Vasquez, V., Cushman, K., Ramos, P., Williamson, C., Vil-
+  10.3390/s19163595.                                                    lareal, P., Correa, L. F. G., and Muller-Landau, H. C.
+                                                                        Barro Colorado Island 50-ha plot crown maps: man-
+Tagle Casapia, X., Cardenas-Vigo, R., Marcos, D., Fernán-               ually segmented and instance segmented. December
+  dez Gamarra, E., Bartholomeus, H., Honorio Coronado,                  2023. doi: 10.25573/data.24784053.v2. URL
+  E. N., Di Liberto Porles, S., Falen, L., Palacios, S., Tsen-          https://smithsonian.figshare.com/art
+  bazar, N.-E., Mitchell, G., Dávila Díaz, A., Draper, F. C.,           icles/dataset/Barro_Colorado_Island_
+  Flores Llampazo, G., Pérez-Peña, P., Chipana, G., Del                 50-ha_plot_crown_maps_manually_segme
+  Castillo Torres, D., Herold, M., and Baker, T. R. Ef-                 nted_and_instance_segmented_/24784053.
+  fective integration of drone technology for mapping and
+  managing palm species in the Peruvian Amazon. Na-                   Veitch-Michaelis, J., Cottam, A., Schweizer, D., Broad-
+  ture Communications, 16(1):3764, April 2025. ISSN                     bent, E. N., Dao, D., Zhang, C., Zambrano, A. A.,
+  2041-1723. doi: 10.1038/s41467-025-58358-5. URL                       and Max, S. OAM-TCD: A globally diverse dataset
+  https://www.nature.com/articles/s414                                  of high-resolution tree cover maps. Advances in Neu-
+  67-025-58358-5.                                                       ral Information Processing Systems, 37:49749–49767,
+                                                                        December 2024. doi: 10.52202/079017-1574. URL
+Takeshige, R., Htoo, K. K., Onishi, M., Rahman, F. M.,                  https://papers.nips.cc/paper_files/p
+  Hoshizaki, K., Ida, H., Ishihara, M. I., Itoh, A.,                    aper/2024/hash/58efdd77196fa8159062a
+  Kaneko, T., Katayama, A., Kuramoto, S., Kurokawa,                     fa0408245da-Abstract-Datasets_and_Be
+  H., Maki, M., Masaka, K., Nakaji, T., Nakamura, M.,                   nchmarks_Track.html.
+  Nishimura, N., Noguchi, M., Sakai, A., Takashima, A.,               Voulgaris, G. Bridging Classical and Modern Computer
+  Tashiro, N., Tokuchi, N., Yamagawa, H., and Onoda, Y.                 Vision: PerceptiveNet for Tree Crown Semantic Segmen-
+  High-resolution digital canopy height models, terrain                 tation.
+  models, ortho-mosaic photos, and canopy tree crown
+  shapes derived from UAV-borne LiDAR at 22 tree                      Waite, C. E., van der Heijden, G. M. F., Field, R., and
+  census plots across Japanese natural forests. Ecological             Boyd, D. S. A view from above: Unmanned aerial
+  Research, 40(4):657–670, 2025. ISSN 1440-1703.                       vehicles (UAVs) provide a new tool for assessing
+  doi: 10.1111/1440- 1703.12555. URL https:                            liana infestation in tropical forest canopies. Journal
+  //onlinelibrary.wiley.com/doi/abs/10                                 of Applied Ecology, 56(4):902–912, 2019.         ISSN
+  .1111/1440-1703.12555. _eprint: https://esj-                         1365-2664. doi: 10.1111/1365-2664.13318. URL
+
+                                                                 13
+                                                        SelvaMask
+
+  https://onlinelibrary.wiley.com/do                                ography, 1(2):100025, November 2025. ISSN 3050-
+  i/abs/10.1111/1365-2664.13318. _eprint:                           5208. doi: 10.1016/j.infgeo.2025.100025. URL
+  https://onlinelibrary.wiley.com/doi/pdf/10.1111/1365-             https://www.sciencedirect.com/scienc
+  2664.13318.                                                       e/article/pii/S3050520825000259.
+Weinstein, B. G., Graves, S. J., Marconi, S., Singh, A.,
+ Zare, A., Stewart, D., Bohlman, S. A., and White,
+ E. P. A benchmark dataset for canopy crown detection
+ and delineation in co-registered airborne RGB, LiDAR
+ and hyperspectral imagery from the National Ecolog-
+ ical Observation Network. PLOS Computational Bi-
+ ology, 17(7):e1009180, 2021. ISSN 1553-7358. doi:
+ 10.1371/journal.pcbi.1009180. URL https://jour
+ nals.plos.org/ploscompbiol/article?i
+ d=10.1371/journal.pcbi.1009180.
+Weishaupt, M., Fan, W., Troles, J., and Tian, J. Individ-
+ ual Tree Crown Based Tree Species Classification from
+ Very High-Resolution UAV Images. In International Geo-
+ science and Remote Sensing Symposium (IGARSS), pp.
+ 1–5, Brisbane, Australien, 2025. URL https://2025
+ .ieeeigarss.org/index.php#welcome.
+Xiang, B., Wielgosz, M., Puliti, S., Král, K., Krůček, M.,
+  Missarov, A., and Astrup, R. ForestFormer3D: A Unified
+  Framework for End-to-End Segmentation of Forest Li-
+  DAR 3D Point Clouds. In Proceedings of the IEEE/CVF
+  International Conference on Computer Vision (ICCV), pp.
+  24717–24727, October 2025.
+Yang, G., Liu, C., Li, G., Chen, H., Chen, K., Wang, Y., and
+  Hu, X. DiffKNet-TL: Maize phenology monitoring with
+  confidence-aware constrained diffusion model based on
+  UAV platform. Computers and Electronics in Agriculture,
+  239:110936, December 2025. ISSN 0168-1699. doi:
+  10.1016/j.compag.2025.110936. URL https://www.
+  sciencedirect.com/science/article/pi
+  i/S0168169925010427.
+Yang, M., Mou, Y., Liu, S., Meng, Y., Liu, Z., Li, P., Xi-
+  ang, W., Zhou, X., and Peng, C. Detecting and mapping
+  tree crowns based on convolutional neural network and
+  Google Earth images. International Journal of Applied
+  Earth Observation and Geoinformation, 108:102764,
+  April 2022. ISSN 1569-8432. doi: 10.1016/j.jag.20
+  22.102764. URL https://www.sciencedirect.
+  com/science/article/pii/S03032434220
+  00903.
+Zhou, Z.-H. and Feng, J. Deep Forest, July 2020.
+  URL http://arxiv.org/abs/1702.08835.
+  arXiv:1702.08835 [cs].
+Zhu, Y., Locke, W., Yuan, J., Zhang, Y., Ma, Q., and
+  Liang, L. Leveraging SAM 2 and LiDAR for auto-
+  mated individual tree crown delineation: A compara-
+  tive evaluation of prompting methods. Information Ge-
+
+                                                               14
+                                                              SelvaMask
+
+A. SelvaMask dataset
+A.1. Image acquisition metadata
+Table 7 details the specific flight parameters and acquisition conditions for the three S ELVA M ASK sites. These parameters
+were chosen to maximize orthomosaic quality and minimize motion blur (shutter speed 1/1000s) across diverse lighting
+conditions.
+
+                       Parameter                   Panama (BCI)           Brazil (ZF2)      Ecuador (Tiputini)
+                        Flight Parameters
+                       Date                        Nov 22, 2024          Jan 31, 2024           Jun 13, 2024
+                       Time (Start–End)            11:05 – 11:39         14:47 – 15:06          10:57 – 11:27
+                       Platform                    DJI Mavic 3M         DJI Mavic 3M           DJI Mavic 3E
+                       Sensor Type               20MP 4/3 CMOS         20MP 4/3 CMOS          20MP 4/3 CMOS
+                       Altitude (AGL)                   60 m                 43 m                 ∼90 m∗
+                       Overlap (Front/Side)          85% / 75%            85% / 75%              85% / 70%
+                       Shutter Speed                  1/1000 s             1/1000 s               1/1000 s
+                       Scanning Mode                  Repetitive          Repetitive             Repetitive
+                       Conditions                Partly cloudy skies      Clear skies            Clear skies
+                        Orthomosaic Properties
+                       Dimensions (px)         48 712 × 41 463          22 947 × 21 047       31 503 × 41 838
+                       Resolution (GSD)           1.83 cm/px               1.34 cm/px            3.47 cm/px
+                       Covered Area                 67.8 ha                   8.7 ha              158.3 ha
+Table 7. Detailed acquisition metadata and resulting orthomosaic properties for all sites. Altitude is reported Above Ground Level (AGL).
+Time is local. ∗ Altitude estimated based on GSD.
+
+
+
+A.2. Annotation protocol
+Software and setup. All annotations were performed using ArcGIS Pro. Annotators were provided with high-resolution
+RGB orthomosaics and a predefined Area of Interest (AOI) layer to ensure consistent spatial coverage.
+
+  1. Initialization: Load the site-specific orthomosaic and the Area of Interest (AOI) mask. Create a new polygon feature
+     class for the session.
+  2. Tracing Method: Use the Freehand Autocomplete tool to trace crown boundaries.
+        • For isolated trees: Trace the full contour.
+        • For clustered trees: Start the trace inside an existing neighbor’s polygon, trace the new crown’s outer edge, and
+          end the trace back inside the neighbor’s polygon. The software automatically calculates the shared boundary to
+          ensure zero overlap.
+  3. Inclusion Criteria:
+        • All visible canopy trees must be annotated.
+        • Trees straddling the edge of the AOI must be included.
+
+  4. Exclusion Criteria:
+        • Do not annotate shadows, deep understory, or ambiguous blurry regions.
+        • Delete any “sliver” or “gap” polygons accidentally created by the autocomplete tool in shadowed regions.
+
+
+
+
+                                                                  15
+                                                                SelvaMask
+
+A.3. Dataset Statistics
+
+
+
+
+Figure 4. Crown area distribution in for all tropical datasets in this study. Vertical lines indicate the five ecological size classes (Tiny,
+Small, Medium, Large, Giant). Y-axis is in logarithmic scale.
+
+
+
+
+                                                                    16
+                                                             SelvaMask
+
+A.4. Tiling strategy
+
+
+
+
+Figure 5. Spatial Cross-Validation Splits. Visualization of the Training (Yellow), Validation (Red), and Test (Blue) zones across the
+three SELVAMASK sites. The Ecuador site is split into two nearby sectors (c, d) within the same orthomosaic. Pixels outside these zones
+are masked to ensure strict spatial isolation.
+
+
+
+
+                                                                  17
+                                                          SelvaMask
+
+B. Training parameters
+B.1. Data augmentation
+Listed in Table 8 are the data augmentation parameters used for all segmentors and detection models. Note that these corre-
+spond to the training augmentations used in (Baudchon et al., 2026) for their multi-resolution, multi-datasets experiments.
+
+                                         Parameter                 Value
+                                          Color & Intensity
+                                         Brightness                0.2 (Prob: 0.5)
+                                         Contrast                  0.2 (Prob: 0.5)
+                                         Saturation                0.2 (Prob: 0.5)
+                                         Hue                       10 (Prob: 0.3)
+                                          Geometric Transformations
+                                         Horizontal Flip        True
+                                         Vertical Flip          True
+                                         Rotation               ±30◦ (Prob: 0.5)
+                                          Cropping & Resizing
+                                         Crop Probability          0.5
+                                         Crop Min Intersection     0.5
+                                         Train Crop Size Range     [666, 2666] pixels
+                                         Target Image Size         {1024, 1777} pixels
+                                         Early Conditional Size    2000 pixels
+Table 8. Data augmentation hyperparameters used during training. These transformations are applied on-the-fly to improve model
+robustness to lighting and orientation changes.
+
+
+
+B.2. NMS parameters optimization for mRF1 metric
+The mRF1 metric requires optimizing NMS and confidence thresholds on a validation set prior to benchmarking on the
+test set (Baudchon et al., 2026). In this work, we optimize these hyperparameters for Detectree2 (Ball et al., 2023) on
+the original Detectree2 dataset, and for all other methods on S ELVA M ASK . This ensures that Detectree2, our primary
+baseline for tropical tree crown segmentation, remains strictly OOD relative to S ELVA M ASK during evaluation. The only
+exception is for the QuebecTrees dataset in our OOD evaluation (Tab. 4), where the NMS is optimized on the validation set
+of QuebecTrees itself for all methods due to the significant domain shift. For the rest of the methodology, i.e the grid search
+setup, we follow (Baudchon et al., 2026).
+
+
+
+
+                                                              18
+                                                           SelvaMask
+
+B.3. SAM fine-tuning
+B.3.1. H YPERPARAMETERS
+
+                                    Hyperparameter                  Value
+                                     Models
+                                    SAM2 Variant                    facebook/sam2-hiera-large
+                                    SAM3 Variant                    SAM3-Large
+                                     Optimization
+                                    Batch Size                      2
+                                    Max Prompts per Batch           64
+                                    Total Training Steps            4,300
+                                    Optimizer                       AdamW
+                                    Scheduler                       Cosine Decay
+                                    Warmup                          5% Linear Warmup
+                                    LR (Image Encoder)              1.0 × 10−5
+                                    LR (Prompt Enc / Mask Dec)      3.0 × 10−5
+                                    Weight Decay                    0.01
+                                     Prompting Strategy
+                                    Prompt Source                   Detector-predicted boxes
+                                    Box Jitter (Noise)              0.0
+                                    Point Prompts                   False
+                                      Loss Function
+                                    Loss Components                 Dice + IoU
+                                    λdice                           1.0
+                                    λiou                            1.0
+                                    λfocal                          0.0 (Disabled)
+                                    IoU Regression Loss             L1
+Table 9. SAM fine-tuning Hyperparameters. Common configuration used for both SAM2 and SAM3 experiments. We fine-tuned
+end-to-end using Automatic Mixed Precision (AMP) with detector-predicted box prompts.
+
+
+
+B.3.2. SAM TRAINING COMPONENTS
+
+                                            Component                              Performance
+                            Image Enc      Prompt Enc       Mask Dec        mAP       mAR        mRF1
+                                                                            16.5       30.6      29.8
+                                                                            16.7       29.0      28.1
+                                                                            16.5       30.6      29.8
+                                                                            16.7       29.0      28.2
+                                                                            18.1       31.3      29.9
+                                                                            18.3       32.6      31.2
+                                                                            17.1       30.9      29.3
+                                                                            19.5       31.5      31.1
+Table 10. Ablation Study on SAM2 fine-tuning Strategy. We evaluate the impact of freezing ( ) vs. fine-tuning ( ) different
+components of the SAM2 architecture. We mark the best and second-best scores in bold and underline, respectively. All experiments
+were run for 1500 steps, with the same Hyperparameters mentioned in Table 9
+
+
+
+
+                                                               19
+                                                           SelvaMask
+
+B.4. End-to-end model training hyperparameters
+
+                                    Mask R-CNN              Mask2Former                     RSPrompter (Anchor)
+             Hyperparameter
+                                      ResNet50       ResNet50              Swin-L         SAM-Base       SAM-Huge
+              Architecture
+             Backbone Pretraining   ImageNet-1k     ImageNet-1k         ImageNet-22k        SA-1B          SA-1B
+             Model Pretraining        COCO            COCO                 COCO             SA-1B          SA-1B
+              Optimization
+             Optimizer                  SGD            AdamW               AdamW            AdamW          AdamW
+             Base Learning Rate      5.0 × 10−3      1.0 × 10−4          1.0 × 10−4       1.0 × 10−5     1.0 × 10−5
+             Batch Size                   4               4                   4                4              4
+             Max Epochs                  800             800                 800            ≈ 1200         ≈ 1200
+             Box Prompts                  -               -                   -               64             64
+              Scheduler
+             Type                   WarmupCosine   WarmupCosine        WarmupMultiStep   WarmupCosine   WarmupCosine
+             Decay Milestones            -              -                [80%, 90%]           -              -
+             Warmup Iterations          100            100                  100              50             50
+Table 11. Hyperparameter configurations for all trained models. We detail the optimization settings for the baselines (Mask R-CNN,
+Mask2Former) and our prompt-based methods (RSPrompter variants). We report only the hyperparameters modified for our experiments;
+all others follow the default configurations of their respective codebases.
+
+
+
+
+                                                                  20
+                                                                                          SelvaMask
+
+     C. Additional results
+
+                                              Model
+                                 70    DeepForest + SAM3
+
+
+
+
+                                                                                                                                                                65.4
+                                                                                                                                                             63.6
+                                       Detectree2 (flexi)
+
+
+
+
+                                                                                                                                                           60.1
+                                       MaskRCNN (R50)
+
+
+
+
+                                                                                                                                                       57.8
+                                 60    SelvaBox + SAM3
+Mean Average Precision (mAP %)
+
+
+
+
+                                                                                                                                    54.2
+                                       Mask2Former (SwinL)
+
+
+
+
+                                                                                                                                  51.0
+                                       RSPrompter (SAM-Huge)
+
+
+
+
+                                                                                                                                 50.1
+                                 50    SelvaBox + SAM3
+
+
+
+
+                                                                                                            45.5
+
+
+
+
+                                                                                                                             43.1
+                                                                                                        41.5
+                                                                                                       39.2
+
+
+
+
+                                                                                                                                                40.4
+                                 40
+
+
+
+
+                                                                                                   34.5
+
+
+
+
+                                                                                                                      33.5
+                                                                                                                      29.3
+
+
+
+
+                                                                                                                                                    26.0
+                                                                                31.2
+                                                                        27.2
+                                 30
+
+
+
+
+                                                                                               21.6
+
+
+
+
+                                                                                                                                             22.6
+                                                                             21.7
+
+
+
+
+                                                                                                                   21.9
+                                                                   20.8
+
+
+
+
+                                                                                           20.2
+                                                                 17.0
+
+
+
+
+                                 20
+                                                                                        14.6
+                                                      9.2
+
+
+
+
+                                 10
+                                                               8.2
+                                            6.9
+
+
+
+                                                             6.6
+                                          5.6
+                                          4.7
+
+
+                                                    1.9
+                                      0.4
+                                      0.3
+
+
+
+
+                                  0
+                                             Tiny                    Small                        Medium                     Large                     Giant
+                                                                                       Crown Size Category
+                                        Figure 6. Different model performances in mAP by size category (Tiny, Small, Medium, Large, Giant).
+
+
+
+                                              Model
+
+
+
+
+                                                                                                                                                               68.2
+                                 70    DeepForest + SAM3
+
+
+
+
+                                                                                                                                                           64.7
+                                                                                                                                                          62.2
+                                       Detectree2 (flexi)
+
+
+
+
+                                                                                                                                                       61.3
+                                       MaskRCNN (R50)
+                                 60    SelvaBox + SAM3
+                                                                                                                                      55.8
+Mean Raster F1 Score (mRF1 %)
+
+
+
+
+                                       Mask2Former (SwinL)
+                                                                                                                                   50.0
+
+
+
+
+                                       RSPrompter (SAM-Huge)
+                                                                                                            49.6
+
+
+
+
+                                                                                                                               46.9
+
+
+
+
+                                 50    SelvaBox + SAM3
+                                                                                                                             46.3
+
+
+
+
+                                                                                                                                                42.3
+                                                                                                     40.8
+                                                                                                    39.2
+                                                                                40.5
+
+
+
+
+                                                                                                   39.8
+
+
+
+
+                                 40
+                                                                                                                          31.3
+
+
+
+
+                                                                                                                                                    30.8
+                                                                          33.5
+                                                                        32.9
+
+                                                                     29.2
+
+
+
+
+                                                                                                                      28.4
+
+
+
+
+                                 30
+                                                                                               22.9
+
+
+
+
+                                                                                                                                             22.9
+                                                                 19.2
+
+
+
+
+                                                                                           20.4
+
+
+
+
+                                                                                                                   20.2
+                                                      18.9
+
+
+
+
+                                 20
+                                              14.0
+
+
+
+
+                                                                                        15.4
+                                                              15.2
+                                             14.0
+
+
+
+
+                                                             13.8
+                                          9.5
+
+
+
+
+                                 10
+                                                    6.7
+                                       1.5
+                                      0.8
+
+
+
+
+                                  0
+                                             Tiny                    Small                        Medium                     Large                     Giant
+                                                                                       Crown Size Category
+                                        Figure 7. Different model performances in mRF1 by size category (Tiny, Small, Medium, Large, Giant).
+
+
+
+
+                                                                                                  21
+                                                                SelvaMask
+
+
+
+
+                        Method           ∆mAP ∆AP50 ∆AP75 ∆mAR ∆AR50 ∆AR75 ∆mRF1 ∆RF150 ∆RF175
+                        SAM2 - SAM2       +2.7 +4.0  +3.8  +2.1 +0.3  +3.3  +3.2  +1.8   +4.4
+                        SAM3 - SAM3       +2.4 +1.0  +4.0  +2.2 +0.0  +4.3  +3.5  +1.9   +5.2
+       Table 12. Effect of fine-tuning on SelvaBox→SAM (absolute ∆ in percentage points over the frozen / zero-shot variant)
+
+
+
+
+Figure 8. Qualitative Results on BCI50ha. Comparison of models predictions: Detectree2 vs. our proposed modular pipeline SelvaBox→
+SAM3 with fine-tuned ( ) modules. Note that the BCI50ha dataset annotation protocol omits small understory trees. Similarly, Detectree2
+produces sparse predictions. In contrast, our pipeline delineates all visible crowns, successfully recovering the dense small trees that are
+ignored by both the baseline and the dataset annotations.
+
+
+
+
+                                                                    22
+

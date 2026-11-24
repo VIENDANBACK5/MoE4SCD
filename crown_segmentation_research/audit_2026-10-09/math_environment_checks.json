@@ -1,0 +1,26 @@
+{
+  "oracle_maxIoU_duplicate_counterexample": {
+    "all_maxIoU": 1.0,
+    "recall": 1.0,
+    "COCO_AP_percent": 83.49834983498347
+  },
+  "equivalent_radius_counterexample": {
+    "two_disjoint_rectangles_width": 1,
+    "height": 100,
+    "center_distance": 1.1,
+    "sum_equivalent_radii": 11.283791670955125
+  },
+  "environment": {
+    "python": "3.11.5 (main, Sep 11 2023, 13:54:46) [GCC 11.2.0]",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "torch": "2.4.0+cu121",
+      "torchvision": "0.19.0+cu121",
+      "numpy": "1.26.4",
+      "scipy": "1.17.1",
+      "scikit-learn": "1.9.0",
+      "pycocotools": "2.0.11",
+      "pyarrow": "24.0.0"
+    }
+  }
+}

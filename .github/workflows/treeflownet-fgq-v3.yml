@@ -1,0 +1,34 @@
+name: TreeFlowNet FGQ V3 engineering
+on:
+  pull_request:
+    paths:
+      - 'crown_segmentation_research/research_program_2026-10-23/**'
+      - 'crown_segmentation_research/fgq_controlled_benchmark_2026/**'
+      - 'crown_segmentation_research/research_integrity/a06_hardening_v2/**'
+      - 'crown_segmentation_research/clean_benchmark/**'
+      - 'crown_segmentation_research/methods/**'
+      - 'crown_segmentation_research/p2_whole_crown_observability_2026-10-16/**'
+      - 'crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/**'
+      - '.github/workflows/treeflownet-fgq-v3.yml'
+  workflow_dispatch:
+jobs:
+  synthetic-contracts:
+    runs-on: ubuntu-latest
+    env:
+      CUDA_VISIBLE_DEVICES: '-1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTORCH_NVML_BASED_CUDA_CHECK: '1'
+      JE_ARROW_MALLOC_CONF: 'background_thread:false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install torch==2.4.0 torchvision==0.19.0 --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install numpy==1.26.4 scipy==1.17.1 pycocotools==2.0.11 Pillow==12.2.0 pyarrow==24.0.0 shapely==2.1.2 pyproj==3.7.2 scikit-learn==1.9.0 scikit-image==0.26.0 PyYAML==6.0.3
+      - name: Synthetic contracts and failure controls; no real data/checkpoints
+        run: python -B -W error::ResourceWarning -m unittest discover -s crown_segmentation_research/research_program_2026-10-23/tests -p 'test_*.py' -v

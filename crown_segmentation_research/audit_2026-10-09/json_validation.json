@@ -1,0 +1,10 @@
+{
+ "n_json": 1376,
+ "parse_errors": [],
+ "nonstandard_constants": [
+  {
+   "file": "clean_benchmark/results/boundary_r2_validation.json",
+   "error": "nonstandard NaN"
+  }
+ ]
+}

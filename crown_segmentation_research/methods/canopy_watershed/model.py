@@ -13,6 +13,13 @@ Architecture:
 """
 from __future__ import annotations
 
+import sys
+_conda_p = '/home/ubuntu/anaconda3/envs/cs2/lib/python3.11/site-packages'
+_local_p = '/home/chung/.local/lib/python3.11/site-packages'
+sys.path = [p for p in sys.path if p != _local_p and p != _conda_p]
+sys.path.insert(0, _conda_p)
+sys.path.append(_local_p)
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

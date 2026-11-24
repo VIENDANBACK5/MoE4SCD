@@ -1,0 +1,94 @@
+{
+ "rasters": {
+  "20210902_sblz1_p4rtk_rgb": {
+   "gsd_m": 0.03,
+   "n_tiles": {
+    "train": 66,
+    "validation": 139,
+    "test": 30
+   },
+   "grid_px": [
+    23325,
+    20826
+   ],
+   "max_origin_err_px": 0.0,
+   "valid_px": {
+    "train": 131429096,
+    "validation": 82939584,
+    "test": 11821694
+   },
+   "overlap_px": {
+    "train&validation": 14094,
+    "train&test": 12966,
+    "validation&test": 11895
+   },
+   "overlap_m2": {
+    "train&validation": 12.685,
+    "train&test": 11.669,
+    "validation&test": 10.705
+   },
+   "test_crowns_touching_overlap": 221,
+   "nearest_test_train_m_approx": 0.0
+  },
+  "20210902_sblz2_p4rtk_rgb": {
+   "gsd_m": 0.03,
+   "n_tiles": {
+    "train": 82,
+    "validation": 0,
+    "test": 0
+   },
+   "grid_px": [
+    16661,
+    21659
+   ],
+   "max_origin_err_px": 0.0,
+   "valid_px": {
+    "train": 181823762,
+    "validation": 0,
+    "test": 0
+   },
+   "overlap_px": {
+    "train&validation": 0,
+    "train&test": 0,
+    "validation&test": 0
+   },
+   "overlap_m2": {
+    "train&validation": 0.0,
+    "train&test": 0.0,
+    "validation&test": 0.0
+   },
+   "test_crowns_touching_overlap": 0,
+   "nearest_test_train_m_approx": null
+  },
+  "20210902_sblz3_p4rtk_rgb": {
+   "gsd_m": 0.03,
+   "n_tiles": {
+    "train": 0,
+    "validation": 0,
+    "test": 138
+   },
+   "grid_px": [
+    12495,
+    12495
+   ],
+   "max_origin_err_px": 0.0,
+   "valid_px": {
+    "train": 0,
+    "validation": 0,
+    "test": 93578455
+   },
+   "overlap_px": {
+    "train&validation": 0,
+    "train&test": 0,
+    "validation&test": 0
+   },
+   "overlap_m2": {
+    "train&validation": 0.0,
+    "train&test": 0.0,
+    "validation&test": 0.0
+   },
+   "test_crowns_touching_overlap": 0,
+   "nearest_test_train_m_approx": null
+  }
+ }
+}

@@ -6,9 +6,16 @@ and computes high-fidelity potential surface, boundary ridge, and canopy support
 from __future__ import annotations
 
 
-# Ensure workspace root is in sys.path
+# Ensure workspace root and conda site-packages in sys.path
 import sys
 from pathlib import Path
+
+_conda_p = '/home/ubuntu/anaconda3/envs/cs2/lib/python3.11/site-packages'
+_local_p = '/home/chung/.local/lib/python3.11/site-packages'
+sys.path = [p for p in sys.path if p != _local_p and p != _conda_p]
+sys.path.insert(0, _conda_p)
+sys.path.append(_local_p)
+
 for _p in Path(__file__).resolve().parents:
     if (_p / "crown_segmentation_research").is_dir():
         if str(_p) not in sys.path:
@@ -66,6 +73,7 @@ class BAMCanopyWatershedDataset(Dataset):
         crop_size: int = 1024,
         augment: bool = True,
         compute_targets: bool = True,
+        sharp_targets: bool = False,
         zip_path: Path = ZIP_ARCHIVE,
     ) -> None:
         super().__init__()
@@ -73,6 +81,7 @@ class BAMCanopyWatershedDataset(Dataset):
         self.crop_size = crop_size
         self.augment = augment
         self.compute_targets = compute_targets
+        self.sharp_targets = sharp_targets
         self.zip_path = zip_path
 
         split_map = {
@@ -181,7 +190,13 @@ class BAMCanopyWatershedDataset(Dataset):
 
         # Compute targets if requested
         if self.compute_targets:
-            surf_tgt, bound_tgt, canopy_tgt = compute_canopy_watershed_targets(crop_inst)
+            if getattr(self, "sharp_targets", False):
+                from crown_segmentation_research.methods.canopy_watershed.targets_sharp import compute_sharp_canopy_targets
+                surf_tgt, bound_tgt, apex_tgt, canopy_tgt = compute_sharp_canopy_targets(crop_inst)
+                apex_t = torch.from_numpy(apex_tgt)
+            else:
+                surf_tgt, bound_tgt, canopy_tgt = compute_canopy_watershed_targets(crop_inst)
+                apex_t = torch.empty(0)
             surf_t = torch.from_numpy(surf_tgt)
             bound_t = torch.from_numpy(bound_tgt)
             canopy_t = torch.from_numpy(canopy_tgt)
@@ -189,12 +204,14 @@ class BAMCanopyWatershedDataset(Dataset):
             surf_t = torch.empty(0)
             bound_t = torch.empty(0)
             canopy_t = torch.empty(0)
+            apex_t = torch.empty(0)
 
         return {
             "image": torch.from_numpy(crop_rgb.astype(np.float32) / 255.0).permute(2, 0, 1),
             "surface": surf_t,
             "boundary": bound_t,
             "canopy": canopy_t,
+            "apex": apex_t,
             "instance_label": torch.from_numpy(crop_inst),
             "image_name": base_name,
         }

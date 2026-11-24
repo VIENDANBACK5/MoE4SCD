@@ -165,3 +165,9 @@ crown_segmentation_research/images/previews_*/
 crown_segmentation_research/images/diagnostics/
 crown_segmentation_research/images/bam_eval_sample_*.png
 crown_segmentation_research/research_program_*/
+
+# Binary pickle caches
+*.pkl
+cellsam_cache/
+cellsam_cache_lowthr/
+

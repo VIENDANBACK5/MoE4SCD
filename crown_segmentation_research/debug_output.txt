@@ -1,0 +1,29 @@
+Script starting...
+Importing DataLoader...
+Importing build_exhaustive_tree_dataset...
+Importing TreeFlowNet...
+Importing TreeFlowLoss...
+All imports finished!
+Checking keys in checkpoint vs model...
+
+--- Testing BFloat16 AMP vs Float32 ---
+  BFloat16 AMP: flow is_nan=False, range=[-10.36, 15.54]
+  BFloat16 Losses:
+    total     : 25.2886, is_nan=False
+    flow      : 1.1365, is_nan=False
+    sdt       : 0.6062, is_nan=False
+    centroid  : 10.4316, is_nan=False
+    canopy    : 13.1141, is_nan=False
+  Float32 Losses:
+    total     : 25.3261, is_nan=False
+    flow      : 1.1368, is_nan=False
+    sdt       : 0.6063, is_nan=False
+    centroid  : 10.4462, is_nan=False
+    canopy    : 13.1368, is_nan=False
+
+Testing 3 full optimizer steps with BFloat16...
+  Step 0: total_loss=25.2886 (flow=1.137, sdt=0.606, cent=10.432, can=13.114)
+  Step 1: total_loss=21.5862 (flow=0.948, sdt=0.601, cent=8.594, can=11.443)
+  Step 2: total_loss=16.3955 (flow=0.848, sdt=0.577, cent=6.537, can=8.434)
+
+BFLOAT16 TEST COMPLETE AND 100% CLEAN!

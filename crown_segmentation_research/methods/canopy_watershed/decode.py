@@ -49,12 +49,8 @@ def extract_persistent_apices(
         List of surviving persistent peaks [(y, x, apex_score), ...].
     """
     H, W = surface.shape
-    # Effective kernel combines local prominence window and minimum distance
-    eff_k = max(kernel_size, int(round(2 * min_distance + 1)))
-    if eff_k % 2 == 0:
-        eff_k += 1
-
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (eff_k, eff_k))
+    k = max(3, kernel_size if kernel_size % 2 == 1 else kernel_size + 1)
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (k, k))
     u_max = cv2.dilate(surface, kernel)
     is_peak = (surface == u_max)
 

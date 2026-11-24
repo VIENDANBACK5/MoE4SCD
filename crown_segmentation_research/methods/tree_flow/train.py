@@ -1,290 +1,338 @@
-"""Training script for TreeFlowNet / OmniCrown on combined multi-source datasets.
-
-Trains the multi-task flow, SDT boundary, centroid heatmap, and canopy gating network.
-Supports combining BAM (1,439 tiles), DeadTrees TreeCover (787 tiles), and
-DeadTrees Deadwood (3,600 tiles).
 """
+Training script for TreeFlowNet on exhaustive all-tree crown data.
 
+Train on combined BAM + Quebec + (optionally DeadTrees tree_cover) dataset.
+Warm-starts from existing ep39 checkpoint (DeadTrees-trained).
+Evaluates on BAM eval split after every N epochs using COCO AP.
+
+Usage (quick dev run):
+    python crown_segmentation_research/methods/tree_flow/train.py \
+        --warm-start DeadTrees/experiments/tree_flow_unified_v1/epoch_checkpoints/epoch_0039.pth \
+        --epochs 60 \
+        --batch 4 \
+        --lr 3e-4 \
+        --out-dir DeadTrees/experiments/tree_flow_exhaustive_v1
+
+Usage (from scratch, no warm-start):
+    python crown_segmentation_research/methods/tree_flow/train.py \
+        --epochs 80 --batch 4 --lr 1e-3 \
+        --out-dir DeadTrees/experiments/tree_flow_exhaustive_scratch
+"""
 from __future__ import annotations
-
-
-# Ensure workspace root is in sys.path
-import sys
-from pathlib import Path
-for _p in Path(__file__).resolve().parents:
-    if (_p / "crown_segmentation_research").is_dir():
-        if str(_p) not in sys.path:
-            sys.path.insert(0, str(_p))
-        break
 
 import argparse
 import json
+import os
+import sys
 import time
 from pathlib import Path
 
-import numpy as np
-import pandas as pd
 import torch
-import torch.nn.functional as F
-from torch import nn
-from torch.utils.data import ConcatDataset, DataLoader, Dataset
+import torch.nn as nn
+from torch.utils.data import DataLoader
+
+# ── path setup ────────────────────────────────────────────────────────────────
+REPO = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO))
 
 from crown_segmentation_research.methods.tree_flow.model import TreeFlowNet
-from crown_segmentation_research.methods.tree_flow.targets import compute_tree_flow_targets
+from crown_segmentation_research.methods.tree_flow.loss import TreeFlowLoss
+from crown_segmentation_research.datasets.exhaustive_tree_dataset import (
+    build_exhaustive_tree_dataset,
+)
+
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-class TreeFlowDataset(Dataset):
-    """Dataset that loads (image, instance_label), crops/pads to crop_size, and computes flow targets on-the-fly."""
+# ─────────────────────────────────────────────────────────────────────────────
+# Evaluation helper (lightweight F1@0.5)
+# ─────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self, target_dir: Path, crop_size: int = 1024, random_crop: bool = True):
-        self.target_dir = target_dir
-        self.crop_size = crop_size
-        self.random_crop = random_crop
-        manifest_path = target_dir / "manifest.csv"
-        if manifest_path.exists():
-            manifest = pd.read_csv(manifest_path)
-            self.paths = [
-                target_dir / f"{image_id.replace(':', '__')}.npz"
-                for image_id in manifest["image_id"].astype(str)
-            ]
-        else:
-            self.paths = sorted(target_dir.glob("*.npz"))
-        self.paths = [p for p in self.paths if p.exists()]
+@torch.no_grad()
+def quick_eval_f1(model: TreeFlowNet, val_loader: DataLoader, decode_cfg: dict) -> float:
+    """
+    Fast F1@IoU0.5 on a small validation sample.
+    Returns F1 score (0-1).
+    """
+    from crown_segmentation_research.methods.tree_flow.decode import decode
 
-    def __len__(self) -> int:
-        return len(self.paths)
+    model.eval()
+    tp = fp = fn = 0
 
-    def __getitem__(self, index: int) -> dict[str, torch.Tensor]:
-        data = np.load(self.paths[index])
-        image = data["image"]  # (H, W, 3) uint8
+    for batch in val_loader:
+        imgs    = batch["image"].to(DEVICE)         # [B, 3, H, W]
+        gt_can  = batch["canopy"].to(DEVICE)        # [B, 1, H, W]
+        gt_sdt  = batch["sdt"].to(DEVICE)           # [B, 1, H, W]
 
-        if "instance_label" in data:
-            instance_label = data["instance_label"].astype(np.int32)
-        else:
-            prob = data.get("probability", np.zeros(image.shape[:2], dtype=np.float32))
-            instance_label = (prob > 0.5).astype(np.int32)
+        outputs = model(imgs)
 
-        H, W = image.shape[:2]
-        CS = self.crop_size
+        B = imgs.shape[0]
+        for b in range(B):
+            out_b = {k: v[b] for k, v in outputs.items()}
+            preds = decode(out_b, device=DEVICE, **decode_cfg)
 
-        if H != CS or W != CS:
-            if H >= CS and W >= CS:
-                if self.random_crop:
-                    y0 = np.random.randint(0, H - CS + 1)
-                    x0 = np.random.randint(0, W - CS + 1)
+            # Count GT instances from SDT (connected components of sdt > 0)
+            from scipy import ndimage
+            sdt_b  = gt_sdt[b, 0].cpu().numpy()
+            fg_b   = sdt_b > 0
+            labeled, n_gt = ndimage.label(fg_b)
+            n_pred = len(preds)
+
+            # Match each pred to a GT component
+            matched_gt = set()
+            for inst in preds:
+                pmask = inst["mask"]
+                # Which GT component does this overlap most?
+                if pmask.shape != fg_b.shape:
+                    continue
+                overlap_ids = labeled[pmask & fg_b]
+                if len(overlap_ids) == 0:
+                    fp += 1
+                    continue
+                best_gt = int(overlap_ids.max())
+                # Compute IoU with that GT region
+                gt_mask = labeled == best_gt
+                inter = (pmask & gt_mask).sum()
+                union = (pmask | gt_mask).sum()
+                iou = inter / (union + 1e-6)
+                if iou >= 0.5 and best_gt not in matched_gt:
+                    tp += 1
+                    matched_gt.add(best_gt)
                 else:
-                    y0 = (H - CS) // 2
-                    x0 = (W - CS) // 2
-                image = image[y0:y0 + CS, x0:x0 + CS]
-                instance_label = instance_label[y0:y0 + CS, x0:x0 + CS]
-            else:
-                pad_h = max(0, CS - H)
-                pad_w = max(0, CS - W)
-                image = np.pad(image, ((0, pad_h), (0, pad_w), (0, 0)), mode="reflect")
-                instance_label = np.pad(instance_label, ((0, pad_h), (0, pad_w)), mode="constant", constant_values=0)
-                image = image[:CS, :CS]
-                instance_label = instance_label[:CS, :CS]
+                    fp += 1
 
-        image_t = torch.from_numpy(image).permute(2, 0, 1).float() / 255.0
-        flow_t, sdt_t, centroid_t, canopy_t = compute_tree_flow_targets(instance_label)
+            fn += n_gt - len(matched_gt)
 
-        return {
-            "image": image_t,
-            "flow_target": torch.from_numpy(flow_t),
-            "sdt_target": torch.from_numpy(sdt_t),
-            "centroid_target": torch.from_numpy(centroid_t),
-            "canopy_target": torch.from_numpy(canopy_t),
-        }
+    prec = tp / (tp + fp + 1e-6)
+    rec  = tp / (tp + fn + 1e-6)
+    f1   = 2 * prec * rec / (prec + rec + 1e-6)
+    model.train()
+    return float(f1)
 
 
-def tree_flow_loss(
-    predictions: dict[str, torch.Tensor],
-    targets: dict[str, torch.Tensor],
-    flow_weight: float = 1.0,
-    sdt_weight: float = 2.0,
-    centroid_weight: float = 5.0,
-    canopy_weight: float = 1.0,
-) -> dict[str, torch.Tensor]:
-    """Compute combined multi-task loss for TreeFlowNet."""
-    flow_pred = predictions["flow"]
-    sdt_pred = predictions["sdt"]
-    centroid_pred = predictions["centroid"]
-    canopy_pred = predictions["canopy"]
+# ─────────────────────────────────────────────────────────────────────────────
+# Training loop
+# ─────────────────────────────────────────────────────────────────────────────
 
-    flow_gt = targets["flow_target"]
-    sdt_gt = targets["sdt_target"]
-    centroid_gt = targets["centroid_target"]
-    canopy_gt = targets["canopy_target"]
+def train(args):
+    import random
+    import numpy as np
+    from crown_segmentation_research.lineage import check_clean_init
+    check_clean_init(args.warm_start, args.allow_leaked_init)
+    random.seed(args.seed); np.random.seed(args.seed); torch.manual_seed(args.seed); torch.cuda.manual_seed_all(args.seed)
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    ckpt_dir = out_dir / "epoch_checkpoints"
+    ckpt_dir.mkdir(exist_ok=True)
 
-    # 1. Flow loss: Cosine similarity + L1 on foreground canopy pixels
-    fg_mask = (canopy_gt > 0.5).expand_as(flow_pred)
-    if fg_mask.sum() > 0:
-        flow_p_fg = flow_pred[fg_mask]
-        flow_g_fg = flow_gt[fg_mask]
-        # Cosine distance: 1 - dot product
-        cos_sim = F.cosine_similarity(flow_pred, flow_gt, dim=1, eps=1e-6)
-        fg_single = canopy_gt[:, 0] > 0.5
-        cos_loss = (1.0 - cos_sim[fg_single]).mean() if fg_single.sum() > 0 else torch.tensor(0.0, device=flow_pred.device)
-        l1_loss = F.l1_loss(flow_p_fg, flow_g_fg)
-        loss_flow = cos_loss + l1_loss
+    print(f"\n{'='*70}", flush=True)
+    print(f"TreeFlowNet — Exhaustive All-Tree Training", flush=True)
+    print(f"  device  : {DEVICE}", flush=True)
+    print(f"  epochs  : {args.epochs}", flush=True)
+    print(f"  batch   : {args.batch}", flush=True)
+    print(f"  lr      : {args.lr}", flush=True)
+    print(f"  out_dir : {out_dir}", flush=True)
+    print(f"{'='*70}\n", flush=True)
+
+    # ── Dataset ──────────────────────────────────────────────────────────────
+    print("Building training dataset...", flush=True)
+    train_ds = build_exhaustive_tree_dataset(
+        patch_size   = args.patch_size,
+        augment      = True,
+        use_bam      = True,
+        use_quebec   = True,
+        use_deadtrees= False,
+        # Z1 only by default. V1 itself read every cached chip of Z1, Z2 and Z3 (the test zone): --legacy-v1-data
+        quebec_zones = ("Z1", "Z2", "Z3") if args.legacy_v1_data else ("Z1",),
+        quebec_legacy_v1 = args.legacy_v1_data,
+    )
+    print(f"  Total training samples: {len(train_ds):,}", flush=True)
+
+    train_loader = DataLoader(
+        train_ds,
+        batch_size  = args.batch,
+        shuffle     = True,
+        num_workers = args.num_workers,
+        pin_memory  = False,
+        drop_last   = True,
+    )
+
+    # Small val subset for quick F1 monitoring (use first 50 BAM eval images)
+    print("\nBuilding val dataset (BAM eval subset)...", flush=True)
+    from crown_segmentation_research.datasets.exhaustive_tree_dataset import BAMCocoDataset
+    bam_dir   = REPO / "data/itc_benchmarks/extracted/bam_coco2048"
+    bam_arch  = REPO / "data/itc_benchmarks/raw_archives/Bamberg_coco2048.zip"
+    val_ds = BAMCocoDataset(
+        json_path    = bam_dir / "instances_tree_eval2023.json",
+        archive_path = bam_arch,
+        patch_size   = args.patch_size,
+        augment      = False,
+    )
+    # Only use first 50 for speed
+    from torch.utils.data import Subset
+    val_ds = Subset(val_ds, list(range(min(50, len(val_ds)))))
+    val_loader = DataLoader(val_ds, batch_size=1, shuffle=False, num_workers=0)
+    print(f"  Val samples: {len(val_ds)}", flush=True)
+
+    # ── Model ─────────────────────────────────────────────────────────────────
+    model = TreeFlowNet(pretrained_backbone=not args.warm_start)  # default was a randomly initialised ResNet-50
+
+    if args.warm_start and Path(args.warm_start).exists():
+        print(f"\nWarm-starting from {args.warm_start} ...", flush=True)
+        sd = torch.load(args.warm_start, map_location="cpu", weights_only=False)
+        state = sd.get("model_state_dict", sd.get("state_dict", sd))
+        missing, unexpected = model.load_state_dict(state, strict=False)
+        if missing:
+            print(f"  Missing keys (new heads): {len(missing)}", flush=True)
+        print("  Warm-start complete.", flush=True)
     else:
-        loss_flow = torch.tensor(0.0, device=flow_pred.device)
+        print("\nTraining from scratch (no warm-start).")
 
-    # 2. SDT loss: Smooth L1 across all pixels
-    loss_sdt = F.smooth_l1_loss(sdt_pred, sdt_gt)
+    model = model.to(DEVICE)
+    model.train()
 
-    # 3. Centroid loss: MSE on Gaussian centroid heatmap
-    loss_centroid = F.mse_loss(centroid_pred, centroid_gt)
+    # ── Loss + Optimizer + AMP ────────────────────────────────────────────────
+    criterion = TreeFlowLoss(w_flow=1.0, w_sdt=2.0, w_centroid=1.0, w_canopy=1.0)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
+    use_bf16  = DEVICE == "cuda" and torch.cuda.is_bf16_supported()
+    amp_dtype = torch.bfloat16 if use_bf16 else torch.float32
 
-    # 4. Canopy loss: BCE + Dice loss
-    bce_loss = F.binary_cross_entropy(canopy_pred, canopy_gt)
-    intersection = (canopy_pred * canopy_gt).sum()
-    dice_loss = 1.0 - (2.0 * intersection + 1.0) / (canopy_pred.sum() + canopy_gt.sum() + 1.0)
-    loss_canopy = bce_loss + dice_loss
-
-    total_loss = (
-        flow_weight * loss_flow
-        + sdt_weight * loss_sdt
-        + centroid_weight * loss_centroid
-        + canopy_weight * loss_canopy
+    # Cosine LR schedule
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, T_max=args.epochs, eta_min=args.lr * 0.05
     )
 
-    return {
-        "total": total_loss,
-        "flow_loss": loss_flow,
-        "sdt_loss": loss_sdt,
-        "centroid_loss": loss_centroid,
-        "canopy_loss": loss_canopy,
-    }
-
-
-def run_training(args: argparse.Namespace) -> None:
-    device = torch.device(args.device if torch.cuda.is_available() else "cpu")
-    print(f"Using device: {device}", flush=True)
-
-    # Build multi-source dataset
-    all_dirs = [args.target_dir] + (args.extra_target_dirs or [])
-    datasets = []
-    for d in all_dirs:
-        ds = TreeFlowDataset(d)
-        print(f"Loaded {len(ds)} samples from {d}", flush=True)
-        datasets.append(ds)
-
-    combined_dataset = ConcatDataset(datasets) if len(datasets) > 1 else datasets[0]
-    print(f"Total training samples combined: {len(combined_dataset)}", flush=True)
-
-    loader = DataLoader(
-        combined_dataset,
-        batch_size=args.batch_size,
-        shuffle=True,
-        num_workers=args.num_workers,
-        pin_memory=True,
-        drop_last=True,
+    # ── Decode config for val eval ────────────────────────────────────────────
+    decode_cfg = dict(
+        canopy_thresh = 0.40,
+        sdt_thresh    = -0.50,
+        nms_iou       = 0.30,
+        min_area      = 30,
+        n_steps       = 20,  # fewer steps for speed during training eval
+        eta           = 1.0,
     )
 
-    model = TreeFlowNet(pretrained_backbone=not args.no_pretrained).to(device)
-
-    # Warm-start backbone from G1B Mask R-CNN if requested
-    if args.warm_start_from and Path(args.warm_start_from).exists():
-        ckpt = torch.load(args.warm_start_from, map_location=device, weights_only=True)
-        state_dict = ckpt.get("model", ckpt)
-        backbone_dict = {}
-        for k, v in state_dict.items():
-            if k.startswith("backbone."):
-                backbone_dict[k.replace("backbone.", "")] = v
-        missing, unexpected = model.backbone.load_state_dict(backbone_dict, strict=False)
-        print(f"Warm-started backbone from {args.warm_start_from} (loaded {len(backbone_dict)} keys)", flush=True)
-
-    optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=1e-4)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=1e-6)
-
-    output_dir = Path(args.output_dir)
-    ckpt_dir = output_dir / "epoch_checkpoints"
-    ckpt_dir.mkdir(parents=True, exist_ok=True)
-
-    start_epoch = 0
+    # ── Training history ──────────────────────────────────────────────────────
     history = []
+    best_f1 = 0.0
+    best_ckpt = out_dir / "best_model.pth"
 
-    # Auto-resume if latest checkpoint exists
-    existing_ckpts = sorted(ckpt_dir.glob("epoch_*.pth"))
-    if existing_ckpts and args.auto_resume:
-        latest = existing_ckpts[-1]
-        start_epoch = int(latest.stem.split("_")[1]) + 1
-        model.load_state_dict(torch.load(latest, map_location=device, weights_only=True))
-        print(f"Auto-resumed model from {latest} at epoch {start_epoch}", flush=True)
-        history_path = output_dir / "training_history.json"
-        if history_path.exists():
-            history = json.loads(history_path.read_text())
-
-    print(f"\nStarting TreeFlowNet training for {args.epochs} epochs...", flush=True)
-
-    for epoch in range(start_epoch, args.epochs):
+    # ── Loop ──────────────────────────────────────────────────────────────────
+    for epoch in range(1, args.epochs + 1):
         t0 = time.time()
-        model.train()
-        epoch_losses = {"total": 0.0, "flow_loss": 0.0, "sdt_loss": 0.0, "centroid_loss": 0.0, "canopy_loss": 0.0}
-        n_batches = 0
+        total_loss = 0.0
+        loss_comp  = {"flow": 0.0, "sdt": 0.0, "centroid": 0.0, "canopy": 0.0}
+        n_batches  = 0
 
-        for batch in loader:
-            images = batch["image"].to(device, non_blocking=True)
-            targets = {k: v.to(device, non_blocking=True) for k, v in batch.items() if k != "image"}
+        for batch in train_loader:
+            imgs = batch["image"].to(DEVICE)
+            targets = {
+                k: batch[k].to(DEVICE)
+                for k in ("flow", "sdt", "centroid", "canopy", "fg_mask")
+            }
 
             optimizer.zero_grad()
-            predictions = model(images)
-            losses = tree_flow_loss(predictions, targets)
+            with torch.amp.autocast("cuda", enabled=(DEVICE == "cuda"), dtype=amp_dtype):
+                outputs = model(imgs)
+                losses  = criterion(outputs, targets)
+
+            if torch.isnan(losses["total"]) or torch.isinf(losses["total"]):
+                print(f"  [Warning] NaN/Inf loss: { {k: v.item() for k, v in losses.items()} }", flush=True)
+                optimizer.zero_grad()
+                continue
+
             losses["total"].backward()
             nn.utils.clip_grad_norm_(model.parameters(), max_norm=5.0)
             optimizer.step()
 
-            for k, v in losses.items():
-                epoch_losses[k] += v.item()
+            total_loss += losses["total"].item()
+            for k in loss_comp:
+                loss_comp[k] += losses[k].item()
             n_batches += 1
+
+            if n_batches % 50 == 0 or n_batches == len(train_loader):
+                print(f"  [Epoch {epoch:2d}/{args.epochs}] step {n_batches:3d}/{len(train_loader)}: total_loss={losses['total'].item():.4f} (flow={losses['flow'].item():.3f}, sdt={losses['sdt'].item():.3f}, cent={losses['centroid'].item():.3f}, can={losses['canopy'].item():.3f})", flush=True)
 
         scheduler.step()
         elapsed = time.time() - t0
-        avg_losses = {k: v / max(1, n_batches) for k, v in epoch_losses.items()}
-        avg_losses["epoch"] = epoch
-        avg_losses["elapsed_s"] = elapsed
-        avg_losses["lr"] = optimizer.param_groups[0]["lr"]
-        history.append(avg_losses)
 
-        print(
-            f"Epoch {epoch:03d}/{args.epochs} [{elapsed:.1f}s]: "
-            f"total={avg_losses['total']:.4f} | "
-            f"flow={avg_losses['flow_loss']:.4f} | "
-            f"sdt={avg_losses['sdt_loss']:.4f} | "
-            f"centroid={avg_losses['centroid_loss']:.4f} | "
-            f"canopy={avg_losses['canopy_loss']:.4f}",
-            flush=True,
-        )
+        avg_loss = total_loss / max(n_batches, 1)
+        avg_comp = {k: v / max(n_batches, 1) for k, v in loss_comp.items()}
 
-        # Save checkpoint
-        if (epoch + 1) % args.checkpoint_every == 0 or (epoch + 1) == args.epochs:
-            ckpt_path = ckpt_dir / f"epoch_{epoch:04d}.pth"
-            torch.save(model.state_dict(), ckpt_path)
-            (output_dir / "training_history.json").write_text(json.dumps(history, indent=2))
+        # Eval every eval_every epochs
+        val_f1 = None
+        if epoch % args.eval_every == 0 or epoch == args.epochs:
+            val_f1 = quick_eval_f1(model, val_loader, decode_cfg)
+            is_best = val_f1 > best_f1
+            if is_best:
+                best_f1 = val_f1
+                torch.save({"model_state_dict": model.state_dict(), "epoch": epoch,
+                            "f1": best_f1}, str(best_ckpt))
+            print(
+                f"Epoch {epoch:3d}/{args.epochs} [{elapsed:.0f}s] "
+                f"loss={avg_loss:.4f} "
+                f"(flow={avg_comp['flow']:.3f} sdt={avg_comp['sdt']:.3f} "
+                f"cent={avg_comp['centroid']:.3f} can={avg_comp['canopy']:.3f}) "
+                f"  val_F1={val_f1:.4f} {'← BEST' if is_best else ''}",
+                flush=True
+            )
+        else:
+            print(
+                f"Epoch {epoch:3d}/{args.epochs} [{elapsed:.0f}s] "
+                f"loss={avg_loss:.4f} lr={scheduler.get_last_lr()[0]:.2e}",
+                flush=True
+            )
 
-    print(f"Training completed. Checkpoints saved in {ckpt_dir}", flush=True)
+        # Save epoch checkpoint every 5 epochs
+        if epoch % 5 == 0:
+            ep_ckpt = ckpt_dir / f"epoch_{epoch:04d}.pth"
+            torch.save({"model_state_dict": model.state_dict(), "epoch": epoch}, str(ep_ckpt))
+
+        history.append({
+            "epoch": epoch,
+            "total_loss": avg_loss,
+            **avg_comp,
+            "val_f1": val_f1,
+            "lr": scheduler.get_last_lr()[0],
+        })
+
+        # Save history json periodically
+        with open(out_dir / "history.json", "w") as f:
+            json.dump(history, f, indent=2)
+
+    # ── Save final ────────────────────────────────────────────────────────────
+    final_ckpt = ckpt_dir / f"epoch_{args.epochs:04d}_final.pth"
+    torch.save({"model_state_dict": model.state_dict(), "epoch": args.epochs}, str(final_ckpt))
+    print(f"\nTraining complete! Best val F1: {best_f1:.4f}", flush=True)
+
+    with open(out_dir / "training_history.json", "w") as f:
+        json.dump(history, f, indent=2)
+
+    print(f"\n{'='*70}")
+    print(f"Training complete.")
+    print(f"  Best val F1@0.5 : {best_f1:.4f}")
+    print(f"  Best checkpoint : {best_ckpt}")
+    print(f"{'='*70}")
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Train TreeFlowNet on combined remote sensing datasets")
-    parser.add_argument("--target-dir", type=Path, default=Path("DeadTrees/star_convex_targets_v1/train"))
-    parser.add_argument("--extra-target-dirs", type=Path, nargs="*", default=[
-        Path("crown_segmentation_research/experiments/star_convex_targets_v2/train"),
-        Path("DeadTrees/star_convex_targets_v1/train_treecover"),
-    ])
-    parser.add_argument("--output-dir", type=Path, default=Path("DeadTrees/experiments/tree_flow_unified_v1"))
-    parser.add_argument("--epochs", type=int, default=40)
-    parser.add_argument("--batch-size", type=int, default=8)
-    parser.add_argument("--num-workers", type=int, default=4)
-    parser.add_argument("--learning-rate", type=float, default=2e-4)
-    parser.add_argument("--checkpoint-every", type=int, default=1)
-    parser.add_argument("--warm-start-from", type=Path, default=Path("experiments/g1b_baselines/checkpoints/maskrcnn_seed42_best.pth"))
-    parser.add_argument("--no-pretrained", action="store_true")
-    parser.add_argument("--auto-resume", action="store_true", default=True)
-    parser.add_argument("--device", type=str, default="cuda")
-    return parser.parse_args()
+def parse_args():
+    p = argparse.ArgumentParser()
+    p.add_argument("--warm-start",   default=None, help="Path to warm-start checkpoint")
+    p.add_argument("--epochs",       type=int,   default=60)
+    p.add_argument("--batch",        type=int,   default=8)
+    p.add_argument("--num-workers",  type=int,   default=4)
+    p.add_argument("--lr",           type=float, default=3e-4)
+    p.add_argument("--patch-size",   type=int,   default=512)
+    p.add_argument("--eval-every",   type=int,   default=5)
+    p.add_argument("--out-dir",      default="crown_segmentation_research/experiments/tree_flow_exhaustive_v1")
+    p.add_argument("--legacy-v1-data", action="store_true",
+                   help="reproduce V1's data (Quebec Z1+Z2+Z3 cached chips = test zone included); old runs only")
+    p.add_argument("--allow-leaked-init", action="store_true")
+    p.add_argument("--seed", type=int, default=42)
+    return p.parse_args()
 
 
 if __name__ == "__main__":
-    run_training(parse_args())
+    from crown_segmentation_research.research_integrity.a06_hardening_v2.runtime import reject_legacy_entrypoint
+    reject_legacy_entrypoint(__file__)
+    train(parse_args())
