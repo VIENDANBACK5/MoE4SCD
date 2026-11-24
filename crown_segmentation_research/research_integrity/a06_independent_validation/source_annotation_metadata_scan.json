@@ -1,0 +1,110 @@
+{
+  "scope": "Prepared COCO compressed RLE area/bbox/dimensions/IDs only; no image/valid-mask decoding, raw parquet comparison, model predictions or performance evaluation.",
+  "splits": [
+    {
+      "split": "train",
+      "source": "/home/chung/RS/Image Segmentation/data/itc_benchmarks/canopyrs_quebectrees/prepared/train_coco.json",
+      "sha256": "7c710fd6b45246af726ff39db8a727a1e355ad9579002ed9bf326ee6c76ca648",
+      "images": 148,
+      "annotations": 53289,
+      "flags": {
+        "duplicate_image_id_records": 0,
+        "duplicate_annotation_id_records": 0,
+        "metadata_RLE_area_difference": 53289,
+        "metadata_RLE_bbox_difference": 53289
+      },
+      "example_annotation_ids": {
+        "metadata_RLE_area_difference": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "metadata_RLE_bbox_difference": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      }
+    },
+    {
+      "split": "validation",
+      "source": "/home/chung/RS/Image Segmentation/data/itc_benchmarks/canopyrs_quebectrees/prepared/validation_coco.json",
+      "sha256": "a9a39f41ac293fa94efc7bbf4636c2852ca0fd82a2f29f44626511d6c1b5c093",
+      "images": 139,
+      "annotations": 15155,
+      "flags": {
+        "duplicate_image_id_records": 0,
+        "duplicate_annotation_id_records": 0,
+        "metadata_RLE_area_difference": 15155,
+        "metadata_RLE_bbox_difference": 15155
+      },
+      "example_annotation_ids": {
+        "metadata_RLE_area_difference": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "metadata_RLE_bbox_difference": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      }
+    },
+    {
+      "split": "test",
+      "source": "/home/chung/RS/Image Segmentation/data/itc_benchmarks/canopyrs_quebectrees/prepared/test_coco.json",
+      "sha256": "292bb2675ce2faeb5126f0705a5eaf56564d211f1c416d5052ba81e0fada55f2",
+      "images": 168,
+      "annotations": 22018,
+      "flags": {
+        "duplicate_image_id_records": 0,
+        "duplicate_annotation_id_records": 0,
+        "metadata_RLE_area_difference": 22018,
+        "metadata_RLE_bbox_difference": 22018
+      },
+      "example_annotation_ids": {
+        "metadata_RLE_area_difference": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "metadata_RLE_bbox_difference": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      }
+    }
+  ]
+}

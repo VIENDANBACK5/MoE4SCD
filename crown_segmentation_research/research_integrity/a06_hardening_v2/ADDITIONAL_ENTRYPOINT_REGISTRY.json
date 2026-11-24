@@ -1,0 +1,57 @@
+[
+  {
+    "path": "crown_segmentation_research/benchmark_all_paradigms.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  },
+  {
+    "path": "crown_segmentation_research/benchmark_boundary_refinement.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  },
+  {
+    "path": "crown_segmentation_research/methods/canopy_watershed/train.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  },
+  {
+    "path": "crown_segmentation_research/methods/canopy_watershed/train_apex.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  },
+  {
+    "path": "crown_segmentation_research/methods/canopy_watershed/train_calibrated.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  },
+  {
+    "path": "crown_segmentation_research/methods/canopy_watershed/train_sharp.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  },
+  {
+    "path": "crown_segmentation_research/methods/canopy_watershed/train_wide.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  },
+  {
+    "path": "crown_segmentation_research/methods/tree_flow/train.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  },
+  {
+    "path": "crown_segmentation_research/methods/tree_flow/train_hr.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  },
+  {
+    "path": "crown_segmentation_research/methods/tree_flow/train_v2.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  },
+  {
+    "path": "crown_segmentation_research/methods/tree_flow/train_v3.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned training/benchmark; original preserved before modification"
+  }
+]

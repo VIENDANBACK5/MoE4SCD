@@ -1,0 +1,60 @@
+{
+  "commands": [
+    {
+      "script": "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/train_treeflow.py",
+      "help_command": [
+        "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+        "-B",
+        "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/train_treeflow.py",
+        "--help"
+      ],
+      "help_exit_code": 0,
+      "accepted_options": [
+        "--targets",
+        "--epochs",
+        "--batch",
+        "--accum",
+        "--lr",
+        "--crop",
+        "--crops-per-tile",
+        "--backbone",
+        "--w-centroid",
+        "--centroid-prior",
+        "--centroid-norm",
+        "--target-margin",
+        "--workers",
+        "--seed",
+        "--out",
+        "--resume"
+      ],
+      "advertised_but_unsupported_options": [
+        "--config",
+        "--crop-size",
+        "--query-capacity",
+        "--device"
+      ]
+    },
+    {
+      "script": "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp021_veto_merge.py",
+      "help_command": [
+        "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+        "-B",
+        "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp021_veto_merge.py",
+        "--help"
+      ],
+      "help_exit_code": 0,
+      "accepted_options": [
+        "--seed",
+        "--split",
+        "--theta",
+        "--device"
+      ],
+      "advertised_but_unsupported_options": [
+        "--mode"
+      ]
+    }
+  ],
+  "advertised_Q_yaml_exists": false,
+  "train_treeflow_requires_out": true,
+  "note": "Only --help executed; no advertised training or experiment command executed."
+}

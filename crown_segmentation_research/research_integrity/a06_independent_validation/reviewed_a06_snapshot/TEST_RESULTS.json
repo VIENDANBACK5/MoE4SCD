@@ -1,0 +1,140 @@
+{
+  "execution_timestamp": "2026-10-15T16:58:20+07:00",
+  "environment": {
+    "python": "3.11.5",
+    "torch": "2.4.0+cu121",
+    "numpy": "1.26.4",
+    "os": "Linux-5.15.0-119-generic-x86_64-with-glibc2.35",
+    "interpreter": "/home/chung/RS/Image Segmentation/cs2_venv/bin/python"
+  },
+  "summary": {
+    "tests_run": 24,
+    "passed": 24,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 0.003
+  },
+  "test_catalog": [
+    {
+      "name": "test_canonical_area_and_determinant",
+      "status": "PASS",
+      "description": "Verify area calculation on square and non-square GSD affine transforms."
+    },
+    {
+      "name": "test_crop_sampler_multi_epoch_diversity",
+      "status": "PASS",
+      "description": "Verify RNG advances across training epochs and stays fixed for validation."
+    },
+    {
+      "name": "test_support_definitions_distinction",
+      "status": "PASS",
+      "description": "Verify unique support and priority ownership are non-equivalent."
+    },
+    {
+      "name": "test_original_masks_preserved_for_matching",
+      "status": "PASS",
+      "description": "Assert primary matching ground truth uses original masks, avoiding silent erasure."
+    },
+    {
+      "name": "test_score_geometry_decoupling_structural_invariant",
+      "status": "PASS",
+      "description": "Altering confidence scores must NOT change structural grouping accuracy."
+    },
+    {
+      "name": "test_spatial_buffer_validation_fail_closed",
+      "status": "PASS",
+      "description": "Confirmatory gate must fail-closed on split touching or within 30m buffer."
+    },
+    {
+      "name": "test_fixture_01_perfect_prediction",
+      "status": "PASS",
+      "description": "Fixture 1: Perfect prediction."
+    },
+    {
+      "name": "test_fixture_02_empty_prediction",
+      "status": "PASS",
+      "description": "Fixture 2: Empty prediction set."
+    },
+    {
+      "name": "test_fixture_03_empty_ground_truth",
+      "status": "PASS",
+      "description": "Fixture 3: Empty ground truth set."
+    },
+    {
+      "name": "test_fixture_04_duplicate_predictions",
+      "status": "PASS",
+      "description": "Fixture 4: Multiple duplicate predictions for single GT."
+    },
+    {
+      "name": "test_fixture_05_undersegmentation_merged_prediction",
+      "status": "PASS",
+      "description": "Fixture 5: Two GT merged into one giant prediction."
+    },
+    {
+      "name": "test_fixture_06_oversegmentation_split_prediction",
+      "status": "PASS",
+      "description": "Fixture 6: One GT split into multiple fragmented predictions."
+    },
+    {
+      "name": "test_fixture_07_overlapping_gt_masks",
+      "status": "PASS",
+      "description": "Fixture 7: Overlapping GT masks evaluated without erasure."
+    },
+    {
+      "name": "test_fixture_08_overlapping_predicted_masks",
+      "status": "PASS",
+      "description": "Fixture 8: Overlapping predicted masks resolved by 1-to-1 matching."
+    },
+    {
+      "name": "test_fixture_09_unassigned_anchors",
+      "status": "PASS",
+      "description": "Fixture 9: Unassigned anchors abstain under unique cover rule."
+    },
+    {
+      "name": "test_fixture_10_partial_truncated_objects",
+      "status": "PASS",
+      "description": "Fixture 10: Partial/truncated objects at tile borders."
+    },
+    {
+      "name": "test_fixture_11_permuted_instance_ids",
+      "status": "PASS",
+      "description": "Fixture 11: Permuted instance IDs produce identical matches and metrics."
+    },
+    {
+      "name": "test_fixture_12_confidence_only_changes",
+      "status": "PASS",
+      "description": "Fixture 12: Confidence-only changes do not affect Stage 1 geometry."
+    },
+    {
+      "name": "test_fixture_13_score_ties_determinism",
+      "status": "PASS",
+      "description": "Fixture 13: Mask score ties resolve deterministically."
+    },
+    {
+      "name": "test_fixture_14_very_small_masks",
+      "status": "PASS",
+      "description": "Fixture 14: Very small masks (< 1.0 m²) correctly matched and binned."
+    },
+    {
+      "name": "test_fixture_15_border_touching_masks",
+      "status": "PASS",
+      "description": "Fixture 15: Border-touching masks properly tracked."
+    },
+    {
+      "name": "test_fixture_16_gt_partially_outside_valid_area",
+      "status": "PASS",
+      "description": "Fixture 16: GT partially outside valid area evaluated against valid support."
+    },
+    {
+      "name": "test_fixture_17_nonsquare_gsd_determinant",
+      "status": "PASS",
+      "description": "Fixture 17: Non-square GSD affine determinant evaluated accurately."
+    },
+    {
+      "name": "test_fixture_18_crops_with_more_gt_than_queries",
+      "status": "PASS",
+      "description": "Fixture 18: Detects query capacity overflow when N_GT > Q."
+    }
+  ]
+}

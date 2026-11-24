@@ -1,0 +1,271 @@
+[
+  {
+    "path": "crown_segmentation_research/clean_benchmark/__init__.py",
+    "status": "LIBRARY_NO_CLI"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/bootstrap_gaps.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/boundary_diagnostics.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/checkpointing.py",
+    "status": "LIBRARY_NO_CLI"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/dataset.py",
+    "status": "LIBRARY_NO_CLI"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/dataset_m3.py",
+    "status": "LIBRARY_NO_CLI"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/diagnostics.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/error_breakdown.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/error_gallery.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/evaluate.py",
+    "status": "ACTIVE_GATED",
+    "gate": "runtime.gate; requires --integrity-config"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp003_decode_variants.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp003_summary.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp003_waterfall.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp007_gate_sweep.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp008b_size_matched.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp012_preview.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp012_split_solidity.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp013_gap_decomposition.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp014_missed_lowscore.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp015_split_leak_check.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp016_preview.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp016_saddle_merge.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp017_oracle_radius.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp018_basin_pairs.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp019_blind_visual.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp020_pair_merge.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp021_veto_merge.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp022_rescore_ceiling.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp023_instance_rescore.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp024_fair_rescore.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp025_gate_rescore.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp026_target_ceiling.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/exp027_omnipose_decoder.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/make_figures.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/make_relabel_kit.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/master_table.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/oracle_rescore.py",
+    "status": "LIBRARY_NO_CLI"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/oracle_seed_nms.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/prepare_canopyrs.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/render_preview.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/render_tables_md.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/seed_scorer.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/seed_scorer_test.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/select_on_val.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/size_extent.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/size_lost_cause.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/size_recall.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/stratify_s1s6.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/synthetic_exp005.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/synthetic_maskrcnn.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/synthetic_world.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Unversioned historical data/output/selection paths; original implementation archived"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/targets_fast.py",
+    "status": "LIBRARY_NO_CLI"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/train_maskrcnn.py",
+    "status": "ACTIVE_GATED",
+    "gate": "runtime.gate; requires --integrity-config"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/train_treeflow.py",
+    "status": "ACTIVE_GATED",
+    "gate": "runtime.gate; requires --integrity-config"
+  },
+  {
+    "path": "crown_segmentation_research/clean_benchmark/train_treeflow_m3.py",
+    "status": "ACTIVE_GATED",
+    "gate": "runtime.gate; requires --integrity-config"
+  }
+]

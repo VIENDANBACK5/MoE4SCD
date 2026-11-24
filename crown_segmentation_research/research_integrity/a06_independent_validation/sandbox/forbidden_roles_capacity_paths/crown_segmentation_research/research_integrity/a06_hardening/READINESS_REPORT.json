@@ -1,0 +1,62 @@
+{
+  "mode": "exploratory",
+  "overall_status": "PASS",
+  "critical_failures": 0,
+  "readiness_verdict": {
+    "DATA_INTEGRITY_READY": true,
+    "EXPLORATORY_FGQ_READY": true,
+    "CONFIRMATORY_BENCHMARK_READY": false
+  },
+  "external_holdout_required": true,
+  "checks": [
+    {
+      "check_id": "CHK-ENV-01",
+      "name": "Core Environment & Library Invariants",
+      "status": "PASS",
+      "severity": "HIGH",
+      "message": "Python 3.11.5, PyTorch 2.4.0+cu121, NumPy 1.26.4"
+    },
+    {
+      "check_id": "CHK-HASH-01",
+      "name": "Historical Artifact Baseline Check",
+      "status": "PASS",
+      "severity": "HIGH",
+      "message": "All 18 baseline artifacts match SHA256 exactly"
+    },
+    {
+      "check_id": "CHK-SPLIT-01",
+      "name": "Exploratory Spatial Compliance",
+      "status": "WARN",
+      "severity": "MEDIUM",
+      "message": "Exploratory mode active on Z1: Boundary seam present (38955 boundary pixels), eliminated under 1-px erosion. Permitted strictly for exploratory model development; prohibited from confirmatory claims."
+    },
+    {
+      "check_id": "CHK-CALIB-01",
+      "name": "Spatial Calibration Independence Standard",
+      "status": "PASS",
+      "severity": "HIGH",
+      "message": "Historical within-validation OOF score calibration had 378 cross-fold tile pairs sharing valid pixels. Policy V3 prohibits reporting unbuffered historical OOF scores as independent. Future calibration must enforce buffered spatial K-fold (min 30m buffer)."
+    },
+    {
+      "check_id": "CHK-CROP-01",
+      "name": "Full-Crown Sampling & Epoch Seeding Invariant",
+      "status": "PASS",
+      "severity": "HIGH",
+      "message": "Multi-epoch RNG fix verified: seed dynamically derived from (master_seed, epoch, split, tile, crop). Full-crown sampling policy enforces 8 crown categories with query capacity overflow detection."
+    },
+    {
+      "check_id": "CHK-OUT-01",
+      "name": "4-Stage Output Contract Compliance",
+      "status": "PASS",
+      "severity": "HIGH",
+      "message": "4-Stage Output Contract active: Stage 0 (Model-Native), Stage 1 (Materialized Proposals), Stage 2 (Accepted Instances), Stage 3 (Scene Instances). Inactive query slots in Q filtered at Stage 1/2. All comparative metrics bound strictly to Stage 2."
+    },
+    {
+      "check_id": "CHK-TEST-01",
+      "name": "Integrity & Synthetic Regression Suite",
+      "status": "PASS",
+      "severity": "HIGH",
+      "message": "All 24 synthetic fixtures and invariant tests passed"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "version": "2.0.0",
+  "aliases": {
+    "data": "/home/chung/RS/data"
+  },
+  "evidence": "Existing symlink roots of source files in pre-change SHA256 baseline; no arbitrary external access expansion"
+}

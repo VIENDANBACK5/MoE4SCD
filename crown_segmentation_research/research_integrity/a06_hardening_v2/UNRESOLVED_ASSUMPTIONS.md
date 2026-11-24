@@ -1,0 +1,11 @@
+# Remaining uncertainties and decisions
+- Upstream polygon vectors and pre-rasterization derivation are unavailable. Raw Parquet RLE/image to prepared data verified; upstream polygon-to-RLE consistency NOT_VERIFIABLE.
+- Site, independent survey/acquisition, exact flight time, sensor and license are unknown. sblz1/2/3 do not establish three independent sites.
+- Two identical-mask/different-ID groups retained: train image127 IDs44568/44569; image135 IDs47448/47449. Biological interpretation requires source-owner decision.
+- Boundary overlap is small; spatial dependence and independent generalization remain unresolved. No universal 30m or one-pixel erosion rule adopted.
+- Complete F/G/Q training recipes, supervision, quota distribution, capacity, budgets, cache baseline and selection rules need a frozen scientific protocol. G-merge and G-repartition must remain distinct.
+- Same-grid stitching tested synthetically only. Natural-scene association, global GT identity, cross-grid stitching and tile-origin robustness unverified.
+- Real GPU deterministic training and allocator limits not exercised; budget API tested without GPU execution. Allocator cap is not OS-wide isolation.
+- New sampling/target semantics change future streams. Existing-directory resume is blocked; new epoch-state resume not certified.
+- No independent holdout registered: EXTERNAL_HOLDOUT_REQUIRED. Historical test remains development-influenced.
+- 23 original A06 source files were already absent before this task; byte-exact prior review snapshot preserved. No restoration over worktree performed.

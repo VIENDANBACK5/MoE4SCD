@@ -147,7 +147,8 @@ crown_segmentation_research/q_accepted_set_diagnosis_*/
 crown_segmentation_research/execution_plan_audit_*/
 crown_segmentation_research/relabel_kit_*/
 crown_segmentation_research/blind_visual_*/
-crown_segmentation_research/research_integrity/
+crown_segmentation_research/research_integrity/**/runs/
+crown_segmentation_research/research_integrity/**/source_scan/
 crown_segmentation_research/synthesis_*/
 crown_segmentation_research/target/
 

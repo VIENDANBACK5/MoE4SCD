@@ -1,0 +1,19 @@
+requirement_id,scientific_requirement,implementation,test_or_evidence,status
+R01,Historical preservation,generate_baseline_hashes.generate / PreflightChecker.check_baseline_integrity,"V01,V06,V13",DEFECT_CONFIRMED
+R02,All-annotation integrity,Existing A00 audit.py; A06 does not call it,source_annotation_metadata_scan.json; V03,MISSING_CONTROL
+R03,Six support definitions,test_suite.derive_support_sets; prepare_canopyrs.prepare_split,support helper tests; V08,SEMANTIC_AMBIGUITY
+R04,Canonical area,test_suite.compute_canonical_area / assign_size_bin,test_canonical_area_and_determinant; V16,MISSING_CONTROL
+R05,Provenance registry,PROVENANCE_REGISTRY_SCHEMA.json; existing A00 registry,V15,MISSING_CONTROL
+R06,Spatial overlap/buffer,PreflightChecker.check_spatial_splits / validate_spatial_buffer,"V03,V11,V16",MISSING_CONTROL
+R07,Dataset roles/test access,PreflightChecker.check_calibration_standards,"forbidden_roles_capacity_paths; V02,V03",MISSING_CONTROL
+R08,Full-crown sampler,CanopyCropDataset / get_crop_rng helper,actual_loader_rng_probe.json; V07,DEFECT_CONFIRMED
+R09,Query capacity,test_fixture_18_crops_with_more_gt_than_queries,"V02,V04",MISSING_CONTROL
+R10,Stage0–3 output/lineage,PreflightChecker.check_output_contract,"V03,V15",MISSING_CONTROL
+R11,One-to-one matching,test_suite.cardinality_first_match,perfect/duplicate/merged/split helper fixtures,VERIFIED_CORRECT
+R12,Grouping NA/assignment policy,evaluate_structural_and_e2e_grouping,"metric_probes.json; V09,V10",DEFECT_CONFIRMED
+R13,AP/boundary/count/C0C1 metrics,Definitions only in A06; historical code exists,"V04,V15",MISSING_CONTROL
+R14,Calibration/score provenance,PreflightChecker.check_calibration_standards,forbidden_roles_capacity_paths; V03,MISSING_CONTROL
+R15,FGQ fairness executable recipe,FGQ_FAIR_COMPARISON_V3 / NEXT_EXPERIMENT_DECISION,"advertised_commands_check.json; V12,V14",DEFECT_CONFIRMED
+R16,Fail-closed config/manifest/output,PreflightChecker.run_all / main,"preflight_probes.json; V01–V03,V13",DEFECT_CONFIRMED
+R17,Regression coverage/CI,test_suite.run_tests; ROOT_CAUSE_MATRIX.csv,"V04,V05,V15",MISSING_CONTROL
+R18,Independent confirmatory reference,Historical role manifest; hardcoded confirmatory block,confirmatory_no_inputs exit1; no independent holdout,NOT_VERIFIABLE

@@ -1,0 +1,38 @@
+[
+  {
+    "workers": 0,
+    "persistent_workers": false,
+    "same_crop_images_across_two_epochs": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "has_set_epoch_api": false,
+    "data": "synthetic fixture; actual CanopyCropDataset unchanged"
+  },
+  {
+    "workers": 2,
+    "persistent_workers": false,
+    "same_crop_images_across_two_epochs": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "has_set_epoch_api": false,
+    "data": "synthetic fixture; actual CanopyCropDataset unchanged"
+  },
+  {
+    "workers": 2,
+    "persistent_workers": true,
+    "same_crop_images_across_two_epochs": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "has_set_epoch_api": false,
+    "data": "synthetic fixture; actual CanopyCropDataset unchanged"
+  }
+]

@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "A06 v2 native provenance registry",
+  "type": "object",
+  "required": [
+    "version",
+    "tiles"
+  ],
+  "properties": {
+    "version": {
+      "const": "2.0.0"
+    },
+    "tiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "tile_key",
+          "split",
+          "role",
+          "source_path",
+          "source_sha256",
+          "prepared_path",
+          "prepared_sha256",
+          "crs",
+          "affine",
+          "annotation_ids",
+          "provenance_status",
+          "lineage"
+        ],
+        "properties": {
+          "tile_key": {
+            "type": "string"
+          },
+          "split": {
+            "enum": [
+              "train",
+              "validation",
+              "test"
+            ]
+          },
+          "role": {
+            "enum": [
+              "TRAIN",
+              "DEVELOPMENT",
+              "CALIBRATION",
+              "CONFIRMATORY_TEST"
+            ]
+          },
+          "affine": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": {
+              "type": "number"
+            }
+          },
+          "annotation_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "provenance_status": {
+            "type": "string"
+          },
+          "site_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "survey_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "acquisition_time": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "license": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

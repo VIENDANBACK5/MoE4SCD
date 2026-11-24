@@ -1,0 +1,278 @@
+{
+  "version": "2.0.0",
+  "overall_status": "FAIL",
+  "mode": "confirmatory",
+  "operation": "synthetic_smoke",
+  "checks": [
+    {
+      "id": "CONFIG",
+      "critical": true,
+      "status": "PASS",
+      "evidence": {
+        "config_sha256": "14fb2669e19b481e3d6cca31b3066aad3657a541d6fd90c2389369d4cafd9285",
+        "semantic_hash": "5d14780b02bbac10483fbdd323787e6e0ccb8bfc8c018375fb08ec3ed7a6cc3d"
+      }
+    },
+    {
+      "id": "HASH",
+      "critical": true,
+      "status": "PASS",
+      "evidence": {
+        "verified_paths": [
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/benchmark_all_paradigms.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/benchmark_boundary_refinement.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/__init__.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/bootstrap_gaps.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/boundary_diagnostics.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/checkpointing.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/dataset.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/diagnostics.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/error_breakdown.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/error_gallery.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/evaluate.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp003_decode_variants.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp003_summary.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp003_waterfall.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp007_gate_sweep.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp008b_size_matched.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp012_preview.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp012_split_solidity.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp013_gap_decomposition.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp014_missed_lowscore.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp015_split_leak_check.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp016_preview.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp016_saddle_merge.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp017_oracle_radius.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp018_basin_pairs.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp019_blind_visual.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp020_pair_merge.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp021_veto_merge.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp022_rescore_ceiling.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp023_instance_rescore.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp024_fair_rescore.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp025_gate_rescore.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp026_target_ceiling.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp027_omnipose_decoder.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/make_figures.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/make_relabel_kit.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/master_table.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/oracle_rescore.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/oracle_seed_nms.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/prepare_canopyrs.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/render_preview.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/render_tables_md.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/seed_scorer.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/seed_scorer_test.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/select_on_val.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/size_extent.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/size_lost_cause.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/size_recall.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/stratify_s1s6.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/synthetic_exp005.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/synthetic_maskrcnn.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/synthetic_world.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/targets_fast.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/train_maskrcnn.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/train_treeflow.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/grouping.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/q_sanity.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/diagnosis_2026-10-11/study.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/canopy_watershed/train.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/canopy_watershed/train_apex.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/canopy_watershed/train_calibrated.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/canopy_watershed/train_sharp.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/canopy_watershed/train_wide.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/__init__.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/decode.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/decode_flowseam.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/eval_dte_bench.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/eval_neuro_dte_bench.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/eval_neuro_val.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/evaluate.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/graph_decode.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/hamiltonian_watershed.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/loss.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/loss_hr.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/loss_v2.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/model.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/model_hr.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/model_v2.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/model_v3.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/preview.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/preview_ablation.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/standalone_flow.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/sweep.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/sweep_bam.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/targets.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/test_model_load.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/train.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/train_hr.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/train_v2.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/train_v3.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/ADDITIONAL_ENTRYPOINT_REGISTRY.json",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/ENTRYPOINT_REGISTRY.json",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/HISTORICAL_RUNNER_REGISTRY.json",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/READ_ROOTS.json",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/__init__.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/affine_audit.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/calibration.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/core.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/crops.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/metrics.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/outputs.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/preflight.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/rescan.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/runtime.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/sampling.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/spatial.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/support_audit.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/test_preflight.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/test_primitives.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/test_runtime.py",
+          "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/verify.py"
+        ]
+      }
+    },
+    {
+      "id": "DATA",
+      "critical": true,
+      "status": "PASS",
+      "evidence": {
+        "dataset_roles": []
+      }
+    },
+    {
+      "id": "SPATIAL",
+      "critical": true,
+      "status": "NOT_APPLICABLE",
+      "evidence": {
+        "status": "NOT_APPLICABLE",
+        "scope": "synthetic no dataset labels"
+      }
+    },
+    {
+      "id": "SAMPLING",
+      "critical": true,
+      "status": "PASS",
+      "evidence": {
+        "sampling_policy": {
+          "master_seed": 5,
+          "crop_shape": [
+            12,
+            12
+          ],
+          "pixel_affine": [
+            0.03,
+            0,
+            0,
+            0,
+            -0.03,
+            0
+          ],
+          "min_valid": 1,
+          "partial_policy": "visible_fragment_retains_original_identity",
+          "categories": [
+            "background",
+            "one_complete",
+            "two_to_four_complete",
+            "crowded",
+            "small",
+            "multilobed",
+            "touching",
+            "partial"
+          ],
+          "queries": 4,
+          "max_targets": 4,
+          "rng_version": "epoch_shared_v2"
+        }
+      }
+    },
+    {
+      "id": "OUTPUT",
+      "critical": true,
+      "status": "PASS",
+      "evidence": {
+        "stage": 2,
+        "threshold": 0.5,
+        "threshold_source_role": "PREREGISTERED",
+        "min_area_m2": 0,
+        "duplicate_policy": "keep",
+        "invalid_support_policy": "keep_original",
+        "E2E_overlap": "highest_score",
+        "structural_overlap": "unique_cover",
+        "max_dets": 400
+      }
+    },
+    {
+      "id": "CALIBRATION",
+      "critical": true,
+      "status": "NOT_APPLICABLE",
+      "evidence": {
+        "status": "NOT_APPLICABLE",
+        "reason": "No calibration or fitting permitted by this recipe"
+      }
+    },
+    {
+      "id": "COMPARISON",
+      "critical": true,
+      "status": "NOT_APPLICABLE",
+      "evidence": {
+        "status": "NOT_APPLICABLE",
+        "scope": "infrastructure only"
+      }
+    },
+    {
+      "id": "RUNTIME_SPEC",
+      "critical": true,
+      "status": "NOT_APPLICABLE",
+      "evidence": {
+        "status": "NOT_APPLICABLE",
+        "scope": "no model runtime"
+      }
+    },
+    {
+      "id": "DESTINATION",
+      "critical": true,
+      "status": "PASS",
+      "evidence": {
+        "new_output": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/runs/synthetic-e9af64ea399c4f908c836cebdeb0bf51"
+      }
+    },
+    {
+      "id": "TESTS",
+      "critical": true,
+      "status": "PASS",
+      "evidence": {
+        "run": 56,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "EXTERNAL_HOLDOUT",
+      "critical": true,
+      "status": "FAIL",
+      "reason": "EXTERNAL_HOLDOUT_REQUIRED"
+    }
+  ],
+  "environment": {
+    "python": "3.11.5",
+    "executable": "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "packages": {
+      "numpy": "1.26.4",
+      "scipy": "1.17.1",
+      "torch": "2.4.0+cu121",
+      "torchvision": "0.19.0+cu121",
+      "pycocotools": "2.0.11",
+      "Pillow": "12.2.0",
+      "pyarrow": "24.0.0",
+      "shapely": "2.1.2",
+      "pyproj": "3.7.2"
+    }
+  },
+  "config_path": "crown_segmentation_research/research_integrity/a06_hardening_v2/configs/confirmatory_rejected.json",
+  "scope": "This gate validates the supplied operation; synthetic/integrity PASS does not authorize F/G/Q benchmark",
+  "EXTERNAL_HOLDOUT_REQUIRED": true
+}

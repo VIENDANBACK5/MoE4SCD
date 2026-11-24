@@ -1,0 +1,17 @@
+[
+  {
+    "path": "crown_segmentation_research/diagnosis_2026-10-11/study.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Original oracle/pilot output paths protected; functions remain importable"
+  },
+  {
+    "path": "crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/grouping.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Original oracle/pilot output paths protected; functions remain importable"
+  },
+  {
+    "path": "crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/q_sanity.py",
+    "status": "LEGACY_BLOCKED",
+    "reason": "Original oracle/pilot output paths protected; functions remain importable"
+  }
+]

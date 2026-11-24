@@ -1,0 +1,5 @@
+# Native data contract V3 (implemented in A06 v2)
+Each registered dataset binds annotation file, exact tile inventory, valid masks, actual affine/CRS, original source lineage and SHA256. Relative data aliases resolve through READ_ROOTS.json; data is a known symlink to /home/chung/RS/data. Unregistered external roots fail.
+Check IDs/association, RLE run sums and dimensions, mask bounds, zero/derived-empty support, metadata area/bbox deviations and valid intersection without deleting records.
+New original physical area = decoded native RLE foreground count × abs(a*e-b*d) for affine [a,b,c,d,e,f]. Require metre-based CRS. Crop/resize updates affine and preserves native area separately; valid/unique/priority areas have distinct names. Size bins are half-open [0,1), [1,2), [2,4), [4,9), [9,infinity).
+Source scan:455 tiles,90462 annotation records,14 raw Parquet shards. Records are not necessarily unique biological trees. 87 bin changes are logged; historical metrics untouched. Native metadata retained. Informational metadata area/bbox differences are not automatically corrupt labels.

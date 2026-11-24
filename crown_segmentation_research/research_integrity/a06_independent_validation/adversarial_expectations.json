@@ -1,0 +1,614 @@
+[
+  {
+    "case": "no_config",
+    "mode": "exploratory",
+    "exit_code": 0,
+    "readiness": {
+      "DATA_INTEGRITY_READY": true,
+      "EXPLORATORY_FGQ_READY": true,
+      "CONFIRMATORY_BENCHMARK_READY": false
+    },
+    "overall": "PASS",
+    "checks": [
+      {
+        "check_id": "CHK-ENV-01",
+        "name": "Core Environment & Library Invariants",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Python 3.11.5, PyTorch 2.4.0+cu121, NumPy 1.26.4"
+      },
+      {
+        "check_id": "CHK-HASH-01",
+        "name": "Historical Artifact Baseline Check",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 18 baseline artifacts match SHA256 exactly"
+      },
+      {
+        "check_id": "CHK-SPLIT-01",
+        "name": "Exploratory Spatial Compliance",
+        "status": "WARN",
+        "severity": "MEDIUM",
+        "message": "Exploratory mode active on Z1: Boundary seam present (38955 boundary pixels), eliminated under 1-px erosion. Permitted strictly for exploratory model development; prohibited from confirmatory claims."
+      },
+      {
+        "check_id": "CHK-CALIB-01",
+        "name": "Spatial Calibration Independence Standard",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Historical within-validation OOF score calibration had 378 cross-fold tile pairs sharing valid pixels. Policy V3 prohibits reporting unbuffered historical OOF scores as independent. Future calibration must enforce buffered spatial K-fold (min 30m buffer)."
+      },
+      {
+        "check_id": "CHK-CROP-01",
+        "name": "Full-Crown Sampling & Epoch Seeding Invariant",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Multi-epoch RNG fix verified: seed dynamically derived from (master_seed, epoch, split, tile, crop). Full-crown sampling policy enforces 8 crown categories with query capacity overflow detection."
+      },
+      {
+        "check_id": "CHK-OUT-01",
+        "name": "4-Stage Output Contract Compliance",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "4-Stage Output Contract active: Stage 0 (Model-Native), Stage 1 (Materialized Proposals), Stage 2 (Accepted Instances), Stage 3 (Scene Instances). Inactive query slots in Q filtered at Stage 1/2. All comparative metrics bound strictly to Stage 2."
+      },
+      {
+        "check_id": "CHK-TEST-01",
+        "name": "Integrity & Synthetic Regression Suite",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 24 synthetic fixtures and invariant tests passed"
+      }
+    ],
+    "audit_inputs_present": false,
+    "copied_readiness_report_bytes_changed": true,
+    "command": [
+      "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+      "-B",
+      "-m",
+      "crown_segmentation_research.research_integrity.a06_hardening.preflight",
+      "--mode",
+      "exploratory"
+    ],
+    "stdout_path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/no_config/preflight.log",
+    "expected_exit_code": 1,
+    "specification_check_passed": false
+  },
+  {
+    "case": "missing_config",
+    "mode": "exploratory",
+    "exit_code": 0,
+    "readiness": {
+      "DATA_INTEGRITY_READY": true,
+      "EXPLORATORY_FGQ_READY": true,
+      "CONFIRMATORY_BENCHMARK_READY": false
+    },
+    "overall": "PASS",
+    "checks": [
+      {
+        "check_id": "CHK-ENV-01",
+        "name": "Core Environment & Library Invariants",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Python 3.11.5, PyTorch 2.4.0+cu121, NumPy 1.26.4"
+      },
+      {
+        "check_id": "CHK-HASH-01",
+        "name": "Historical Artifact Baseline Check",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 18 baseline artifacts match SHA256 exactly"
+      },
+      {
+        "check_id": "CHK-SPLIT-01",
+        "name": "Exploratory Spatial Compliance",
+        "status": "WARN",
+        "severity": "MEDIUM",
+        "message": "Exploratory mode active on Z1: Boundary seam present (38955 boundary pixels), eliminated under 1-px erosion. Permitted strictly for exploratory model development; prohibited from confirmatory claims."
+      },
+      {
+        "check_id": "CHK-CALIB-01",
+        "name": "Spatial Calibration Independence Standard",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Historical within-validation OOF score calibration had 378 cross-fold tile pairs sharing valid pixels. Policy V3 prohibits reporting unbuffered historical OOF scores as independent. Future calibration must enforce buffered spatial K-fold (min 30m buffer)."
+      },
+      {
+        "check_id": "CHK-CROP-01",
+        "name": "Full-Crown Sampling & Epoch Seeding Invariant",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Multi-epoch RNG fix verified: seed dynamically derived from (master_seed, epoch, split, tile, crop). Full-crown sampling policy enforces 8 crown categories with query capacity overflow detection."
+      },
+      {
+        "check_id": "CHK-OUT-01",
+        "name": "4-Stage Output Contract Compliance",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "4-Stage Output Contract active: Stage 0 (Model-Native), Stage 1 (Materialized Proposals), Stage 2 (Accepted Instances), Stage 3 (Scene Instances). Inactive query slots in Q filtered at Stage 1/2. All comparative metrics bound strictly to Stage 2."
+      },
+      {
+        "check_id": "CHK-TEST-01",
+        "name": "Integrity & Synthetic Regression Suite",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 24 synthetic fixtures and invariant tests passed"
+      }
+    ],
+    "audit_inputs_present": false,
+    "copied_readiness_report_bytes_changed": true,
+    "command": [
+      "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+      "-B",
+      "-m",
+      "crown_segmentation_research.research_integrity.a06_hardening.preflight",
+      "--mode",
+      "exploratory",
+      "--config",
+      "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/missing_config/does_not_exist.json"
+    ],
+    "stdout_path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/missing_config/preflight.log",
+    "expected_exit_code": 1,
+    "specification_check_passed": false
+  },
+  {
+    "case": "malformed_config",
+    "mode": "exploratory",
+    "exit_code": 0,
+    "readiness": {
+      "DATA_INTEGRITY_READY": true,
+      "EXPLORATORY_FGQ_READY": true,
+      "CONFIRMATORY_BENCHMARK_READY": false
+    },
+    "overall": "PASS",
+    "checks": [
+      {
+        "check_id": "CHK-ENV-01",
+        "name": "Core Environment & Library Invariants",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Python 3.11.5, PyTorch 2.4.0+cu121, NumPy 1.26.4"
+      },
+      {
+        "check_id": "CHK-HASH-01",
+        "name": "Historical Artifact Baseline Check",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 18 baseline artifacts match SHA256 exactly"
+      },
+      {
+        "check_id": "CHK-SPLIT-01",
+        "name": "Exploratory Spatial Compliance",
+        "status": "WARN",
+        "severity": "MEDIUM",
+        "message": "Exploratory mode active on Z1: Boundary seam present (38955 boundary pixels), eliminated under 1-px erosion. Permitted strictly for exploratory model development; prohibited from confirmatory claims."
+      },
+      {
+        "check_id": "CHK-CALIB-01",
+        "name": "Spatial Calibration Independence Standard",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Historical within-validation OOF score calibration had 378 cross-fold tile pairs sharing valid pixels. Policy V3 prohibits reporting unbuffered historical OOF scores as independent. Future calibration must enforce buffered spatial K-fold (min 30m buffer)."
+      },
+      {
+        "check_id": "CHK-CROP-01",
+        "name": "Full-Crown Sampling & Epoch Seeding Invariant",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Multi-epoch RNG fix verified: seed dynamically derived from (master_seed, epoch, split, tile, crop). Full-crown sampling policy enforces 8 crown categories with query capacity overflow detection."
+      },
+      {
+        "check_id": "CHK-OUT-01",
+        "name": "4-Stage Output Contract Compliance",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "4-Stage Output Contract active: Stage 0 (Model-Native), Stage 1 (Materialized Proposals), Stage 2 (Accepted Instances), Stage 3 (Scene Instances). Inactive query slots in Q filtered at Stage 1/2. All comparative metrics bound strictly to Stage 2."
+      },
+      {
+        "check_id": "CHK-TEST-01",
+        "name": "Integrity & Synthetic Regression Suite",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 24 synthetic fixtures and invariant tests passed"
+      }
+    ],
+    "audit_inputs_present": false,
+    "copied_readiness_report_bytes_changed": true,
+    "command": [
+      "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+      "-B",
+      "-m",
+      "crown_segmentation_research.research_integrity.a06_hardening.preflight",
+      "--mode",
+      "exploratory",
+      "--config",
+      "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/malformed_config/experiment.json"
+    ],
+    "stdout_path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/malformed_config/preflight.log",
+    "expected_exit_code": 1,
+    "specification_check_passed": false
+  },
+  {
+    "case": "forbidden_roles_capacity_paths",
+    "mode": "exploratory",
+    "exit_code": 0,
+    "readiness": {
+      "DATA_INTEGRITY_READY": true,
+      "EXPLORATORY_FGQ_READY": true,
+      "CONFIRMATORY_BENCHMARK_READY": false
+    },
+    "overall": "PASS",
+    "checks": [
+      {
+        "check_id": "CHK-ENV-01",
+        "name": "Core Environment & Library Invariants",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Python 3.11.5, PyTorch 2.4.0+cu121, NumPy 1.26.4"
+      },
+      {
+        "check_id": "CHK-HASH-01",
+        "name": "Historical Artifact Baseline Check",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 18 baseline artifacts match SHA256 exactly"
+      },
+      {
+        "check_id": "CHK-SPLIT-01",
+        "name": "Exploratory Spatial Compliance",
+        "status": "WARN",
+        "severity": "MEDIUM",
+        "message": "Exploratory mode active on Z1: Boundary seam present (38955 boundary pixels), eliminated under 1-px erosion. Permitted strictly for exploratory model development; prohibited from confirmatory claims."
+      },
+      {
+        "check_id": "CHK-CALIB-01",
+        "name": "Spatial Calibration Independence Standard",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Historical within-validation OOF score calibration had 378 cross-fold tile pairs sharing valid pixels. Policy V3 prohibits reporting unbuffered historical OOF scores as independent. Future calibration must enforce buffered spatial K-fold (min 30m buffer)."
+      },
+      {
+        "check_id": "CHK-CROP-01",
+        "name": "Full-Crown Sampling & Epoch Seeding Invariant",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Multi-epoch RNG fix verified: seed dynamically derived from (master_seed, epoch, split, tile, crop). Full-crown sampling policy enforces 8 crown categories with query capacity overflow detection."
+      },
+      {
+        "check_id": "CHK-OUT-01",
+        "name": "4-Stage Output Contract Compliance",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "4-Stage Output Contract active: Stage 0 (Model-Native), Stage 1 (Materialized Proposals), Stage 2 (Accepted Instances), Stage 3 (Scene Instances). Inactive query slots in Q filtered at Stage 1/2. All comparative metrics bound strictly to Stage 2."
+      },
+      {
+        "check_id": "CHK-TEST-01",
+        "name": "Integrity & Synthetic Regression Suite",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 24 synthetic fixtures and invariant tests passed"
+      }
+    ],
+    "audit_inputs_present": false,
+    "copied_readiness_report_bytes_changed": true,
+    "command": [
+      "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+      "-B",
+      "-m",
+      "crown_segmentation_research.research_integrity.a06_hardening.preflight",
+      "--mode",
+      "exploratory",
+      "--config",
+      "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/forbidden_roles_capacity_paths/experiment.json"
+    ],
+    "stdout_path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/forbidden_roles_capacity_paths/preflight.log",
+    "expected_exit_code": 1,
+    "specification_check_passed": false
+  },
+  {
+    "case": "missing_baseline",
+    "mode": "exploratory",
+    "exit_code": 0,
+    "readiness": {
+      "DATA_INTEGRITY_READY": true,
+      "EXPLORATORY_FGQ_READY": true,
+      "CONFIRMATORY_BENCHMARK_READY": false
+    },
+    "overall": "PASS",
+    "checks": [
+      {
+        "check_id": "CHK-ENV-01",
+        "name": "Core Environment & Library Invariants",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Python 3.11.5, PyTorch 2.4.0+cu121, NumPy 1.26.4"
+      },
+      {
+        "check_id": "CHK-HASH-01",
+        "name": "Historical Artifact Baseline Check",
+        "status": "WARN",
+        "severity": "MEDIUM",
+        "message": "BASELINE_HASHES.json not found; generating baseline."
+      },
+      {
+        "check_id": "CHK-SPLIT-01",
+        "name": "Exploratory Spatial Compliance",
+        "status": "WARN",
+        "severity": "MEDIUM",
+        "message": "Exploratory mode active on Z1: Boundary seam present (38955 boundary pixels), eliminated under 1-px erosion. Permitted strictly for exploratory model development; prohibited from confirmatory claims."
+      },
+      {
+        "check_id": "CHK-CALIB-01",
+        "name": "Spatial Calibration Independence Standard",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Historical within-validation OOF score calibration had 378 cross-fold tile pairs sharing valid pixels. Policy V3 prohibits reporting unbuffered historical OOF scores as independent. Future calibration must enforce buffered spatial K-fold (min 30m buffer)."
+      },
+      {
+        "check_id": "CHK-CROP-01",
+        "name": "Full-Crown Sampling & Epoch Seeding Invariant",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Multi-epoch RNG fix verified: seed dynamically derived from (master_seed, epoch, split, tile, crop). Full-crown sampling policy enforces 8 crown categories with query capacity overflow detection."
+      },
+      {
+        "check_id": "CHK-OUT-01",
+        "name": "4-Stage Output Contract Compliance",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "4-Stage Output Contract active: Stage 0 (Model-Native), Stage 1 (Materialized Proposals), Stage 2 (Accepted Instances), Stage 3 (Scene Instances). Inactive query slots in Q filtered at Stage 1/2. All comparative metrics bound strictly to Stage 2."
+      },
+      {
+        "check_id": "CHK-TEST-01",
+        "name": "Integrity & Synthetic Regression Suite",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 24 synthetic fixtures and invariant tests passed"
+      }
+    ],
+    "audit_inputs_present": false,
+    "copied_readiness_report_bytes_changed": true,
+    "command": [
+      "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+      "-B",
+      "-m",
+      "crown_segmentation_research.research_integrity.a06_hardening.preflight",
+      "--mode",
+      "exploratory",
+      "--config",
+      "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/missing_baseline/experiment.json"
+    ],
+    "stdout_path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/missing_baseline/preflight.log",
+    "expected_exit_code": 1,
+    "specification_check_passed": false
+  },
+  {
+    "case": "empty_baseline",
+    "mode": "exploratory",
+    "exit_code": 0,
+    "readiness": {
+      "DATA_INTEGRITY_READY": true,
+      "EXPLORATORY_FGQ_READY": true,
+      "CONFIRMATORY_BENCHMARK_READY": false
+    },
+    "overall": "PASS",
+    "checks": [
+      {
+        "check_id": "CHK-ENV-01",
+        "name": "Core Environment & Library Invariants",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Python 3.11.5, PyTorch 2.4.0+cu121, NumPy 1.26.4"
+      },
+      {
+        "check_id": "CHK-HASH-01",
+        "name": "Historical Artifact Baseline Check",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 0 baseline artifacts match SHA256 exactly"
+      },
+      {
+        "check_id": "CHK-SPLIT-01",
+        "name": "Exploratory Spatial Compliance",
+        "status": "WARN",
+        "severity": "MEDIUM",
+        "message": "Exploratory mode active on Z1: Boundary seam present (38955 boundary pixels), eliminated under 1-px erosion. Permitted strictly for exploratory model development; prohibited from confirmatory claims."
+      },
+      {
+        "check_id": "CHK-CALIB-01",
+        "name": "Spatial Calibration Independence Standard",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Historical within-validation OOF score calibration had 378 cross-fold tile pairs sharing valid pixels. Policy V3 prohibits reporting unbuffered historical OOF scores as independent. Future calibration must enforce buffered spatial K-fold (min 30m buffer)."
+      },
+      {
+        "check_id": "CHK-CROP-01",
+        "name": "Full-Crown Sampling & Epoch Seeding Invariant",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Multi-epoch RNG fix verified: seed dynamically derived from (master_seed, epoch, split, tile, crop). Full-crown sampling policy enforces 8 crown categories with query capacity overflow detection."
+      },
+      {
+        "check_id": "CHK-OUT-01",
+        "name": "4-Stage Output Contract Compliance",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "4-Stage Output Contract active: Stage 0 (Model-Native), Stage 1 (Materialized Proposals), Stage 2 (Accepted Instances), Stage 3 (Scene Instances). Inactive query slots in Q filtered at Stage 1/2. All comparative metrics bound strictly to Stage 2."
+      },
+      {
+        "check_id": "CHK-TEST-01",
+        "name": "Integrity & Synthetic Regression Suite",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 24 synthetic fixtures and invariant tests passed"
+      }
+    ],
+    "audit_inputs_present": false,
+    "copied_readiness_report_bytes_changed": true,
+    "command": [
+      "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+      "-B",
+      "-m",
+      "crown_segmentation_research.research_integrity.a06_hardening.preflight",
+      "--mode",
+      "exploratory",
+      "--config",
+      "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/empty_baseline/experiment.json"
+    ],
+    "stdout_path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/empty_baseline/preflight.log",
+    "expected_exit_code": 1,
+    "specification_check_passed": false
+  },
+  {
+    "case": "tampered_real_digest",
+    "mode": "exploratory",
+    "exit_code": 1,
+    "readiness": {
+      "DATA_INTEGRITY_READY": false,
+      "EXPLORATORY_FGQ_READY": false,
+      "CONFIRMATORY_BENCHMARK_READY": false
+    },
+    "overall": "FAIL",
+    "checks": [
+      {
+        "check_id": "CHK-ENV-01",
+        "name": "Core Environment & Library Invariants",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Python 3.11.5, PyTorch 2.4.0+cu121, NumPy 1.26.4"
+      },
+      {
+        "check_id": "CHK-HASH-01",
+        "name": "Historical Artifact Baseline Check",
+        "status": "FAIL",
+        "severity": "CRITICAL",
+        "message": "Artifacts modified: 1 files changed"
+      },
+      {
+        "check_id": "CHK-SPLIT-01",
+        "name": "Exploratory Spatial Compliance",
+        "status": "WARN",
+        "severity": "MEDIUM",
+        "message": "Exploratory mode active on Z1: Boundary seam present (38955 boundary pixels), eliminated under 1-px erosion. Permitted strictly for exploratory model development; prohibited from confirmatory claims."
+      },
+      {
+        "check_id": "CHK-CALIB-01",
+        "name": "Spatial Calibration Independence Standard",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Historical within-validation OOF score calibration had 378 cross-fold tile pairs sharing valid pixels. Policy V3 prohibits reporting unbuffered historical OOF scores as independent. Future calibration must enforce buffered spatial K-fold (min 30m buffer)."
+      },
+      {
+        "check_id": "CHK-CROP-01",
+        "name": "Full-Crown Sampling & Epoch Seeding Invariant",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Multi-epoch RNG fix verified: seed dynamically derived from (master_seed, epoch, split, tile, crop). Full-crown sampling policy enforces 8 crown categories with query capacity overflow detection."
+      },
+      {
+        "check_id": "CHK-OUT-01",
+        "name": "4-Stage Output Contract Compliance",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "4-Stage Output Contract active: Stage 0 (Model-Native), Stage 1 (Materialized Proposals), Stage 2 (Accepted Instances), Stage 3 (Scene Instances). Inactive query slots in Q filtered at Stage 1/2. All comparative metrics bound strictly to Stage 2."
+      },
+      {
+        "check_id": "CHK-TEST-01",
+        "name": "Integrity & Synthetic Regression Suite",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 24 synthetic fixtures and invariant tests passed"
+      }
+    ],
+    "audit_inputs_present": false,
+    "copied_readiness_report_bytes_changed": true,
+    "command": [
+      "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+      "-B",
+      "-m",
+      "crown_segmentation_research.research_integrity.a06_hardening.preflight",
+      "--mode",
+      "exploratory",
+      "--config",
+      "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/tampered_real_digest/experiment.json"
+    ],
+    "stdout_path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/tampered_real_digest/preflight.log",
+    "expected_exit_code": 1,
+    "specification_check_passed": true
+  },
+  {
+    "case": "confirmatory_no_inputs",
+    "mode": "confirmatory",
+    "exit_code": 1,
+    "readiness": {
+      "DATA_INTEGRITY_READY": true,
+      "EXPLORATORY_FGQ_READY": true,
+      "CONFIRMATORY_BENCHMARK_READY": false
+    },
+    "overall": "FAIL",
+    "checks": [
+      {
+        "check_id": "CHK-ENV-01",
+        "name": "Core Environment & Library Invariants",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Python 3.11.5, PyTorch 2.4.0+cu121, NumPy 1.26.4"
+      },
+      {
+        "check_id": "CHK-HASH-01",
+        "name": "Historical Artifact Baseline Check",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 18 baseline artifacts match SHA256 exactly"
+      },
+      {
+        "check_id": "CHK-SPLIT-01",
+        "name": "Confirmatory Spatial Independence Gate",
+        "status": "FAIL",
+        "severity": "CRITICAL",
+        "message": "Confirmatory split validation FAILED: Split Z1 has 235 connected tiles across train/val/test with 38,955 same-grid boundary pixels. Historical test set was previously evaluated in EXP003/015/020. External holdout dataset is required before confirmatory benchmarking."
+      },
+      {
+        "check_id": "CHK-CALIB-01",
+        "name": "Spatial Calibration Independence Standard",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Historical within-validation OOF score calibration had 378 cross-fold tile pairs sharing valid pixels. Policy V3 prohibits reporting unbuffered historical OOF scores as independent. Future calibration must enforce buffered spatial K-fold (min 30m buffer)."
+      },
+      {
+        "check_id": "CHK-CROP-01",
+        "name": "Full-Crown Sampling & Epoch Seeding Invariant",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "Multi-epoch RNG fix verified: seed dynamically derived from (master_seed, epoch, split, tile, crop). Full-crown sampling policy enforces 8 crown categories with query capacity overflow detection."
+      },
+      {
+        "check_id": "CHK-OUT-01",
+        "name": "4-Stage Output Contract Compliance",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "4-Stage Output Contract active: Stage 0 (Model-Native), Stage 1 (Materialized Proposals), Stage 2 (Accepted Instances), Stage 3 (Scene Instances). Inactive query slots in Q filtered at Stage 1/2. All comparative metrics bound strictly to Stage 2."
+      },
+      {
+        "check_id": "CHK-TEST-01",
+        "name": "Integrity & Synthetic Regression Suite",
+        "status": "PASS",
+        "severity": "HIGH",
+        "message": "All 24 synthetic fixtures and invariant tests passed"
+      }
+    ],
+    "audit_inputs_present": false,
+    "copied_readiness_report_bytes_changed": false,
+    "command": [
+      "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+      "-B",
+      "-m",
+      "crown_segmentation_research.research_integrity.a06_hardening.preflight",
+      "--mode",
+      "confirmatory"
+    ],
+    "stdout_path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/sandbox/confirmatory_no_inputs/preflight.log",
+    "expected_exit_code": 1,
+    "specification_check_passed": true
+  }
+]

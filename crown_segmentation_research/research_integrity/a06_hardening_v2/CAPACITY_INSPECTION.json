@@ -1,0 +1,19 @@
+{
+  "scope": "CPU constructor + parameter counts of existing architecture only; no forward, fitting, training, checkpoint modification, or performance comparison",
+  "F": [
+    {
+      "backbone": "resnet50",
+      "total_parameters": 28572485,
+      "encoder_parameters": 26799296,
+      "head_parameters": 1773189
+    },
+    {
+      "backbone": "swin_t",
+      "total_parameters": 32020991,
+      "encoder_parameters": 30247802,
+      "head_parameters": 1773189
+    }
+  ],
+  "Q_historical_reported_head_parameters": 257537,
+  "Q_count_evidence": "Historical source/report read; not recomputed by this constructor inspection"
+}

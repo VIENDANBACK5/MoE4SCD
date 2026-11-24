@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/home/chung/RS/Image Segmentation/cs2_venv/bin/python",
+    "-B",
+    "-m",
+    "crown_segmentation_research.research_integrity.a06_hardening.test_suite"
+  ],
+  "exit_code": 0,
+  "subprocess_wall_seconds": 0.24353922298178077,
+  "summary": {
+    "tests_run": 24,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": true
+  },
+  "declared_tests": 24,
+  "empty_test_bodies": [
+    {
+      "name": "test_fixture_12_confidence_only_changes",
+      "line": 509
+    },
+    {
+      "name": "test_fixture_17_nonsquare_gsd_determinant",
+      "line": 546
+    }
+  ]
+}

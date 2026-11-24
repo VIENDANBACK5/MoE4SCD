@@ -1,0 +1,342 @@
+{
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/bootstrap_gaps.py": {
+    "before_sha256": "424ac2b7caea87db49d49a5cd2d88a637b6667407eef3bf137825e224693afe0",
+    "after_sha256": "2a26b5a2c67f5c02b5c89c324869da932452783375185ae89a11def50fe1bba7",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/boundary_diagnostics.py": {
+    "before_sha256": "2110d255a7aff383246713fc1c61da2228a3069b485c5d8063735b1d422c379f",
+    "after_sha256": "e1fadef8c15d984de63dfc809d6a50156aaed3988b992f8b9c0c88efb55ee288",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/dataset.py": {
+    "before_sha256": "bfc761cbc2a501d18d8886db7e68d83d48a0d1ac9fa8fe63734bc7381303f5ee",
+    "after_sha256": "c7fd1e298fff8c1bcd775c5a391d2b66487d34b9366ae84ef8edfd04f359f4ee",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/diagnostics.py": {
+    "before_sha256": "aee644a706526a10027d2a317f0bf3ecb30b0d5981677cb5ce306d9dc4cdbca6",
+    "after_sha256": "c46c6b6fdae121a4f43e323dfefeeeee54d12046720d0e0cdbe4cb70586c9990",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/error_breakdown.py": {
+    "before_sha256": "f63c4448c0d9359a93bd145ca440fc6ffba0b16cd4a6db4536d978d170af9304",
+    "after_sha256": "af77ea44c84d7c252354812bfd6cb148cc107c8b56735db2d64a9c3a351cc3af",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/error_gallery.py": {
+    "before_sha256": "2689f3a43b99a7184848c56038784dcf0ccfc90e75fed220a6639f0db98d339c",
+    "after_sha256": "1d38efca657a29c9a6e17c218d7fc05f580f24343b023ec677fe73c76997b6d8",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/evaluate.py": {
+    "before_sha256": "01f0812d58c783e78a55fdc2bf85a00bec5eb3c5e74599e5bb2499ab6103f562",
+    "after_sha256": "1deb7e2054c69f8a49579c890ab9a2e9cc0825eb86e3d443b4aa60713f137bba",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp003_decode_variants.py": {
+    "before_sha256": "54de1a4e441bfe62d66c864665fdc21256d78cdb9169c95b07062c6d5f77e8f2",
+    "after_sha256": "cd5dca8ff507a11c06591995d0be06586dcae3ae17eb070443823613ff9dfbb5",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp003_summary.py": {
+    "before_sha256": "98af764d717e777b75dff2449032959dea4a06cf349d84e3257ce6d781961944",
+    "after_sha256": "5969856020cd0252d0bd970203c4e0c6e82a53cb2523f0446694ef80dfba68c9",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp003_waterfall.py": {
+    "before_sha256": "73a6eb63b7a3e1831a488407142782fb8ccb56eab4afeb6a217caa599e79ac4a",
+    "after_sha256": "bfc80fc8dcb10ad619d4fe77d31619cec31e41e291cbf73315f37caad4d2403e",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp007_gate_sweep.py": {
+    "before_sha256": "4fe6d9f9b53a9f7eece8e3b77e3d94a58169d4678d5ca2873db5a116875f1e78",
+    "after_sha256": "1ea1242ca355b6149fe772c207bd531e7536ef6030cc51f6b1821f91510a3555",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp008b_size_matched.py": {
+    "before_sha256": "a0c088fd30c6db048865a259bd52791dfb9c562998888e4b4c2b3d3eccdb884a",
+    "after_sha256": "00abe5f72f7d77e669beca0ad701031511112ea15fd96e181aa6b9ec5f563a7e",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp012_preview.py": {
+    "before_sha256": "ce25a4c67e764e5fe8682adb5311fd0c991cc162c23755735f4add5152774cba",
+    "after_sha256": "c2b010d2487869126dad849ef78684384c2f5e92bcbfb485a156a568e5acde3c",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp012_split_solidity.py": {
+    "before_sha256": "3e88a608e4af0148b26eff53437e6c3644a34793852cf9fb19418290ad1952e7",
+    "after_sha256": "3691cafc434bb7dbfb05f361c65bade8b8ac81c0dc7b7a541e3b5f81ec1b05a4",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp013_gap_decomposition.py": {
+    "before_sha256": "0035f763b255bbef6fc1f017da34da16d5fa5e81536b3ccd74c660184c3fb02c",
+    "after_sha256": "d3e2fc8a534a0d216bc36bf0cb2ebcfc760a7c5f5120207fefece40b673d2cf5",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp014_missed_lowscore.py": {
+    "before_sha256": "7b489fc1fd1af0dcc0f78044c3fe11bbc0c1c49456e8a0c819e4dde2986b6226",
+    "after_sha256": "1bc1254fae64dafba3517715388ac67acb6d03589d4421ae0d17bac11972598c",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp015_split_leak_check.py": {
+    "before_sha256": "268026bda29d5c7234da4fd672a957af98e83953054901ec11d7bc5dda828544",
+    "after_sha256": "6d9a21bd7abf9a7ff4fe58a6c1a71ff4464c6fcf831385719d14433f7d2d1841",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp016_preview.py": {
+    "before_sha256": "340425eba1cab85d20d779c9c9add0cf25f1ef98a1ac1a8bb3b7d527fdade048",
+    "after_sha256": "1eff1d539f83710fd626b41a52e04c484c17d31c03c222a0086b18ba3c72e0df",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp016_saddle_merge.py": {
+    "before_sha256": "bf0b06e1c32366a42ac11d3e0f6bd6c1c4045e55add7abf4a6d134d7bf6fade1",
+    "after_sha256": "c2dd3ba9e7bfd8fcd6b577907920a9ea670af5e338913e05d9353be564895a91",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp017_oracle_radius.py": {
+    "before_sha256": "ac6824114749676d7fe51ff0124ae3cf1acf93be87645ac03fb7f3fdc732e479",
+    "after_sha256": "79f60182f778dc7063a2d58d35a711c4dd888414131812a74cfce743c2e1e11f",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp018_basin_pairs.py": {
+    "before_sha256": "4e6b6e56399df5833722c4c9c4186056fda90a0df243800e5b6a445b85380755",
+    "after_sha256": "8265e54edccb9128ad5080dd1bade0b3b639025797383ca8b9c9dd52f9234c38",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp019_blind_visual.py": {
+    "before_sha256": "3260d628378cc144b1741e0335dee3bfb99ab49b082da44081300c3fd1823390",
+    "after_sha256": "8acec19cc22aaa1442befb2867ca3b64b368bf60ed983a4b154be2629951d932",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp020_pair_merge.py": {
+    "before_sha256": "b08f18c693734e991984140a9b010330a867ae933fcbd2a58f46d8f6376c848b",
+    "after_sha256": "93739d0dfabb9b2688768165165624683f3b1c1bae2da93e474af4cf581766d6",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp021_veto_merge.py": {
+    "before_sha256": "25bd372fef595fb0e8e572a279cbdfc77fbc8b1200ec3b99adfcca46caf660fc",
+    "after_sha256": "2d3677722a8843caa1f10481ea165dd44fcb3fd87a5a8023af4a05c96eaa9652",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp022_rescore_ceiling.py": {
+    "before_sha256": "5e37665f22a1e36399d893ef10989f83af6da9aa3abaecdc5dde28076e6e0a1f",
+    "after_sha256": "31ffd59f836082f9019c610bcd6037a4203c483ee7e0ec9010be490d36e60929",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp023_instance_rescore.py": {
+    "before_sha256": "fd94ecdc82650bd732debe423409d6c7209a218933045ff401c23eda6f095150",
+    "after_sha256": "022ac933f729fe8a712c4c63d2c31604a06ca9d2a0dbcd3bde7404675e848c5c",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp024_fair_rescore.py": {
+    "before_sha256": "09df65948e2f946e7cb7e00a558c8f045098df72e5fe15c089d03bc83df71716",
+    "after_sha256": "e75444e68b4ee7657fe26c17bf8aafcca04bb0677e9d946d7ff37bf5102a4673",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp025_gate_rescore.py": {
+    "before_sha256": "213f6cf558e57ed51815e04438193b74afb874d754383086fb566bdc5ea8b5d3",
+    "after_sha256": "339fc53cfc063a95e5b9cdb4b7f7676e0fd206078bf17954b7cbd86ea6bd094b",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp026_target_ceiling.py": {
+    "before_sha256": "f55943ffd26eda3e1e496bbf08587e413e66201b96bb5ed579faead5b3f70f8f",
+    "after_sha256": "a0e9c2588951bd8f543dab5852777b173829af696b64b908cc21e185c107b0ea",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/exp027_omnipose_decoder.py": {
+    "before_sha256": "e6bd7b9c40e39841c127772c1e4a0b7c201b1c6f1b46ce2b280d18593374f748",
+    "after_sha256": "da8fb24c8835953012afeb51fff2a78b8ace90411613ce82db1c70f1107de322",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/make_figures.py": {
+    "before_sha256": "ebc8a378d22905c2713de6f3d411f1162b08eed6fdf17b1400b249c910744782",
+    "after_sha256": "7ec09759ced9215723b896f9f55cdccb29bf5aef2b459b8bf2c6bcf2bc5fe89e",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/make_relabel_kit.py": {
+    "before_sha256": "3cbc6aa9964cbc1bce9e1df371dc7efe0036d7e7e96a9d75e4556375f030c2b1",
+    "after_sha256": "02d898d11d7ac68a18e03ed0cd674d4d60115cf546db9f83c4b2db8f8d279384",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/master_table.py": {
+    "before_sha256": "1bdf33df76e59147d90c54b80ce0d3659772363564e3edb13c31083dbd0374bf",
+    "after_sha256": "220d5ace1ccc88a063b566a13cc906112308a8b10adf4c334a9056d36149c22c",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/oracle_seed_nms.py": {
+    "before_sha256": "6013159a5ee3be050894d8bdddd0bacf8ba0d9df872f6890d56529bd717ac3b6",
+    "after_sha256": "8d8d3b9ccb6d0b287ef11c8746db5335b921d95bc2c8447db935236ed7ec0407",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/prepare_canopyrs.py": {
+    "before_sha256": "3b74bdb9688b90f6ecd91fd3045a4fca56b7dc7fcbfcec40b02edde6741b4853",
+    "after_sha256": "feba382919149de212d5e834bd5296ec785ca6668fd73ee20def0825694fcfd2",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/render_preview.py": {
+    "before_sha256": "fd9ba16b9ae4d6d0388f978efab3c560743cae3c9ebbdb6094a582592e6b3d03",
+    "after_sha256": "2fb0537529078102215cc42ecf03cdbb13724cddc2bc4bb354b70d8493e9eea1",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/render_tables_md.py": {
+    "before_sha256": "094ded97185b4b09006041edd98294a30c5451c65fcd9ef92f6e4f63e3768f90",
+    "after_sha256": "4cfa479cc629032dc562ce69e1efb20798958d15b6c481fb69c02a8fb4b2f8e7",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/seed_scorer.py": {
+    "before_sha256": "3904d3ee139d4335c1e3c34db1c3661ef4fb6d1320970ae9db6fb1c280e960d1",
+    "after_sha256": "03af8e2a19ff9302b30b2d82e3cf524c8d69fa7124c856ce985becf221d564bb",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/seed_scorer_test.py": {
+    "before_sha256": "c83208667c120838dd61223a112e7aed79024ebf4ff70e8227a53f96d22133ef",
+    "after_sha256": "de64988a504a72b906246af3b0eaade1137b0e11b2d88998c106f4f6986d0a0b",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/select_on_val.py": {
+    "before_sha256": "84ad45bff1e959b04f7c599fc7697b584f354f4ea3e329a1f5244ea3bbd80e70",
+    "after_sha256": "7f014c392f136633eac76619ae9ead05c85db50b2f39442026b89c08af92808f",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/size_extent.py": {
+    "before_sha256": "0c705a3761cc8f4e077777c06e25dcf356b89eb2ba37751a203f908e542ae8dc",
+    "after_sha256": "93b27f1c0fef9fc168362e432be01e32360e224f4177359913992ddcd6e8c674",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/size_lost_cause.py": {
+    "before_sha256": "4fca7f78e683f50037393cf462d7dd26558e061d78921f096bf701b818ceb403",
+    "after_sha256": "b615baec0d15d9800dffa9e84ded006515471249d07e89cae41d591532952ba7",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/size_recall.py": {
+    "before_sha256": "c748638437a659caf596fa5ec0ceca3a54b99d93f3c02d13dd4214c6bc569927",
+    "after_sha256": "4c7c1052b34babf45384786d691b5922d420abed7c3b99db27767dfe308eaa7f",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/stratify_s1s6.py": {
+    "before_sha256": "f74509c8824e3ed1900492ad4f88575f3435bef265b3efde72360b0e4c1c052e",
+    "after_sha256": "25bb79957bab91f9287e548c12a5347b31d049072c1ce3af103a25412de78c1a",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/synthetic_exp005.py": {
+    "before_sha256": "7a254f9e8ed61eb17a470a72b7d0935868c55c6bca6312b800d4f10e10fcc0d4",
+    "after_sha256": "67fdf33d316d954e590baf7fbe4564b13426bc34359cba39baba0cceee191582",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/synthetic_maskrcnn.py": {
+    "before_sha256": "a5e789dec1d834525e459c8709cc6d010404c91a0da4069bde32ca436ed781c8",
+    "after_sha256": "e74604f7555b0d1c4cd07bffd201c40175d409fb21dfbb119e6740cba49fb17f",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/synthetic_world.py": {
+    "before_sha256": "f25cd459920692f919ba569d787483d156bd15697f94d30d4a7829ee7506f417",
+    "after_sha256": "6168c941b39f7d02e7986ab70dc75969f93f3c048177a14d4e462f4f8852838e",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/train_maskrcnn.py": {
+    "before_sha256": "9b94a9e2f3a44fb90ed0694324ddf965ff4d2762ae543b798bd3c724897f3a97",
+    "after_sha256": "88333494d17e25ad200c44552975acd0a9cad85b8611a53bc0f0e5db3d45da92",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/train_treeflow.py": {
+    "before_sha256": "c929a6fe0807e7cbc0505f5bc7a631af1f56b96320cfa42797aa0b1bd4407fd1",
+    "after_sha256": "0500d234cbe7843dcb684308c8dfb36556a39e516e055fe83f2d589ce415e789",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/grouping.py": {
+    "before_sha256": "fabaae1c25531659c00dcb117626eb526510ea2678ed30a409834edfeccb95f7",
+    "after_sha256": "cc901bce6a960f6977892b7f42d971038e56828363daa34d2144e60f98de5a8e",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/q_sanity.py": {
+    "before_sha256": "cfcad72411572615296f1da86de375e873642550ae7a62ce41ff7e333a69fd77",
+    "after_sha256": "2bfb5b42389bcf7371ae24afd28b016cc141b75de074f2946f371648feaaa0fd",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/diagnosis_2026-10-11/study.py": {
+    "before_sha256": "272be1edc43604b92a4483a059042f1770fd24b30343bdf4e96b7c1dee7b6149",
+    "after_sha256": "a67401b3a2afbaf190385097e1a0b9f83702a512900e6d89c844fa2481785480",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/benchmark_all_paradigms.py": {
+    "before_sha256": "e7875727f4898caadbf06d43f741d00149c17e0b903990f6be8b0e8b855414c1",
+    "after_sha256": "149922c9860edf80de9994267a47a19e446f2a314b37003d2686ad98c0970c4f",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/benchmark_boundary_refinement.py": {
+    "before_sha256": "7334ced689ef0577485e761c75252d0fa0b33d3c72c9fa1fe9c360c95dba1020",
+    "after_sha256": "92647ffac33ee2163304967e365fe436c7cec1501309a4d8acebe611cefd757e",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/canopy_watershed/train.py": {
+    "before_sha256": "e611be1ab0cf431aa533ad1b4bfd4822b511e856780deff322046059434f8d0c",
+    "after_sha256": "ff2e8b8ddd18ddc8fb690b9dcea41a3839328b8a8d030dba317ab374f031cba3",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/canopy_watershed/train_apex.py": {
+    "before_sha256": "ac074b859df368f00255976191e8a440085929f884f096876536da71d1204c77",
+    "after_sha256": "c85360ac5c02d5786bce5392a0bc8627605804bab7da47880cbc4b9f7e55612f",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/canopy_watershed/train_calibrated.py": {
+    "before_sha256": "f0b4ab4f6b3628d3d8255a421e1cbf0dd9cd7a325f2b4e9c46b753b63fcf9d66",
+    "after_sha256": "2edfe43f96dcb38eee30e3f02f4c6c941d0bee681f132a747d781cd5db8066c5",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/canopy_watershed/train_sharp.py": {
+    "before_sha256": "a25bb631e643719896da5d04920782efd4a24aa65c1f81d44ebc00904e033979",
+    "after_sha256": "e22363e6bcf67fcb36d0bcd2819724138edd0fd333b1d3c4601cf0c57a0585c8",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/canopy_watershed/train_wide.py": {
+    "before_sha256": "40009365fc79fb19397447add26f3321fde0e0588ea20bbc65840ed9581d53b8",
+    "after_sha256": "01f6e2bb04a4911f09984df626161b166e4c4d549aff64d805a43cee474c1208",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/train.py": {
+    "before_sha256": "42ed26bc7ab2acb8c4b95723100cbbe1757b284830dc2a9488849a539c6173a4",
+    "after_sha256": "82528a7d2b7d618b2be56ff0f66b5fede1bd4ed7ed47ecaa20152719f1e5f20e",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/train_hr.py": {
+    "before_sha256": "52497396f6c82a9b4cafef3552686afb1b3714e22674a83ab797f0e366fd8376",
+    "after_sha256": "4cbe72112ef2579aca5963cb819db2d2654a2891003565d43bf3758390d46d75",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/train_v2.py": {
+    "before_sha256": "4e356486fb660231af6f5c16fb4fb9530fd79f640c42d0250ae58729e5696632",
+    "after_sha256": "45e1f7509d40e06697825f3c4e499b242a66447aeb17120bf2ab09f0c80a4e5a",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/methods/tree_flow/train_v3.py": {
+    "before_sha256": "c10d0c9f16b2c0250a6064228a59b24fb332173c21389932f55941500bc83f70",
+    "after_sha256": "c2aa00c9f01db510dd3095038305070b50f16afb20127c232f0a6509687b98f7",
+    "scope": "authorized implementation repair; original bytes archived"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/preflight.py": {
+    "before_sha256": "ecb7791f6762fcd5c400ecec9edb320ddb2aaf6401c9d78896cd3d92eb7a3a66",
+    "after_sha256": "9ad6cb3ef5023028e98f160e6c5f5ec318fce2470669d429c4a3c8c3027a2989",
+    "scope": "EXP-028 (M3) entrypoint registration; user approved a06 onboarding 2026-11-20; originals in research/ITC_THREE_TRACKS_V1_20261120/track3_formation/artifacts/harness_originals"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/runtime.py": {
+    "before_sha256": "2933b269baca7028f94b6e092f22ce5fee1d2238a9ed18507081c12b9bfcfe71",
+    "after_sha256": "0da14687bb2f6b5515a6361085dc46329fb28c46ca1dc28a9c4033baec4ab161",
+    "scope": "EXP-028 (M3) entrypoint registration; user approved a06 onboarding 2026-11-20; originals in research/ITC_THREE_TRACKS_V1_20261120/track3_formation/artifacts/harness_originals"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/ENTRYPOINT_REGISTRY.json": {
+    "before_sha256": "442108e1d50fd0e549feccf9d787c24835ddcf5efedcb4701449e22c48d403dd",
+    "after_sha256": "ed0d5faa15ecf37121f643c594a569ff3594e5e37141020be5210978c50262ff",
+    "scope": "EXP-028 (M3) entrypoint registration; user approved a06 onboarding 2026-11-20; originals in research/ITC_THREE_TRACKS_V1_20261120/track3_formation/artifacts/harness_originals"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/dataset_m3.py": {
+    "before_sha256": null,
+    "after_sha256": "976a9d53d80231a0e99a98ef0dcb0f66fd071607dfa76a22f50279aaf1ab5915",
+    "scope": "EXP-028 (M3) entrypoint registration; user approved a06 onboarding 2026-11-20; originals in research/ITC_THREE_TRACKS_V1_20261120/track3_formation/artifacts/harness_originals; new file; EXP-028b rejection sampler (MAX_CROP_TRIES 1000), user-approved 2026-11-21; EXP-031 method 1 option --field-weight crown (default pixel unchanged), user-approved 2026-11-22"
+  },
+  "/home/chung/RS/Image Segmentation/crown_segmentation_research/clean_benchmark/train_treeflow_m3.py": {
+    "before_sha256": null,
+    "after_sha256": "2b4d4f14310d92ccc624b1250d41d8c34df5314482fa9910439bfee502ba877a",
+    "scope": "EXP-028 (M3) entrypoint registration; user approved a06 onboarding 2026-11-20; originals in research/ITC_THREE_TRACKS_V1_20261120/track3_formation/artifacts/harness_originals; new file; EXP-031 method 1 option --field-weight crown (default pixel unchanged), user-approved 2026-11-22; EXP-034 method 2 option --decision-loss cannot (default off unchanged), user-approved 2026-11-22; EXP-036 method 3 option --decision-loss loop (decoder-in-the-loop), user-approved 2026-11-22"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TreeFlowNet Provenance Registry Schema V3",
+  "description": "Schema enforcing end-to-end traceability for every scene, mosaic, tile, and annotation in TreeFlowNet.",
+  "type": "object",
+  "required": [
+    "tile_id",
+    "scene_id",
+    "mosaic_id",
+    "split_role",
+    "crs",
+    "affine_transform",
+    "gsd",
+    "valid_footprint",
+    "annotation_ids",
+    "provenance_status",
+    "sha256_hash"
+  ],
+  "properties": {
+    "tile_id": {
+      "type": "string",
+      "description": "Unique identifier of the tile, formatted as {split}:{mosaic_id}_{tile_index}."
+    },
+    "scene_id": {
+      "type": "string",
+      "description": "Broader geographic scene identifier or regional cluster."
+    },
+    "mosaic_id": {
+      "type": "string",
+      "enum": ["sblz1", "sblz2", "sblz3", "unknown"],
+      "description": "Identifier of the source orthomosaic raster."
+    },
+    "survey_id": {
+      "type": "string",
+      "description": "Flight acquisition or aerial survey mission identifier, if independently verified."
+    },
+    "acquisition_date": {
+      "type": "string",
+      "description": "UTC date of aerial flight acquisition. Must be null if inferred only from file naming."
+    },
+    "original_source_path": {
+      "type": "string",
+      "description": "Path to original raw or prepared raster archive."
+    },
+    "sha256_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA256 checksum of the tile content."
+    },
+    "split_role": {
+      "type": "string",
+      "enum": ["TRAIN", "DEVELOPMENT", "CALIBRATION", "CONFIRMATORY_TEST"],
+      "description": "Authorized experimental role of the tile."
+    },
+    "crs": {
+      "type": "string",
+      "description": "Coordinate reference system, e.g. EPSG:32618."
+    },
+    "affine_transform": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 6,
+      "maxItems": 6,
+      "description": "6-element affine transformation matrix [a, b, c, d, e, f]."
+    },
+    "gsd": {
+      "type": "object",
+      "required": ["dx", "dy", "unit"],
+      "properties": {
+        "dx": { "type": "number" },
+        "dy": { "type": "number" },
+        "unit": { "type": "string", "enum": ["meters"] }
+      }
+    },
+    "valid_footprint": {
+      "type": "object",
+      "required": ["total_pixels", "valid_pixels", "valid_ratio"],
+      "properties": {
+        "total_pixels": { "type": "integer" },
+        "valid_pixels": { "type": "integer" },
+        "valid_ratio": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "annotation_ids": {
+      "type": "array",
+      "items": { "type": "integer" },
+      "description": "List of COCO annotation IDs contained within this tile."
+    },
+    "derivation_lineage": {
+      "type": "object",
+      "properties": {
+        "pipeline_version": { "type": "string" },
+        "crop_method": { "type": "string" },
+        "resampling": { "type": "string" }
+      }
+    },
+    "annotation_policy_version": {
+      "type": "string",
+      "default": "v3"
+    },
+    "license_provenance": {
+      "type": "string",
+      "description": "Dataset license, terms of use, or data citation."
+    },
+    "provenance_status": {
+      "type": "string",
+      "enum": ["VERIFIED_ACCURATE", "INFERRED_UNVERIFIED", "REQUIRES_DOCUMENTATION"],
+      "description": "Epistemic verification state of the record metadata."
+    }
+  }
+}

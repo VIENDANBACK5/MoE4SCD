@@ -1,0 +1,20 @@
+{
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/BAO_CAO_A00_A05.md": "MISSING",
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/blockers.json": "MISSING",
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/data_summary.json": "MISSING",
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/spatial_summary.json": "MISSING",
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/border_overlap_summary.json": "MISSING",
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/cross_grid_summary.json": "MISSING",
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/area_definition_audit.json": "MISSING",
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/historical_hash_check.json": "MISSING",
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/audit.py": "MISSING",
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/check_metrics.py": "MISSING",
+  "crown_segmentation_research/execution_plan_audit_2026-10-15/measurement_spec_v3_draft.md": "MISSING",
+  "crown_segmentation_research/clean_benchmark/dataset.py": "MISSING",
+  "crown_segmentation_research/clean_benchmark/targets_fast.py": "MISSING",
+  "crown_segmentation_research/clean_benchmark/evaluate.py": "MISSING",
+  "crown_segmentation_research/clean_benchmark/seed_scorer.py": "MISSING",
+  "crown_segmentation_research/diagnosis_2026-10-11/study.py": "MISSING",
+  "crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/grouping.py": "MISSING",
+  "crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/q_sanity.py": "MISSING"
+}

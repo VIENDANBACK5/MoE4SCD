@@ -1,0 +1,232 @@
+{
+  "baseline_entries": [
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/BAO_CAO_A00_A05.md",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "63fba5b43922f56fd34ea0f6a81c154892e44da205b058fa7c8511be50c8f5a4"
+    },
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/blockers.json",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "072faf9325789b786acf8b2c1106cca7e80016c289c4331ff93d12af88c20e82"
+    },
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/data_summary.json",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "d34147c503924541a3980086c522737455118d7081714a2f2c9771dc52a7bedc"
+    },
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/spatial_summary.json",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "98e7964b60e4e7bc9e45a80161615a4b8aaaa2ceb68a8606506a088d1a87de5e"
+    },
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/border_overlap_summary.json",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "587b92b9f1727513bacce7f26b4f0d4077dea1b312ee27b60f7e8d8c0c07bf90"
+    },
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/cross_grid_summary.json",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "9951b4a4ccacb97a59279665c18b03992518cc618707f5d66208740b0294e02c"
+    },
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/area_definition_audit.json",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "b579016355ff5cb5775d45b1ecdb2a45db9b9e692cf5a0b6ee28ad349969e985"
+    },
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/historical_hash_check.json",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "8583a917252333cb005e50095f64836f79ca5f0cbdf35b6f3d1ddffbbe67e358"
+    },
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/audit.py",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "ba05ff9831836c8236eef2d08dc693449df706998c89ff1414e950a3f2414a9d"
+    },
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/check_metrics.py",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "48fcec73ff324dc48417f5835018b7e825f8850f5bddd1f660efb54ed0bfe46c"
+    },
+    {
+      "path": "crown_segmentation_research/execution_plan_audit_2026-10-15/measurement_spec_v3_draft.md",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "1bbfb3c5743255fd8384b553f6af80b9fc1f2bd071e8d173cd51962e5f02b425"
+    },
+    {
+      "path": "crown_segmentation_research/clean_benchmark/dataset.py",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "bfc761cbc2a501d18d8886db7e68d83d48a0d1ac9fa8fe63734bc7381303f5ee"
+    },
+    {
+      "path": "crown_segmentation_research/clean_benchmark/targets_fast.py",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "1ed607e1021470ec97058e64fab54fa735c14380a96054578b2a63e2f8553903"
+    },
+    {
+      "path": "crown_segmentation_research/clean_benchmark/evaluate.py",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "01f0812d58c783e78a55fdc2bf85a00bec5eb3c5e74599e5bb2499ab6103f562"
+    },
+    {
+      "path": "crown_segmentation_research/clean_benchmark/seed_scorer.py",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "3904d3ee139d4335c1e3c34db1c3661ef4fb6d1320970ae9db6fb1c280e960d1"
+    },
+    {
+      "path": "crown_segmentation_research/diagnosis_2026-10-11/study.py",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "272be1edc43604b92a4483a059042f1770fd24b30343bdf4e96b7c1dee7b6149"
+    },
+    {
+      "path": "crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/grouping.py",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "fabaae1c25531659c00dcb117626eb526510ea2678ed30a409834edfeccb95f7"
+    },
+    {
+      "path": "crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/q_sanity.py",
+      "recorded_missing": true,
+      "actually_exists": true,
+      "actual_sha256": "cfcad72411572615296f1da86de375e873642550ae7a62ce41ff7e333a69fd77"
+    }
+  ],
+  "reviewed_A06_source": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_independent_validation/reviewed_a06_snapshot",
+  "correct_repo_root": "/home/chung/RS/Image Segmentation",
+  "A06_computed_repo_root": "/home/chung/RS",
+  "config_path_AST_usages": [
+    {
+      "line": 41,
+      "ctx": "Store"
+    }
+  ],
+  "runtime_integration_references": [],
+  "recorded_readiness": {
+    "DATA_INTEGRITY_READY": true,
+    "EXPLORATORY_FGQ_READY": true,
+    "CONFIRMATORY_BENCHMARK_READY": false
+  },
+  "verified_prior_support_counts": [
+    {
+      "split": "train",
+      "tiles": 148,
+      "annotations": 53289,
+      "scene_ids": [
+        "20210902_sblz1_p4rtk_rgb",
+        "20210902_sblz2_p4rtk_rgb"
+      ],
+      "gsd_x_range_m": [
+        0.029999999999997206,
+        0.029999999999997206
+      ],
+      "gsd_y_range_m": [
+        0.030000000000067063,
+        0.030000000000067063
+      ],
+      "crs_values": [
+        "EPSG:32618"
+      ],
+      "unique_valid_area_m2": 281927.572200604,
+      "tile_area_sum_m2_not_deduplicated": 1057601.5677022648,
+      "size_counts": {
+        "lt1": 844,
+        "1to2": 2415,
+        "2to4": 7021,
+        "4to9": 15947,
+        "ge9": 27062
+      },
+      "unique_support_empty": 63,
+      "priority_support_empty": 10,
+      "zero_area": 0,
+      "outside_valid_annotations": 29,
+      "area_mismatch_annotations": 53289
+    },
+    {
+      "split": "validation",
+      "tiles": 139,
+      "annotations": 15155,
+      "scene_ids": [
+        "20210902_sblz1_p4rtk_rgb"
+      ],
+      "gsd_x_range_m": [
+        0.02999999999998882,
+        0.02999999999998882
+      ],
+      "gsd_y_range_m": [
+        0.03000000000026833,
+        0.03000000000026833
+      ],
+      "crs_values": [
+        "EPSG:32618"
+      ],
+      "unique_valid_area_m2": 74645.62560015991,
+      "tile_area_sum_m2_not_deduplicated": 287058.5046024607,
+      "size_counts": {
+        "lt1": 272,
+        "1to2": 1143,
+        "2to4": 2728,
+        "4to9": 4904,
+        "ge9": 6108
+      },
+      "unique_support_empty": 4,
+      "priority_support_empty": 4,
+      "zero_area": 0,
+      "outside_valid_annotations": 6,
+      "area_mismatch_annotations": 15155
+    },
+    {
+      "split": "test",
+      "tiles": 168,
+      "annotations": 22018,
+      "scene_ids": [
+        "20210902_sblz1_p4rtk_rgb",
+        "20210902_sblz3_p4rtk_rgb"
+      ],
+      "gsd_x_range_m": [
+        0.02999999999998882,
+        0.02999999999998882
+      ],
+      "gsd_y_range_m": [
+        0.03000000000026833,
+        0.03000000000026833
+      ],
+      "crs_values": [
+        "EPSG:32618"
+      ],
+      "unique_valid_area_m2": 94860.1341007447,
+      "tile_area_sum_m2_not_deduplicated": 347094.38790297596,
+      "size_counts": {
+        "lt1": 576,
+        "1to2": 2601,
+        "2to4": 5539,
+        "4to9": 7263,
+        "ge9": 6039
+      },
+      "unique_support_empty": 0,
+      "priority_support_empty": 0,
+      "zero_area": 0,
+      "outside_valid_annotations": 0,
+      "area_mismatch_annotations": 22018
+    }
+  ],
+  "actual_pairwise_shared_pixel_sum": 38955,
+  "A06_fallback_pixel_sum": 38955
+}

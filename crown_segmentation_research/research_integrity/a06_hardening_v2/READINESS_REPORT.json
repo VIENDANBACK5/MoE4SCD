@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "date_UTC": "2026-10-15T13:30:27.229945+00:00",
+  "DATA_INTEGRITY_READY": true,
+  "EXPLORATORY_FGQ_READY": false,
+  "CONFIRMATORY_BENCHMARK_READY": false,
+  "data_integrity_scope": "Available native reference/data derivation and tested gated infrastructure; not biological truth, spatial independence or fully validated scene inference",
+  "data_evidence": [
+    "verification_final/TEST_RESULTS.json",
+    "verification_final/PRESERVATION_CHECK.json",
+    "source_scan/SOURCE_VERIFICATION_RUNTIME.json",
+    "source_scan/AFFINE_VERIFICATION.json",
+    "source_scan/SIX_SUPPORTS_VERIFICATION.json"
+  ],
+  "exploratory_blockers": [
+    "Complete executable G/Q benchmark recipes not implemented or scientifically frozen",
+    "Matched supervision, sampling quotas, target treatment, query capacity and budgets unresolved",
+    "Frozen candidate/pair-cache reference and benchmark tie-selection policy require protocol registration",
+    "Natural-scene stitching/GT global identity not certified if Stage3 claims requested"
+  ],
+  "confirmatory_status": "CONFIRMATORY_NOT_READY",
+  "EXTERNAL_HOLDOUT_REQUIRED": true,
+  "confirmatory_blockers": [
+    "No appropriate independent external dataset and acquisition provenance registered",
+    "Historical validation/test influenced development",
+    "Primary endpoints/margins, calibration and model selection must be preregistered and frozen"
+  ],
+  "unknowns": [
+    "Upstream polygons/rasterization and biological label identity",
+    "Acquisition/site/license provenance",
+    "Two duplicate-mask different-ID groups"
+  ],
+  "synthetic_gate_PASS_is_not_FGQ_readiness": true
+}

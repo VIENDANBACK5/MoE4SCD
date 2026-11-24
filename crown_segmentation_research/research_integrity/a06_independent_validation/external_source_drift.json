@@ -1,0 +1,145 @@
+{
+  "observed_UTC": "2026-10-15T10:51:53.160637+00:00",
+  "cause": "UNKNOWN; change outside review commands; user clarification requested",
+  "snapshot_recovery": "All 25 A06 file contents recovered byte-exactly from confirmatory sandbox copy and checked against initial SHA256",
+  "drift": [
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/EVIDENCE_LEVELS.md",
+      "initial_sha256": "754c1ac32a8fe3692397d67e92eb10752fe93e44a729f9cb713cc3e23975cef7",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/DATA_CONTRACT_V3.md",
+      "initial_sha256": "4a4107f4509a76bc9f98a4b3ca960eda8b86a2c41bc2763d6d3cab249a785b3f",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/FGQ_FAIR_COMPARISON_V3.md",
+      "initial_sha256": "caecf0115fa366dbf8f6879fa5e0c4f7de6658a2cd76deb8222e46094856fe81",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/REFERENCE_SEMANTICS_V3.md",
+      "initial_sha256": "182101dfebd87357bfd66c0ad3fad19dfa7df6e47758f71a9c75dadb92db78d3",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/SPATIAL_SPLIT_POLICY_V3.md",
+      "initial_sha256": "cd654e3c8a9b5dda6c2fc014d090b0c4200d0bb94167350fa22eccf7657865ec",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/HARDENING_REPORT.md",
+      "initial_sha256": "9ff8c1c0aaaf0de5f47a4d69c7424fb1252cc25881e069b02ddd315800243f08",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/PROVENANCE_REGISTRY_SCHEMA.json",
+      "initial_sha256": "76b9e9d1938e4cd3f48a54e07be25085769d04829259e0b26ce51fdc06b55e95",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/ROOT_CAUSE_MATRIX.csv",
+      "initial_sha256": "8dc11f32bb6a0f3f5ac9093c802b4a1670a18964ae80cf5f878e8dd1e82d41bd",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/OUTPUT_CONTRACT_V3.md",
+      "initial_sha256": "e842568261a6415a71713e039f20f835861512583993638ae0a52302e4a6c1a0",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/NEXT_EXPERIMENT_DECISION.md",
+      "initial_sha256": "4461e411e4e36a96a034a30a6ef0e105e1c7f5a6fe69eb27effa5cfea5a37ef0",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/TEST_RESULTS.json",
+      "initial_sha256": "0edd5b7dfc3b184ba5899f45c913c86ce8a6efcd1b348adea2fb70b9bd37af55",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/FIX_LOG.md",
+      "initial_sha256": "7b82df05fdbf0ad5d47f21264bf4c7d757bf932c11493d90d9752f057bcfc0a6",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/UNRESOLVED_ASSUMPTIONS.md",
+      "initial_sha256": "db6af286f17f93e111847df7933fcebc64351a8df3bbf24a159aaa7d63c5127c",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/CROP_SAMPLING_POLICY_V3.md",
+      "initial_sha256": "5892e566b108863610d2470ba9f67a4b00b062b1d5c0866c656a0d5e0c6d2de1",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/notes.md",
+      "initial_sha256": "27d6ff2c6a0a5d52b4c6b2814585ef6fb9833bc1158ae0877019c9c5a9b3a861",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/__init__.py",
+      "initial_sha256": "f16d46a4e0727ea58624c4894e39699379e4279b74d7944328172355e58d2c1e",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/CALIBRATION_POLICY_V3.md",
+      "initial_sha256": "bb9797d46d061988dfbc66aae618acaee2f4f29012b6be32dff32ce289fa9d36",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/preflight.py",
+      "initial_sha256": "fa1322b3dd4467e3adf5deb9cd3d14cc2c3957a0a1d36db44e9efe1406cc81cc",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/AUDIT_FINDINGS.md",
+      "initial_sha256": "8bef6ca47315e6f4444de230fb71aea512450a8add649ceab1feae25af1d3e26",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/test_suite.py",
+      "initial_sha256": "d642693eade6ffe1f583ce3f842c9090aab18995222f6ffa27de321e491eaae6",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/task_plan.md",
+      "initial_sha256": "b2902f2a24088dc2cf42340ab6eb2dbadb7b293ecb03cd9c9da6d7549e317380",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/METRIC_DEFINITIONS_V3.md",
+      "initial_sha256": "9a9664eac47c060e6830f5f67b1e9e356f0777b8dfa4b07b944e7c89710994bd",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    },
+    {
+      "path": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening/generate_baseline_hashes.py",
+      "initial_sha256": "766d0ad9e04640ca55d13ebe1731af4d20b641f73e62f4a7dc6612b60e7626bf",
+      "current_sha256": null,
+      "current_state": "MISSING"
+    }
+  ]
+}

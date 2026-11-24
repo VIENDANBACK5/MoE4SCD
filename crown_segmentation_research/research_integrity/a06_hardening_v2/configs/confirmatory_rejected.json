@@ -1,0 +1,516 @@
+{
+  "version": "2.0.0",
+  "mode": "confirmatory",
+  "operation": "synthetic_smoke",
+  "study_type": "infrastructure",
+  "methods": [
+    "Q"
+  ],
+  "inputs": {
+    "crown_segmentation_research/benchmark_all_paradigms.py": {
+      "sha256": "149922c9860edf80de9994267a47a19e446f2a314b37003d2686ad98c0970c4f"
+    },
+    "crown_segmentation_research/benchmark_boundary_refinement.py": {
+      "sha256": "92647ffac33ee2163304967e365fe436c7cec1501309a4d8acebe611cefd757e"
+    },
+    "crown_segmentation_research/clean_benchmark/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "crown_segmentation_research/clean_benchmark/bootstrap_gaps.py": {
+      "sha256": "2a26b5a2c67f5c02b5c89c324869da932452783375185ae89a11def50fe1bba7"
+    },
+    "crown_segmentation_research/clean_benchmark/boundary_diagnostics.py": {
+      "sha256": "e1fadef8c15d984de63dfc809d6a50156aaed3988b992f8b9c0c88efb55ee288"
+    },
+    "crown_segmentation_research/clean_benchmark/checkpointing.py": {
+      "sha256": "65a2dc140aa38d66816c8d291ddf4681f2a0b7b990b81b506dbcf82e0de65e20"
+    },
+    "crown_segmentation_research/clean_benchmark/dataset.py": {
+      "sha256": "c7fd1e298fff8c1bcd775c5a391d2b66487d34b9366ae84ef8edfd04f359f4ee"
+    },
+    "crown_segmentation_research/clean_benchmark/diagnostics.py": {
+      "sha256": "c46c6b6fdae121a4f43e323dfefeeeee54d12046720d0e0cdbe4cb70586c9990"
+    },
+    "crown_segmentation_research/clean_benchmark/error_breakdown.py": {
+      "sha256": "af77ea44c84d7c252354812bfd6cb148cc107c8b56735db2d64a9c3a351cc3af"
+    },
+    "crown_segmentation_research/clean_benchmark/error_gallery.py": {
+      "sha256": "1d38efca657a29c9a6e17c218d7fc05f580f24343b023ec677fe73c76997b6d8"
+    },
+    "crown_segmentation_research/clean_benchmark/evaluate.py": {
+      "sha256": "1deb7e2054c69f8a49579c890ab9a2e9cc0825eb86e3d443b4aa60713f137bba"
+    },
+    "crown_segmentation_research/clean_benchmark/exp003_decode_variants.py": {
+      "sha256": "cd5dca8ff507a11c06591995d0be06586dcae3ae17eb070443823613ff9dfbb5"
+    },
+    "crown_segmentation_research/clean_benchmark/exp003_summary.py": {
+      "sha256": "5969856020cd0252d0bd970203c4e0c6e82a53cb2523f0446694ef80dfba68c9"
+    },
+    "crown_segmentation_research/clean_benchmark/exp003_waterfall.py": {
+      "sha256": "bfc80fc8dcb10ad619d4fe77d31619cec31e41e291cbf73315f37caad4d2403e"
+    },
+    "crown_segmentation_research/clean_benchmark/exp007_gate_sweep.py": {
+      "sha256": "1ea1242ca355b6149fe772c207bd531e7536ef6030cc51f6b1821f91510a3555"
+    },
+    "crown_segmentation_research/clean_benchmark/exp008b_size_matched.py": {
+      "sha256": "00abe5f72f7d77e669beca0ad701031511112ea15fd96e181aa6b9ec5f563a7e"
+    },
+    "crown_segmentation_research/clean_benchmark/exp012_preview.py": {
+      "sha256": "c2b010d2487869126dad849ef78684384c2f5e92bcbfb485a156a568e5acde3c"
+    },
+    "crown_segmentation_research/clean_benchmark/exp012_split_solidity.py": {
+      "sha256": "3691cafc434bb7dbfb05f361c65bade8b8ac81c0dc7b7a541e3b5f81ec1b05a4"
+    },
+    "crown_segmentation_research/clean_benchmark/exp013_gap_decomposition.py": {
+      "sha256": "d3e2fc8a534a0d216bc36bf0cb2ebcfc760a7c5f5120207fefece40b673d2cf5"
+    },
+    "crown_segmentation_research/clean_benchmark/exp014_missed_lowscore.py": {
+      "sha256": "1bc1254fae64dafba3517715388ac67acb6d03589d4421ae0d17bac11972598c"
+    },
+    "crown_segmentation_research/clean_benchmark/exp015_split_leak_check.py": {
+      "sha256": "6d9a21bd7abf9a7ff4fe58a6c1a71ff4464c6fcf831385719d14433f7d2d1841"
+    },
+    "crown_segmentation_research/clean_benchmark/exp016_preview.py": {
+      "sha256": "1eff1d539f83710fd626b41a52e04c484c17d31c03c222a0086b18ba3c72e0df"
+    },
+    "crown_segmentation_research/clean_benchmark/exp016_saddle_merge.py": {
+      "sha256": "c2dd3ba9e7bfd8fcd6b577907920a9ea670af5e338913e05d9353be564895a91"
+    },
+    "crown_segmentation_research/clean_benchmark/exp017_oracle_radius.py": {
+      "sha256": "79f60182f778dc7063a2d58d35a711c4dd888414131812a74cfce743c2e1e11f"
+    },
+    "crown_segmentation_research/clean_benchmark/exp018_basin_pairs.py": {
+      "sha256": "8265e54edccb9128ad5080dd1bade0b3b639025797383ca8b9c9dd52f9234c38"
+    },
+    "crown_segmentation_research/clean_benchmark/exp019_blind_visual.py": {
+      "sha256": "8acec19cc22aaa1442befb2867ca3b64b368bf60ed983a4b154be2629951d932"
+    },
+    "crown_segmentation_research/clean_benchmark/exp020_pair_merge.py": {
+      "sha256": "93739d0dfabb9b2688768165165624683f3b1c1bae2da93e474af4cf581766d6"
+    },
+    "crown_segmentation_research/clean_benchmark/exp021_veto_merge.py": {
+      "sha256": "2d3677722a8843caa1f10481ea165dd44fcb3fd87a5a8023af4a05c96eaa9652"
+    },
+    "crown_segmentation_research/clean_benchmark/exp022_rescore_ceiling.py": {
+      "sha256": "31ffd59f836082f9019c610bcd6037a4203c483ee7e0ec9010be490d36e60929"
+    },
+    "crown_segmentation_research/clean_benchmark/exp023_instance_rescore.py": {
+      "sha256": "022ac933f729fe8a712c4c63d2c31604a06ca9d2a0dbcd3bde7404675e848c5c"
+    },
+    "crown_segmentation_research/clean_benchmark/exp024_fair_rescore.py": {
+      "sha256": "e75444e68b4ee7657fe26c17bf8aafcca04bb0677e9d946d7ff37bf5102a4673"
+    },
+    "crown_segmentation_research/clean_benchmark/exp025_gate_rescore.py": {
+      "sha256": "339fc53cfc063a95e5b9cdb4b7f7676e0fd206078bf17954b7cbd86ea6bd094b"
+    },
+    "crown_segmentation_research/clean_benchmark/exp026_target_ceiling.py": {
+      "sha256": "a0e9c2588951bd8f543dab5852777b173829af696b64b908cc21e185c107b0ea"
+    },
+    "crown_segmentation_research/clean_benchmark/exp027_omnipose_decoder.py": {
+      "sha256": "da8fb24c8835953012afeb51fff2a78b8ace90411613ce82db1c70f1107de322"
+    },
+    "crown_segmentation_research/clean_benchmark/make_figures.py": {
+      "sha256": "7ec09759ced9215723b896f9f55cdccb29bf5aef2b459b8bf2c6bcf2bc5fe89e"
+    },
+    "crown_segmentation_research/clean_benchmark/make_relabel_kit.py": {
+      "sha256": "02d898d11d7ac68a18e03ed0cd674d4d60115cf546db9f83c4b2db8f8d279384"
+    },
+    "crown_segmentation_research/clean_benchmark/master_table.py": {
+      "sha256": "220d5ace1ccc88a063b566a13cc906112308a8b10adf4c334a9056d36149c22c"
+    },
+    "crown_segmentation_research/clean_benchmark/oracle_rescore.py": {
+      "sha256": "f33f9e895543b8938261c6b86e26940ebe9c509de1f4e0325b0b4151a8343eb8"
+    },
+    "crown_segmentation_research/clean_benchmark/oracle_seed_nms.py": {
+      "sha256": "8d8d3b9ccb6d0b287ef11c8746db5335b921d95bc2c8447db935236ed7ec0407"
+    },
+    "crown_segmentation_research/clean_benchmark/prepare_canopyrs.py": {
+      "sha256": "feba382919149de212d5e834bd5296ec785ca6668fd73ee20def0825694fcfd2"
+    },
+    "crown_segmentation_research/clean_benchmark/render_preview.py": {
+      "sha256": "2fb0537529078102215cc42ecf03cdbb13724cddc2bc4bb354b70d8493e9eea1"
+    },
+    "crown_segmentation_research/clean_benchmark/render_tables_md.py": {
+      "sha256": "4cfa479cc629032dc562ce69e1efb20798958d15b6c481fb69c02a8fb4b2f8e7"
+    },
+    "crown_segmentation_research/clean_benchmark/seed_scorer.py": {
+      "sha256": "03af8e2a19ff9302b30b2d82e3cf524c8d69fa7124c856ce985becf221d564bb"
+    },
+    "crown_segmentation_research/clean_benchmark/seed_scorer_test.py": {
+      "sha256": "de64988a504a72b906246af3b0eaade1137b0e11b2d88998c106f4f6986d0a0b"
+    },
+    "crown_segmentation_research/clean_benchmark/select_on_val.py": {
+      "sha256": "7f014c392f136633eac76619ae9ead05c85db50b2f39442026b89c08af92808f"
+    },
+    "crown_segmentation_research/clean_benchmark/size_extent.py": {
+      "sha256": "93b27f1c0fef9fc168362e432be01e32360e224f4177359913992ddcd6e8c674"
+    },
+    "crown_segmentation_research/clean_benchmark/size_lost_cause.py": {
+      "sha256": "b615baec0d15d9800dffa9e84ded006515471249d07e89cae41d591532952ba7"
+    },
+    "crown_segmentation_research/clean_benchmark/size_recall.py": {
+      "sha256": "4c7c1052b34babf45384786d691b5922d420abed7c3b99db27767dfe308eaa7f"
+    },
+    "crown_segmentation_research/clean_benchmark/stratify_s1s6.py": {
+      "sha256": "25bb79957bab91f9287e548c12a5347b31d049072c1ce3af103a25412de78c1a"
+    },
+    "crown_segmentation_research/clean_benchmark/synthetic_exp005.py": {
+      "sha256": "67fdf33d316d954e590baf7fbe4564b13426bc34359cba39baba0cceee191582"
+    },
+    "crown_segmentation_research/clean_benchmark/synthetic_maskrcnn.py": {
+      "sha256": "e74604f7555b0d1c4cd07bffd201c40175d409fb21dfbb119e6740cba49fb17f"
+    },
+    "crown_segmentation_research/clean_benchmark/synthetic_world.py": {
+      "sha256": "6168c941b39f7d02e7986ab70dc75969f93f3c048177a14d4e462f4f8852838e"
+    },
+    "crown_segmentation_research/clean_benchmark/targets_fast.py": {
+      "sha256": "1ed607e1021470ec97058e64fab54fa735c14380a96054578b2a63e2f8553903"
+    },
+    "crown_segmentation_research/clean_benchmark/train_maskrcnn.py": {
+      "sha256": "88333494d17e25ad200c44552975acd0a9cad85b8611a53bc0f0e5db3d45da92"
+    },
+    "crown_segmentation_research/clean_benchmark/train_treeflow.py": {
+      "sha256": "0500d234cbe7843dcb684308c8dfb36556a39e516e055fe83f2d589ce415e789"
+    },
+    "crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/grouping.py": {
+      "sha256": "cc901bce6a960f6977892b7f42d971038e56828363daa34d2144e60f98de5a8e"
+    },
+    "crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/q_sanity.py": {
+      "sha256": "2bfb5b42389bcf7371ae24afd28b016cc141b75de074f2946f371648feaaa0fd"
+    },
+    "crown_segmentation_research/diagnosis_2026-10-11/study.py": {
+      "sha256": "a67401b3a2afbaf190385097e1a0b9f83702a512900e6d89c844fa2481785480"
+    },
+    "crown_segmentation_research/methods/canopy_watershed/train.py": {
+      "sha256": "ff2e8b8ddd18ddc8fb690b9dcea41a3839328b8a8d030dba317ab374f031cba3"
+    },
+    "crown_segmentation_research/methods/canopy_watershed/train_apex.py": {
+      "sha256": "c85360ac5c02d5786bce5392a0bc8627605804bab7da47880cbc4b9f7e55612f"
+    },
+    "crown_segmentation_research/methods/canopy_watershed/train_calibrated.py": {
+      "sha256": "2edfe43f96dcb38eee30e3f02f4c6c941d0bee681f132a747d781cd5db8066c5"
+    },
+    "crown_segmentation_research/methods/canopy_watershed/train_sharp.py": {
+      "sha256": "e22363e6bcf67fcb36d0bcd2819724138edd0fd333b1d3c4601cf0c57a0585c8"
+    },
+    "crown_segmentation_research/methods/canopy_watershed/train_wide.py": {
+      "sha256": "01f6e2bb04a4911f09984df626161b166e4c4d549aff64d805a43cee474c1208"
+    },
+    "crown_segmentation_research/methods/tree_flow/__init__.py": {
+      "sha256": "b7d96d2e042bbfed9eb865445dce15f9be0df83090f78ea2633afa0578a0def5"
+    },
+    "crown_segmentation_research/methods/tree_flow/decode.py": {
+      "sha256": "c90ae2623c989a81dd380b24101ba4a21b979e90658865106e71d2288d4cff52"
+    },
+    "crown_segmentation_research/methods/tree_flow/decode_flowseam.py": {
+      "sha256": "fea2c26f904bf22ed0561832f7b29fbf4ede42270f44e44b49126a192e415c7b"
+    },
+    "crown_segmentation_research/methods/tree_flow/eval_dte_bench.py": {
+      "sha256": "7a719009718316d271a3092c54a5d4f7ef0982999f77d5997f7e468279876168"
+    },
+    "crown_segmentation_research/methods/tree_flow/eval_neuro_dte_bench.py": {
+      "sha256": "22b490f6fbb4312304ab67efcdbd4fc18bc2ac6cb6ae44157589f76024f562ad"
+    },
+    "crown_segmentation_research/methods/tree_flow/eval_neuro_val.py": {
+      "sha256": "f05bd0d5c0f4f13af3ac768b20392194f3ae393420cad4cee7ed878f0e1784a7"
+    },
+    "crown_segmentation_research/methods/tree_flow/evaluate.py": {
+      "sha256": "bbc514844cd1590f423dbd23c76f202c8c7704e9d94815215981fd08137f8a3a"
+    },
+    "crown_segmentation_research/methods/tree_flow/graph_decode.py": {
+      "sha256": "e829cad4df7a68b8b23e60283dc4fc90df288b0a966ef9c29648efede00b64c8"
+    },
+    "crown_segmentation_research/methods/tree_flow/hamiltonian_watershed.py": {
+      "sha256": "b9ae8a965311b071770738aaf1ca38ef84cd8fffdd42a36b75e404b77ba3bfc3"
+    },
+    "crown_segmentation_research/methods/tree_flow/loss.py": {
+      "sha256": "65e049fb718fa642a880aa500fd431a4f75371cabae0db1d0eee738b89afa6c0"
+    },
+    "crown_segmentation_research/methods/tree_flow/loss_hr.py": {
+      "sha256": "505d7d616730dec5048bf77bcd93c22a354634c687e5fd3e9d3070b49d674184"
+    },
+    "crown_segmentation_research/methods/tree_flow/loss_v2.py": {
+      "sha256": "9c91f9d102dae2d190c0c0de3173d2a722d62e89f5e0f9c4d208aa67454a8260"
+    },
+    "crown_segmentation_research/methods/tree_flow/model.py": {
+      "sha256": "62ea6c2dbf1ac7e6b81b8791186221caaab13bca757d036ef608ffe84bbfb96c"
+    },
+    "crown_segmentation_research/methods/tree_flow/model_hr.py": {
+      "sha256": "e091d0b4ae363e5e6a747de76537f5bda23cd5fe9338ea1b20bb90d9e02415ec"
+    },
+    "crown_segmentation_research/methods/tree_flow/model_v2.py": {
+      "sha256": "d0e9b866fad571a944ed2e678e48d591003af8cab13e65fb542504a4c1692c3c"
+    },
+    "crown_segmentation_research/methods/tree_flow/model_v3.py": {
+      "sha256": "efb9cc057291f807a7410880ee1e7a878af4737070e0e766edaca6cfc58306de"
+    },
+    "crown_segmentation_research/methods/tree_flow/preview.py": {
+      "sha256": "228ce2286c6d8bb0d457e9af2ac7a93c71ef86d48e2590a1bc95505212f7295a"
+    },
+    "crown_segmentation_research/methods/tree_flow/preview_ablation.py": {
+      "sha256": "36e445379c722e122eb403648b588791bc9a1a7eb61b58c095cce8a0142485e4"
+    },
+    "crown_segmentation_research/methods/tree_flow/standalone_flow.py": {
+      "sha256": "be67422e956f447e6897a453e2ac6fe1fd58796e1581a166851e08b7b8b27c40"
+    },
+    "crown_segmentation_research/methods/tree_flow/sweep.py": {
+      "sha256": "b3e590c265c07b2e774a49b67115ffc3898c8b7ef4f9355428968a53e72bce82"
+    },
+    "crown_segmentation_research/methods/tree_flow/sweep_bam.py": {
+      "sha256": "15deacb1aba38d16c2894ec0951dd6e7c15d8df824c8418c896a8df4af1e4a40"
+    },
+    "crown_segmentation_research/methods/tree_flow/targets.py": {
+      "sha256": "e0bc5b23835c7537f62f86aa3b74997079cf76ca051374d64fe5d1a4274673dc"
+    },
+    "crown_segmentation_research/methods/tree_flow/test_model_load.py": {
+      "sha256": "2c95152046e753dbdc7c5d3d91707814d023ac1d6f5cb9c7564ad8398b1a8669"
+    },
+    "crown_segmentation_research/methods/tree_flow/train.py": {
+      "sha256": "82528a7d2b7d618b2be56ff0f66b5fede1bd4ed7ed47ecaa20152719f1e5f20e"
+    },
+    "crown_segmentation_research/methods/tree_flow/train_hr.py": {
+      "sha256": "4cbe72112ef2579aca5963cb819db2d2654a2891003565d43bf3758390d46d75"
+    },
+    "crown_segmentation_research/methods/tree_flow/train_v2.py": {
+      "sha256": "45e1f7509d40e06697825f3c4e499b242a66447aeb17120bf2ab09f0c80a4e5a"
+    },
+    "crown_segmentation_research/methods/tree_flow/train_v3.py": {
+      "sha256": "c2aa00c9f01db510dd3095038305070b50f16afb20127c232f0a6509687b98f7"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/ADDITIONAL_ENTRYPOINT_REGISTRY.json": {
+      "sha256": "79ec0a9600edefa2195515f0c39fffa7b7e29ebfba0299aadc52623b6a57f811"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/ENTRYPOINT_REGISTRY.json": {
+      "sha256": "442108e1d50fd0e549feccf9d787c24835ddcf5efedcb4701449e22c48d403dd"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/HISTORICAL_RUNNER_REGISTRY.json": {
+      "sha256": "4993af5f39c483ed969b9be5355f2bf954ee5f1e7dea2d5c40ae9eb2e9877f5b"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/READ_ROOTS.json": {
+      "sha256": "4206506343b2cf81168cd6801d5b9b1e6f50a27d0fa6e15c7ebf7408a0320a54"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/__init__.py": {
+      "sha256": "f7e0c0768ce1b64479fc15a5025f14dc63bba47c97c6ebeb5f3eb44a4ef7d6bc"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/affine_audit.py": {
+      "sha256": "17cefecf701f21aafbae9af51a1709d26ddf13e259b5630b580516ac46af7769"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/calibration.py": {
+      "sha256": "09e965d03874cfeb411c53e2ed2ade3a22c1a7f55ff8b3c41480f315bce6aad3"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/core.py": {
+      "sha256": "d17cb629155cd21c9c4beacff12a6fca39e0a0f5fdaa8a6c114e6171673cbd7e"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/crops.py": {
+      "sha256": "70e671d8a743e1da7d72e2dc7683cf59f3ae81267c6781832b66d5fcc880f344"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/metrics.py": {
+      "sha256": "0ed75817b8b7db2ac68f6b60a22771299705338ae263e2da5539a52294c268ee"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/outputs.py": {
+      "sha256": "2021fb6a9ee59f959ff5f810824e56b9c9273aa4a14280c9651d0ef81279fd28"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/preflight.py": {
+      "sha256": "ecb7791f6762fcd5c400ecec9edb320ddb2aaf6401c9d78896cd3d92eb7a3a66"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/rescan.py": {
+      "sha256": "44e3d4fdb41a6d7db1e325566ff5f9e40669865a52f2858a763a792688fd7d23"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/runtime.py": {
+      "sha256": "2933b269baca7028f94b6e092f22ce5fee1d2238a9ed18507081c12b9bfcfe71"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/sampling.py": {
+      "sha256": "3116fb6acace14a25adf5ac1c89fbeaa70ea04b50a862899614661aac05094bc"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/spatial.py": {
+      "sha256": "904cabd3ca856c460a84e019b6c55a753563327f5bfdee14db08955743963000"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/support_audit.py": {
+      "sha256": "28e8450f4adf1cc7ee658ea7141d35f21ee2f36eb21a3cf18fca1e7e086815e3"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/test_preflight.py": {
+      "sha256": "22c4ef89bcf83434c35b3be081288e4fab567e7f425faa1253db3a2d6c33d3a2"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/test_primitives.py": {
+      "sha256": "745460b5c9b5c0ea2ead61c7a070f9d1378061a9a1d30d7b92b5219029362faf"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/test_runtime.py": {
+      "sha256": "6f3458a14b57b1826f7533e8c8809b4b4f8b619e046e432fc0f613043794f3d7"
+    },
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/verify.py": {
+      "sha256": "cf8556b80089badb8f1ba78992a505fc0779740827c12ab16f6f83de1972829d"
+    }
+  },
+  "required_inputs": [
+    "crown_segmentation_research/benchmark_all_paradigms.py",
+    "crown_segmentation_research/benchmark_boundary_refinement.py",
+    "crown_segmentation_research/clean_benchmark/__init__.py",
+    "crown_segmentation_research/clean_benchmark/bootstrap_gaps.py",
+    "crown_segmentation_research/clean_benchmark/boundary_diagnostics.py",
+    "crown_segmentation_research/clean_benchmark/checkpointing.py",
+    "crown_segmentation_research/clean_benchmark/dataset.py",
+    "crown_segmentation_research/clean_benchmark/diagnostics.py",
+    "crown_segmentation_research/clean_benchmark/error_breakdown.py",
+    "crown_segmentation_research/clean_benchmark/error_gallery.py",
+    "crown_segmentation_research/clean_benchmark/evaluate.py",
+    "crown_segmentation_research/clean_benchmark/exp003_decode_variants.py",
+    "crown_segmentation_research/clean_benchmark/exp003_summary.py",
+    "crown_segmentation_research/clean_benchmark/exp003_waterfall.py",
+    "crown_segmentation_research/clean_benchmark/exp007_gate_sweep.py",
+    "crown_segmentation_research/clean_benchmark/exp008b_size_matched.py",
+    "crown_segmentation_research/clean_benchmark/exp012_preview.py",
+    "crown_segmentation_research/clean_benchmark/exp012_split_solidity.py",
+    "crown_segmentation_research/clean_benchmark/exp013_gap_decomposition.py",
+    "crown_segmentation_research/clean_benchmark/exp014_missed_lowscore.py",
+    "crown_segmentation_research/clean_benchmark/exp015_split_leak_check.py",
+    "crown_segmentation_research/clean_benchmark/exp016_preview.py",
+    "crown_segmentation_research/clean_benchmark/exp016_saddle_merge.py",
+    "crown_segmentation_research/clean_benchmark/exp017_oracle_radius.py",
+    "crown_segmentation_research/clean_benchmark/exp018_basin_pairs.py",
+    "crown_segmentation_research/clean_benchmark/exp019_blind_visual.py",
+    "crown_segmentation_research/clean_benchmark/exp020_pair_merge.py",
+    "crown_segmentation_research/clean_benchmark/exp021_veto_merge.py",
+    "crown_segmentation_research/clean_benchmark/exp022_rescore_ceiling.py",
+    "crown_segmentation_research/clean_benchmark/exp023_instance_rescore.py",
+    "crown_segmentation_research/clean_benchmark/exp024_fair_rescore.py",
+    "crown_segmentation_research/clean_benchmark/exp025_gate_rescore.py",
+    "crown_segmentation_research/clean_benchmark/exp026_target_ceiling.py",
+    "crown_segmentation_research/clean_benchmark/exp027_omnipose_decoder.py",
+    "crown_segmentation_research/clean_benchmark/make_figures.py",
+    "crown_segmentation_research/clean_benchmark/make_relabel_kit.py",
+    "crown_segmentation_research/clean_benchmark/master_table.py",
+    "crown_segmentation_research/clean_benchmark/oracle_rescore.py",
+    "crown_segmentation_research/clean_benchmark/oracle_seed_nms.py",
+    "crown_segmentation_research/clean_benchmark/prepare_canopyrs.py",
+    "crown_segmentation_research/clean_benchmark/render_preview.py",
+    "crown_segmentation_research/clean_benchmark/render_tables_md.py",
+    "crown_segmentation_research/clean_benchmark/seed_scorer.py",
+    "crown_segmentation_research/clean_benchmark/seed_scorer_test.py",
+    "crown_segmentation_research/clean_benchmark/select_on_val.py",
+    "crown_segmentation_research/clean_benchmark/size_extent.py",
+    "crown_segmentation_research/clean_benchmark/size_lost_cause.py",
+    "crown_segmentation_research/clean_benchmark/size_recall.py",
+    "crown_segmentation_research/clean_benchmark/stratify_s1s6.py",
+    "crown_segmentation_research/clean_benchmark/synthetic_exp005.py",
+    "crown_segmentation_research/clean_benchmark/synthetic_maskrcnn.py",
+    "crown_segmentation_research/clean_benchmark/synthetic_world.py",
+    "crown_segmentation_research/clean_benchmark/targets_fast.py",
+    "crown_segmentation_research/clean_benchmark/train_maskrcnn.py",
+    "crown_segmentation_research/clean_benchmark/train_treeflow.py",
+    "crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/grouping.py",
+    "crown_segmentation_research/diagnosis_2026-10-11/fgq_revision_2026-10-13/q_sanity.py",
+    "crown_segmentation_research/diagnosis_2026-10-11/study.py",
+    "crown_segmentation_research/methods/canopy_watershed/train.py",
+    "crown_segmentation_research/methods/canopy_watershed/train_apex.py",
+    "crown_segmentation_research/methods/canopy_watershed/train_calibrated.py",
+    "crown_segmentation_research/methods/canopy_watershed/train_sharp.py",
+    "crown_segmentation_research/methods/canopy_watershed/train_wide.py",
+    "crown_segmentation_research/methods/tree_flow/__init__.py",
+    "crown_segmentation_research/methods/tree_flow/decode.py",
+    "crown_segmentation_research/methods/tree_flow/decode_flowseam.py",
+    "crown_segmentation_research/methods/tree_flow/eval_dte_bench.py",
+    "crown_segmentation_research/methods/tree_flow/eval_neuro_dte_bench.py",
+    "crown_segmentation_research/methods/tree_flow/eval_neuro_val.py",
+    "crown_segmentation_research/methods/tree_flow/evaluate.py",
+    "crown_segmentation_research/methods/tree_flow/graph_decode.py",
+    "crown_segmentation_research/methods/tree_flow/hamiltonian_watershed.py",
+    "crown_segmentation_research/methods/tree_flow/loss.py",
+    "crown_segmentation_research/methods/tree_flow/loss_hr.py",
+    "crown_segmentation_research/methods/tree_flow/loss_v2.py",
+    "crown_segmentation_research/methods/tree_flow/model.py",
+    "crown_segmentation_research/methods/tree_flow/model_hr.py",
+    "crown_segmentation_research/methods/tree_flow/model_v2.py",
+    "crown_segmentation_research/methods/tree_flow/model_v3.py",
+    "crown_segmentation_research/methods/tree_flow/preview.py",
+    "crown_segmentation_research/methods/tree_flow/preview_ablation.py",
+    "crown_segmentation_research/methods/tree_flow/standalone_flow.py",
+    "crown_segmentation_research/methods/tree_flow/sweep.py",
+    "crown_segmentation_research/methods/tree_flow/sweep_bam.py",
+    "crown_segmentation_research/methods/tree_flow/targets.py",
+    "crown_segmentation_research/methods/tree_flow/test_model_load.py",
+    "crown_segmentation_research/methods/tree_flow/train.py",
+    "crown_segmentation_research/methods/tree_flow/train_hr.py",
+    "crown_segmentation_research/methods/tree_flow/train_v2.py",
+    "crown_segmentation_research/methods/tree_flow/train_v3.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/ADDITIONAL_ENTRYPOINT_REGISTRY.json",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/ENTRYPOINT_REGISTRY.json",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/HISTORICAL_RUNNER_REGISTRY.json",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/READ_ROOTS.json",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/__init__.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/affine_audit.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/calibration.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/core.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/crops.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/metrics.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/outputs.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/preflight.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/rescan.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/runtime.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/sampling.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/spatial.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/support_audit.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/test_preflight.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/test_primitives.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/test_runtime.py",
+    "crown_segmentation_research/research_integrity/a06_hardening_v2/verify.py"
+  ],
+  "datasets": [],
+  "output_dir": "/home/chung/RS/Image Segmentation/crown_segmentation_research/research_integrity/a06_hardening_v2/runs/synthetic-e9af64ea399c4f908c836cebdeb0bf51",
+  "spatial_policy": {
+    "version": "fixture-only",
+    "support": "full_footprint",
+    "buffer_m": 0
+  },
+  "sampling": {
+    "master_seed": 5,
+    "crop_shape": [
+      12,
+      12
+    ],
+    "pixel_affine": [
+      0.03,
+      0,
+      0,
+      0,
+      -0.03,
+      0
+    ],
+    "min_valid": 1,
+    "partial_policy": "visible_fragment_retains_original_identity",
+    "categories": [
+      "background",
+      "one_complete",
+      "two_to_four_complete",
+      "crowded",
+      "small",
+      "multilobed",
+      "touching",
+      "partial"
+    ],
+    "queries": 4,
+    "max_targets": 4,
+    "rng_version": "epoch_shared_v2"
+  },
+  "selection": {
+    "stage": 2,
+    "threshold": 0.5,
+    "threshold_source_role": "PREREGISTERED",
+    "min_area_m2": 0,
+    "duplicate_policy": "keep",
+    "invalid_support_policy": "keep_original",
+    "E2E_overlap": "highest_score",
+    "structural_overlap": "unique_cover",
+    "max_dets": 400
+  },
+  "calibration": {
+    "enabled": false
+  },
+  "comparison": {},
+  "runtime": {
+    "entrypoint": null,
+    "cli": {}
+  },
+  "measurement": {
+    "scope": "synthetic only; no biological/benchmark endpoint selected"
+  }
+}

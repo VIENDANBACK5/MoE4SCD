@@ -1,0 +1,90 @@
+[
+  {
+    "case": "zero_denominator",
+    "expected": "NA/null with counts",
+    "actual": {
+      "same_acc": 0.0,
+      "diff_acc": 0.0,
+      "balanced": 0.0,
+      "coverage": 0.0
+    }
+  },
+  {
+    "case": "no_different_pairs",
+    "expected": "diff accuracy NA, balanced common-support policy required",
+    "actual": {
+      "same_acc": 1.0,
+      "diff_acc": 0.0,
+      "balanced": 0.5,
+      "coverage": 1.0,
+      "covered_pairs": 1,
+      "total_pairs": 1
+    }
+  },
+  {
+    "case": "highest_score_overlap_E2E",
+    "expected": "Prior execution plan requires same accuracy1 then0 under highest-score E2E resolution; A06 changes that policy to unique cover",
+    "actual": {
+      "scores_09_08": {
+        "same_acc": 0.0,
+        "diff_acc": 0.0,
+        "balanced": 0.0,
+        "coverage": 0.0,
+        "covered_pairs": 0,
+        "total_pairs": 1
+      },
+      "scores_08_09": {
+        "same_acc": 0.0,
+        "diff_acc": 0.0,
+        "balanced": 0.0,
+        "coverage": 0.0,
+        "covered_pairs": 0,
+        "total_pairs": 1
+      }
+    }
+  },
+  {
+    "case": "NaN_area",
+    "expected": "reject invalid area",
+    "actual": "ge9"
+  },
+  {
+    "case": "degenerate_affine",
+    "expected": "reject zero determinant",
+    "actual": 0.0
+  },
+  {
+    "case": "mismatched_mask_shapes",
+    "expected": "reject nonmatching mask/image dimensions",
+    "actual": {
+      "rejected": true,
+      "exception": "IndexError",
+      "message": "boolean index did not match indexed array along dimension 1; dimension is 2 but corresponding boolean dimension is 1"
+    }
+  },
+  {
+    "case": "overlapping_boxes_zero_buffer",
+    "expected": "overlap policy separate from distance; cannot certify disjoint support",
+    "actual": {
+      "valid": true,
+      "distance": 0.0
+    }
+  },
+  {
+    "case": "legacy_priority_replay",
+    "expected": "same as historical first-wins code",
+    "actual": {
+      "equal": false,
+      "changed_pixels": 9,
+      "historical_owner_at_center": 1,
+      "A06_owner_at_center": 2
+    }
+  },
+  {
+    "case": "validation_epoch_handling",
+    "expected": "caller must lock epoch; helper itself does not enforce it",
+    "actual": {
+      "equal": false
+    }
+  }
+]

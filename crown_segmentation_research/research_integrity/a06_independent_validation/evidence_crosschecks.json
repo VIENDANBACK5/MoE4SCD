@@ -1,0 +1,97 @@
+{
+  "regression_test_references": [
+    {
+      "id": "F01",
+      "claimed_regression_test": "test_spatial_split_leakage_and_buffer",
+      "test_exists_in_delivered_suite": false
+    },
+    {
+      "id": "F02",
+      "claimed_regression_test": "test_cross_grid_ground_support",
+      "test_exists_in_delivered_suite": false
+    },
+    {
+      "id": "F03",
+      "claimed_regression_test": "test_confirmatory_gate_blocks_connected_splits",
+      "test_exists_in_delivered_suite": false
+    },
+    {
+      "id": "F04",
+      "claimed_regression_test": "test_support_definitions_distinction",
+      "test_exists_in_delivered_suite": true
+    },
+    {
+      "id": "F05",
+      "claimed_regression_test": "test_area_calculation_determinism",
+      "test_exists_in_delivered_suite": false
+    },
+    {
+      "id": "F06",
+      "claimed_regression_test": "test_crop_sampler_epoch_diversity",
+      "test_exists_in_delivered_suite": false
+    },
+    {
+      "id": "F07",
+      "claimed_regression_test": "test_full_crown_sampling_invariants",
+      "test_exists_in_delivered_suite": false
+    },
+    {
+      "id": "F08",
+      "claimed_regression_test": "test_stage0_to_stage3_output_contract",
+      "test_exists_in_delivered_suite": false
+    },
+    {
+      "id": "F09",
+      "claimed_regression_test": "test_calibration_policy_leakage_rejection",
+      "test_exists_in_delivered_suite": false
+    },
+    {
+      "id": "F10",
+      "claimed_regression_test": "test_test_set_access_control",
+      "test_exists_in_delivered_suite": false
+    },
+    {
+      "id": "F11",
+      "claimed_regression_test": "test_g0_vs_g1_semantic_distinction",
+      "test_exists_in_delivered_suite": false
+    },
+    {
+      "id": "F12",
+      "claimed_regression_test": "test_preflight_fail_closed_behavior",
+      "test_exists_in_delivered_suite": false
+    }
+  ],
+  "report_hash_comparisons": [
+    {
+      "file": "BAO_CAO_A00_A05.md",
+      "reported_sha256": "1b0c034ff6060c2393a52bbd922c262ad0126743bbfdcf66563606992d9ba2bf",
+      "computed_sha256": "63fba5b43922f56fd34ea0f6a81c154892e44da205b058fa7c8511be50c8f5a4",
+      "matches": false
+    },
+    {
+      "file": "data_summary.json",
+      "reported_sha256": "a29d89dcfd09f7b15d2d1fe21b6db5db78fc4219fe6a92fc51be8c5bc79f1503",
+      "computed_sha256": "d34147c503924541a3980086c522737455118d7081714a2f2c9771dc52a7bedc",
+      "matches": false
+    },
+    {
+      "file": "spatial_summary.json",
+      "reported_sha256": "0973a1168f02aa563b723f5b74c2d3ca45fa3565f464010377c8e9b626d7042a",
+      "computed_sha256": "98e7964b60e4e7bc9e45a80161615a4b8aaaa2ceb68a8606506a088d1a87de5e",
+      "matches": false
+    },
+    {
+      "file": "dataset.py",
+      "reported_sha256": "77bb9c24e86539a4891129f798fec1584cfc7940bc6d8882ca9f84860086ebc8",
+      "computed_sha256": "bfc761cbc2a501d18d8886db7e68d83d48a0d1ac9fa8fe63734bc7381303f5ee",
+      "matches": false
+    },
+    {
+      "file": "q_sanity.py",
+      "reported_sha256": "f8b63e8df31102ec3b320ec2c2a3d07742a0fe5c86c128c7cb02484c2f60503f",
+      "computed_sha256": "cfcad72411572615296f1da86de375e873642550ae7a62ce41ff7e333a69fd77",
+      "matches": false
+    }
+  ],
+  "reported_environment_matches_current_core_versions": true
+}
