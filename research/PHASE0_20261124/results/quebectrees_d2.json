@@ -1,0 +1,34 @@
+{
+ "n_unique_crowns": 3671,
+ "area_m2_quantiles": {
+  "0.05": 1.5462,
+  "0.25": 3.8447999999999998,
+  "0.5": 7.5186,
+  "0.75": 14.281649999999999,
+  "0.95": 32.622299999999996
+ },
+ "d1": {
+  "non_touching": 113,
+  "balanced": 1646,
+  "moderate": 995,
+  "strong": 917,
+  "strong_share": 0.24979569599564153,
+  "strong_lt2m2": 185
+ },
+ "d2": {
+  "non_touching": 103,
+  "balanced": 1638,
+  "moderate": 999,
+  "strong": 931,
+  "strong_share": 0.2536093707436666,
+  "strong_lt2m2": 190
+ },
+ "d5": {
+  "non_touching": 76,
+  "balanced": 1601,
+  "moderate": 1024,
+  "strong": 970,
+  "strong_share": 0.2642331789703078,
+  "strong_lt2m2": 202
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "status": "PASS",
+ "config_hash": "f97deb74ef1700deec7fb7678291ab4d90cb1a19ce0c1948cf8f10824ec3c9b1",
+ "checks": {
+  "train_val_tiles_disjoint": {
+   "ok": true,
+   "info": {
+    "train": 148,
+    "validation": 139
+   }
+  },
+  "no_test_in_config": {
+   "ok": true,
+   "info": null
+  },
+  "cache_complete": {
+   "ok": true,
+   "info": {
+    "n": 14212,
+    "reform": 4357,
+    "keep": 9855,
+    "natural": [
+     7485,
+     38630,
+     4357
+    ]
+   }
+  },
+  "cache_from_train_only": {
+   "ok": true,
+   "info": null
+  },
+  "targets_consistent": {
+   "ok": true,
+   "info": null
+  },
+  "finite_features": {
+   "ok": true,
+   "info": null
+  },
+  "rows_fast_equals_image_rows": {
+   "ok": true,
+   "info": {
+    "crop": "v1",
+    "n": 26,
+    "absorbed": 4
+   }
+  },
+  "M2_permutation_invariant": {
+   "ok": true,
+   "info": {
+    "max_logit_diff": 5.960464477539063e-08
+   }
+  },
+  "param_parity_B2_M2_within_25pct": {
+   "ok": true,
+   "info": {
+    "B1": 657921,
+    "B2": 953859,
+    "M2": 939266
+   }
+  },
+  "capacity_overfit": {
+   "ok": true,
+   "info": {
+    "B1": [
+     0.0,
+     0.0
+    ],
+    "B2": [
+     0.0,
+     0.236
+    ],
+    "M2": [
+     0.0001,
+     0.2515
+    ]
+   }
+  }
+ }
+}

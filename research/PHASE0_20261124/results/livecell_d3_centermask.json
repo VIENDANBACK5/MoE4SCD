@@ -1,0 +1,711 @@
+{
+ "model": "LIVECell anchor-free CenterMask2 V-99-eSE (ALL)",
+ "cut": 0.55,
+ "size_edges_px": [
+  130.0,
+  190.0,
+  286.0,
+  482.0
+ ],
+ "density_edges": [
+  11.0,
+  21.0
+ ],
+ "all": {
+  "1": {
+   "d": 1,
+   "strata": {
+    "non_touching": {
+     "n": 7894,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      -0.0,
+      0.0005
+     ],
+     "hit_rate": 0.935900684063846
+    },
+    "balanced": {
+     "n": 110315,
+     "absorbed": 4199,
+     "rate": 0.03806372660109686,
+     "ci": [
+      0.037,
+      0.0392
+     ],
+     "hit_rate": 0.8510719303811811
+    },
+    "moderate": {
+     "n": 30576,
+     "absorbed": 3380,
+     "rate": 0.11054421768707483,
+     "ci": [
+      0.1071,
+      0.1141
+     ],
+     "hit_rate": 0.6805010465724751
+    },
+    "strong": {
+     "n": 11755,
+     "absorbed": 3740,
+     "rate": 0.3181624840493407,
+     "ci": [
+      0.3098,
+      0.3266
+     ],
+     "hit_rate": 0.39812845597618035
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.3181624840493407,
+    "balanced_rate_std_to_strong": 0.060362335797333674,
+    "n_strong_in_cells": 11755,
+    "diff": 0.25780014825200703,
+    "diff_ci": [
+     0.1570115025151069,
+     0.3563668033482538
+    ],
+    "ratio": 5.270877606817107
+   },
+   "consequence": {
+    "n_instances": 160540,
+    "recall": 0.7895913790955525,
+    "share_of_misses_that_are_absorption": 0.33508984872257913,
+    "recall_gain_if_strong_absorptions_were_hits": 0.02329637473526847,
+    "recall_gain_if_all_absorptions_were_hits": 0.0705057929487978
+   }
+  },
+  "2": {
+   "d": 2,
+   "strata": {
+    "non_touching": {
+     "n": 6464,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      -0.0,
+      0.0006
+     ],
+     "hit_rate": 0.9364170792079208
+    },
+    "balanced": {
+     "n": 109259,
+     "absorbed": 3993,
+     "rate": 0.03654618841468437,
+     "ci": [
+      0.0354,
+      0.0377
+     ],
+     "hit_rate": 0.8552247412112504
+    },
+    "moderate": {
+     "n": 32338,
+     "absorbed": 3572,
+     "rate": 0.11045828437132785,
+     "ci": [
+      0.1071,
+      0.1139
+     ],
+     "hit_rate": 0.6851073041004391
+    },
+    "strong": {
+     "n": 12479,
+     "absorbed": 3864,
+     "rate": 0.30964019552848787,
+     "ci": [
+      0.3016,
+      0.3178
+     ],
+     "hit_rate": 0.40964820899110505
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.30964019552848787,
+    "balanced_rate_std_to_strong": 0.05550795245632957,
+    "n_strong_in_cells": 12479,
+    "diff": 0.2541322430721583,
+    "diff_ci": [
+     0.1591242033474564,
+     0.3508372122267907
+    ],
+    "ratio": 5.5783033209898125
+   },
+   "consequence": {
+    "n_instances": 160540,
+    "recall": 0.7895913790955525,
+    "share_of_misses_that_are_absorption": 0.338346309837473,
+    "recall_gain_if_strong_absorptions_were_hits": 0.024068767908309457,
+    "recall_gain_if_all_absorptions_were_hits": 0.07119098044101159
+   }
+  },
+  "5": {
+   "d": 5,
+   "strata": {
+    "non_touching": {
+     "n": 4771,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      0.0,
+      0.0008
+     ],
+     "hit_rate": 0.9352337036260742
+    },
+    "balanced": {
+     "n": 105812,
+     "absorbed": 3542,
+     "rate": 0.03347446414395343,
+     "ci": [
+      0.0324,
+      0.0346
+     ],
+     "hit_rate": 0.861650852455298
+    },
+    "moderate": {
+     "n": 35896,
+     "absorbed": 3807,
+     "rate": 0.10605638511254736,
+     "ci": [
+      0.1029,
+      0.1093
+     ],
+     "hit_rate": 0.6966235792288834
+    },
+    "strong": {
+     "n": 14061,
+     "absorbed": 4098,
+     "rate": 0.2914444207382121,
+     "ci": [
+      0.284,
+      0.299
+     ],
+     "hit_rate": 0.43524642628547044
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.2914444207382121,
+    "balanced_rate_std_to_strong": 0.04583012995207133,
+    "n_strong_in_cells": 14061,
+    "diff": 0.24561429078614075,
+    "diff_ci": [
+     0.15724889729424868,
+     0.3385169730076363
+    ],
+    "ratio": 6.3592318207040135
+   },
+   "consequence": {
+    "n_instances": 160540,
+    "recall": 0.7895913790955525,
+    "share_of_misses_that_are_absorption": 0.33887918529263744,
+    "recall_gain_if_strong_absorptions_were_hits": 0.02552634857356422,
+    "recall_gain_if_all_absorptions_were_hits": 0.07130310203064656
+   }
+  }
+ },
+ "by_ctype": {
+  "A172": {
+   "d": 2,
+   "strata": {
+    "non_touching": {
+     "n": 349,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      -0.0,
+      0.0109
+     ],
+     "hit_rate": 0.9598853868194842
+    },
+    "balanced": {
+     "n": 6975,
+     "absorbed": 465,
+     "rate": 0.06666666666666667,
+     "ci": [
+      0.061,
+      0.0728
+     ],
+     "hit_rate": 0.8236559139784946
+    },
+    "moderate": {
+     "n": 3898,
+     "absorbed": 633,
+     "rate": 0.1623909697280657,
+     "ci": [
+      0.1511,
+      0.1743
+     ],
+     "hit_rate": 0.6775269368907132
+    },
+    "strong": {
+     "n": 1498,
+     "absorbed": 372,
+     "rate": 0.24833110814419226,
+     "ci": [
+      0.2271,
+      0.2708
+     ],
+     "hit_rate": 0.48664886515353806
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.24833110814419226,
+    "balanced_rate_std_to_strong": 0.18030366880933446,
+    "n_strong_in_cells": 1498,
+    "diff": 0.0680274393348578,
+    "diff_ci": [
+     -0.020424171110178753,
+     0.12685386626163223
+    ],
+    "ratio": 1.3772937055806376
+   },
+   "consequence": {
+    "n_instances": 12720,
+    "recall": 0.7429245283018868,
+    "share_of_misses_that_are_absorption": 0.44954128440366975,
+    "recall_gain_if_strong_absorptions_were_hits": 0.029245283018867925,
+    "recall_gain_if_all_absorptions_were_hits": 0.11556603773584906
+   }
+  },
+  "BT474": {
+   "d": 2,
+   "strata": {
+    "non_touching": {
+     "n": 833,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      0.0,
+      0.0046
+     ],
+     "hit_rate": 0.8907563025210085
+    },
+    "balanced": {
+     "n": 8436,
+     "absorbed": 590,
+     "rate": 0.06993835941204363,
+     "ci": [
+      0.0647,
+      0.0756
+     ],
+     "hit_rate": 0.7744191559981034
+    },
+    "moderate": {
+     "n": 2687,
+     "absorbed": 318,
+     "rate": 0.11834759955340529,
+     "ci": [
+      0.1067,
+      0.1311
+     ],
+     "hit_rate": 0.5556382582806103
+    },
+    "strong": {
+     "n": 775,
+     "absorbed": 128,
+     "rate": 0.16516129032258065,
+     "ci": [
+      0.1407,
+      0.1929
+     ],
+     "hit_rate": 0.4012903225806452
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.16516129032258065,
+    "balanced_rate_std_to_strong": 0.26365736196073275,
+    "n_strong_in_cells": 775,
+    "diff": -0.0984960716381521,
+    "diff_ci": [
+     -0.17435461048734469,
+     -0.020116698015878818
+    ],
+    "ratio": 0.6264239659167135
+   },
+   "consequence": {
+    "n_instances": 12731,
+    "recall": 0.713141151519912,
+    "share_of_misses_that_are_absorption": 0.2836801752464403,
+    "recall_gain_if_strong_absorptions_were_hits": 0.010054198413321813,
+    "recall_gain_if_all_absorptions_were_hits": 0.08137616840782343
+   }
+  },
+  "BV2": {
+   "d": 2,
+   "strata": {
+    "non_touching": {
+     "n": 1785,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      -0.0,
+      0.0021
+     ],
+     "hit_rate": 0.9210084033613445
+    },
+    "balanced": {
+     "n": 33618,
+     "absorbed": 359,
+     "rate": 0.010678803022190493,
+     "ci": [
+      0.0096,
+      0.0118
+     ],
+     "hit_rate": 0.9057647688738176
+    },
+    "moderate": {
+     "n": 4082,
+     "absorbed": 474,
+     "rate": 0.11611954924056835,
+     "ci": [
+      0.1067,
+      0.1263
+     ],
+     "hit_rate": 0.5867221950024498
+    },
+    "strong": {
+     "n": 2298,
+     "absorbed": 1574,
+     "rate": 0.6849434290687555,
+     "ci": [
+      0.6657,
+      0.7036
+     ],
+     "hit_rate": 0.033942558746736295
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.6849434290687555,
+    "balanced_rate_std_to_strong": 0.10441920336764227,
+    "n_strong_in_cells": 2298,
+    "diff": 0.5805242257011132,
+    "diff_ci": [
+     0.24589326937437353,
+     0.6724934486210992
+    ],
+    "ratio": 6.559554248438251
+   },
+   "consequence": {
+    "n_instances": 41783,
+    "recall": 0.8272981834717469,
+    "share_of_misses_that_are_absorption": 0.3335643015521064,
+    "recall_gain_if_strong_absorptions_were_hits": 0.03767082306201087,
+    "recall_gain_if_all_absorptions_were_hits": 0.05760716080702678
+   }
+  },
+  "Huh7": {
+   "d": 2,
+   "strata": {
+    "non_touching": {
+     "n": 606,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      -0.0,
+      0.0063
+     ],
+     "hit_rate": 0.9125412541254125
+    },
+    "balanced": {
+     "n": 1598,
+     "absorbed": 140,
+     "rate": 0.08760951188986232,
+     "ci": [
+      0.0747,
+      0.1025
+     ],
+     "hit_rate": 0.8260325406758448
+    },
+    "moderate": {
+     "n": 457,
+     "absorbed": 66,
+     "rate": 0.14442013129102846,
+     "ci": [
+      0.1152,
+      0.1796
+     ],
+     "hit_rate": 0.687089715536105
+    },
+    "strong": {
+     "n": 329,
+     "absorbed": 81,
+     "rate": 0.24620060790273557,
+     "ci": [
+      0.2028,
+      0.2955
+     ],
+     "hit_rate": 0.5653495440729484
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.24610591900311526,
+    "balanced_rate_std_to_strong": 0.23481114593820562,
+    "n_strong_in_cells": 321,
+    "diff": 0.011294773064909641,
+    "diff_ci": [
+     -0.0746866680432858,
+     0.10649908337569626
+    ],
+    "ratio": 1.0481015201377282
+   },
+   "consequence": {
+    "n_instances": 2990,
+    "recall": 0.7936454849498328,
+    "share_of_misses_that_are_absorption": 0.4651539708265802,
+    "recall_gain_if_strong_absorptions_were_hits": 0.02709030100334448,
+    "recall_gain_if_all_absorptions_were_hits": 0.0959866220735786
+   }
+  },
+  "MCF7": {
+   "d": 2,
+   "strata": {
+    "non_touching": {
+     "n": 442,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      0.0,
+      0.0086
+     ],
+     "hit_rate": 0.9366515837104072
+    },
+    "balanced": {
+     "n": 25098,
+     "absorbed": 882,
+     "rate": 0.03514224240975376,
+     "ci": [
+      0.0329,
+      0.0375
+     ],
+     "hit_rate": 0.8275958243684756
+    },
+    "moderate": {
+     "n": 8257,
+     "absorbed": 798,
+     "rate": 0.09664527067942352,
+     "ci": [
+      0.0905,
+      0.1032
+     ],
+     "hit_rate": 0.7087319849824392
+    },
+    "strong": {
+     "n": 1422,
+     "absorbed": 499,
+     "rate": 0.3509142053445851,
+     "ci": [
+      0.3265,
+      0.3761
+     ],
+     "hit_rate": 0.3431786216596343
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.3509142053445851,
+    "balanced_rate_std_to_strong": 0.08870436103165949,
+    "n_strong_in_cells": 1422,
+    "diff": 0.2622098443129256,
+    "diff_ci": [
+     0.09986829303044971,
+     0.3940684807608657
+    ],
+    "ratio": 3.9559972166344815
+   },
+   "consequence": {
+    "n_instances": 35219,
+    "recall": 0.7815383741730316,
+    "share_of_misses_that_are_absorption": 0.2832076943072524,
+    "recall_gain_if_strong_absorptions_were_hits": 0.014168488599903462,
+    "recall_gain_if_all_absorptions_were_hits": 0.061870013345069426
+   }
+  },
+  "SHSY5Y": {
+   "d": 2,
+   "strata": {
+    "non_touching": {
+     "n": 453,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      -0.0,
+      0.0084
+     ],
+     "hit_rate": 0.9028697571743929
+    },
+    "balanced": {
+     "n": 15151,
+     "absorbed": 1197,
+     "rate": 0.07900468615932942,
+     "ci": [
+      0.0748,
+      0.0834
+     ],
+     "hit_rate": 0.7167843706686027
+    },
+    "moderate": {
+     "n": 6955,
+     "absorbed": 1020,
+     "rate": 0.1466570812365205,
+     "ci": [
+      0.1385,
+      0.1552
+     ],
+     "hit_rate": 0.5608914450035946
+    },
+    "strong": {
+     "n": 2035,
+     "absorbed": 445,
+     "rate": 0.21867321867321868,
+     "ci": [
+      0.2013,
+      0.2372
+     ],
+     "hit_rate": 0.26388206388206387
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.21867321867321868,
+    "balanced_rate_std_to_strong": 0.11841761362655895,
+    "n_strong_in_cells": 2035,
+    "diff": 0.10025560504665973,
+    "diff_ci": [
+     0.04542421904928864,
+     0.14861994169701714
+    ],
+    "ratio": 1.846627473534682
+   },
+   "consequence": {
+    "n_instances": 24594,
+    "recall": 0.6386517036675612,
+    "share_of_misses_that_are_absorption": 0.29953865196354224,
+    "recall_gain_if_strong_absorptions_were_hits": 0.018093844026998453,
+    "recall_gain_if_all_absorptions_were_hits": 0.10823778157274132
+   }
+  },
+  "SKOV3": {
+   "d": 2,
+   "strata": {
+    "non_touching": {
+     "n": 212,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      -0.0,
+      0.0178
+     ],
+     "hit_rate": 0.9716981132075472
+    },
+    "balanced": {
+     "n": 2081,
+     "absorbed": 64,
+     "rate": 0.030754444978375782,
+     "ci": [
+      0.0242,
+      0.0391
+     ],
+     "hit_rate": 0.9298414223930802
+    },
+    "moderate": {
+     "n": 1088,
+     "absorbed": 71,
+     "rate": 0.06525735294117647,
+     "ci": [
+      0.0521,
+      0.0815
+     ],
+     "hit_rate": 0.8621323529411765
+    },
+    "strong": {
+     "n": 822,
+     "absorbed": 217,
+     "rate": 0.2639902676399027,
+     "ci": [
+      0.235,
+      0.2952
+     ],
+     "hit_rate": 0.4489051094890511
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.2639902676399027,
+    "balanced_rate_std_to_strong": 0.13842723325662873,
+    "n_strong_in_cells": 822,
+    "diff": 0.12556303438327396,
+    "diff_ci": [
+     -0.024230285006302223,
+     0.2508436769518261
+    ],
+    "ratio": 1.9070688724269598
+   },
+   "consequence": {
+    "n_instances": 4203,
+    "recall": 0.820366404948846,
+    "share_of_misses_that_are_absorption": 0.46622516556291393,
+    "recall_gain_if_strong_absorptions_were_hits": 0.0516297882464906,
+    "recall_gain_if_all_absorptions_were_hits": 0.08374970259338568
+   }
+  },
+  "SkBr3": {
+   "d": 2,
+   "strata": {
+    "non_touching": {
+     "n": 1784,
+     "absorbed": 0,
+     "rate": 0.0,
+     "ci": [
+      0.0,
+      0.0021
+     ],
+     "hit_rate": 0.9809417040358744
+    },
+    "balanced": {
+     "n": 16302,
+     "absorbed": 296,
+     "rate": 0.018157281315176053,
+     "ci": [
+      0.0162,
+      0.0203
+     ],
+     "hit_rate": 0.9708624708624709
+    },
+    "moderate": {
+     "n": 4914,
+     "absorbed": 192,
+     "rate": 0.03907203907203907,
+     "ci": [
+      0.034,
+      0.0449
+     ],
+     "hit_rate": 0.9403744403744404
+    },
+    "strong": {
+     "n": 3300,
+     "absorbed": 548,
+     "rate": 0.16606060606060605,
+     "ci": [
+      0.1538,
+      0.1791
+     ],
+     "hit_rate": 0.7315151515151516
+    }
+   },
+   "standardised": {
+    "strong_rate_in_cells": 0.16606060606060605,
+    "balanced_rate_std_to_strong": 0.04614972711850397,
+    "n_strong_in_cells": 3300,
+    "diff": 0.11991087894210208,
+    "diff_ci": [
+     0.01933205953696495,
+     0.24329192834799523
+    ],
+    "ratio": 3.598300931101783
+   },
+   "consequence": {
+    "n_instances": 26300,
+    "recall": 0.9358174904942966,
+    "share_of_misses_that_are_absorption": 0.6137440758293838,
+    "recall_gain_if_strong_absorptions_were_hits": 0.020836501901140683,
+    "recall_gain_if_all_absorptions_were_hits": 0.03939163498098859
+   }
+  }
+ }
+}

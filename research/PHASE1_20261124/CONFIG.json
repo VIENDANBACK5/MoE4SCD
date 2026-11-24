@@ -1,0 +1,20 @@
+{
+ "study": "PHASE1 Prototype 1: M2 joint hypothesis-membership revision vs B1/B2",
+ "protocol": "PROTOCOL_M2_PROTOTYPE.md",
+ "dataset": "QuebecTrees (canopyrs prepared); train 148 tiles x 4 quadrants; validation 139 crops; TEST not touched",
+ "base_model": "Mask R-CNN s42, validation-selected checkpoint, frozen; candidates score >= 0.45",
+ "features": "FPN level 0 (stride 4, 256 ch), RoIAlign 32x32, RoI = mask box x1.25, min side 24",
+ "training_set": "all REFORM + KEEP sampled with p=0.26 (seeded by crop index); no synthetic unions",
+ "arms": ["B1", "B2", "M2"],
+ "m2": {"T": 3, "power_iters": 6, "D": 128},
+ "epochs": 20,
+ "batch": 128,
+ "lr": 0.001,
+ "wd": 0.0001,
+ "augmentation": "dihedral (rot90 x flip), identical across arms per batch",
+ "seeds": [42, 43, 44],
+ "selection": "final weights; no validation-based selection",
+ "decision_threshold": "0.5 after prior correction from cache ratio to natural train KEEP/REFORM prior",
+ "min_child_px": 100,
+ "reading": "see PROTOCOL_M2_PROTOTYPE.md, Pre-declared reading"
+}

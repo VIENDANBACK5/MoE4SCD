@@ -1,0 +1,506 @@
+{
+ "n_unique": 3671,
+ "prior_shift": -1.3660502360735065,
+ "variants": {
+  "B0": {
+   "recall": 0.7145192045764097,
+   "absorption_rate": 0.12530645600653773,
+   "recovered": 0,
+   "lost": 0,
+   "net_pp": 0.0,
+   "FP": 3520,
+   "AP": 0.3141030756149709,
+   "AP50": 0.6348255446639703,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     0
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": null,
+   "P_recovered_given_trigger_absorbed_occ": null
+  },
+  "B1_s42_learned": {
+   "recall": 0.6924543721056933,
+   "absorption_rate": 0.08989376191773359,
+   "recovered": 76,
+   "lost": 164,
+   "net_pp": -2.3971669844728956,
+   "FP": 5578,
+   "AP": 0.2472527180740233,
+   "AP50": 0.5448200319458419,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2577,
+     189
+    ],
+    [
+     9266,
+     967
+    ],
+    [
+     684,
+     543
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.45817490494296575,
+   "P_recovered_given_trigger_absorbed_occ": 0.37621023513139695
+  },
+  "B1_s42_oracle": {
+   "recall": 0.7482974666303459,
+   "absorption_rate": 0.03541269408880414,
+   "recovered": 174,
+   "lost": 50,
+   "net_pp": 3.377826205393626,
+   "FP": 4234,
+   "AP": 0.2909488959520349,
+   "AP50": 0.634960120953527,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2766,
+     0
+    ],
+    [
+     10233,
+     0
+    ],
+    [
+     0,
+     1227
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 1.0,
+   "P_recovered_given_trigger_absorbed_occ": 0.3960709759188847
+  },
+  "B2_s42_learned": {
+   "recall": 0.7153364205938436,
+   "absorption_rate": 0.09261781530918006,
+   "recovered": 74,
+   "lost": 77,
+   "net_pp": -0.08172160174339417,
+   "FP": 5001,
+   "AP": 0.2714836364847991,
+   "AP50": 0.5913179910799782,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2607,
+     159
+    ],
+    [
+     9393,
+     840
+    ],
+    [
+     700,
+     527
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.4550063371356147,
+   "P_recovered_given_trigger_absorbed_occ": 0.38579387186629527
+  },
+  "B2_s42_oracle": {
+   "recall": 0.7482974666303459,
+   "absorption_rate": 0.041678016889131024,
+   "recovered": 166,
+   "lost": 43,
+   "net_pp": 3.350585671479161,
+   "FP": 4264,
+   "AP": 0.2924715121156159,
+   "AP50": 0.6315235121747029,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2766,
+     0
+    ],
+    [
+     10233,
+     0
+    ],
+    [
+     0,
+     1227
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 1.0,
+   "P_recovered_given_trigger_absorbed_occ": 0.3612167300380228
+  },
+  "M2_s42_learned": {
+   "recall": 0.7199673113593027,
+   "absorption_rate": 0.09370743666575865,
+   "recovered": 65,
+   "lost": 51,
+   "net_pp": 0.38136747480250616,
+   "FP": 4690,
+   "AP": 0.27268712190900873,
+   "AP50": 0.5989819453451318,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2675,
+     91
+    ],
+    [
+     9542,
+     691
+    ],
+    [
+     772,
+     455
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.42268694550063374,
+   "P_recovered_given_trigger_absorbed_occ": 0.3583208395802099
+  },
+  "M2_s42_oracle": {
+   "recall": 0.7450286025606102,
+   "absorption_rate": 0.046853718332879324,
+   "recovered": 141,
+   "lost": 31,
+   "net_pp": 2.9964587305911197,
+   "FP": 4316,
+   "AP": 0.29400158610725224,
+   "AP50": 0.6312613445032343,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2766,
+     0
+    ],
+    [
+     10233,
+     0
+    ],
+    [
+     0,
+     1227
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.9936628643852978,
+   "P_recovered_given_trigger_absorbed_occ": 0.32716836734693877
+  },
+  "B1_s43_learned": {
+   "recall": 0.7131571778806864,
+   "absorption_rate": 0.098065922092073,
+   "recovered": 61,
+   "lost": 69,
+   "net_pp": -0.2179242713157178,
+   "FP": 4413,
+   "AP": 0.28532516013557535,
+   "AP50": 0.6011443081432901,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2697,
+     69
+    ],
+    [
+     9831,
+     402
+    ],
+    [
+     878,
+     349
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.31368821292775667,
+   "P_recovered_given_trigger_absorbed_occ": 0.37777777777777777
+  },
+  "B1_s43_oracle": {
+   "recall": 0.7482974666303459,
+   "absorption_rate": 0.03541269408880414,
+   "recovered": 174,
+   "lost": 50,
+   "net_pp": 3.377826205393626,
+   "FP": 4234,
+   "AP": 0.2909488959520349,
+   "AP50": 0.634960120953527,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2766,
+     0
+    ],
+    [
+     10233,
+     0
+    ],
+    [
+     0,
+     1227
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 1.0,
+   "P_recovered_given_trigger_absorbed_occ": 0.3960709759188847
+  },
+  "B2_s43_learned": {
+   "recall": 0.7221465540724599,
+   "absorption_rate": 0.09643149005720512,
+   "recovered": 61,
+   "lost": 38,
+   "net_pp": 0.6265322800326887,
+   "FP": 4546,
+   "AP": 0.2802471414932935,
+   "AP50": 0.6062324261196755,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2648,
+     118
+    ],
+    [
+     9652,
+     581
+    ],
+    [
+     812,
+     415
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.38466413181242076,
+   "P_recovered_given_trigger_absorbed_occ": 0.3542009884678748
+  },
+  "B2_s43_oracle": {
+   "recall": 0.7499318986652138,
+   "absorption_rate": 0.04331244892399891,
+   "recovered": 164,
+   "lost": 35,
+   "net_pp": 3.514028874965949,
+   "FP": 4245,
+   "AP": 0.29541131426847106,
+   "AP50": 0.6357339758517496,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2766,
+     0
+    ],
+    [
+     10233,
+     0
+    ],
+    [
+     0,
+     1227
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.9917617237008872,
+   "P_recovered_given_trigger_absorbed_occ": 0.34440894568690095
+  },
+  "M2_s43_learned": {
+   "recall": 0.719694906020158,
+   "absorption_rate": 0.10732770362299102,
+   "recovered": 39,
+   "lost": 22,
+   "net_pp": 0.4630890765459003,
+   "FP": 3924,
+   "AP": 0.30436018055542396,
+   "AP50": 0.6330731454850218,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2741,
+     25
+    ],
+    [
+     10050,
+     183
+    ],
+    [
+     973,
+     254
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.27756653992395436,
+   "P_recovered_given_trigger_absorbed_occ": 0.3013698630136986
+  },
+  "M2_s43_oracle": {
+   "recall": 0.7412149278125851,
+   "absorption_rate": 0.044129664941432854,
+   "recovered": 141,
+   "lost": 44,
+   "net_pp": 2.642331789703078,
+   "FP": 4353,
+   "AP": 0.29071424718486644,
+   "AP50": 0.6263825924660538,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2766,
+     0
+    ],
+    [
+     10233,
+     0
+    ],
+    [
+     0,
+     1227
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 1.0,
+   "P_recovered_given_trigger_absorbed_occ": 0.32636248415716096
+  },
+  "B1_s44_learned": {
+   "recall": 0.6981748842277309,
+   "absorption_rate": 0.09479705802233723,
+   "recovered": 69,
+   "lost": 135,
+   "net_pp": -1.7978752383546717,
+   "FP": 5278,
+   "AP": 0.24939858961782205,
+   "AP50": 0.5441291296723951,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2603,
+     163
+    ],
+    [
+     9410,
+     823
+    ],
+    [
+     738,
+     489
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.40430925221799746,
+   "P_recovered_given_trigger_absorbed_occ": 0.3824451410658307
+  },
+  "B1_s44_oracle": {
+   "recall": 0.7482974666303459,
+   "absorption_rate": 0.03541269408880414,
+   "recovered": 174,
+   "lost": 50,
+   "net_pp": 3.377826205393626,
+   "FP": 4234,
+   "AP": 0.2909488959520349,
+   "AP50": 0.634960120953527,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2766,
+     0
+    ],
+    [
+     10233,
+     0
+    ],
+    [
+     0,
+     1227
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 1.0,
+   "P_recovered_given_trigger_absorbed_occ": 0.3960709759188847
+  },
+  "B2_s44_learned": {
+   "recall": 0.715064015254699,
+   "absorption_rate": 0.09724870607463906,
+   "recovered": 59,
+   "lost": 62,
+   "net_pp": -0.08172160174339417,
+   "FP": 4699,
+   "AP": 0.2702041897551454,
+   "AP50": 0.5916508572560212,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2619,
+     147
+    ],
+    [
+     9581,
+     652
+    ],
+    [
+     798,
+     429
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.3643852978453739,
+   "P_recovered_given_trigger_absorbed_occ": 0.4017391304347826
+  },
+  "B2_s44_oracle": {
+   "recall": 0.7447561972214656,
+   "absorption_rate": 0.03731953146281667,
+   "recovered": 158,
+   "lost": 47,
+   "net_pp": 3.0236992645055842,
+   "FP": 4288,
+   "AP": 0.2927409730786837,
+   "AP50": 0.6310343677209377,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2766,
+     0
+    ],
+    [
+     10233,
+     0
+    ],
+    [
+     0,
+     1227
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 1.0,
+   "P_recovered_given_trigger_absorbed_occ": 0.3612167300380228
+  },
+  "M2_s44_learned": {
+   "recall": 0.7172432579678562,
+   "absorption_rate": 0.11795151184963225,
+   "recovered": 12,
+   "lost": 3,
+   "net_pp": 0.24516480523018253,
+   "FP": 3616,
+   "AP": 0.31228277137278593,
+   "AP50": 0.63320516130826,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2754,
+     12
+    ],
+    [
+     10202,
+     31
+    ],
+    [
+     1139,
+     88
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 0.08048162230671736,
+   "P_recovered_given_trigger_absorbed_occ": 0.33858267716535434
+  },
+  "M2_s44_oracle": {
+   "recall": 0.7436665758648869,
+   "absorption_rate": 0.035685099427948785,
+   "recovered": 149,
+   "lost": 43,
+   "net_pp": 2.8874965949332605,
+   "FP": 4326,
+   "AP": 0.29130252082483243,
+   "AP50": 0.6288247472874231,
+   "decisions_FP_KEEP_REFORM_x_keep_reform": [
+    [
+     2766,
+     0
+    ],
+    [
+     10233,
+     0
+    ],
+    [
+     0,
+     1227
+    ]
+   ],
+   "P_trigger_given_absorbed_occ": 1.0,
+   "P_recovered_given_trigger_absorbed_occ": 0.34220532319391633
+  }
+ },
+ "UCO_B0": {
+  "U_uncovered": 539,
+  "C_absorbed": 460,
+  "O_other": 49,
+  "misses": 1048
+ }
+}
